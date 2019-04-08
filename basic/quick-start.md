@@ -215,7 +215,7 @@ $t->persist($u);
 $t->run();
 ```
 
-You can immediatelly dump your entity to see newly generated primary key:
+You can immediatelly dump the object to see newly generated primary key:
 
 ```php
 print_r($u);
