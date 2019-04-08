@@ -74,6 +74,9 @@ Table of Content
   * ~ [Static Tables](advanced/static.md)
   * ~ [Custom Relations](advanced/custom-reation.md)
   * ~ [Custom Column Types](advances/custom-column.md)
+  * ~ [UUID as Primary Key](advanced/uuid.md)
+  * ~ [Timestamp Entities](advanced/timestamp.md)
+  * ~ [Soft Deleted Entities](advanced/soft-deletes.md)
   * ~ [External Data Sources](advanced/external.md)
   * ~ [Configuring Schema Builder](advanced/schema-builder.md)
 * Components
