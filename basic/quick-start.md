@@ -265,3 +265,10 @@ protected $age;
 ```
 
 Schema will be automatically updated on next script invocation.
+
+We can find all users with non defined age using following method:
+
+```php
+$users = $orm->getRepository(\Example\User::class)->findAll(['age' => null]);
+print_r($users);
+```
