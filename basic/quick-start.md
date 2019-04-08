@@ -199,7 +199,7 @@ Your ORM is ready to be used.
 
 > You can dump `schema` variable to check the internal representation of your entity schema.
 
-## Create your entity
+## Persist Entity
 Now, we can create and save our first entity in database:
 
 ```php
@@ -231,7 +231,6 @@ $u = $orm->getRepository(\Example\User::class)->findByPK(1);
 > Remove code from section above to avoid fetching same entity as one which was created above.
 
 ## Update Entity
-
 To update entity data simple change it's value before persisting it in the transaction:
 
 ```php
