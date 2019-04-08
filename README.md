@@ -14,15 +14,15 @@ Table of Content
   * [Configuration](info/configuration.md)
   * [Contributing](into/contributing.md)
   * [LICENSE](license.md)
+* Basics
+  * [Connect to Database](basic/connetion.md)
+  * [Create, Update, Delete](basic/crud.md)
+  * [Select](basic/select.md)
+  * [Simple Relation](basic/relation.md)
 * Annotated Entities
   * [Prerequisites](annotated/prerequisites.md)
   * [Entities](annotated/entity.md)
   * [Relations](annotated/relations.md)
-* Basics
-  * [Mapping](basic/mapping.md)
-  * [Create, Update, Delete](basic/crud.md)
-  * [Select](basic/select.md)
-  * [Simple Relation](basic/relation.md)
 * Relations
   * [Has One](relation/has-one.md)
   * [Has Many](relation/has-many.md)
@@ -65,6 +65,7 @@ Table of Content
   * [Testing](how-to/testing.md)
   * [Reconnects and Database Exceptions](how-to/exception.md)
   * [Self-References and Cyclic Relations](how-to/cyclic.md)
+  * [Static Tables](how-to/static.md)
 * Components
   * [Data Mapper Core](component/core.md)
   * [Schema Builder](component/schema-builder.md)
