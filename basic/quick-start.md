@@ -1,10 +1,12 @@
-# Installation
+# Quick Start
+This guide provides quick overview of ORM installation and configuration process and example using annotateed entity. other sections of the documentation will provide deeper insign of various use-cases.
+
+## Installation
 Cycle ORM requiments include:
   * PHP7.1+
   * PHP-PDO
   * PDO drivers for desired databases
 
-## Installation
 Cycle ORM is available as composer repository and can be installed using following command in a root of your project:
 
 ```bash
@@ -75,3 +77,109 @@ $orm = new ORM\ORM(new ORM\Factory(
 ```
 
 > Make sure to add `use Cycle\ORM;` at top of your file.
+
+ORM is ready for use but it does not have any entity associated with it.
+
+## Register Namespace
+We can create our first entity in a directory `src` of our project.
+
+Register new namespace in your composer.json file:
+
+```json
+"autoload": {
+    "psr-4": {
+      "Example\\": "src/"
+    }
+  }
+```
+
+Execute: 
+
+```bash
+$ composer dump
+```
+
+## Create Entity
+We can now create our first entity in `src` folder. We will use capabilities provided by `cycle/annoted` package to describe our schema:
+
+```php
+<?php declare(strict_types=1);
+
+namespace Example;
+
+/**
+ * @entity
+ */
+class User
+{
+    /**
+     * @column(type=primary)
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @column(type=string)
+     * @var string
+     */
+    protected $name;
+    
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+}
+```
+
+Cycle will automatically assign role `user` and table `users` from default database to this entity.
+
+## Schema Generation
+In order to operate we need to generate ORM Schema which will describe how our entities are configured. Thought we can do it manually 
+we will use pipeline generator provided by `cycle/schema-builder` package and generators from `cycle/annotated`.
+
+First, we have to create instance of `ClassLocator` which will automatically find needed entities:
+
+```php
+$classLocator = (new \Spiral\Tokenizer\Tokenizer(new \Spiral\Tokenizer\Config\TokenizerConfig([
+    'directories' => ['src/']
+])))->classLocator();
+```
+
+We can immediatelly check if our class visible for static indexation:
+
+```php
+print_r($classLocator->getClasses());
+```
+
+Once class locator is established we can create our schema generation pipeline. First, we will add needed namespace imports:
+
+```php
+use Cycle\Schema;
+use Cycle\Annotated;
+```
+
+Now we can define our pipeline:
+
+```php
+$schema = (new \Cycle\Schema\Compiler())->compile(new \Cycle\Schema\Registry($dbal), [
+    new Annotated\Entities($classLocator),
+    new Schema\Generator\CleanTables(),
+    Schema\Generator\GenerateRelations::defaultGenerator(),
+    new Schema\Generator\ValidateEntities(),
+    new Schema\Generator\RenderTables(),
+    new Schema\Generator\RenderRelations(),
+    new Schema\Generator\SyncTables(),
+    new Schema\Generator\GenerateTypecast(),
+]);
+```
+
