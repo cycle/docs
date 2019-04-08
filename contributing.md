@@ -12,4 +12,4 @@ Feel free to propose any ideas related to architecture, docs (___docs are never 
 
 ## Critical/Security Issues
 If you found something which shouldn't be there or a bug which opens a security hole please let me know immediately 
-by email [wolfy.jd@gmail.com](mailto:wolfy.jd@gmail.com)
+by email [wolfy-j@spiralscout.com](mailto:wolfy-j@spiralscout.com)
