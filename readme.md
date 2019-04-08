@@ -11,10 +11,10 @@ Table of Content
 * About Cycle
   * ~ [How to keep being sane while writing 60+ pages of documentation](https://github.com/cycle/docs)
   * ~ [About Cycle ORM](intro/about.md)
-  * ~ [Quick Start](basic/quick-start.md)
-  * ~ [Installation](into/installation.md)
-  * ~ [Configuration](info/configuration.md)
-  * ~ [Contributing](into/contributing.md)
+  * ~ [Quick Start](intro/quick-start.md)
+  * ~ [Installation](intro/installation.md)
+  * ~ [Configuration](intro/configuration.md)
+  * ~ [Contributing](contributing.md)
   * [LICENSE](license.md)
 * Basics
   * ~ [Connect to Database](basic/connetion.md)
