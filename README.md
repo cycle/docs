@@ -54,6 +54,7 @@ Table of Content
   * [Constrains](architecture/constrain.md)
   * [Node Parser](architecture/node-parser.md)
 * Advanced Usage
+  * [Usage in Long Running Applications](how-to/daemonizing.md)
   * [Single Table Inheritance](how-to/single-table-inheritance.md)
   * [Custom Mappers](how-to/custom-mapper.md)
   * [Dynamic Schema (StdClass)](how-to/dynamic-schema.md)
