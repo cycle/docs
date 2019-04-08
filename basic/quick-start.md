@@ -35,6 +35,8 @@ In order to operate, Cycle ORM require proper database connection to be set. All
 <?php declare(strict_types=1);
 include 'vendor/autoload.php';
 
+use Spiral\Database;
+
 $dbal = new Database\DatabaseManager(new Database\Config\DatabaseConfig([
     'default'     => 'default',
     'databases'   => [
