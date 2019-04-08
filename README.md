@@ -9,6 +9,7 @@ Cycle is PHP DataMapper and ORM engine designed to work in long-running PHP appl
 Table of Content
 ----------------
 * About Cycle
+  * ~ [How to keep being sane while writing 60+ pages of documentation](https://github.com/cycle/docs)
   * ~ [About Cycle ORM](intro/about.md)
   * ~ [Installation](into/installation.md)
   * ~ [Configuration](info/configuration.md)
