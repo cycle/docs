@@ -66,7 +66,7 @@ Table of Content
   * [Reconnects and Database Exceptions](how-to/exception.md)
   * [Self-References and Cyclic Relations](how-to/cyclic.md)
   * [Static Tables](how-to/static.md)
-  * [Custom Relation](how-to/custom-reation.md)
+  * [Custom Relations](how-to/custom-reation.md)
   * [External Data Sources](how-to/external.md)
 * Components
   * [Data Mapper Core](component/core.md)
