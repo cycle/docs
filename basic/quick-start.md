@@ -172,9 +172,9 @@ Now we can define our pipeline:
 
 ```php
 $schema = (new \Cycle\Schema\Compiler())->compile(new \Cycle\Schema\Registry($dbal), [
-    new Annotated\Entities($classLocator),
-    new Schema\Generator\CleanTables(),
-    Schema\Generator\GenerateRelations::defaultGenerator(),
+    new Annotated\Entities($cl),
+    new Schema\Generator\ResetTables(),
+    new Schema\Generator\GenerateRelations(),
     new Schema\Generator\ValidateEntities(),
     new Schema\Generator\RenderTables(),
     new Schema\Generator\RenderRelations(),
@@ -183,3 +183,85 @@ $schema = (new \Cycle\Schema\Compiler())->compile(new \Cycle\Schema\Registry($db
 ]);
 ```
 
+> We will explain what each iterator is doing in a later sections. Please note, while complining your schema `SyncTables` will automatically adjust your database structure! Do not use it on real database!
+
+The resulted schema can be passed to ORM. 
+
+```php
+$orm = $orm->withSchema(new ORM\Schema($schema));
+```
+
+Your ORM is ready to be used. 
+
+> You can dump `schema` variable to check the internal representation of your entity schema.
+
+## Create First Entity
+Now, we can create and save our first entity in database:
+
+
+## Create your entity
+We can create your 
+> Generated schema is intended to be cached in your application, only re-generate schema when it's needed.
+
+```php
+$u = new \Example\User();
+$u->setName("Hello World");
+```
+
+To persist our entity we have pass it into Transaction object:
+
+```php
+$t = new ORM\Transaction($orm);
+$t->persist($u);
+$t->run();
+```
+
+You can immediatelly dump your entity to see newly generated primary key:
+
+```php
+print_r($u);
+```
+
+## Select Entity
+You can select the entity from database using it's primary key and associated repository:
+
+```php
+$u = $orm->getRepository(\Example\User::class)->findByPK(1);
+```
+
+> Remove code from section above to avoid fetching same entity as one which was created above.
+
+## Update Entity
+
+To update entity data simple change it's value before persisting it in the transaction:
+
+```php
+$u = $orm->getRepository(\Example\User::class)->findByPK(1);
+
+print_r($u);
+$u->setName("New " . mt_rand(0, 1000));
+
+(new ORM\Transaction($orm))->persist($u)->run();
+```
+
+You can notice new name being displayed on every script iteration.
+
+## Delete Entity
+To delete entity simply call method `delete` of the Transation:
+
+```php
+(new ORM\Transaction($orm))->delete($u)->run();
+```
+
+## Update Entity Schema
+You can modify your entity schema to add new columns. Note that you have to either specify default value or set column as `nullable` in order to apply modification to non empty table.
+
+```php
+/**
+* @column(type=int,nullable=true)
+* @var int|null
+*/
+protected $age;
+```
+
+Schema will be automatically updated on next script invocation.
