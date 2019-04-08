@@ -10,7 +10,7 @@ Table of Content
 ----------------
 * About Cycle
   * ~ [How to keep being sane while writing 60+ pages of documentation](https://github.com/cycle/docs)
-  * ~ [About Cycle ORM](intro/about.md)
+  * [About Cycle ORM](intro/about.md)
   * ~ [Installation](intro/installation.md)
   * ~ [Configuration](intro/configuration.md)
   * [Contributing](contributing.md)
