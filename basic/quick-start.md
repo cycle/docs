@@ -174,18 +174,18 @@ Now we can define our pipeline:
 
 ```php
 $schema = (new \Cycle\Schema\Compiler())->compile(new \Cycle\Schema\Registry($dbal), [
-    new Annotated\Entities($cl),
-    new Schema\Generator\ResetTables(),
-    new Schema\Generator\GenerateRelations(),
-    new Schema\Generator\ValidateEntities(),
-    new Schema\Generator\RenderTables(),
-    new Schema\Generator\RenderRelations(),
-    new Schema\Generator\SyncTables(),
-    new Schema\Generator\GenerateTypecast(),
+    new Annotated\Entities($cl),              // register annotated entities
+    new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
+    new Schema\Generator\GenerateRelations(), // generate entity relations
+    new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
+    new Schema\Generator\RenderTables(),      // declare table schemas
+    new Schema\Generator\RenderRelations(),   // declare relation keys and indexes
+    new Schema\Generator\SyncTables(),        // sync table changes to database
+    new Schema\Generator\GenerateTypecast(),  // typecast non string columns
 ]);
 ```
 
-> We will explain what each iterator is doing in a later sections. Please note, while complining your schema `SyncTables` will automatically adjust your database structure! Do not use it on real database!
+> We will explain what each generator is doing in a later sections. Please note, while complining your schema `SyncTables` will automatically adjust your database structure! Do not use it on real database!
 
 The resulted schema can be passed to ORM. 
 
