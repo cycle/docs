@@ -40,6 +40,7 @@ Table of Content
   * [Relations](query-builder/relations.md)
 * Architecture
   * [Overview](architecture/overview.md)
+  * [Schema](architecture/schema.md)
   * [Entity](architecture/entity.md)
   * [Collection](architecture/collection.md)
   * [Pivot Collection](architecture/pivot-collection.md)
