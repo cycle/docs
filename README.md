@@ -16,6 +16,7 @@ Table of Content
   * ~ [Contributing](into/contributing.md)
   * ~ [LICENSE](license.md)
 * Basics
+  * ~ [Quick Start](basic/quick-start.md)
   * ~ [Connect to Database](basic/connetion.md)
   * ~ [Create, Update, Delete](basic/crud.md)
   * ~ [Select](basic/select.md)
