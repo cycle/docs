@@ -270,3 +270,6 @@ We can find all users with non defined age using following method:
 $users = $orm->getRepository(\Example\User::class)->findAll(['age' => null]);
 print_r($users);
 ```
+
+## Going Forward
+Next sections of this documentation are based on assumption that you already have properly configured DBAL and ORM instances.
