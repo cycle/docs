@@ -76,3 +76,5 @@ Table of Content
   * ~ [Annotations Parser](component/annotated.md)
   * ~ [Migrations](component/migrations.md)
   * ~ [Proxy Factory](component/proxy-factory.md)
+* Integrations
+  * ~ [Spiral Framework](integration/spiral.md)
