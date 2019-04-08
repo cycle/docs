@@ -21,6 +21,8 @@ Table of Content
 * Basics
   * [Mapping](basic/mapping.md)
   * [Create, Update, Delete](basic/crud.md)
+  * [Select](basic/select.md)
+  * [Simple Relation](basic/relation.md)
 * Relations
   * [Has One](relation/has-one.md)
   * [Has Many](relation/has-many.md)
@@ -38,7 +40,11 @@ Table of Content
   * [Relations](query-builder/relations.md)
 * Architecture
   * [Overview](architecture/overview.md)
+  * [Entity](architecture/entity.md)
+  * [Collection](architecture/collection.md)
+  * [Pivot Collection](architecture/pivot-collection.md)
   * [Heap and States](architecture/heap.md)
+  * [Entity Iterator](architecture/iterator.md)
   * [Mappers](architecture/mapper.md)
   * [Commands](architecture/command.md)
   * [Transactions (Unit of Work)](architecture/transaction.md)
@@ -57,6 +63,7 @@ Table of Content
   * [References and Proxies](how-to/references.md)
   * [Testing](how-to/testing.md)
   * [Reconnects and Database Exceptions](how-to/exception.md)
+  * [Self-References and Cyclic Relations](how-to/cyclic.md)
 * Components
   * [Data Mapper Core](component/core.md)
   * [Schema Builder](component/schema-builder.md)
