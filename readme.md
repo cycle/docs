@@ -49,7 +49,7 @@ Table of Content
   * ~ [Heap, Node, State](architecture/heap.md)
   * ~ [Entity Iterator](architecture/iterator.md)
   * ~ [Mappers](architecture/mapper.md)
-  * ~ [Commands](architecture/command.md)
+  * ~ [Commands and Linked Contexts](architecture/command.md)
   * ~ [Transactions (Unit of Work)](architecture/transaction.md)
   * ~ [Sources and Databases](architecture/source.md)
   * ~ [References, Promises and Proxies](architecture/promise.md)
