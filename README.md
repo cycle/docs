@@ -14,7 +14,7 @@ Table of Content
   * ~ [Installation](into/installation.md)
   * ~ [Configuration](info/configuration.md)
   * ~ [Contributing](into/contributing.md)
-  * ~ [LICENSE](license.md)
+  * [LICENSE](license.md)
 * Basics
   * ~ [Quick Start](basic/quick-start.md)
   * ~ [Connect to Database](basic/connetion.md)
