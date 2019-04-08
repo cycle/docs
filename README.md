@@ -54,6 +54,7 @@ Table of Content
   * [Query Builder](architecture/query-builder.md)
   * [Constrains](architecture/constrain.md)
   * [Node Parser](architecture/node-parser.md)
+  * [Limitations](architecture/limitations.md)
 * Advanced Usage
   * [Usage in Long Running Applications](how-to/daemonizing.md)
   * [Single Table Inheritance](how-to/single-table-inheritance.md)
