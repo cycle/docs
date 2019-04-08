@@ -33,5 +33,47 @@ In order to operate, Cycle ORM require proper database connection to be set. All
 <?php declare(strict_types=1);
 include 'vendor/autoload.php';
 
-
+$dbal = new Database\DatabaseManager(new Database\Config\DatabaseConfig([
+    'default'     => 'default',
+    'databases'   => [
+        'default' => [
+            'connection' => 'sqlite'
+        ]
+    ],
+    'connections' => [
+        'sqlite' => [
+            'driver'  => Database\Driver\SQLite\SQLiteDriver::class,
+            'options' => [
+                'connection' => 'sqlite:database.db',
+                'username'   => '',
+                'password'   => '',
+            ]
+        ]
+    ]
+]));
 ```
+
+> Read about how to connect to other database types in [next section](connection.md). You can also configure
+database connections in runtime.
+
+We can get access to our database object and check connection:
+
+```php
+print_r($dbal->database('default')->getTables());
+```
+
+> Run `php filename.php`, the result must be empty array.
+
+## ORM
+ORM service can be initiated using following construction:
+
+```php
+$orm = new ORM\ORM(new ORM\Factory(
+    $dbal,
+    ORM\Config\RelationConfig::getDefault()
+));
+```
+
+> Make sure to add `use Cycle\ORM;` at top of your file.
+
+
