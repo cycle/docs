@@ -57,7 +57,7 @@ $dbal = new Database\DatabaseManager(new Database\Config\DatabaseConfig([
 ]));
 ```
 
-> Read about how to connect to other database types in [next section](connection.md). You can also configure
+> Read about how to connect to other database types in [next section](basic/connection.md). You can also configure
 database connections in runtime.
 
 We can get access to our database object and check connection:
