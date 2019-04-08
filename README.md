@@ -59,7 +59,6 @@ Table of Content
   * [Single Table Inheritance](how-to/single-table-inheritance.md)
   * [Custom Mappers](how-to/custom-mapper.md)
   * [Dynamic Schema (StdClass)](how-to/dynamic-schema.md)
-  * [Custom Relation](how-to/custom-reation.md)
   * [Entity Constrains](how-to/constrain.md)
   * [Caching](how-to/caching.md)
   * [References and Proxies](how-to/references.md)
@@ -67,6 +66,8 @@ Table of Content
   * [Reconnects and Database Exceptions](how-to/exception.md)
   * [Self-References and Cyclic Relations](how-to/cyclic.md)
   * [Static Tables](how-to/static.md)
+  * [Custom Relation](how-to/custom-reation.md)
+  * [External Data Sources](how-to/external.md)
 * Components
   * [Data Mapper Core](component/core.md)
   * [Schema Builder](component/schema-builder.md)
