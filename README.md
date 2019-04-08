@@ -44,7 +44,7 @@ Table of Content
   * [Entity](architecture/entity.md)
   * [Collection](architecture/collection.md)
   * [Pivot Collection](architecture/pivot-collection.md)
-  * [Heap and States](architecture/heap.md)
+  * [Heap, Node, State](architecture/heap.md)
   * [Entity Iterator](architecture/iterator.md)
   * [Mappers](architecture/mapper.md)
   * [Commands](architecture/command.md)
