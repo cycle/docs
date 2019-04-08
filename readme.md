@@ -82,7 +82,7 @@ Table of Content
 * Components
   * ~ [Data Mapper Core](component/core.md)
   * ~ [Schema Builder](component/schema-builder.md)
-  * ~ [Annotations Parser](component/annotated.md)
+  * ~ [Annotation Parser](component/annotated.md)
   * ~ [Migrations](component/migrations.md)
   * ~ [Proxy Factory](component/proxy-factory.md)
 * Integrations
