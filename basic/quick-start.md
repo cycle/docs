@@ -101,7 +101,7 @@ Execute:
 $ composer dump
 ```
 
-## Create Entity
+## Define Entity
 We can now create our first entity in `src` folder. We will use capabilities provided by `cycle/annoted` package to describe our schema:
 
 ```php
@@ -193,17 +193,14 @@ The resulted schema can be passed to ORM.
 $orm = $orm->withSchema(new ORM\Schema($schema));
 ```
 
+> Generated schema is intended to be cached in your application, only re-generate schema when it's needed.
+
 Your ORM is ready to be used. 
 
 > You can dump `schema` variable to check the internal representation of your entity schema.
 
-## Create First Entity
-Now, we can create and save our first entity in database:
-
-
 ## Create your entity
-We can create your 
-> Generated schema is intended to be cached in your application, only re-generate schema when it's needed.
+Now, we can create and save our first entity in database:
 
 ```php
 $u = new \Example\User();
