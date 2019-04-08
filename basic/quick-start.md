@@ -231,7 +231,7 @@ $u = $orm->getRepository(\Example\User::class)->findByPK(1);
 > Remove code from the section above to avoid fetching entity from memory.
 
 ## Update Entity
-To update entity data simple change it's value before persisting it in the transaction:
+To update entity data simply change it's value before persisting it in the transaction:
 
 ```php
 $u = $orm->getRepository(\Example\User::class)->findByPK(1);
