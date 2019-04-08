@@ -75,5 +75,3 @@ $orm = new ORM\ORM(new ORM\Factory(
 ```
 
 > Make sure to add `use Cycle\ORM;` at top of your file.
-
-
