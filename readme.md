@@ -73,6 +73,7 @@ Table of Content
   * ~ [Self-References and Cyclic Relations](advanced/cyclic.md)
   * ~ [Static Tables](advanced/static.md)
   * ~ [Custom Relations](advanced/custom-reation.md)
+  * ~ [Custom Column Types](advances/custom-column.md)
   * ~ [External Data Sources](advanced/external.md)
   * ~ [Configuring Schema Builder](advanced/schema-builder.md)
 * Components
