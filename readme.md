@@ -3,7 +3,7 @@ Table of Content
 * About Cycle
   * ~ [How to keep being sane while writing 60+ pages of documentation](https://github.com/cycle/docs)
   * [About Cycle ORM](intro/about.md)
-  * ~ [Installation](intro/install.md)
+  * [Installation](intro/install.md)
   * ~ [Configuration](intro/configuration.md)
   * [Contributing](contributing.md)
   * [LICENSE](license.md)
