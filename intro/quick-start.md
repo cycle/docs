@@ -1,5 +1,5 @@
 # Quick Start
-This guide provides quick overview of ORM installation and configuration process and example using annotateed entity. other sections of the documentation will provide deeper insign of various use-cases.
+This guide provides quick overview of ORM installation, configuration process and example using an annotateed entity. Other sections of the documentation will provide deeper insign of various use-cases.
 
 ## Requirements
   * PHP7.1+
@@ -7,7 +7,7 @@ This guide provides quick overview of ORM installation and configuration process
   * PDO drivers for desired databases
   
 ## Installation
-Cycle ORM is available as composer repository and can be installed using following command in a root of your project:
+Cycle ORM is available as composer repository and can be installed using the following command in a root of your project:
 
 ```bash
 $ composer require cycle/orm
@@ -19,9 +19,9 @@ In order to enable support for annotated entities you have to request additional
 $ composer require cycle/annotated
 ```
 
-Given commands will download Cycle ORM dependencies such as `spiral/databses`, `doctrine/collections` and `zendframework/zend-hydrator`.
+This command will also download Cycle ORM dependencies such as `spiral/databses`, `doctrine/collections` and `zendframework/zend-hydrator`.
 
-In order to access to Cycle ORM classes make sure to include `vendor/autoload.php` into your file.
+In order to access Cycle ORM classes make sure to include `vendor/autoload.php` into your file.
 
 ```php
 <?php declare(strict_types=1);
@@ -29,7 +29,7 @@ include 'vendor/autoload.php';
 ```
 
 ## Configuration
-In order to operate, Cycle ORM require proper database connection to be set. All database connections are managed using `DatabaseManager` service provided by the package `spiral/database`. We can configure our first database connection to be initiated on demand using following configuration:
+In order to operate, Cycle ORM require proper database connection to be set. All database connections are managed using `DatabaseManager` service provided by the package `spiral/database`. We can configure our first database connection to be initiated on demand using the following configuration:
 
 ```php
 <?php declare(strict_types=1);
@@ -58,29 +58,24 @@ $dbal = new Database\DatabaseManager(new Database\Config\DatabaseConfig([
 ```
 
 > Read about how to connect to other database types in [next section](/basic/connection.md). You can also configure
-database connections in runtime.
+database connections at runtime.
 
-We can get access to our database object and check connection:
+Check database access using following code:
 
 ```php
 print_r($dbal->database('default')->getTables());
 ```
 
-> Run `php filename.php`, the result must be empty array.
+> Run `php {filename}.php`, the result must be empty array.
 
 ## ORM
-ORM service can be initiated using following construction:
+Initiate ORM service:
 
 ```php
-$orm = new ORM\ORM(new ORM\Factory(
-    $dbal,
-    ORM\Config\RelationConfig::getDefault()
-));
+$orm = new ORM\ORM(new ORM\Factory($dbal));
 ```
 
 > Make sure to add `use Cycle\ORM;` at top of your file.
-
-ORM is ready for use but it does not have any entity associated with it.
 
 ## Register Namespace
 We can create our first entity in a directory `src` of our project.
@@ -102,7 +97,7 @@ $ composer dump
 ```
 
 ## Define Entity
-We can now create our first entity in `src` folder. We will use capabilities provided by `cycle/annoted` package to describe our schema:
+To create our first entity in `src` folder we will use capabilities provided by `cycle/annoted` package to describe desired schema:
 
 ```php
 <?php declare(strict_types=1);
@@ -145,19 +140,21 @@ class User
 
 Cycle will automatically assign role `user` and table `users` from default database to this entity.
 
+> Attention, `@entity` annotation is required!
+
 ## Schema Generation
 In order to operate we need to generate ORM Schema which will describe how our entities are configured. Thought we can do it manually 
-we will use pipeline generator provided by `cycle/schema-builder` package and generators from `cycle/annotated`.
+we will use the pipeline generator provided by `cycle/schema-builder` package and generators from `cycle/annotated`.
 
 First, we have to create instance of `ClassLocator` which will automatically find needed entities:
 
 ```php
 $classLocator = (new \Spiral\Tokenizer\Tokenizer(new \Spiral\Tokenizer\Config\TokenizerConfig([
-    'directories' => ['src/']
+    'directories' => ['src/'],
 ])))->classLocator();
 ```
 
-We can immediatelly check if our class visible for static indexation:
+We can immediatelly check if our class visible (ClassLocator will perform static indexation of your code behind the hood):
 
 ```php
 print_r($classLocator->getClasses());
@@ -173,7 +170,7 @@ use Cycle\Annotated;
 Now we can define our pipeline:
 
 ```php
-$schema = (new \Cycle\Schema\Compiler())->compile(new \Cycle\Schema\Registry($dbal), [
+$schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Annotated\Entities($cl),              // register annotated entities
     new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
     new Schema\Generator\GenerateRelations(), // generate entity relations
@@ -195,19 +192,19 @@ $orm = $orm->withSchema(new ORM\Schema($schema));
 
 > Generated schema is intended to be cached in your application, only re-generate schema when it's needed.
 
-Your ORM is ready to be used. 
+Your ORM is ready for use. 
 
 > You can dump `schema` variable to check the internal representation of your entity schema.
 
 ## Persist Entity
-Now, we can create and save our first entity in database:
+Now, we can init and persist our first entity in database:
 
 ```php
 $u = new \Example\User();
 $u->setName("Hello World");
 ```
 
-To persist our entity we have pass it into Transaction object:
+To persist our entity we have register it in the transaction:
 
 ```php
 $t = new ORM\Transaction($orm);
@@ -228,21 +225,21 @@ You can select the entity from database using it's primary key and associated re
 $u = $orm->getRepository(\Example\User::class)->findByPK(1);
 ```
 
-> Remove code from the section above to avoid fetching entity from memory.
+> Remove the code from the section above to avoid fetching entity from memory.
 
 ## Update Entity
 To update entity data simply change it's value before persisting it in the transaction:
 
 ```php
 $u = $orm->getRepository(\Example\User::class)->findByPK(1);
-
 print_r($u);
+
 $u->setName("New " . mt_rand(0, 1000));
 
 (new ORM\Transaction($orm))->persist($u)->run();
 ```
 
-You can notice new name being displayed on every script iteration.
+You can notice that new name will be displayed on every script iteration.
 
 ## Delete Entity
 To delete entity simply call method `delete` of the Transation:
@@ -252,7 +249,7 @@ To delete entity simply call method `delete` of the Transation:
 ```
 
 ## Update Entity Schema
-You can modify your entity schema to add new columns. Note that you have to either specify default value or set column as `nullable` in order to apply modification to non empty table.
+You can modify your entity schema to add new columns. Note that you have to either specify default value or set column as `nullable` in order to apply modification to the non empty table.
 
 ```php
 /**
@@ -262,9 +259,7 @@ You can modify your entity schema to add new columns. Note that you have to eith
 protected $age;
 ```
 
-Schema will be automatically updated on next script invocation.
-
-We can find all users with non defined age using following method:
+Schema will be automatically updated on next script invocation. We can find all users with non defined age using following method:
 
 ```php
 $users = $orm->getRepository(\Example\User::class)->findAll(['age' => null]);
