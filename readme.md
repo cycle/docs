@@ -2,10 +2,10 @@ Table of Content
 ----------------
 * About Cycle
   * [About Cycle ORM](intro/about.md)
+  * [Quick Start](intro/quick-start.md)
   * [Contributing](contributing.md)
   * [LICENSE](license.md)
 * Basics
-  * [Quick Start](basic/quick-start.md)
   * ~ [Connect to Database](basic/connetion.md)
   * ~ [Create, Update, Delete](basic/crud.md)
   * ~ [Select](basic/select.md)
