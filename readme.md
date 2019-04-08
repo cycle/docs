@@ -59,6 +59,8 @@ Table of Content
   * ~ [Limitations](architecture/limitations.md)
 * Advanced Usage
   * ~ [Usage in Long Running Applications](how-to/daemonizing.md)
+  * ~ [Syncronizing Database Schema](how-to/sync-schema.md)
+  * ~ [Working with Multiple Databases](how-to/multiple-databases.md)
   * ~ [Single Table Inheritance](how-to/single-table-inheritance.md)
   * ~ [Custom Mappers](how-to/custom-mapper.md)
   * ~ [Dynamic Schema (StdClass)](how-to/dynamic-schema.md)
