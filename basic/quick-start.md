@@ -1,12 +1,12 @@
 # Quick Start
 This guide provides quick overview of ORM installation and configuration process and example using annotateed entity. other sections of the documentation will provide deeper insign of various use-cases.
 
-## Installation
-Cycle ORM requiments include:
+## Requirements
   * PHP7.1+
   * PHP-PDO
   * PDO drivers for desired databases
-
+  
+## Installation
 Cycle ORM is available as composer repository and can be installed using following command in a root of your project:
 
 ```bash
