@@ -8,7 +8,7 @@ Please make sure that the following requirements are satisfied before submitting
 
 Feel free to propose any ideas related to architecture, docs (___docs are never complete___),  adaptation or community.
 
-> Original guide author is not native English speaker, feel free to create PR for any text corrections.
+> Original guide author is not a native English speaker, feel free to create PR for any text corrections.
 
 ## Critical/Security Issues
 If you found something which shouldn't be there or a bug which opens a security hole please let me know immediately 
