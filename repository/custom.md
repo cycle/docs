@@ -96,7 +96,7 @@ class UserRepository extends Repository
 ```
 
 ## Integration with Spiral Framewor
-If you use Spiral Framework all custom repositories would be available directly in container, without need to request $orm instance.
+If you use Spiral Framework all custom repositories would be available directly in the container, without need to request $orm instance.
 
 ```php
 public function listAction(UserRepository $users) 
