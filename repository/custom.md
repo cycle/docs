@@ -77,10 +77,10 @@ object from your method.
 Now you can access to this method:
 
 ```php
-print_r($orm->getRepository(\Example\User::class)->findActive()->findAll());
+print_r($orm->getRepository(\Example\User::class)->findActive()->fetchAll());
 ```
 
-## Pre-Loads
+## Preloading relations
 Another use-case is to automatically pre-load some of entity relations using custom find method:
 
 ```php
@@ -94,3 +94,15 @@ class UserRepository extends Repository
     }
 }
 ```
+
+## Integration with Spiral Framewor
+If you use Spiral Framework all custom repositories would be available directly in container, without need to request $orm instance.
+
+```php
+public function listAction(UserRepository $users) 
+{
+    print_r($users->findActive()->fetchAll());
+}
+```
+
+> Note, given approach will only work for unique entity-repository associations.
