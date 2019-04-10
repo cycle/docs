@@ -1,5 +1,5 @@
 # Custom Repositories
-It is essential to be able to associate custom repository implementations with your entities. You are able to create 
+It is essential to be able to associate custom repository implementations to your entities. You are able to create 
 any repository from scratch, especially for non SQL sources. However, the most common use case would be extending default
 repository implementation to add custom selectors.
 
