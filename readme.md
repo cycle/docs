@@ -24,7 +24,7 @@ Table of Content
 * Repositories
   * ~ [Select Entity](repository/select.md)
   * ~ [Relations](repository/relations.md)
-  * ~ [Custom Repository](repository/custom.md)
+  * [Custom Repository](repository/custom.md)
 * Query Builder
   * ~ [Basics](query-builder/basic.md)
   * ~ [Complex Conditions](query-builder/complex.md)
