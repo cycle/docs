@@ -88,7 +88,7 @@ class UserRepository extends Repository
 {
     // ...
 
-    public function findActiveUsersIncludeAddress(): Select 
+    public function findActiveUsersLoadAddress(): Select 
     {
         return $this->findActive()->load('address');
     }
