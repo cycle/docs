@@ -19,7 +19,7 @@ In order to enable support for annotated entities you have to request additional
 $ composer require cycle/annotated
 ```
 
-This command will also download Cycle ORM dependencies such as `spiral/databses`, `doctrine/collections` and `zendframework/zend-hydrator`.
+This command will also download Cycle ORM dependencies such as `spiral/database`, `doctrine/collections` and `zendframework/zend-hydrator`.
 
 In order to access Cycle ORM classes make sure to include `vendor/autoload.php` into your file.
 
