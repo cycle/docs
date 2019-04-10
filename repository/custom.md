@@ -55,7 +55,7 @@ print_r(get_class($orm->getRepository(\Example\User::class)));
 
 ## Custom Selects
 Main reason of using custom repositories is the ability to write your own `find` methods. You can do that using 
-internal `find` or `select` method.
+base `select` method which return you instance of `Cycle\ORM\Select`:
 
 ```php
 namespace Example\Repository;
