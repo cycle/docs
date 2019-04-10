@@ -7,7 +7,7 @@ Table of Content
   * [LICENSE](license.md)
 * Basics
   * ~ [Installation](basic/install.md)
-  * ~ [Connect to Database](basic/connetion.md)
+  * ~ [Connect to Database](basic/connect.md)
   * [Create, Update, Delete](basic/crud.md)
   * ~ [Select](basic/select.md)
   * ~ [Simple Relation](basic/relation.md)
