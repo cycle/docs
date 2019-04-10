@@ -62,7 +62,7 @@ namespace Example\Repository;
 
 use Cycle\ORM\Select; 
 
-class UserRepository extends Repository 
+class UserRepository extends Select\Repository 
 {
     public function findActive(): Select 
     {
@@ -84,7 +84,7 @@ print_r($orm->getRepository(\Example\User::class)->findActive()->fetchAll());
 Another use-case is to automatically pre-load some of entity relations using custom find method:
 
 ```php
-class UserRepository extends Repository 
+class UserRepository extends Select\Repository 
 {
     // ...
 
