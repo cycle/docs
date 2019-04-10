@@ -23,8 +23,8 @@ Table of Content
   * ~ [Many Thought Many](relation/many-though-many.md)
 * Repositories
   * ~ [Select Entity](repository/select.md)
+  * [Custom Repositories](repository/custom.md)
   * ~ [Relations](repository/relations.md)
-  * [Custom Repository](repository/custom.md)
 * Query Builder
   * ~ [Basics](query-builder/basic.md)
   * ~ [Complex Conditions](query-builder/complex.md)
