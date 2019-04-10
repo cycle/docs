@@ -14,7 +14,7 @@ Since you can provide any iterable source to the `Cycle\ORM\Iterator` you can cr
 ```php
 use Cycle\ORM;
 
-function generateFiltered(ORM\Select $select, $value) 
+function filterByExternal(ORM\Select $select, $value) 
 {
     foreach($select->load('external')->fetchData() as $item) {
         if($line['external']['value'] == $item) {
@@ -25,7 +25,7 @@ function generateFiltered(ORM\Select $select, $value)
 
 // ...
 
-foreach (new ORM\Iterator($orm, User::class, generateFiltered($select, $value)) {
+foreach (new ORM\Iterator($orm, User::class, filterByExternal($select, $value)) {
     print_r($user);
 }
 ```
