@@ -21,7 +21,7 @@ $ composer require cycle/annotated
 
 This command will also download Cycle ORM dependencies such as `spiral/database`, `doctrine/collections` and `zendframework/zend-hydrator`.
 
-In order to access Cycle ORM classes make sure to include `vendor/autoload.php` into your file.
+In order to access Cycle ORM classes make sure to include `vendor/autoload.php` in your file.
 
 ```php
 <?php declare(strict_types=1);
