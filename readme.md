@@ -46,7 +46,7 @@ Table of Content
   * ~ [Query Builder](architecture/query-builder.md)
   * ~ [Constrains](architecture/constrain.md)
   * ~ [Node Parser](architecture/node-parser.md)
-  * ~ [Limitations](architecture/limitations.md)
+  * [Limitations](architecture/limitations.md)
 * Advanced Usage
   * ~ [Usage in Long Running Applications](advanced/daemonizing.md)
   * ~ [Syncronizing Database Schema](advanced/sync-schema.md)
