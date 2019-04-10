@@ -17,8 +17,7 @@ class UserRepository extends Select\Repository
 }
 ```
 
-You can now associte this repository to your entinty by specifying `Schema::REPOSITORY` in your entity schema. Easier path would be 
-using `entity` annotation for your class:
+Use `entity` annotation attribute to create the association:
 
 ```php
 namespace Example;
@@ -46,11 +45,13 @@ class User
 }
 ```
 
-Update your schema to get access to newly assigned repository though `getRepository` method of orm:
+Update/calculate your schema to get access to newly assigned repository though `getRepository` method of orm:
 
 ```php
 print_r(get_class($orm->getRepository(\Example\User::class)));
 ```
+
+> You can assing one repository implementation to multiple entities.
 
 ## Custom Selects
 Main reason of using custom repositories is the ability to write your own `find` methods. You can do that using 
