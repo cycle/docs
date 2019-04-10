@@ -29,3 +29,5 @@ foreach (new ORM\Iterator($orm, User::class, filterByExternal($select, $value)) 
     print_r($user);
 }
 ```
+
+> Given approach will minimize the amount of allocated memory.
