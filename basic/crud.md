@@ -74,7 +74,7 @@ $tr->run();
 Please note, ORM would not automatically trigger the delete operation for related entities and will rely 
 on foreign key rules set in database.
 
-## Persisting related entities
+## Persisting related Entities
 Persinting entity will also persist all related entities within it.
  
 ```php
@@ -107,3 +107,5 @@ $tr->run();
 ```
 
 > `Transaction::MODE_ENTITY_ONLY` flag can be used while creating or updating the entity.
+
+You can also turn cascading save on relalation level by setting `cascade` flag to `false`.
