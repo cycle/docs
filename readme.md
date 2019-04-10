@@ -8,7 +8,7 @@ Table of Content
 * Basics
   * ~ [Installation](basic/install.md)
   * ~ [Connect to Database](basic/connetion.md)
-  * ~ [Create, Update, Delete](basic/crud.md)
+  * [Create, Update, Delete](basic/crud.md)
   * ~ [Select](basic/select.md)
   * ~ [Simple Relation](basic/relation.md)
 * Annotated Entities
