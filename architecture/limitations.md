@@ -1,5 +1,5 @@
 # Limitations
-Cyrrent implementation of Cycle ORM includes following limitations.
+Current implementation of Cycle ORM includes multiple limitations.
 
 ## Compond Primary Keys
 ORM relies on unique primary key to create proper entity map, using complex primary keys is currently not supported.
