@@ -79,3 +79,18 @@ Now you can access to this method:
 ```php
 print_r($orm->getRepository(\Example\User::class)->findActive()->findAll());
 ```
+
+## Pre-Loads
+Another use-case is to automatically pre-load some of entity relations using custom find method:
+
+```php
+class UserRepository extends Repository 
+{
+    // ...
+
+    public function findActiveUsersIncludeAddress(): Select 
+    {
+        return $this->findActive()->load('address');
+    }
+}
+```
