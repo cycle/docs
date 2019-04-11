@@ -25,7 +25,7 @@ function filterByExternal(ORM\Select $select, $value)
 
 // ...
 
-foreach (new ORM\Iterator($orm, User::class, filterByExternal($select, $value) as $user) {
+foreach (new ORM\Iterator($orm, User::class, filterByExternal($select, $value)) as $user) {
     print_r($user);
 }
 ```
