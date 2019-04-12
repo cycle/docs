@@ -30,6 +30,7 @@ Table of Content
   * ~ [Complex Conditions](query-builder/complex.md)
   * ~ [Expressions](query-builder/expressions.md)
   * ~ [Relations](query-builder/relations.md)
+  * ~ [Security](query-builder/security.md)
 * Architecture
   * ~ [Overview](architecture/overview.md)
   * ~ [Schema](architecture/schema.md)
