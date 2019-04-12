@@ -29,7 +29,7 @@ into multiple types for each of the error types:
 ```php
 try {
    $tr->run();
-} catch (ConnectionExceptio $e) {
+} catch (ConnectionException $e) {
    print_r("database has gone away");
 } catch (ConstrainException $e) {
    print_r("database constrain not met, nulable field?");
