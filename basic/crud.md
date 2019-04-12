@@ -108,4 +108,4 @@ $tr->run();
 
 > `Transaction::MODE_ENTITY_ONLY` flag can be used while creating or updating the entity.
 
-You can also turn cascading save on relalation level by setting `cascade` flag to `false`.
+You can also turn off cascading on relation level by setting `cascade` flag to `false`.
