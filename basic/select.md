@@ -61,7 +61,7 @@ foreach($repository->findAll(['status' => 'active']) as $e) {
 }
 ```
 
-## Working with selects
+## Working with Select
 If repository entity is an instance of `Cycle\ORM\Select\Repository` (default SQL repository) you are also albe to get access
 to low level method `select` which gives you ability to compile more complex queries or pre-load related entities:
 
@@ -71,3 +71,5 @@ $result = $repository->select()->where('balance', '>', 1)->load('address')->fetc
 
 > It's recommended to avoid usage of `select` method outside of repository classes and instead expose [custom](repository/custom.md) find methods. 
 
+## The repository Scope
+Please note, in Cycle ORM the Repository object is only responsible for entity retrieval, all persist operations must be handled by transaction, entity mappers and command chains.
