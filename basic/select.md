@@ -53,6 +53,8 @@ $entity = $repository->findOne([
 ]);
 ```
 
+> You can read more about compound expressions [here](https://spiral-framework.com/guide/database-builders).
+
 To find multiple entitied use:
 
 ```php
@@ -70,6 +72,8 @@ $result = $repository->select()->where('balance', '>', 1)->load('address')->fetc
 ```
 
 > It's recommended to avoid usage of `select` method outside of repository classes and instead expose [custom](repository/custom.md) find methods. 
+
+> You can read more about methods available in select queries [here](https://spiral-framework.com/guide/database-builders).
 
 ## The repository Scope
 Please note, in Cycle ORM the Repository object is only responsible for entity retrieval, all persist operations must be handled by transaction, entity mappers and command chains.
