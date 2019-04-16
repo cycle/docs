@@ -63,7 +63,7 @@ foreach($repository->findAll(['status' => 'active']) as $e) {
 }
 ```
 
-## Working with Select
+## Working with SelectQuery
 If repository entity is an instance of `Cycle\ORM\Select\Repository` (default SQL repository) you are also albe to get access
 to low level method `select` which gives you ability to compile more complex queries or pre-load related entities:
 
