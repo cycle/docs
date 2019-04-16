@@ -21,7 +21,7 @@ Table of Content
   * ~ [Belongs To](relation/belongs-to.md)
   * ~ [Refers To](relation/refers-to.md)
   * ~ [Many Thought Many](relation/many-though-many.md)
-  * ~ [Inversed Relations](relation/inversed.md)
+  * ~ [Inverse Relations](relation/inverse.md)
   * ~ [Morphed Relations](relations/morphed.md)
   * ~ [Static Links](relation/static-link.md)
 * Repositories
