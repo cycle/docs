@@ -36,7 +36,7 @@ Table of Content
   * ~ [Security](query-builder/security.md)
 * Architecture
   * ~ [Overview](architecture/overview.md)
-  * ~ [Schema](architecture/schema.md)
+  * [Schema](architecture/schema.md)
   * ~ [Entity](architecture/entity.md)
   * ~ [Collection](architecture/collection.md)
   * ~ [Pivot Collection](architecture/pivot-collection.md)
