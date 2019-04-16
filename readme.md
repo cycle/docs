@@ -9,7 +9,7 @@ Table of Content
   * ~ [Installation](basic/install.md)
   * ~ [Connect to Database](basic/connect.md)
   * [Create, Update, Delete](basic/crud.md)
-  * ~ [Select](basic/select.md)
+  * [Select](basic/select.md)
   * ~ [Simple Relation](basic/relation.md)
 * Annotated Entities
   * ~ [Prerequisites](annotated/prerequisites.md)
