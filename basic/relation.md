@@ -1,5 +1,5 @@
 # Simple Relation
-An important part of any ORM engine is ability handle the relations between objects. In order to do so we will use 
+An important part of any ORM engine is the ability handle relations between objects. In order to do so we will use 
 `cycle/annotated` package to describe the relation.
 
 > Deeper review of different relations, their options and select methods will be given in futher sections.
