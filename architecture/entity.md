@@ -17,3 +17,6 @@ If transaction succcessed the State data will be merged with parent Node object 
 
 ## Heap
 The Heap used to store all loaded entity Nodes and their current states (if any). By design, heap operates as hash table in which entity is the key and node is value. 
+
+## Transaction
+Transaction used to generate and run set of operations required to persist or delete given entities. Though, all of the operation are performed withing single Heap the changes are never written to Node directly and only synced once the transaction is complete.
