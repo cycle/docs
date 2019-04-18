@@ -25,7 +25,7 @@ Table of Content
   * ~ [Morphed Relations](relations/morphed.md)
   * ~ [Static Links](relation/static-link.md)
 * Repositories
-  * ~ [Select Entity](repository/select.md)
+  * [Select Entity](repository/select.md)
   * [Custom Repositories](repository/custom.md)
   * ~ [Relations](repository/relations.md)
 * Query Builder
