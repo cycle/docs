@@ -210,8 +210,7 @@ in where method using relation name as prefix:
 ```php
 $result = $orm->getRepository(\Example\User::class)
     ->select()
-    ->with('address')
-    ->where('address.city', 'New York')
+    ->with('address')->where('address.city', 'New York')
     ->fetchAll();
 ```
 
