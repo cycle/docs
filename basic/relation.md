@@ -146,7 +146,7 @@ $t->persist($user);
 $t->run();
 ```
 
-Generated command chain will be automatically sorted to keep the proper order of SQL commands.
+Generated command chain will be automatically sorted to keep the proper order of SQL operations.
 
 ## Retrieve the related entity
 Though Cycle ORM support lazy loading though proxies (see extension `cycle/proxy-factory`) it is recommended to pre-loaded needed
