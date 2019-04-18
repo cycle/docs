@@ -71,7 +71,6 @@ Table of Content
   * ~ [External Data Sources](advanced/external.md)
   * ~ [Configuring Schema Builder](advanced/schema-builder.md)
 * Components
-  * ~ [Data Mapper Core](component/core.md)
   * ~ [Schema Builder](component/schema-builder.md)
   * ~ [Annotation Parser](component/annotated.md)
   * ~ [Migrations](component/migrations.md)
