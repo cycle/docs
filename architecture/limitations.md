@@ -31,3 +31,6 @@ foreach (new ORM\Iterator($orm, User::class, filterByExternal($select, $value)) 
 ```
 
 > Given approach will minimize the amount of allocated memory.
+
+## MyISAM
+It is not reliable to use Cycle with MySQL MyISAM engine as it does not support transaction which can guarantee the recovery from persist errors. Use InnoDB engine instead.
