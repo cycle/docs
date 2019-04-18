@@ -219,7 +219,11 @@ The SQL:
 
 ```sql
 SELECT
-"user"."id" AS "c0", "user"."name" AS "c1", "user_address"."id" AS "c2", "user_address"."city" AS "c3", "user_address"."user_id" AS "c4"
+    "user"."id" AS "c0", 
+    "user"."name" AS "c1", 
+    "user_address"."id" AS "c2", 
+    "user_address"."city" AS "c3", 
+    "user_address"."user_id" AS "c4"
 FROM "users" AS "user"
 INNER JOIN "addresses" AS "user_address"
     ON "user_address"."user_id" = "user"."id"
@@ -241,7 +245,14 @@ And the resulted SQL:
 
 ```sql
 SELECT
-"user"."id" AS "c0", "user"."name" AS "c1", "l_user_address"."id" AS "c2", "l_user_address"."city" AS "c3", "l_user_address"."user_id" AS "c4", "user_address"."id" AS "c5", "user_address"."city" AS "c6", "user_address"."user_id" AS "c7"
+    "user"."id" AS "c0", 
+    "user"."name" AS "c1", 
+    "l_user_address"."id" AS "c2", 
+    "l_user_address"."city" AS "c3", 
+    "l_user_address"."user_id" AS "c4", 
+    "user_address"."id" AS "c5", 
+    "user_address"."city" AS "c6", 
+    "user_address"."user_id" AS "c7"
 FROM "users" AS "user"
 LEFT JOIN "addresses" AS "l_user_address"
     ON "l_user_address"."user_id" = "user"."id"
@@ -249,3 +260,5 @@ INNER JOIN "addresses" AS "user_address"
     ON "user_address"."user_id" = "user"."id"
 WHERE "user_address"."city" = 'New York';
 ```
+
+> You can also force select to use one `JOIN` for both `load` and `with` methods via `using` option (to be described later).
