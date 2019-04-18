@@ -169,7 +169,11 @@ Following construction will produce the SQL similar to:
 
 ```sql
 SELECT
-"user"."id" AS "c0", "user"."name" AS "c1", "l_user_address"."id" AS "c2", "l_user_address"."city" AS "c3", "l_user_address"."user_id" AS "c4"
+    "user"."id" AS "c0", 
+    "user"."name" AS "c1", 
+    "l_user_address"."id" AS "c2", 
+    "l_user_address"."city" AS "c3", 
+    "l_user_address"."user_id" AS "c4"
 FROM "users" AS "user"
 LEFT JOIN "addresses" AS "l_user_address"
     ON "l_user_address"."user_id" = "user"."id";
@@ -193,10 +197,13 @@ In this case, the resulted SQL will look like:
 
 ```sql
 SELECT
-"user"."id" AS "c0", "user"."name" AS "c1"
+    "user"."id" AS "c0", 
+    "user"."name" AS "c1"
 FROM "users" AS "user";
 SELECT
-"user_address"."id" AS "c0", "user_address"."city" AS "c1", "user_address"."user_id" AS "c2"
+    "user_address"."id" AS "c0", 
+    "user_address"."city" AS "c1", 
+    "user_address"."user_id" AS "c2"
 FROM "addresses" AS "user_address"
 WHERE "user_address"."user_id" IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 ```
