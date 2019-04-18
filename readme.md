@@ -37,11 +37,10 @@ Table of Content
 * Architecture
   * ~ [Overview](architecture/overview.md)
   * [Schema](architecture/schema.md)
-  * ~ [Entity](architecture/entity.md)
+  * ~ [Entity, Heap, Node, State](architecture/entity.md)
+  * ~ [Entity Iterator](architecture/iterator.md)
   * ~ [Collection](architecture/collection.md)
   * ~ [Pivot Collection](architecture/pivot-collection.md)
-  * ~ [Heap, Node, State](architecture/heap.md)
-  * ~ [Entity Iterator](architecture/iterator.md)
   * ~ [Mappers](architecture/mapper.md)
   * ~ [Commands and Linked Contexts](architecture/command.md)
   * ~ [Transactions (Unit of Work)](architecture/transaction.md)
