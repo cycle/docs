@@ -71,6 +71,7 @@ Table of Content
   * ~ [Configuring Schema Builder](advanced/schema-builder.md)
   * ~ [Testing](advanced/testing.md)
 * Components
+  * ~ [DataMapper Core](component/core.md)
   * ~ [Schema Builder](component/schema-builder.md)
   * ~ [Annotation Parser](component/annotated.md)
   * ~ [Migrations](component/migrations.md)
