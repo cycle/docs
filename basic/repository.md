@@ -94,15 +94,3 @@ class UserRepository extends Select\Repository
     }
 }
 ```
-
-## Integration with Spiral Framework
-If you use Spiral Framework all custom repositories would be available directly in the container, without need to request $orm instance.
-
-```php
-public function listAction(UserRepository $users) 
-{
-    print_r($users->findActive()->fetchAll());
-}
-```
-
-> Note, given approach will only work for unique entity-repository associations.
