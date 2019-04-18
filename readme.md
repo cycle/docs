@@ -33,7 +33,7 @@ Table of Content
   * ~ [Security](query-builder/security.md)
 * Architecture
   * [Schema](architecture/schema.md)
-  * ~ [Entity, Heap, Node, State](architecture/entity.md)
+  * [Entity, Heap, Node, State](architecture/entity.md)
   * ~ [Mappers](architecture/mapper.md) 
   * ~ [Commands and Linked Contexts](architecture/command.md)
   * ~ [Entity Iterator](architecture/iterator.md)
