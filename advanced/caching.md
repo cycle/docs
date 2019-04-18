@@ -1,5 +1,5 @@
 # Caching
-Cycle ORM does not provide caching abilities on core level, however, it provides an convinient point at which caching can be intergated.
+Cycle ORM does not provide caching abilities on core level, however, it provides an multiple points at which caching can be integrated.
 
 ## Caching the Selection
 In order to cache the selected enties and their relations you are able to utilize method `fetchData` of `Cycle\ORM\Select`.
