@@ -11,7 +11,7 @@ Table of Content
   * [Create, Update, Delete](basic/crud.md)
   * [Select](basic/select.md)
   * [Custom Repositories](basic/repository.md)
-  * ~ [Simple Relation](basic/relation.md)
+  * [Simple Relation](basic/relation.md)
 * Annotated Entities
   * ~ [Prerequisites](annotated/prerequisites.md)
   * ~ [Entities](annotated/entity.md)
