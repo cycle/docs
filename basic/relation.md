@@ -239,7 +239,6 @@ WHERE "user_address"."city" = 'New York';
 You can freely combine `load` and `with` method, ORM will help you to avoid collisions:
 
 ```php
-
 $result = $orm->getRepository(\Example\User::class)
     ->select()
     ->with('address')->where('address.city', 'New York')
