@@ -111,6 +111,8 @@ class User
 
 Once you will update the schema and sync your database schema (or run migration) you are ready to use this relation.
 
+> ORM will automatically create FK on `address.user_id`. We will describe later how to alter this value.
+
 ## Store with related entity
 To store related entity with it's parent simply `persist` the object which defines the relation:
 
