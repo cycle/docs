@@ -25,9 +25,6 @@ class User
      */
     protected $name;
     
-    /**
-    protected $address;
-
     public function getId(): int
     {
         return $this->id;
