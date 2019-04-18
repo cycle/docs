@@ -10,6 +10,7 @@ Table of Content
   * ~ [Connect to Database](basic/connect.md)
   * [Create, Update, Delete](basic/crud.md)
   * [Select](basic/select.md)
+  * [Custom Repositories](basic/repository.md)
   * ~ [Simple Relation](basic/relation.md)
 * Annotated Entities
   * ~ [Prerequisites](annotated/prerequisites.md)
@@ -24,10 +25,6 @@ Table of Content
   * ~ [Inverse Relations](relation/inverse.md)
   * ~ [Morphed Relations](relations/morphed.md)
   * ~ [Static Links](relation/static-link.md)
-* Repositories
-  * [Select Entity](repository/select.md)
-  * [Custom Repositories](repository/custom.md)
-  * ~ [Relations](repository/relations.md)
 * Query Builder
   * ~ [Basics](query-builder/basic.md)
   * ~ [Complex Conditions](query-builder/complex.md)
