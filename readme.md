@@ -58,7 +58,6 @@ Table of Content
   * [Caching](advanced/caching.md)
   * ~ [Pagination](advanced/pagination.md)
   * ~ [References and Proxies](advanced/references.md)
-  * ~ [Testing](advanced/testing.md)
   * ~ [Reconnects and Database Exceptions](advanced/exception.md)
   * ~ [Self-References and Cyclic Relations](advanced/cyclic.md)
   * ~ [Static Tables](advanced/static.md)
@@ -70,6 +69,7 @@ Table of Content
   * ~ [Soft Deleted Entities](advanced/soft-deletes.md)
   * ~ [External Data Sources](advanced/external.md)
   * ~ [Configuring Schema Builder](advanced/schema-builder.md)
+  * ~ [Testing](advanced/testing.md)
 * Components
   * ~ [Schema Builder](component/schema-builder.md)
   * ~ [Annotation Parser](component/annotated.md)
