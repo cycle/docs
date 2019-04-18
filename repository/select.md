@@ -11,8 +11,6 @@ You can request repository instance using entity class name or it's role name:
 $r = $orm->getRepository("user");
 ```
 
-The Repository provides multiple methods to select the entity.
-
 To find the entity using it's primary key:
 
 ```php
