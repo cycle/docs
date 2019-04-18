@@ -261,4 +261,30 @@ INNER JOIN "addresses" AS "user_address"
 WHERE "user_address"."city" = 'New York';
 ```
 
-> You can also force select to use one `JOIN` for both `load` and `with` methods via `using` option (to be described later).
+You can also force select to use one `JOIN` for both `load` and `with` methods via `using` option:
+
+```php
+$result = $orm->getRepository(\Example\User::class)
+    ->select()
+    ->with('address', ['as' => 'user_address'])->where('address.city', 'New York')
+    ->load('address', ['using' => 'user_address'])
+    ->fetchAll();
+```
+
+In this case only one JOIN will be produced:
+
+```sql
+SELECT
+    "user"."id" AS "c0", 
+    "user"."name" AS "c1", 
+    "user_address"."id" AS "c2", 
+    "user_address"."city" AS "c3", 
+    "user_address"."user_id" AS "c4",
+    "user_address"."id" AS "c5",
+    "user_address"."city" AS "c6", 
+    "user_address"."user_id" AS "c7"
+FROM "users" AS "user"
+INNER JOIN "addresses" AS "user_address"
+    ON "user_address"."user_id" = "user"."id"
+WHERE "user_address"."city" = 'New York';
+```
