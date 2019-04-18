@@ -149,8 +149,8 @@ $t->run();
 Generated command chain will be automatically sorted to keep the proper order of SQL operations.
 
 ## Retrieve the related entity
-Though Cycle ORM support lazy loading though proxies (see extension `cycle/proxy-factory`) it is recommended to pre-loaded needed
-objects using custom repository methods.
+Though Cycle ORM support lazy loading using proxies (see extension `cycle/proxy-factory`) it is recommended to pre-load needed
+relations using custom repository methods.
 
 To load related object use `load` method of `Cycle\ORM\Select`. The relation can be loaded using property name:
 
