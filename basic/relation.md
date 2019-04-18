@@ -155,7 +155,7 @@ relations using custom repository methods.
 To load related object use `load` method of `Cycle\ORM\Select`. The relation can be loaded using property name:
 
 ```php
-$result = $orm->getRepository(\Example\User::class)
+$result = $orm->getRepository(User::class)
     ->select()
     ->load('address')
     ->fetchAll();
@@ -183,7 +183,7 @@ Please note, by default ORM will try to load `hasOne` relation using `LEFT JOIN`
 external query (post load) by modifying load method:
 
 ```php
-$result = $orm->getRepository(\Example\User::class)
+$result = $orm->getRepository(User::class)
     ->select()
     ->load('address', ['method' => ORM\Select\JoinableLoader::POSTLOAD])
     ->fetchAll();
@@ -215,7 +215,7 @@ To filter the selection using related data use method `with`, once such method i
 in where method using relation name as prefix:
 
 ```php
-$result = $orm->getRepository(\Example\User::class)
+$result = $orm->getRepository(User::class)
     ->select()
     ->with('address')->where('address.city', 'New York')
     ->fetchAll();
@@ -239,7 +239,7 @@ WHERE "user_address"."city" = 'New York';
 You can freely combine `load` and `with` method, ORM will help you to avoid collisions:
 
 ```php
-$result = $orm->getRepository(\Example\User::class)
+$result = $orm->getRepository(User::class)
     ->select()
     ->with('address')->where('address.city', 'New York')
     ->load('address')
@@ -269,7 +269,7 @@ WHERE "user_address"."city" = 'New York';
 You can also force select to use one `JOIN` for both `load` and `with` methods via `using` option:
 
 ```php
-$result = $orm->getRepository(\Example\User::class)
+$result = $orm->getRepository(User::class)
     ->select()
     ->with('address', ['as' => 'user_address'])->where('address.city', 'New York')
     ->load('address', ['using' => 'user_address'])
