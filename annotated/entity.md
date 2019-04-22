@@ -76,6 +76,7 @@ class User
 ```
 
 ## Columns
+ 
 
 
 ## Table Extension
