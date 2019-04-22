@@ -184,8 +184,58 @@ tinyBinary  | ---                       | Tiny binary, same as "binary" for most
 longBinary  | ---                       | Long binary, same as "binary" for most of databases. Differs only in MySQL.
 json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it nativelly.
 
-
 ## Table Extension
+In some cases you might want to specificy additional table columns and indexes without the link to the entity properies. This can be achieved using `@table` annotation:
 
+```php
+/**  
+ * @entity
+ * @table(
+ *      columns= {"created_at": @column(type=datetime), "deleted_at": @column(type=datetime)},
+ *      indexes= {
+ *             @index(columns={"username"}, unique=true), 
+ *             @index(columns={"status"})
+ *      }
+ * )
+ */
+class User 
+{
+    /** $column(type=primary) */
+    protected $id;
+    
+    /** @column(type="string(32)") */
+    protected $username;
+    
+    /** @column(type="enum(active,disabled)", default="active") */
+    protected $status;
+}
+```
+
+> The column definition is identical to one used for the property.
 
 ## Merging annotations
+Annotated Entities extension support ability to merge table defintions provided by linked Mapper, Source, Repository and Constrain classes. Such approach can be useful in cases when you want to implement domain wise functionality like auto timestamps or soft deletes.
+
+```php
+/**
+ * @entity (
+ *    repository = "Repository/UserRepository",
+ * )
+ */
+class User 
+{
+}
+```
+
+```php
+/**
+ * @table (
+ *     columns= {"created_at": @column(type=datetime)},
+ *     indexes= {@index(columns={"created_at"})}
+ * ) 
+ */
+class UserRepository 
+{
+
+}
+```
