@@ -232,7 +232,7 @@ class User
  *     indexes={@index(columns = {"created_at"})}
  * ) 
  */
-class UserRepository 
+class UserRepository extends Repository
 {
 
 }
