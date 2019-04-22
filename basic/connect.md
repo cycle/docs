@@ -72,7 +72,7 @@ For **SQLite**:
 
 ```php
 'sqlite' => [
-    'driver'  => Database\Driver\SQLite\SQLiteDriver::class,
+    'driver'  => Driver\SQLite\SQLiteDriver::class,
     'options' => [
         'connection' => 'sqlite:database.db',
         'username'   => '',
@@ -87,7 +87,7 @@ For `MySQL` and `MariaDB`:
 
 ```php
 'mysql'     => [
-  'driver'  => Drivers\MySQL\MySQLDriver::class,
+  'driver'  => Driver\MySQL\MySQLDriver::class,
   'options' => [
     'connection' => 'mysql:host=127.0.0.1;dbname=database',
     'username'   => 'mysql',
@@ -100,7 +100,7 @@ For `PosgresSQL`:
 
 ```php
 'postgres'  => [
-  'driver'   => Drivers\Postgres\PostgresDriver::class,
+  'driver'   => Driver\Postgres\PostgresDriver::class,
   'options' => [
       'connection' => 'pgsql:host=127.0.0.1;dbname=database',
       'username'   => 'postgres',
@@ -113,7 +113,7 @@ For `SQLServer`:
 
 ```php
 'sqlServer' => [
-  'driver'  => Drivers\SQLServer\SQLServerDriver::class,
+  'driver'  => Driver\SQLServer\SQLServerDriver::class,
   'options' => [
     'connection' => 'sqlsrv:Server=OWNER;Database=DATABASE',
     'username'   => 'sqlServer',
