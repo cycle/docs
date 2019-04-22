@@ -168,9 +168,9 @@ $dbal->addDatabase(new Database(
   'prefix_',
   new SQLiteDriver(
      'connection'  => 'sqlite::memory:',
-      'username'   => 'username',
-      'password'   => 'password',
-      'options'    => []
+     'username'   => 'username',
+     'password'   => 'password',
+     'options'    => []
   )
 ));
 ```
