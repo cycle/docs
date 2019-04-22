@@ -3,9 +3,7 @@ Annotated entities extension is capable to index any domain entity in your proje
 entity make sure to add `@entity` annotation to the docComment.
 
 ```php
-/**
- * @entity
- */
+/** @entity */
 class User 
 {
 }
