@@ -60,6 +60,21 @@ readonlySchema | bool   | Set to true to disable schema synchronization for assi
 source         | class  | Entity source class (internal), defaults to `Cycle\ORM\Select\Source`
 constrain      | class  | Class name of contrain to be applied to every entity query, defaults to `null`
 
+For example typical entity description might look like:
+
+```php
+/**
+ * @entity (
+ *    repository = "Repository/UserRepository",
+ *    table      = "users",
+ *    constrain  = "Constrain/SortByID"
+ * )
+ */
+class User 
+{
+}
+```
+
 ## Columns
 
 
