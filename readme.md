@@ -38,7 +38,7 @@ Table of Content
   * ~ [Transactions (Unit of Work)](architecture/transaction.md)
   * ~ [Commands and Linked Contexts](architecture/command.md)
   * ~ [Entity Iterator](architecture/iterator.md)
-  * ~ [Collection](architecture/collection.md)
+  * ~ [Collections](architecture/collection.md)
   * ~ [Sources and Databases](architecture/source.md)
   * ~ [References, Promises and Proxies](architecture/promise.md)
   * ~ [Query Builder](architecture/query-builder.md)
