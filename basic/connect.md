@@ -163,7 +163,7 @@ $driver->setProfiling(true);
 In addition to config driven setup you are able to configure your database connections in runtime:
 
 ```php
-$this->dbal->addDatabase(new Database(
+$dbal->addDatabase(new Database(
   'name',
   'prefix_',
   new SQLiteDriver(
