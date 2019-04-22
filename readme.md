@@ -14,7 +14,7 @@ Table of Content
   * [Simple Relation](basic/relation.md)
 * Annotated Entities
   * [Prerequisites](annotated/prerequisites.md)
-  * ~ [Entities](annotated/entity.md)
+  * [Entities](annotated/entity.md)
   * ~ [Relations](annotated/relations.md)
 * Relations
   * ~ [Has One](relation/has-one.md)
