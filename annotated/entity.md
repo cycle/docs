@@ -19,7 +19,7 @@ You can tweak any of this values by setting `entity` options:
 
 ```php
 /**
- * @entity (
+ * @entity(
  *     role     = "user", 
  *     database = "database", 
  *     table    = "user_table"
@@ -36,7 +36,7 @@ Some options can be used to overwrite default entity behaviour, for example to a
 
 ```php
 /**
- * @entity (repository = "Repository/UserRepository")
+ * @entity(repository = "Repository/UserRepository")
  */
 class User 
 {
@@ -62,7 +62,7 @@ For example typical entity description might look like:
 
 ```php
 /**
- * @entity (
+ * @entity(
  *    table      = "users",
  *    repository = "Repository/UserRepository",
  *    constrain  = "Constrain/SortByID"
@@ -191,8 +191,8 @@ In some cases you might want to specificy additional table columns and indexes w
 /**  
  * @entity
  * @table(
- *      columns= {"created_at": @column(type=datetime), "deleted_at": @column(type=datetime)},
- *      indexes= {
+ *      columns={"created_at": @column(type=datetime), "deleted_at": @column(type=datetime)},
+ *      indexes={
  *             @index(columns={"username"}, unique=true), 
  *             @index(columns={"status"})
  *      }
@@ -218,7 +218,7 @@ Annotated Entities extension support ability to merge table defintions provided 
 
 ```php
 /**
- * @entity (
+ * @entity(
  *    repository = "Repository/UserRepository",
  * )
  */
@@ -229,9 +229,9 @@ class User
 
 ```php
 /**
- * @table (
- *     columns= {"created_at": @column(type=datetime)},
- *     indexes= {@index(columns={"created_at"})}
+ * @table(
+ *     columns={"created_at": @column(type=datetime)},
+ *     indexes={@index(columns={"created_at"})}
  * ) 
  */
 class UserRepository 
