@@ -13,7 +13,7 @@ Table of Content
   * [Custom Repositories](basic/repository.md)
   * [Simple Relation](basic/relation.md)
 * Annotated Entities
-  * ~ [Prerequisites](annotated/prerequisites.md)
+  * [Prerequisites](annotated/prerequisites.md)
   * ~ [Entities](annotated/entity.md)
   * ~ [Relations](annotated/relations.md)
 * Relations
