@@ -80,7 +80,7 @@ No entity can operate without some properties mapped to table columns. To map yo
 /** @entity */
 class User 
 {
-    /** $column(type=primary) */
+    /** $column(type = primary) */
     protected $id;
 }
 ```
@@ -91,10 +91,10 @@ By default, entity properly will be mapped to the column with same name as prope
 /** @entity */
 class User 
 {
-    /** $column(type="primary") */
+    /** $column(type = "primary") */
     protected $id;
     
-    /** @column(type="string", name="username") */
+    /** @column(type = "string", name = "username") */
     protected $login;
 }
 ```
@@ -105,16 +105,16 @@ Some column types support additional arguments, such as length, values, etc.
 /** @entity */
 class User 
 {
-    /** $column(type=primary) */
+    /** $column(type = primary) */
     protected $id;
     
-    /** @column(type="string(32)") */
+    /** @column(type = "string(32)") */
     protected $login;
     
-    /** @column(type="enum(active,disabled)") */
+    /** @column(type = "enum(active,disabled)") */
     protected $status;
         
-    /** @column(type="decimal(5,5)") */
+    /** @column(type = "decimal(5,5)") */
     protected $balance;
 }
 ```
@@ -125,10 +125,10 @@ Use `default` option to specify the default value of the column:
 /** @entity */
 class User 
 {
-    /** $column(type=primary) */
+    /** $column(type = primary) */
     protected $id;
     
-    /** @column(type="enum(active,disabled)", default="active") */
+    /** @column(type = "enum(active,disabled)", default = "active") */
     protected $status;
 }
 ```
@@ -139,10 +139,10 @@ While adding new columns to the entities associated with non empty tables you ar
 /** @entity */
 class User 
 {
-    /** $column(type=primary) */
+    /** $column(type = primary) */
     protected $id;
     
-    /** @column(type="string(64)", nullable=true) */
+    /** @column(type = "string(64)", nullable = true) */
     protected $password;
 }
 ```
@@ -191,22 +191,22 @@ In some cases you might want to specificy additional table columns and indexes w
 /**  
  * @entity
  * @table(
- *      columns={"created_at": @column(type=datetime), "deleted_at": @column(type=datetime)},
+ *      columns={"created_at": @column(type = datetime), "deleted_at": @column(type = datetime)},
  *      indexes={
- *             @index(columns={"username"}, unique=true), 
- *             @index(columns={"status"})
+ *             @index(columns = {"username"}, unique = true), 
+ *             @index(columns = {"status"})
  *      }
  * )
  */
 class User 
 {
-    /** $column(type=primary) */
+    /** $column(type = primary) */
     protected $id;
     
-    /** @column(type="string(32)") */
+    /** @column(type ="string(32)") */
     protected $username;
     
-    /** @column(type="enum(active,disabled)", default="active") */
+    /** @column(type = "enum(active,disabled)", default = "active") */
     protected $status;
 }
 ```
@@ -228,8 +228,8 @@ class User
 ```php
 /**
  * @table(
- *     columns={"created_at": @column(type=datetime)},
- *     indexes={@index(columns={"created_at"})}
+ *     columns={"created_at": @column(type = datetime)},
+ *     indexes={@index(columns = {"created_at"})}
  * ) 
  */
 class UserRepository 
