@@ -54,7 +54,7 @@ mapper         | class  | Mapper class name, defaults to `Cycle\ORM\Mapper\Mappe
 repository     | class  | Repository class to represent read operations for entity, defaults to `Cycle\ORM\Select\Repository`
 table          | string | Entity source table, defaults to plural form of entity role
 database       | string | Database name, defaults to `null` (default database)
-readonlySchema | bool   | Set to true to disable schema synchronization for assigned table.
+readonlySchema | bool   | Set to true to disable schema synchronization for assigned table, defaults to `false`
 source         | class  | Entity source class (internal), defaults to `Cycle\ORM\Select\Source`
 constrain      | class  | Class name of contrain to be applied to every entity query, defaults to `null`
 
