@@ -60,7 +60,7 @@ To use read/write connections use sections `connection` and `readConnection` acc
 'default' => [
   'connection'     => 'mysql',
   'readConnection' => 'mysqlSlave',
-  'prefix'     => 'secondary_'
+  'prefix'         => 'secondary_'
 ]
 ```
 
