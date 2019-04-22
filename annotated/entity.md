@@ -65,8 +65,8 @@ For example typical entity description might look like:
 ```php
 /**
  * @entity (
- *    repository = "Repository/UserRepository",
  *    table      = "users",
+ *    repository = "Repository/UserRepository",
  *    constrain  = "Constrain/SortByID"
  * )
  */
