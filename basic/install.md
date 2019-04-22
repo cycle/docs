@@ -121,7 +121,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
     new Schema\Generator\RenderTables(),      // declare table schemas
     new Schema\Generator\RenderRelations(),   // declare relation keys and indexes
-    new Annotated\Indexes(),                  // register non entity indexes (table leve)
+    new Annotated\Indexes(),                  // register non entity indexes (table level)
     new Schema\Generator\SyncTables(),        // sync table changes to database
     new Schema\Generator\GenerateTypecast(),  // typecast non string columns
 ]);
