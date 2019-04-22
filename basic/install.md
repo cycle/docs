@@ -61,6 +61,12 @@ To compile schema using annotated entities and automatically configure the datab
 ```php
 use Cycle\Schema;
 use Cycle\Annotated;
+use Spiral\Tokenizer;
+
+// Class locator
+$cl = (new Tokenizer\Tokenizer(new Tokenizer\Config\TokenizerConfig([
+    'directories' => ['src/'],
+])))->classLocator();
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Annotated\Entities($cl),              // register annotated entities
