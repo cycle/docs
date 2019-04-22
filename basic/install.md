@@ -125,6 +125,8 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\SyncTables(),        // sync table changes to database
     new Schema\Generator\GenerateTypecast(),  // typecast non string columns
 ]);
+
+$orm = $orm->withSchema(new Schema($schema));
 ```
 
 The result of schema builder is compiled schema, given schema can be cached in order to avoid expensive calculations on each request.
