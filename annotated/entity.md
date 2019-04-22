@@ -218,9 +218,7 @@ Annotated Entities extension support ability to merge table defintions provided 
 
 ```php
 /**
- * @entity(
- *    repository = "Repository/UserRepository",
- * )
+ * @entity(repository = "Repository/UserRepository")
  */
 class User 
 {
