@@ -31,7 +31,7 @@ include 'vendor/autoload.php';
 
 ## Connect Database
 In order to connect Cycle to proper database instance you must configure instance of `Spiral\Database\DatabaseManager`. 
-The details of configuration process described in a [following section](basic/connect.md).
+The details of configuration process described in a [following section](/basic/connect.md).
 
 ## Instantiate ORM
 An ORM service can be instantiated using `Cycle\ORM\ORM` class which takes only one dependency on `Cycle\ORM\Factory`:
