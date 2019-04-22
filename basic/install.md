@@ -101,7 +101,7 @@ $orm = $orm->withSchema($schema);
 
 However, in order to simplify the integration it is recommended to use schema compiler provided by `cycle/schema-builder` extenstion. Such compiler is able to automatically index all available entities, perform database introspection and reflection. 
 
-To compile schema using annotated entities and automatically configure the database use followoing pipeline:
+To compile schema using annotated entities and automatically configure the database use the followoing pipeline:
 
 ```php
 use Cycle\Schema;
