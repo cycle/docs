@@ -48,7 +48,52 @@ The schema can be descibed manually by instatiating `Cycle\ORM\Schema` object:
 
 ```php
 $schema = new Schema([
-
+    'user' => [
+        Schema::ENTITY      => User::class,
+        Schema::MAPPER      => Mapper::class,
+        Schema::DATABASE    => 'default',
+        Schema::TABLE       => 'user',
+        Schema::PRIMARY_KEY => 'id',
+        Schema::COLUMNS     => [
+            'id'    =>   'id', 
+            'email' =>   'email',
+            'balance' => 'balance'
+        ],
+        Schema::TYPECAST    => [
+            'id'      => 'int',
+            'balance' => 'float'
+        ],
+        Schema::SCHEMA      => [],
+        Schema::RELATIONS   => [
+            'address' => [
+                 Relation::TYPE   => Relation::HAS_ONE,
+                 Relation::TARGET => 'address',
+                 Relation::SCHEMA => [
+                     Relation::CASCADE   => true,
+                     Relation::INNER_KEY => 'id',
+                     Relation::OUTER_KEY => 'user_id',
+                 ],
+            ]
+        ]
+    ],
+    'address' => [
+        Schema::ENTITY      => Address::class,
+        Schema::MAPPER      => Mapper::class,
+        Schema::DATABASE    => 'default',
+        Schema::TABLE       => 'address',
+        Schema::PRIMARY_KEY => 'id',
+        Schema::COLUMNS     => [
+            'id'      => 'id', 
+            'user_id' => 'user_id',
+            'city'    => 'city'
+        ],
+        Schema::TYPECAST    => [
+            'id'      => 'int'
+        ],
+        Schema::SCHEMA      => [],
+        Schema::RELATIONS   => []
+        ]
+    ],
 ]);
 
 $orm = $orm->withSchema($schema);
