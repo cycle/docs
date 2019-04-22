@@ -38,9 +38,7 @@ Some options can be used to overwrite default entity behaviour, for example to a
 
 ```php
 /**
- * @entity (
- *     repository = "Repository/UserRepository"
- * )
+ * @entity (repository = "Repository/UserRepository")
  */
 class User 
 {
