@@ -293,3 +293,14 @@ INNER JOIN "addresses" AS "user_address"
     ON "user_address"."user_id" = "user"."id"
 WHERE "user_address"."city" = 'New York';
 ```
+
+## Combined Selections
+The strict separation between `load` and `with` methods grants you the ability to control filter and load scope separatelly. For example, to find user with any published post and and load all user posts with visible comments:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->distinct() // required due join of posts
+    ->with('posts')->where('posts.published', true)
+    ->load('posts.comments', ['where' => ['visible' => true]])
+    ->fetchAll();
+```
