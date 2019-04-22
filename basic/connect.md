@@ -143,6 +143,12 @@ Database will be automatically connected on first SQL request.
 
 > DBAL will use database specified in `default` config option if name is `null`.
 
+Direct SQL queries as possible from this moment:
+
+```php
+$dbal->database('default')->table('users')->select()->fetchAll();
+```
+
 ## Profiling and Logging
 Each of database Driver implements `Psr\Log\LoggerAwareInterface`, you can enable SQL logging by assigning logger and enabling Driver 
 profiling:
