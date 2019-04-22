@@ -160,7 +160,7 @@ typecast | callable | Column typecast function, defaults to one of (int|float|bo
 nullable | bool | Set column as nullable, defaults to `false`
 default | mixed | Default column value, defaults to `none`
 
-Following column names are avaiable:
+Following column types are avaiable:
 
 Type        | Parameters                | Description
 ---         | ---                       | ---
