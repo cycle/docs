@@ -39,7 +39,6 @@ Table of Content
   * ~ [Commands and Linked Contexts](architecture/command.md)
   * ~ [Entity Iterator](architecture/iterator.md)
   * ~ [Collection](architecture/collection.md)
-  * ~ [Pivot Collection](architecture/pivot-collection.md)
   * ~ [Sources and Databases](architecture/source.md)
   * ~ [References, Promises and Proxies](architecture/promise.md)
   * ~ [Query Builder](architecture/query-builder.md)
