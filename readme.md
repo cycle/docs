@@ -7,7 +7,7 @@ Table of Content
   * [LICENSE](license.md)
 * Basics
   * ~ [Installation](basic/install.md)
-  * ~ [Connect to Database](basic/connect.md)
+  * [Connect to Database](basic/connect.md)
   * [Create, Update, Delete](basic/crud.md)
   * [Select](basic/select.md)
   * [Custom Repositories](basic/repository.md)
