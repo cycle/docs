@@ -6,7 +6,7 @@ Table of Content
   * [Contributing](contributing.md)
   * [LICENSE](license.md)
 * Basics
-  * ~ [Installation](basic/install.md)
+  * [Installation](basic/install.md)
   * [Connect to Database](basic/connect.md)
   * [Create, Update, Delete](basic/crud.md)
   * [Select](basic/select.md)
