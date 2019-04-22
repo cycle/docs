@@ -55,8 +55,8 @@ $schema = new Schema([
         Schema::TABLE       => 'user',
         Schema::PRIMARY_KEY => 'id',
         Schema::COLUMNS     => [
-            'id'    =>   'id', 
-            'email' =>   'email',
+            'id'      => 'id', 
+            'email'   => 'email',
             'balance' => 'balance'
         ],
         Schema::TYPECAST    => [
@@ -92,7 +92,6 @@ $schema = new Schema([
         ],
         Schema::SCHEMA      => [],
         Schema::RELATIONS   => []
-        ]
     ],
 ]);
 
