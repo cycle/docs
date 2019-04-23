@@ -94,7 +94,7 @@ fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, de
 indexCreate | bool   | Create index on innerKey, defaults to `true`
 
 ## RefersTo
-The RefersTo relation is similar to BelongsTo relation but must be used to establish **multiple relations** to same entity (or in case of **cyclic** relation). The most common example is ability to store last post stored by users.
+The RefersTo relation is similar to BelongsTo relation but must be used to establish **multiple relations** to the same entity (or in case of **cyclic** relation). The most common example is ability to store last post stored by users.
 
 ```php
 /** @entity */ 
