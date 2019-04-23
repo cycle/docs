@@ -76,7 +76,7 @@ class Post
 {
     // ...
     
-    /** @belongsTo(target="User") */
+    /** @belongsTo(target = "User") */
     protected $author;
 }
 ```
@@ -136,8 +136,125 @@ indexCreate | bool   | Create index on outerKey, defaults to `true`
 
 > You must use `refersTo` relation for cyclic dependencies.
 
-## ManyThoughMany
+## ManyToMany
+Relation of type ManyToMany provide more complex connection with ability to use intermediate entity for the connection. This relation must be represented using `Cycle\ORM\Relation\Pivoted\PivotedCollection`. The relation required definition of `though` option with similar rules as `target`.
 
+```php
+/** @entity */ 
+class User 
+{
+    // ...
 
-## Inversing Relations
+    /** @manyToMany(target = "Tag", though = "UserTag") */
+    protected $tags;
+    
+    public function __construct()
+    {
+        $this->tags = new PivotedCollection();
+    }
+}
+```
 
+The relation defines number of options to control set of associated keys and conditions:
+
+Option      | Value  | Comment
+---         | ---    | ----
+cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
+nullable    | bool   | Defines if relation can be nullable (pivot entity can exists without parent(s)), defaults to `true`
+innerKey    | string | Inner key name in source entity, default to primary key
+outerKey    | string | Outer key name in target entity, default to primary key
+thoughInnerKey | string | Key name connected to the innerKey of source entity, defaults to `{sourceRole}_{innerKey}` 
+thoughOuterKey | string | Key name connected to the outerKey of related entity, defaults to `{targetRole}_{outerKey}` 
+thoughWhere | array | Where conditions applied to `though` entity
+where       | array | Where conditions applied to related entity
+fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey, defauls to `true`
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
+indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
+
+## Morphed Relations
+Cycle ORM provides support for the polimorphic relations. Given relations can be used to link entity to multiple entity types and seleted the desired object in runtime. Relations must be assigned to the entity interface rather than specific role or class name.
+
+```php
+/** @entity */
+class User implements ImageHolderInterface 
+{
+     // ...
+}
+```
+
+BelongsToMorphed relations allows entity to belong to any of the parents which implement given interface:
+
+```php
+/** @entity */
+class Image
+{
+    // ...
+    
+    /** @belongsToMorphed(target = "ImageHolderInterface")*/
+    protected $parent;
+}
+```
+
+Option      | Value  | Comment
+---         | ---    | ----
+cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
+nullable    | bool   | Defines if relation can be nullable, defaults to `true`
+innerKey    | string | Inner key name in source entity, default to `{relation}_{innerKey}`
+outerKey    | string | Outer key name in target entity, default to primary key
+morphKey | string | Contains target entity role name, defaults to `{relation}_role`
+morphKeyLength | int | The lengths of the morphKey, defaults to 32
+indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
+
+> The index will be created on [outerKey, morphKey].
+
+MorphedHasOne and MorphedHasMany is an inverse version of BelongsToMorphed.
+
+```php
+/** @entity */
+class User implements ImageHolderInterface 
+{
+     // ...
+     
+     /** @morphedHasOne(target = "Image")*/
+     protected $image;
+}
+```
+
+Option      | Value  | Comment
+---         | ---    | ----
+cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
+nullable    | bool   | Defines if relation can be nullable, defaults to `false`
+innerKey    | string | Inner key name in source entity, default to primary key
+outerKey    | string | Outer key name in target entity, default to `{relation}_{innerKey}`
+morphKey    | string | Contains target entity role name, defaults to `{relation}_role`
+morphKeyLength | int | The lengths of the morphKey, defaults to 32
+indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
+
+```php
+/** @entity */
+class User implements ImageHolderInterface 
+{
+     // ...
+     
+     /** @morphedHasMany(target = "Image")*/
+     protected $images;
+     
+     public function __construct() 
+     {
+         $this->images = new ArrayCollection();
+     }
+}
+```
+
+Option      | Value  | Comment
+---         | ---    | ----
+cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
+nullable    | bool   | Defines if relation can be nullable, defaults to `false`
+innerKey    | string | Inner key name in source entity, default to primary key
+outerKey    | string | Outer key name in target entity, default to `{relation}_{innerKey}`
+morphKey | string | Contains target entity role name, defaults to `{relation}_role`
+morphKeyLength | int | The lengths of the morphKey, defaults to 32
+where       | array | Where conditions applied to related entity
+indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
+
+Please note, given relations would not be able to automatically cretate FK keys since ORM is unable to decide which key must be used. Also, eager loading abilities are limited for such relations (join is only possible for `morphedHas*` relations).
