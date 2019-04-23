@@ -258,3 +258,19 @@ where       | array | Where conditions applied to related entity
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
 
 Please note, given relations would not be able to automatically cretate FK keys since ORM is unable to decide which key must be used. Also, eager loading abilities are limited for such relations (join is only possible for `morphedHas*` relations).
+
+## Inversing Relations
+In some cases you might want to create inversed relation automatically. Please note, you still have to create property in order to store the related data (and initialize it in case of `many` relations).
+
+To inverse relation you must use option `inverse` with specified inversed relation name and type.
+
+```php
+/** @entity */ 
+class Post 
+{
+    // ...
+    
+    /** @belongsTo(target = "User", inverse = @inverse(type=hasMany, name="posts")) */
+    protected $user;
+}
+```
