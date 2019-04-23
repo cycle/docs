@@ -15,7 +15,7 @@ Table of Content
 * Annotated Entities
   * [Prerequisites](annotated/prerequisites.md)
   * [Entities](annotated/entity.md)
-  * ~ [Relations](annotated/relations.md)
+  * [Relations](annotated/relations.md)
 * Relations
   * ~ [Has One](relation/has-one.md)
   * ~ [Has Many](relation/has-many.md)
