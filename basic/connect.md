@@ -66,7 +66,7 @@ To use read/write connections use sections `connection` and `readConnection` acc
 
 ## Connections
 Each of database instance must have associated connection object. Connections used to provide low level functionality and wrap
-different database drivers. To register new connection you have to specify connection class and it's connection options:
+different database drivers. To register new connection you have to specify driver class and it's connection options:
 
 For **SQLite**:
 
