@@ -45,7 +45,7 @@ To register new database simply add it into `databases` section:
 ]
 ```
 
-To give database specific prefix use `prefix` option:
+To give database specific prefix use `prefix` option (all the queries will be affected):
 
 ```php
 'default' => [
