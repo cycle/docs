@@ -128,7 +128,7 @@ There is multiple connection options you can use to customize the behaviour.
 
 Options | Value | Description 
 --- | --- | ---
-timezone | string | Default driver timezone (all DateTimeInterface objects will be converted into it), defaults to `UTC`.
+timezone | string | Default driver timezone (all DateTimeInterface query parameters will be converted into it), defaults to `UTC`.
 reconnect | bool | Allow driver to automatically reconnect, defaults to `false`.
 profiling | bool | Enable SQL profiling (logging), defaults to `false`.
 
