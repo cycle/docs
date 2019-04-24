@@ -31,7 +31,7 @@ $dbConfig = new Database\Config\DatabaseConfig([
 $dbal = new Database\DatabaseManager($dbConfig);
 ```
 
-> You can instaiate DBAL with empty connection list and configure it in runtime if needed.
+> You can instantiate DBAL with empty connection list and configure it in runtime if needed.
 
 ## Configure Databases
 Spiral/Database module provide support to manage multiple databases in one application, use read/write connections and logically 
