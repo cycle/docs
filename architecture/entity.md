@@ -7,7 +7,7 @@ In a simplest form the entity lifecycle can be describe as following:
 ## Entity
 The Entity object is, technically, any object used to carry data (including relation data). By default Cycle relies on separate class for each of the entity, however, it is possible to use `stdClass` or same class for multiple entities. This can be achieved by associating entity with custom mappers and giving them different roles. Upon `persist` operation, the Mapper object must extract entity values and generate desired State associated with entity Node.
 
-Since the extraction and hydration of entity is controlled solely by associated Mapper it is possible to use custom node implementations, such as ActiveRecord like classes, or entities in which data represented using internal array structure.
+Since the extraction and hydration of entity controlled solely by associated Mapper it is possible to use custom node implementations, such as ActiveRecord like classes, or entities in which data represented using internal array structure.
 
 ## Node
 Node is the internal object used to represent any entity in the system. Node used only to carry entity information such as current set of relations, entity role and it's data. Each entity always have one Node object associated with it (however, Node might not exists till first persist operation).
