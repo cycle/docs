@@ -2,7 +2,7 @@
 Current implementation of Cycle ORM includes multiple limitations.
 
 ## Compound Primary Keys
-ORM relies on unique primary key to create proper entity map, using complex primary keys is currently not supported.
+ORM relies on unique primary key to create proper entity map, using complex primary keys is currently not implemented.
 
 ## Filter by relations from external databases
 It is currently not possible to automatically filter the selection based on values of related entities located in external source. 
