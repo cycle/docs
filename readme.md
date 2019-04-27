@@ -35,7 +35,7 @@ Table of Content
   * ~ [Mappers](architecture/mapper.md) 
   * ~ [Transactions (Unit of Work)](architecture/transaction.md)
   * ~ [Commands and Linked Contexts](architecture/command.md)
-  * ~ [Entity Iterator](architecture/iterator.md)
+  * [Entity Iterator](architecture/iterator.md)
   * ~ [Collections](architecture/collection.md)
   * ~ [Sources and Databases](architecture/source.md)
   * ~ [References, Promises and Proxies](architecture/promise.md)
