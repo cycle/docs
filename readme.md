@@ -22,9 +22,7 @@ Table of Content
   * ~ [Belongs To](relation/belongs-to.md)
   * ~ [Refers To](relation/refers-to.md)
   * ~ [Many Thought Many](relation/many-though-many.md)
-  * ~ [Inverse Relations](relation/inverse.md)
   * ~ [Morphed Relations](relations/morphed.md)
-  * ~ [Static Links](relation/static-link.md)
 * Query Builder
   * ~ [Basics](query-builder/basic.md)
   * ~ [Complex Conditions](query-builder/complex.md)
