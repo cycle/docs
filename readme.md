@@ -57,7 +57,7 @@ Table of Content
   * ~ [References and Proxies](advanced/references.md)
   * ~ [Reconnects and Database Exceptions](advanced/exception.md)
   * ~ [Self-References and Cyclic Relations](advanced/cyclic.md)
-  * ~ [Static Tables](advanced/static.md)
+  * ~ [Readonly Table Schemas](advanced/static.md)
   * ~ [Custom Relations](advanced/custom-reation.md)
   * ~ [Custom Column Types](advances/custom-column.md)
   * ~ [Custom Hydrators and Embedded Types](advanced/hydrator.md)
