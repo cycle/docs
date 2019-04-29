@@ -90,14 +90,14 @@ print_r($users);
 You can transfer related entity between two parents:
 
 ```php
-$u = $orm->getRespository(User::class)->select()->load('address')->wherePK(1)->fetchOne();
+$u1 = $orm->getRespository(User::class)->select()->load('address')->wherePK(1)->fetchOne();
 
 $u2 = new User();
 $u2->setAddress($u->getAddress());
-$u->setAddress(null);
+$u1->setAddress(null);
 
 $t = new Transaction($orm);
-$t->persist($u);
+$t->persist($u1);
 $t->persist($u2);
 $t->run();
 ```
