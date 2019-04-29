@@ -11,7 +11,7 @@ To define specific column as primary key use annotation option `primary`:
  */
 class User 
 {
-    /** @column(type = "string(36)", primary = true)*/
+    /** @column(type = "string(36)", primary = true) */
     protected $uuid;
     
     public function getUUID(): string
@@ -52,7 +52,7 @@ In order to associate mapper and entity use `@entity` option mapper:
  */
 class User 
 {
-    /** @column(type = "string(36)", primary = true)*/
+    /** @column(type = "string(36)", primary = true) */
     protected $uuid;
 }
 ```
