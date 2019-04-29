@@ -57,13 +57,11 @@ Table of Content
   * ~ [References and Proxies](advanced/references.md)
   * ~ [Reconnects and Database Exceptions](advanced/exception.md)
   * ~ [Self-References and Cyclic Relations](advanced/cyclic.md)
-  * ~ [Custom Relations](advanced/custom-reation.md)
   * ~ [Custom Column Types](advances/custom-column.md)
   * ~ [Custom Hydrators and Embedded Types](advanced/hydrator.md)
   * [UUID as Primary Key](advanced/uuid.md)
   * ~ [Timestamped Entities](advanced/timestamp.md)
   * ~ [Soft Deleted Entities](advanced/soft-deletes.md)
-  * ~ [External Data Sources](advanced/external.md)
   * ~ [Configuring Schema Builder](advanced/schema-builder.md)
   * ~ [Testing](advanced/testing.md)
 * Components
