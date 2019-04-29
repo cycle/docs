@@ -15,7 +15,7 @@ class User
 }
 ```
 
-> You must properly handle the cases when relation not initialized (`null`)!
+> You must properly handle the cases when relation is not initialized (`null`)!
 
 By default, ORM will generate outer key in relation object using parent entity role and inner key (primary key by default) values. As result column and FK will be added to Address entity on `user_id` column.
 
