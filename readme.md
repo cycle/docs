@@ -53,7 +53,7 @@ Table of Content
   * ~ [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
   * ~ [Select Constrains](advanced/constrain.md)
   * [Caching](advanced/caching.md)
-  * ~ [Pagination](advanced/pagination.md)
+  * [Pagination](advanced/pagination.md)
   * ~ [References and Proxies](advanced/references.md)
   * ~ [Reconnects and Database Exceptions](advanced/exception.md)
   * ~ [Self-References and Cyclic Relations](advanced/cyclic.md)
