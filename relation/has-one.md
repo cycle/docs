@@ -94,7 +94,6 @@ $u = $orm->getRespository(User::class)->select()->load('address')->wherePK(1)->f
 
 $u2 = new User();
 $u2->setAddress($u->getAddress());
-
 $u->setAddress(null);
 
 $t = new Transaction($orm);
