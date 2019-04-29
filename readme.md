@@ -61,7 +61,7 @@ Table of Content
   * ~ [Custom Relations](advanced/custom-reation.md)
   * ~ [Custom Column Types](advances/custom-column.md)
   * ~ [Custom Hydrators and Embedded Types](advanced/hydrator.md)
-  * ~ [UUID as Primary Key](advanced/uuid.md)
+  * [UUID as Primary Key](advanced/uuid.md)
   * ~ [Timestamp Entities](advanced/timestamp.md)
   * ~ [Soft Deleted Entities](advanced/soft-deletes.md)
   * ~ [External Data Sources](advanced/external.md)
