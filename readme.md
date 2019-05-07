@@ -56,7 +56,6 @@ Table of Content
   * [Pagination](advanced/pagination.md)
   * ~ [References and Proxies](advanced/references.md)
   * ~ [Reconnects and Database Exceptions](advanced/exception.md)
-  * ~ [Self-References and Cyclic Relations](advanced/cyclic.md)
   * ~ [Custom Column Types](advances/custom-column.md)
   * ~ [Custom Hydrators and Embedded Types](advanced/hydrator.md)
   * [UUID as Primary Key](advanced/uuid.md)
