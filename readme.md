@@ -18,7 +18,7 @@ Table of Content
   * [Relations](annotated/relations.md)
 * Relations
   * [Has One](relation/has-one.md)
-  * ~ [Has Many](relation/has-many.md)
+  * [Has Many](relation/has-many.md)
   * ~ [Belongs To](relation/belongs-to.md)
   * ~ [Refers To](relation/refers-to.md)
   * ~ [Many To Many](relation/many-though-many.md)
