@@ -69,7 +69,8 @@ print_r($u->getAddress());
 You can filter entity selection using related data, call method `with` of your entity `Select` to join related entity table:
 
 ```php
-$users = $orm->getRepository(User::class)->select()
+$users = $orm->getRepository(User::class)
+    ->select()
     ->with('address')->where('address.city', 'New York')
     ->fetchAll();
     
@@ -79,7 +80,8 @@ print_r($users);
 Cycle `Select` can automatically join related table on first `where` condition, previous example can be rewritten:
 
 ```php
-$users = $orm->getRepository(User::class)->select()
+$users = $orm->getRepository(User::class)
+    ->select()
     ->where('address.city', 'New York')
     ->fetchAll();
     
