@@ -1,4 +1,4 @@
-# Has One
+# Has Many
 The Has Many relation defines that entity exclusively owns multiple other entities in a form of parent-children.
 
 ## Definition
