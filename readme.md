@@ -60,7 +60,6 @@ Table of Content
   * ~ [Custom Column Types](advances/custom-column.md)
   * ~ [Custom Hydrators and Embedded Types](advanced/hydrator.md)
   * [UUID as Primary Key](advanced/uuid.md)
-  * ~ [Multirepository Entity](advanced/multirepository.md)
   * ~ [Timestamped Entities](advanced/timestamp.md)
   * ~ [Soft Deleted Entities](advanced/soft-deletes.md)
   * ~ [Configuring Schema Builder](advanced/schema-builder.md)
