@@ -42,7 +42,7 @@ class User
 }
 ```
 
-By default, ORM will generate outer key in relation object using parent entity role and inner key (primary key by default) values. As result column and FK will be added to Address entity on `user_id` column.
+By default, ORM will generate outer key in relation object using parent entity role and inner key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
 
 Option      | Value  | Comment
 ---         | ---    | ----
