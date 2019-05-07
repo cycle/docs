@@ -65,22 +65,22 @@ print_r($p->getAddress());
 You can filter entity selection using related data, call method `with` of your entity `Select` to join related entity table:
 
 ```php
-$users = $orm->getRepository(Post::class)
+$posts = $orm->getRepository(Post::class)
     ->select()
     ->with('user')->where('user.status', 'active')
     ->fetchAll();
     
-print_r($users);
+print_r($posts);
 ```
 
 Cycle `Select` can automatically join related table on first `where` condition, previous example can be rewritten:
 
 ```php
-$users = $orm->getRepository(User::class)
+$posts = $orm->getRepository(Post::class)
     ->select()
     ->where('user.status', 'active')
     ->fetchAll();
     
-print_r($users);
+print_r($posts);
 ```
 
