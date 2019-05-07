@@ -40,18 +40,14 @@ use Spiral\Database;
 $dbal = new Database\DatabaseManager(new Database\Config\DatabaseConfig([
     'default'     => 'default',
     'databases'   => [
-        'default' => [
-            'connection' => 'sqlite'
-        ]
+        'default' => ['connection' => 'sqlite']
     ],
     'connections' => [
         'sqlite' => [
             'driver'  => Database\Driver\SQLite\SQLiteDriver::class,
-            'options' => [
-                'connection' => 'sqlite:database.db',
-                'username'   => '',
-                'password'   => '',
-            ]
+            'connection' => 'sqlite:database.db',
+            'username'   => '',
+            'password'   => '',
         ]
     ]
 ]));
