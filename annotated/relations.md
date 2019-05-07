@@ -129,7 +129,6 @@ cascade     | bool   | Automatically save related data with parent entity, defau
 nullable    | bool   | Defines if relation can be nullable (child can have no parent), defaults to `false`
 innerKey    | string | Inner key in parent entity, defaults to primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
-where       | array  | Additional where condition to be applied for the relation, defaults to none.
 fkCreate    | bool   | Set to true to automatically create FK on outerKey, defauls to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
 indexCreate | bool   | Create index on outerKey, defaults to `true`
