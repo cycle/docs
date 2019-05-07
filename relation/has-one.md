@@ -55,7 +55,7 @@ $u->setAddress(null);
 
 The child object will be removed during the persist operation.
 
-> To avoid child object removal (detach) use an opposite relation type `Belongs To` like `$address->user = null`.
+> To avoid child object removal (detach) set `nullable` true. In this case child outer key will be reset to `null`.
 
 ## Loading
 To access related data simply call the method `load` of your `User` `Select` object:
