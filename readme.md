@@ -21,7 +21,7 @@ Table of Content
   * ~ [Has Many](relation/has-many.md)
   * ~ [Belongs To](relation/belongs-to.md)
   * ~ [Refers To](relation/refers-to.md)
-  * ~ [Many Thought Many](relation/many-though-many.md)
+  * ~ [Many To Many](relation/many-though-many.md)
   * ~ [Morphed Relations](relations/morphed.md)
 * Query Builder
   * ~ [Basics](query-builder/basic.md)
