@@ -16,6 +16,8 @@ Avoid using user values in `orderBy` as well:
 $users->orderBy($userParam, $userDirection); // possible SQL injection
 ```
 
+> Same goes for aggregation methods `sum`, `avg`, `min`, `max`.
+
 ## Expression and Fragments
 None of user input must be used in `Fragment` and `Expression` wrappers:
 
