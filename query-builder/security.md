@@ -17,7 +17,7 @@ $users->orderBy($userParam, $userDirection); // possible SQL injection
 ```
 
 ## Expression and Fragments
-None of user imput must be used in `Fragment` and `Expression` wrappers:
+None of user input must be used in `Fragment` and `Expression` wrappers:
 
 ```php
 $users->where($name, '=', new Expression("CONCAT($userValue)")); // possible SQL injection
