@@ -61,3 +61,16 @@ where       | array | Where conditions applied to related entity
 fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey, defauls to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
+
+## Usage
+
+## Loading
+
+## Accessing Pivot Entity
+
+## Filtering
+
+## Chain Filtering
+
+## Load filtered
+...
