@@ -247,6 +247,3 @@ $users = $orm->getRepository(User::class)
     ->where('tags.@.subRelation.value', $value)
     ->fetchAll();
 ```
-
-## Load filtered
-...
