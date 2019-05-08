@@ -45,13 +45,42 @@ class User
 }
 ```
 
-By default ORM will generate FK and indexes in `though` entity using role and primary keys of linked objects. Following values are available for the configuration:
+```php
+/** @entity */
+class UserTag
+{
+    /** @column(type=primary) */
+    private $id;
+}
+```
+ 
+```php
+/** @entity */
+class Tag
+{
+    /** @column(type=primary) */
+    private $id;
 
+    /** @column(type=string) */
+    private $name;
+
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+}
+```
+
+By default ORM will generate FK and indexes in `though` entity using role and primary keys of linked objects. Following values are available for the configuration:
 
 Option      | Value  | Comment
 ---         | ---    | ----
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
-nullable    | bool   | Defines if relation can be nullable (pivot entity can exists without parent(s)), defaults to `true`
 innerKey    | string | Inner key name in source entity, default to primary key
 outerKey    | string | Outer key name in target entity, default to primary key
 thoughInnerKey | string | Key name connected to the innerKey of source entity, defaults to `{sourceRole}_{innerKey}` 
@@ -62,11 +91,105 @@ fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey 
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
 
+> You can keep your pivot entity empty, the only requirement is to have defined primary key.
+ 
 ## Usage
+To associte two entities using Many To Many relation use method `add` of pivot collection:
+
+```php
+$u = new User();
+$u->setName("Antony");
+
+$u->getTags()->add(new Tag("tag a"));
+
+$t = new Transaction($orm);
+$t->persist($u);
+$t->run();
+```
+
+To remove association to the object use `remove` or `removeElement` methods. Deassociation will remove `UserTag` not `Tag` entity.
+
+```php
+$u->getTags()->removeElement($tag);
+```
 
 ## Loading
+Use method `load` of your `Select` object to pre-load data of related and pivot entities:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->fetchAll();
+```
+
+Once loaded, you can access the related entity data using the collection:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->fetchAll();
+    
+foreach ($users as $u) {
+    print_r($u->getTags()->toArray());
+}
+```
 
 ## Accessing Pivot Entity
+Many To Many relation provides you ability to access the pivot entity data using the `PivotedCollection` object. You can do that
+using `getPivot` method:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->fetchAll();
+    
+foreach ($users as $u) {
+    foreach ($u->getTags() as $t) {
+         print_r($t);
+         print_r($u->getTags()->getPivot($t));
+    }
+}
+```
+
+You can change the values of this entity as they will be persisted with parent entity. This approach allows you to easier
+control the association between parent and related entities.
+
+For example, we can add new properly to our `UserTag`:
+
+```php
+/** @entity */
+class UserTag
+{
+    /** @column(type=primary) */
+    private $id;
+
+    /** @column(type=datetime, default = null) */
+    private $created_at;
+
+    public function __construct(\DateTimeInterface $d)
+    {
+        $this->created_at = $d;
+    }
+}
+```
+
+Now we can assign this entity to newly created connection:
+
+```php
+$u = new User();
+$u->setName("Antony");
+        
+$tag = new Tag("tag a");
+
+$u->tags->add($tag);
+$u->tags->setPivot($tag, new UserTag(new \DateTimeImmutable()));
+    
+$t->persist($u);
+$t->run();
+```
 
 ## Filtering
 
