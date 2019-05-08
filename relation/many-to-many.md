@@ -192,8 +192,61 @@ $t->run();
 ```
 
 ## Filtering
+Similar to Has Many the entity query can be filtered using `with` method:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->distinct()
+    ->with('tags')
+    ->fetchAll();
+```
+
+You can filter the entity results using `where` method on related properties:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->distinct()
+    ->where('tags.name', 'tag a')
+    ->fetchAll();
+```
+
+Following SQL will be produced:
+
+```sql 
+SELECT DISTINCT
+`user`.`id` AS `c0`, `user`.`name` AS `c1`
+FROM `users` AS `user`
+INNER JOIN `user_tags` AS `user_tags_pivot`
+    ON `user_tags_pivot`.`user_id` = `user`.`id`
+INNER JOIN `tags` AS `user_tags`
+    ON `user_tags`.`id` = `user_tags_pivot`.`tag_id`
+WHERE `user_tags`.`name` = 'tag a'
+```
 
 ## Chain Filtering
+Pivot entity data is available for the filering as well, you must use keyword `@` to access it.
+
+```php
+$hour = new \DateInterval("PT40M");
+
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->distinct()
+    ->where('tags.@.created_at', '>', (new \DateTimeImmutable())->sub($hour))
+    ->fetchAll();
+```
+
+You can also load/filter the relations assigned to pivot entity.
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->distinct()
+    ->where('tags.@.subRelation.value', $value)
+    ->fetchAll();
+```
 
 ## Load filtered
 ...
