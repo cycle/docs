@@ -34,7 +34,7 @@ class User
 }
 ```
 
-## Create Command Chain
+## Command Chain
 We can link another command to be executed right after `$cmd`:
 
 ```php
