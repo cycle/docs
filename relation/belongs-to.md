@@ -1,5 +1,5 @@
 # Belongs To
-Belongs To relation defines that entity is owned by related entity on exclusive matter. Example: post belongs to author, comment belongs to post. Most of `belongsTo` relations can be created using `iverse` option of the declared `hasOne` or `hasMany` relation.
+Belongs To relation defines that entity is owned by a related entity on the exclusive matter. Example: post belongs to the author, comment belongs to post. Most of `belongsTo` relations can be created using `inverse` option of the declared `hasOne` or `hasMany` relation.
 
 ## Definition
 To define Belongs To relation using annotated enties extension use:
@@ -15,19 +15,19 @@ class Post
 }
 ```
 
-> You must properly handle the cases when relation is not initialized (`null`)!
+> You must properly handle the cases when the relation is not initialized (`null`)!
 
-By default, ORM will generate outer key in relation object using related entity role and outer key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
+By default, ORM will generate an outer key in relation object using related entity role and outer key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
 
 Option      | Value  | Comment
 ---         | ---    | ----
 cascade     | bool   | Automatically save related data with source entity, defaults to `true`
-nullable    | bool   | Defines if relation can be nullable (child can have no parent), defaults to `true`
+nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `true`
 innerKey    | string | Inner key in source entity, defaults to `{relationName}_{outerKey}`
-outerKey    | string | Outer key in related entity, by default primary key
+outerKey    | string | Outer key in the related entity, by default primary key
 fkCreate    | bool   | Set to true to automatically create FK on innerKey, defauls to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
-indexCreate | bool   | Create index on innerKey, defaults to `true`
+indexCreate | bool   | Create an index on innerKey, defaults to `true`
 
 # Usage
 Cycle will automatically save the related entity (unless `cascade` set to `false`).
