@@ -1,5 +1,5 @@
 # Quick Start
-This guide provides quick overview of ORM installation, configuration process and example using an annotateed entity. Other sections of the documentation will provide deeper insign of various use-cases.
+This guide provides a quick overview of ORM installation, configuration process and an example using an annotateed entity. Other sections of the documentation will provide deeper insign of various use-cases.
 
 ## Requirements
   * PHP7.1+
@@ -7,13 +7,13 @@ This guide provides quick overview of ORM installation, configuration process an
   * PDO drivers for desired databases
   
 ## Installation
-Cycle ORM is available as composer repository and can be installed using the following command in a root of your project:
+Cycle ORM is available as composer repository and can be installed using the following command in the root of your project:
 
 ```bash
 $ composer require cycle/orm
 ```
 
-In order to enable support for annotated entities you have to request additional package:
+In order to enable support for annotated entities you have to request an additional package:
 
 ```bash
 $ composer require cycle/annotated
@@ -178,7 +178,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 ]);
 ```
 
-> We will explain what each generator is doing in a later sections. Please note, while complining your schema `SyncTables` will automatically adjust your database structure! Do not use it on real database!
+> We will explain what each generator is doing in later sections. Please note, while complining your schema `SyncTables` will automatically adjust your database structure! Do not use it on a real database!
 
 The resulted schema can be passed to ORM. 
 
@@ -235,7 +235,7 @@ $u->setName("New " . mt_rand(0, 1000));
 (new ORM\Transaction($orm))->persist($u)->run();
 ```
 
-You can notice that new name will be displayed on every script iteration.
+You can notice that a new name will be displayed on every script iteration.
 
 ## Delete Entity
 To delete entity simply call method `delete` of the Transation:
@@ -245,7 +245,7 @@ To delete entity simply call method `delete` of the Transation:
 ```
 
 ## Update Entity Schema
-You can modify your entity schema to add new columns. Note that you have to either specify default value or set column as `nullable` in order to apply modification to the non empty table.
+You can modify your entity schema to add new columns. Note that you have to either specify a default value or set column as `nullable` in order to apply the modification to the non empty table.
 
 ```php
 /**
