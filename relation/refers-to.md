@@ -1,6 +1,6 @@
-# Referes To
-Refers To relation is very similar to Belongs To but must be used in cases when multiple relations can exist to related entity
-(including cyclic relations). Example: user has many comments, user refers to last comment
+# Refers To
+Refers To relation is very similar to Belongs To but must be used in cases when multiple relations can exist to a related entity
+(including cyclic relations). Example: a user has many comments, the user refers to the last comment
 
 
 ## Definition
@@ -28,21 +28,21 @@ class User
 }
 ```
 
-> You must properly handle the cases when relation is not initialized (`null`)!
+> You must properly handle the cases when the relation is not initialized (`null`)!
 
-By default, ORM will generate outer key in relation object using related entity role and outer key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
+By default, ORM will generate an outer key in relation object using related entity role and outer key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
 
 Option      | Value  | Comment
 ---         | ---    | ----
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
-nullable    | bool   | Defines if relation can be nullable (child can have no parent), defaults to `false`
-innerKey    | string | Inner key in parent entity, defaults to primary key
+nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `false`
+innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
 fkCreate    | bool   | Set to true to automatically create FK on outerKey, defauls to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
-indexCreate | bool   | Create index on outerKey, defaults to `true`
+indexCreate | bool   | Create an index on outerKey, defaults to `true`
 
-> Please note, default `fkAction` is `SET NULL`, relation is nullable by default.
+> Please note, default `fkAction` is `SET NULL`, the relation is nullable by default.
 
 
 # Usage
@@ -57,7 +57,7 @@ $t->persist($u);
 $t->run();
 ```
 
-Simply set the properly value to null to remove the entity reference.
+Simply set the proper value to null to remove the entity reference.
 
 ```php
 $u = new User();
@@ -100,7 +100,7 @@ print_r($users);
 ```
 
 ## Self References
-The RefersTo relation can be used to create self references.
+The RefersTo relation can be used to create self-references.
 
 ```php
 /** @entity */
@@ -138,4 +138,4 @@ $result = $orm->getRepository(Category::class)
     ->fetchAll();
 ```
 
-> Make sure that cyclic dependencies is what you need.
+> Make sure that cyclic dependencies are what you need.
