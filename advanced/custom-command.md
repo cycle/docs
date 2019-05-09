@@ -51,6 +51,7 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 ```
 
 In case of Create, the primary key sequence won't be available at moment of `queueCreate` call (it will be available after `SQL INSERT` query). 
+
 This value must be forwarded to our command using `forward` method from `$cmd`:
 
 ```php
