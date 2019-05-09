@@ -15,7 +15,7 @@ class User
 }
 ```
 
-In order to use newly created entity you must define the collection to store related entities. Do it in your constructor:
+In order to use a newly created entity, you must define the collection to store related entities. Do it in your constructor:
 
 ```php
 use use Doctrine\Common\Collections\ArrayCollection;
@@ -42,18 +42,18 @@ class User
 }
 ```
 
-By default, ORM will generate outer key in relation object using parent entity role and inner key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
+By default, ORM will generate an outer key in relation object using parent entity role and inner key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
 
 Option      | Value  | Comment
 ---         | ---    | ----
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
-nullable    | bool   | Defines if relation can be nullable (child can have no parent), defaults to `false`
-innerKey    | string | Inner key in parent entity, defaults to primary key
+nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `false`
+innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
 where       | array  | Additional where condition to be applied for the relation, defaults to none.
 fkCreate    | bool   | Set to true to automatically create FK on outerKey, defauls to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
-indexCreate | bool   | Create index on outerKey, defaults to `true`
+indexCreate | bool   | Create an index on outerKey, defaults to `true`
 
 ## Usage
 To add the child object to the collection, use collection method `add`:
@@ -80,7 +80,7 @@ $u->getPosts()->removeElement(post);
 
 The child object will be removed during the persist operation.
 
-> Set relation option `nullable` as true to nullify the outer key istead of entity removal.
+> Set relation option `nullable` as true to nullify the outer key instead of entity removal.
 
 ## Loading
 To access related data simply call the method `load` of your `User` `Select` object:
@@ -112,7 +112,7 @@ $users = $orm->getRepository(User::class)
 print_r($users);
 ```
 
-> Make sure to call `distinct` since multi-row table will be joined to your query.
+> Make sure to call `distinct` since the multi-row table will be joined to your query.
 
 Cycle `Select` can automatically join related table on first `where` condition, previous example can be rewritten:
 
@@ -127,8 +127,7 @@ print_r($users);
 ```
 
 ## Load filtered
-Another option available for HasMany relation is to pre-filter related data on database level. To do that, use `where` option of the 
-relation or `load` method. For example we can load all users with at least one post and pre-load only published posts:
+Another option available for HasMany relation is to pre-filter related data on database level. To do that, use `where` option of the relation or `load` method. For example, we can load all users with at least one post and pre-load only published posts:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -151,7 +150,7 @@ $users = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-Given appoarch will produce only one SQL query.
+Given approach will produce only one SQL query.
 
 ```sql
 SELECT DISTINCT
