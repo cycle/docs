@@ -1,5 +1,5 @@
 # Contributing
-Feel free to contribute to the development of the Cycle ORM or it's components. 
+Feel free to contribute to the development of the Cycle ORM or its components. 
 Please make sure that the following requirements are satisfied before submitting your pull request:
 
 * PSR-2 and PSR-4
