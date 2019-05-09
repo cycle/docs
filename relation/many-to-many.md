@@ -1,7 +1,7 @@
 # Many To Many
-Many to Many relation is in fact two relations combined together. This relation require intermediate (pivot) entity to connect source and target entities. Examples: many users has many tags, many posts has many favorites.
+Many to Many relation is, in fact, two relations combined together. This relation requires intermediate (pivot) entity to connect the source and target entities. Examples: many users have many tags, many posts have many favorites.
 
-The relation provides the access to intermediate object on all the steps including creation, update and query building.
+The relation provides access to an intermediate object on all the steps including creation, update and query building.
 
 ## Definition
 To define Has Many relation using annotated enties extension use (attention, make sure to create pivot entity):
@@ -17,7 +17,7 @@ class User
 }
 ```
 
-In order to use newly created entity you must define the collection to store related entities. The collection must be instance of
+In order to use a newly created entity, you must define the collection to store related entities. The collection must be an instance of
 `Cycle\ORM\Relation\Pivoted\PivotedCollection`. Do it in your constructor:
 
 ```php
@@ -76,22 +76,22 @@ class Tag
 }
 ```
 
-By default ORM will generate FK and indexes in `though` entity using role and primary keys of linked objects. Following values are available for the configuration:
+By default, ORM will generate FK and indexes in `though` entity using role and primary keys of linked objects. Following values are available for the configuration:
 
 Option      | Value  | Comment
 ---         | ---    | ----
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
-innerKey    | string | Inner key name in source entity, default to primary key
-outerKey    | string | Outer key name in target entity, default to primary key
-thoughInnerKey | string | Key name connected to the innerKey of source entity, defaults to `{sourceRole}_{innerKey}` 
-thoughOuterKey | string | Key name connected to the outerKey of related entity, defaults to `{targetRole}_{outerKey}` 
+innerKey    | string | Inner key name in source entity, default to a primary key
+outerKey    | string | Outer key name in target entity, default to a primary key
+thoughInnerKey | string | Key name connected to the innerKey of source entity defaults to `{sourceRole}_{innerKey}` 
+thoughOuterKey | string | Key name connected to the outerKey of a related entity defaults to `{targetRole}_{outerKey}` 
 thoughWhere | array | Where conditions applied to `though` entity
-where       | array | Where conditions applied to related entity
-fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey, defauls to `true`
+where       | array | Where conditions applied to a related entity
+fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey, defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
 
-> You can keep your pivot entity empty, the only requirement is to have defined primary key.
+> You can keep your pivot entity empty, the only requirement is to have defined a primary key.
  
 ## Usage
 To associte two entities using Many To Many relation use method `add` of pivot collection:
@@ -107,7 +107,7 @@ $t->persist($u);
 $t->run();
 ```
 
-To remove association to the object use `remove` or `removeElement` methods. Deassociation will remove `UserTag` not `Tag` entity.
+To remove association to the object using `remove` or `removeElement` methods. Disassociation will remove `UserTag` not `Tag` entity.
 
 ```php
 $u->getTags()->removeElement($tag);
@@ -154,7 +154,7 @@ foreach ($users as $u) {
 }
 ```
 
-You can change the values of this entity as they will be persisted with parent entity. This approach allows you to easier
+You can change the values of this entity as they will be persisted with the parent entity. This approach allows you to easier
 control the association between parent and related entities.
 
 For example, we can add new properly to our `UserTag`:
@@ -226,7 +226,7 @@ WHERE `user_tags`.`name` = 'tag a'
 ```
 
 ## Chain Filtering
-Pivot entity data is available for the filering as well, you must use keyword `@` to access it.
+Pivot entity data is available for filtering as well, you must use the keyword `@` to access it.
 
 ```php
 $hour = new \DateInterval("PT40M");
