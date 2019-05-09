@@ -1,6 +1,6 @@
 # Select Entity
-Cycle ORM provide multiple options to select entity data from the database. 
-The most common and recommended methods to use associated entity repository.
+Cycle ORM provides multiple options to select entity data from the database. 
+The most common and recommended methods to use the associated entity repository.
 
 ## Using Repository
 To access repository associated with specific entity use method `getRepository` of orm service:
@@ -23,7 +23,7 @@ To find the entity using it's primary key:
 $entity = $repository->findByPK(1);
 ```
 
-> Note, method will return `null` if no entity found.
+> Note, the method will return `null` if no entity found.
 
 To find enity by any of it's field(s) use:
 
