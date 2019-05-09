@@ -1,6 +1,5 @@
 # Annotated Entities
-Annotated entities extension is capable to index any domain entity in your project. To indicate that class must be treated as domain 
-entity make sure to add `@entity` annotation to the docComment.
+Annotated entities extension is capable to index any domain entity in your project. To indicate that class must be treated as a domain entity make sure to add `@entity` annotation to the docComment.
 
 ```php
 /** @entity */
@@ -12,8 +11,8 @@ class User
 > Annotations are based on Doctrine/Lexer package and support syntax similar to the Doctrine one.
 
 ## Entity
-Usually, the single annotation `@entity` is enought to describe your model. In this case Cycle will automatically assign generated
-table name and role based on class name. In case of `User` the role will be `user`, database `null` (default) and table `users`.
+Usually, the single annotation `@entity` is enough to describe your model. In this case, Cycle will automatically assign the generated
+table name and role based on the class name. In the case of `User` the role will be `user`, database `null` (default) and table `users`.
 
 You can tweak any of this values by setting `entity` options:
 
@@ -30,7 +29,7 @@ class User
 }
 ```
 
-> You must manually set `role` and `table` for your classes if you use models which share same name.
+> You must manually set `role` and `table` for your classes if you use models which share the same name.
 
 Some options can be used to overwrite default entity behaviour, for example to assign custom entity repository:
 
@@ -43,20 +42,20 @@ class User
 }
 ```
 
-> Cycle can locate repository class name automatically, using current entity namespace as base path.
+> Cycle can locate repository class name automatically, using current entity namespace as the base path.
 
 Following entity options are available for customization:
 
 Option | Value | Comment 
 --- | --- | ---
-role           | string | Entity role, defaults to lowercases class name without namespace
-mapper         | class  | Mapper class name, defaults to `Cycle\ORM\Mapper\Mapper`
-repository     | class  | Repository class to represent read operations for entity, defaults to `Cycle\ORM\Select\Repository`
-table          | string | Entity source table, defaults to plural form of entity role
+role           | string | Entity role, defaults to lowercases class name without a namespace
+mapper         | class  | Mapper class name defaults to `Cycle\ORM\Mapper\Mapper`
+repository     | class  | Repository class to represent read operations for an entity defaults to `Cycle\ORM\Select\Repository`
+table          | string | Entity source table defaults to plural form of entity role
 database       | string | Database name, defaults to `null` (default database)
-readonlySchema | bool   | Set to true to disable schema synchronization for assigned table, defaults to `false`
+readonlySchema | bool   | Set to true to disable schema synchronization for the assigned table, defaults to `false`
 source         | class  | Entity source class (internal), defaults to `Cycle\ORM\Select\Source`
-constrain      | class  | Class name of contrain to be applied to every entity query, defaults to `null`
+constrain      | class  | Class name of constraint to be applied to every entity query, defaults to `null`
 
 For example typical entity description might look like:
 
@@ -74,7 +73,7 @@ class User
 ```
 
 ## Columns
-No entity can operate without some properties mapped to table columns. To map your property to the column add annotation `@column` to it. It's mandratory to specify column type. You must always specify **one** primary (auto incremental) column for your entity.
+No entity can operate without some properties mapped to table columns. To map your property to the column add annotation `@column` to it. It's mandatory to specify column type. You must always specify **one** primary (auto incremental) column for your entity.
 
 ```php
 /** @entity */
@@ -85,9 +84,9 @@ class User
 }
 ```
 
-> Read how to use non incremental primary keys (for example UUID) in Advanced section.
+> Read how to use non-incremental primary keys (for example UUID) in Advanced section.
 
-By default, entity properly will be mapped to the column with same name as property, you can change it:
+By default, the entity properly will be mapped to the column with the same name as the property, you can change it:
 
 ```php
 /** @entity */
@@ -135,7 +134,7 @@ class User
 }
 ```
 
-While adding new columns to the entities associated with non empty tables you are required to either specify default value or mark column as nullable:
+While adding new columns to the entities associated with non-empty tables you are required to either specify a default value or mark column as nullable:
 
 ```php
 /** @entity */
@@ -153,38 +152,38 @@ Following options are available for configuration:
 
 Option | Value | Comment
 --- | --- | ---
-name | string | Column name, defauls to property name.
+name | string | Column name, default to the property name.
 type | string | Column type with arguments.
-primary | bool | Explicitly set column as primary key, defaults to `false`
+primary | bool | Explicitly set column as primary key defaults to `false`
 typecast | callable | Column typecast function, defaults to one of (int|float|bool|datetime) based on column type
 nullable | bool | Set column as nullable, defaults to `false`
-default | mixed | Default column value, defaults to `none`
+default | mixed | Default column value defaults to `none`
 
-Following column types are avaiable:
+Following column types are available:
 
 Type        | Parameters                | Description
 ---         | ---                       | ---
-**primary** | ---                       | Special column type, usually mapped as integer + auto incrementing flag and added as table primary index column. You can define only one primary column in your table (you still can create compound primary key, see below).
-bigPrimary  | ---                       | Same as primary but uses bigInteger to store it's values.
+**primary** | ---                       | Special column type, usually mapped as integer + auto incrementing flag and added as table primary index column. You can define only one primary column in your table (you still can create a compound primary key, see below).
+bigPrimary  | ---                       | Same as primary but uses bigInteger to store its values.
 boolean     | ---                       | Boolean type, some databases will store it as integer (1/0).
 integer     | ---                       | Database specific integer (usually 32 bits).
-tinyInteger | ---                       | Small/tiny integer, check your DBMS to check it's size.
-bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check it's size.
-**string**  | [length:255]              | String with specified lenth, perfect type for emails and usernames as it can be indexed. 
+tinyInteger | ---                       | Small/tiny integer, check your DBMS to check it's the size.
+bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check it's the size.
+**string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed. 
 text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.
-tinyText    | ---                       | Tiny text, same as "text" for most of databases. Differs only in MySQL.
-longText    | ---                       | Long text, same as "text" for most of databases. Differs only in MySQL.
+tinyText    | ---                       | Tiny text, same as "text" for most of the databases. Differs only in MySQL.
+longText    | ---                       | Long text, same as "text" for most of the databases. Differs only in MySQL.
 double      | ---                       | [Double precision number.] (https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
-float       | ---                       | Single precision number, usually mapped into "real" type in database. 
+float       | ---                       | Single precision number, usually mapped into "real" type in the database. 
 decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.
 datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.
 date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.
 time        | ---                       | To store time only.
-*timestamp* | ---                       | Timestamp without timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column in your objects to store time (use datetime instead) as timestamps will behave very specific to select DBMS.
+*timestamp* | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column in your objects to store time (use datetime instead) as timestamps will behave very specific to select DBMS.
 binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.
-tinyBinary  | ---                       | Tiny binary, same as "binary" for most of databases. Differs only in MySQL.
-longBinary  | ---                       | Long binary, same as "binary" for most of databases. Differs only in MySQL.
-json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it nativelly.
+tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. Differs only in MySQL.
+longBinary  | ---                       | Long binary, same as "binary" for most of the databases. Differs only in MySQL.
+json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.
 
 ## Table Extension
 In some cases you might want to specificy additional table columns and indexes without the link to the entity properies. This can be achieved using `@table` annotation:
@@ -213,10 +212,10 @@ class User
 }
 ```
 
-> The column definition is identical to one used for the property.
+> The column definition is identical to the one used for the property.
 
 ## Merging annotations
-Annotated Entities extension support ability to merge table defintions provided by linked Mapper, Source, Repository and Constrain classes. Such approach can be useful in cases when you want to implement domain wise functionality like auto timestamps or soft deletes.
+Annotated Entities extension support ability to merge table definitions provided by linked Mapper, Source, Repository and Constrain classes. Such an approach can be useful in cases when you want to implement domain wise functionality like auto timestamps or soft deletes.
 
 ```php
 /**
