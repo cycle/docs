@@ -1,8 +1,8 @@
 # Simple Relation
-An important part of any ORM engine is the ability handle relations between objects. In order to do so we will use 
+An important part of any ORM engine is the ability to handle relations between objects. In order to do so, we will use 
 `cycle/annotated` package to describe the relation.
 
-> Deeper review of different relations, their options and select methods will be given in futher sections.
+> Deeper review of different relations, their options, and select methods will be given in further sections.
 
 ## Describe Entity
 First we have to create two entities we want to relate:
@@ -79,7 +79,7 @@ class Address
 }
 ```
 
-To relate our entities we have to add new property to one of them and annotate it properly, we should also add getters and setters.
+To relate our entities we have to add a new property to one of them and annotate it properly, we should also add getters and setters.
 
 ```php
 /**
@@ -165,7 +165,7 @@ foreach ($result as $user) {
 }
 ```
 
-Following construction will produce the SQL similar to:
+The following construction will produce the SQL similar to:
 
 ```sql
 SELECT
@@ -276,7 +276,7 @@ $result = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-In this case only one JOIN will be produced:
+In this case, only one JOIN will be produced:
 
 ```sql
 SELECT
@@ -295,7 +295,7 @@ WHERE "user_address"."city" = 'New York';
 ```
 
 ## Combined Selections
-The strict separation between `load` and `with` methods grants you the ability to control filter and load scope separatelly. For example, to find user with any published post and and load all user posts with all visible comments:
+The strict separation between `load` and `with` methods grants you the ability to control filter and load scope separately. For example, to find a user with any published post and load all user posts with all visible comments:
 
 ```php
 $users = $orm->getRepository(User::class)
