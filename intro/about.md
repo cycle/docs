@@ -19,7 +19,7 @@ Features:
 - designed to work in long-running applications, immutable core
 - dirty state, sync exceptions do not break entity map state
 - supports MySQL, MariaDB, PostgresSQL, SQLServer, SQLite (full mock capability)
-- supports global query constrains, UUIDs as PK, soft deletes, auto timestamps
+- supports global query constraints, UUIDs as PK, soft deletes, auto timestamps
 - compatible with Doctrine Collections and Zend Hydrator
 
 Extensions:
