@@ -74,4 +74,4 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 }
 ```
 
-> Example: see [sample implementation](https://github.com/cycle/orm/blob/master/tests/ORM/Fixtures/SnapshotMapper.php) which copies all entity changes into separate table.
+> Example: see [sample implementation](https://github.com/cycle/orm/blob/master/tests/ORM/Fixtures/UserSnapshotMapper.php) which copies all entity changes into separate table.
