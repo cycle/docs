@@ -1,10 +1,9 @@
 # Custom Repositories
-It is essential to be able to associate custom repository implementations to your entities. You are able to create 
-any repository from scratch, especially for non SQL sources. However, the most common use case would be extending default
+It is essential to be able to associate custom repository implementations to your entities. You are able to create any repository from scratch, especially for none SQL sources. However, the most common use case would be extending default
 repository implementation to add custom selectors.
 
 ## Create Repository
-To create custom repository associated with SQL data source simply extend primary class `Cycle\ORM\Select\Repository`:
+To create a custom repository associated with SQL data source simply extend primary class `Cycle\ORM\Select\Repository`:
 
 ```php
 namespace Example\Repository;
@@ -51,11 +50,11 @@ Update/calculate your schema to get access to newly assigned repository though `
 print_r(get_class($orm->getRepository(\Example\User::class)));
 ```
 
-> You can assing one repository implementation to multiple entities.
+> You can assign one repository implementation to multiple entities.
 
 ## Custom Selects
-Main reason of using custom repositories is the ability to write your own `find` methods. You can do that using 
-base `select` method which return you instance of `Cycle\ORM\Select`:
+The main reason for using custom repositories is the ability to write your own `find` methods. You can do that using 
+base `select` method which returns you the instance of `Cycle\ORM\Select`:
 
 ```php
 namespace Example\Repository;
@@ -81,7 +80,7 @@ print_r($orm->getRepository(\Example\User::class)->findActive()->fetchAll());
 ```
 
 ## Preloading relations
-Another use-case is to automatically pre-load some of entity relations using custom find method:
+Another use-case is to automatically pre-load some of the entity relations using custom find method:
 
 ```php
 class UserRepository extends Select\Repository 
