@@ -3,7 +3,7 @@ Make sure to install `cycle/annoated` and `cycle/schema-builder` extenstions in 
 annotated generators into schema compiler (see more details [here](/basic/install.md)).
 
 ## Compiler Pipeline
-The complete pipeline with annotated entites support will look like:
+The complete pipeline with annotated entities support will look like:
 
 ```php
 use Cycle\Schema;
