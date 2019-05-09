@@ -26,8 +26,8 @@ Table of Content
 * Query Builder
   * ~ [Basics](query-builder/basic.md)
   * ~ [Complex Conditions](query-builder/complex.md)
-  * ~ [Expressions](query-builder/expressions.md)
   * ~ [Relations](query-builder/relations.md)
+  * ~ [Expressions](query-builder/expressions.md)
   * [Security](query-builder/security.md)
 * Architecture
   * [Schema](architecture/schema.md)
