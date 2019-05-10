@@ -247,3 +247,5 @@ $users = $orm->getRepository(User::class)
     ->where('tags.@.subRelation.value', $value)
     ->fetchAll();
 ```
+
+> Cross database Many To Many is not supported yet.
