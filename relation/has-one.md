@@ -1,5 +1,5 @@
 # Has One
-The Has One relation defines that entity exclusively owns another entity in a form of parent-children.
+The Has One relation defines that entity exclusively owns another entity in a form of parent-children. Consider this relation as form of decomposition with ability to store data in external table.
 
 ## Definition
 To define Has One relation using annotated enties extension use:
