@@ -7,16 +7,16 @@ ORM can simplify the definition of large entities by proving the ability to spli
 To define embeddable entity use `@embeddable` annotation. As with `@entity` you are able to define custom mapper or associate additional columns/indexes using `@table` annotation.
 
 ```php
-/** @embeddable() */
+/** @embeddable */
 class Address 
 {
-    /** @column(type=string) */ 
+    /** @column(type = string) */ 
     public $country;
   
-    /** @column(type=string) */ 
+    /** @column(type = string) */ 
     public $city;
   
-    /** @column(type=string) */ 
+    /** @column(type = string) */ 
     public $address;
 }
 ```
@@ -60,16 +60,16 @@ By default, all embedded entity column will be stored in owning entity table wit
 `columnPrefix` option of `@embeddable` annotation:
 
 ```php
-/** @embeddable(columnPrefix="address_") */
+/** @embeddable(columnPrefix = "address_") */
 class Address 
 {
-    /** @column(type=string) */ 
+    /** @column(type = string) */ 
     public $country;
   
-    /** @column(type=string) */ 
+    /** @column(type = string) */ 
     public $city;
   
-    /** @column(type=string) */ 
+    /** @column(type = string) */ 
     public $address;
 }
 ```
