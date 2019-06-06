@@ -32,14 +32,14 @@ Table of Content
   * ~ [Relations](query-builder/relations.md)
   * ~ [Expressions](query-builder/expressions.md)
   * [Security](query-builder/security.md)
-* Architecture
+* Internals
   * [Schema](architecture/schema.md)
   * [Entity, Heap, Node, State](architecture/entity.md)
   * ~ [Mappers](architecture/mapper.md) 
   * ~ [Transactions (Unit of Work)](architecture/transaction.md)
   * ~ [Commands and Linked Contexts](architecture/command.md)
   * [Entity Iterator](architecture/iterator.md)
-  * ~ [Collections](architecture/collection.md)
+  * [Collections](architecture/collection.md)
   * ~ [Sources and Databases](architecture/source.md)
   * ~ [References, Promises and Proxies](architecture/promise.md)
   * ~ [Query Builder](architecture/query-builder.md)
