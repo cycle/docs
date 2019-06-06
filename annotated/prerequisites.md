@@ -16,6 +16,7 @@ $cl = (new Tokenizer\Tokenizer(new Tokenizer\Config\TokenizerConfig([
 ])))->classLocator();
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
+    new Annotated\Embeddings($cl),            // register annotated embeddings
     new Annotated\Entities($cl),              // register annotated entities
     new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
     new Annotated\Columns(),                  // register non field columns (table level)
