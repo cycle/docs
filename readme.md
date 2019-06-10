@@ -43,7 +43,7 @@ Table of Content
   * ~ [Sources and Databases](architecture/source.md)
   * ~ [References, Promises and Proxies](architecture/promise.md)
   * ~ [Query Builder](architecture/query-builder.md)
-  * ~ [Constrains](architecture/constrain.md)
+  * [Constrains](architecture/constrain.md)
   * ~ [Node Parser](architecture/node-parser.md)
   * [Limitations](architecture/limitations.md)
 * Advanced Usage
