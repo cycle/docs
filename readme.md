@@ -53,7 +53,7 @@ Table of Content
   * ~ [Single Table Inheritance](advanced/single-table-inheritance.md)
   * [Custom Mappers](advanced/custom-mapper.md)
   * ~ [Custom Commands](advanced/custom-command.md)
-  * ~ [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
+  * [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
   * ~ [Select Constrains](advanced/constrain.md)
   * [Caching](advanced/caching.md)
   * [Pagination](advanced/pagination.md)
