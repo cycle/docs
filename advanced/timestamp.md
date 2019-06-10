@@ -25,9 +25,9 @@ class TimestampedMapper extends Mapper
         /** @var Update $cmd */
         $cmd = parent::queueUpdate($entity, $node, $state);
         
-        // state will be automatically updated after command execution
+        $state->register('updated_at', new \DateTimeImmutable(), true);
         $cmd->registerAppendix('updated_at', new \DateTimeImmutable());
-                
+                    
         return $cmd;
     }
 }
@@ -64,7 +64,7 @@ class TimestampedMapper extends Mapper
         /** @var Update $cmd */
         $cmd = parent::queueUpdate($entity, $node, $state);
         
-        // state will be automatically updated after command execution
+        $state->register('updated_at', new \DateTimeImmutable(), true);
         $cmd->registerAppendix('updated_at', new \DateTimeImmutable());
                 
         return $cmd;
