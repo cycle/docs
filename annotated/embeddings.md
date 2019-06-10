@@ -86,9 +86,7 @@ $select->where('address.country', 'USA');
 By default, all embedded entities will be loaded with parent object. To alter this behaviour use `load` option of `@embedd` relation annotation:
 
 ```php
-/**  
- * @entity
- */
+/** @entity */
 class User 
 {
     /** $column(type = primary) */
