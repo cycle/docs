@@ -11,19 +11,34 @@ This can be done by either defining your schema using schema builder or by writi
 We can build our entities using entity definitions:
 
 ```php
+//
+// Lets create a new entity object.
+//
 $e = new Entity();
 $e->setRole('user');
-$e->setMapper(Cycle\ORM\Mapper\StdMapper);
+$e->setMapper(Cycle\ORM\Mapper\StdMapper::class);
 
-$entity->getFields()->set(
-    'id', (new Field())->setType('primary')->setColumn('id')->setPrimary(true)
-);
 
-$r = new Registry($this->dbal);
-$r->register($e)->linkTable($e, 'default', 'user');
+//
+// And now we will try to add to it a new field that 
+// was not described in the original mapper.
+//
+$field = (new Field())
+    ->setType('primary')
+    ->setColumn('id')
+    ->setPrimary(true);
+    
+$entity->getFields()->set('id', $field);
 
-$c = new Compiler();
-$schema = $c->compile($r, [new RenderTables()]);
+
+//
+// And use this sample code to check the result.
+//
+$registry = new Registry($this->dbal);
+$registry->register($e)->linkTable($e, 'default', 'user');
+
+
+$schema = (new Compiler())->compile($r, [new RenderTables()]);
 
 print_r($schema);
 
