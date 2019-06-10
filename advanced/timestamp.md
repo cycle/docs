@@ -33,8 +33,7 @@ class TimestampedMapper extends Mapper
 }
 ```
 
-While we can set column values directly in `Insert` command we have to use alternative method `registerAppendix` for `Update`. Such method
-will only push changes to database if any other entity field has changes.
+> While we can set column values directly in `Insert` command we have to use alternative method `registerAppendix` for `Update`. Such method will only push changes to database if any other entity field has changes.
 
 ## Automatically Define Columns
 You can use annotated entites extension to automatically declared needed column from inside your mapper:
