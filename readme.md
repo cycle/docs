@@ -62,7 +62,7 @@ Table of Content
   * ~~[Custom Column Types](advances/custom-column.md)~~
   * [UUID as Primary Key](advanced/uuid.md)
   * [Timestamped Entities](advanced/timestamp.md)
-  * ~~[Soft Deleted Entities](advanced/soft-deletes.md)~~
+  * [Soft Deleted Entities](advanced/soft-deletes.md)
   * ~~[Configuring Schema Builder](advanced/schema-builder.md)~~
   * ~~[Testing](advanced/testing.md)~~
 * Components
