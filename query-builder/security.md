@@ -24,3 +24,11 @@ None of user input must be used in `Fragment` and `Expression` wrappers:
 ```php
 $users->where($name, '=', new Expression("CONCAT($userValue)")); // possible SQL injection
 ```
+
+## Array Parameters
+ORM will not allow you to use array parameters outside of `Prameter` scope:
+
+```php
+$users->where($id, 'IN', [1, 2, 3]); // compile exception
+$users->where($id, 'IN', new Parameter([1, 2, 3])); // valid approach
+```
