@@ -36,20 +36,19 @@ Table of Content
   * [Schema](advanced/schema.md)
   * [Entity, Heap, Node, State](advanced/entity.md)
   * ~~[Mappers](advanced/mapper.md)~~
+  * [Custom Mappers](advanced/custom-mapper.md)
   * ~~[Custom Commands](advanced/custom-command.md)~~
   * ~~[Transactions (Unit of Work)](advanced/transaction.md)~~
   * ~~[Commands and Linked Contexts](advanced/command.md)~~
   * [Entity Iterator](advanced/iterator.md)
   * [Collections](advanced/collections.md)
   * ~~[References, Promises and Proxies](advanced/promise.md)~~
-  * ~~[Query Builder](advanced/query-builder.md)~~
   * [Constrains](advanced/constrain.md)
   * ~~[Node Parser](advanced/node-parser.md)~~
   * ~~[Sources and Databases](advanced/source.md)~~
   * ~~[Usage in Long Running Applications](advanced/daemonizing.md)~~
   * ~~[Reconnects and Database Exceptions](advanced/exception.md)~~
   * ~~[Single Table Inheritance](advanced/single-table-inheritance.md)~~
-  * [Custom Mappers](advanced/custom-mapper.md)
   * [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
   * [Caching](advanced/caching.md)
   * [Pagination](advanced/pagination.md)
