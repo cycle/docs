@@ -60,7 +60,7 @@ Table of Content
   * ~~[Syncronizing Database Schema](advanced/sync-schema.md)~~
   * ~~[Configuring Schema Builder](advanced/schema-builder.md)~~
   * ~~[Testing](advanced/testing.md)~~
-  * [Limitations](architecture/limitations.md)
+  * [Limitations](advanced/limitations.md)
 * Components
   * ~~[DataMapper Core](component/core.md)~~
   * ~~[Schema Builder](component/schema-builder.md)~~
