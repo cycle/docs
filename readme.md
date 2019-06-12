@@ -32,39 +32,36 @@ Table of Content
   * ~~[Relations](query-builder/relations.md)~~
   * ~~[Expressions](query-builder/expressions.md)~~
   * [Security](query-builder/security.md)
-* Internals
-  * [Schema](architecture/schema.md)
-  * [Entity, Heap, Node, State](architecture/entity.md)
-  * ~~[Mappers](architecture/mapper.md)~~
-  * ~~[Transactions (Unit of Work)](architecture/transaction.md)~~
-  * ~~[Commands and Linked Contexts](architecture/command.md)~~
-  * [Entity Iterator](architecture/iterator.md)
-  * [Collections](architecture/collections.md)
-  * ~~[Sources and Databases](architecture/source.md)~~
-  * ~~[References, Promises and Proxies](architecture/promise.md)~~
-  * ~~[Query Builder](architecture/query-builder.md)~~
-  * [Constrains](architecture/constrain.md)
-  * ~~[Node Parser](architecture/node-parser.md)~~
-  * [Limitations](architecture/limitations.md)
-* Advanced Usage
+* Advanced
+  * [Schema](advanced/schema.md)
+  * [Entity, Heap, Node, State](advanced/entity.md)
+  * ~~[Mappers](advanced/mapper.md)~~
+  * ~~[Custom Commands](advanced/custom-command.md)~~
+  * ~~[Transactions (Unit of Work)](advanced/transaction.md)~~
+  * ~~[Commands and Linked Contexts](advanced/command.md)~~
+  * [Entity Iterator](advanced/iterator.md)
+  * [Collections](advanced/collections.md)
+  * ~~[References, Promises and Proxies](advanced/promise.md)~~
+  * ~~[Query Builder](advanced/query-builder.md)~~
+  * [Constrains](advanced/constrain.md)
+  * ~~[Node Parser](advanced/node-parser.md)~~
   * ~~[Usage in Long Running Applications](advanced/daemonizing.md)~~
-  * ~~[Syncronizing Database Schema](advanced/sync-schema.md)~~
-  * ~~[Working with Multiple Databases](advanced/multiple-databases.md)~~
+  * ~~[Reconnects and Database Exceptions](advanced/exception.md)~~
+  * ~~[Sources and Databases](advanced/source.md)~~
   * ~~[Single Table Inheritance](advanced/single-table-inheritance.md)~~
   * [Custom Mappers](advanced/custom-mapper.md)
-  * ~~[Custom Commands](advanced/custom-command.md)~~
   * [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
-  * ~~[Select Constrains](advanced/constrain.md)~~
   * [Caching](advanced/caching.md)
   * [Pagination](advanced/pagination.md)
   * ~~[References and Proxies](advanced/references.md)~~
-  * ~~[Reconnects and Database Exceptions](advanced/exception.md)~~
   * ~~[Custom Column Types](advances/custom-column.md)~~
   * [UUID as Primary Key](advanced/uuid.md)
   * [Timestamped Entities](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
+  * ~~[Syncronizing Database Schema](advanced/sync-schema.md)~~
   * ~~[Configuring Schema Builder](advanced/schema-builder.md)~~
   * ~~[Testing](advanced/testing.md)~~
+  * [Limitations](architecture/limitations.md)
 * Components
   * ~~[DataMapper Core](component/core.md)~~
   * ~~[Schema Builder](component/schema-builder.md)~~
