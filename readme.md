@@ -45,9 +45,9 @@ Table of Content
   * ~~[Query Builder](advanced/query-builder.md)~~
   * [Constrains](advanced/constrain.md)
   * ~~[Node Parser](advanced/node-parser.md)~~
+  * ~~[Sources and Databases](advanced/source.md)~~
   * ~~[Usage in Long Running Applications](advanced/daemonizing.md)~~
   * ~~[Reconnects and Database Exceptions](advanced/exception.md)~~
-  * ~~[Sources and Databases](advanced/source.md)~~
   * ~~[Single Table Inheritance](advanced/single-table-inheritance.md)~~
   * [Custom Mappers](advanced/custom-mapper.md)
   * [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
