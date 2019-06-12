@@ -1,9 +1,9 @@
 Table of Content
 ----------------
 
-* About Cycle
+* Cycle
   * [About Cycle ORM](intro/about.md)
-  * [Quick Start](intro/quick-start.md)
+  * [**Quick Start**](intro/quick-start.md)
   * [Contributing](contributing.md)
   * [LICENSE](license.md)
 * Basics
