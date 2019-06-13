@@ -53,7 +53,7 @@ Table of Content
   * [Caching](advanced/caching.md)
   * [Pagination](advanced/pagination.md)
   * ~~[References and Proxies](advanced/references.md)~~
-  * ~~[Custom Column Types](advances/custom-column.md)~~
+  * ~~[Column Wrappers](advances/column-wrappers.md)~~
   * [UUID as Primary Key](advanced/uuid.md)
   * [Timestamped Entities](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
