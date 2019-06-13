@@ -145,9 +145,8 @@ we will use the pipeline generator provided by `cycle/schema-builder` package an
 First, we have to create instance of `ClassLocator` which will automatically find needed entities:
 
 ```php
-$classLocator = (new \Spiral\Tokenizer\Tokenizer(new \Spiral\Tokenizer\Config\TokenizerConfig([
-    'directories' => ['src/'],
-])))->classLocator();
+$finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__]));
+$classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 ```
 
 We can immediatelly check if our class visible (ClassLocator will perform static indexation of your code behind the hood):
