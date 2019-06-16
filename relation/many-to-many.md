@@ -4,7 +4,7 @@ Many to Many relation is, in fact, two relations combined together. This relatio
 The relation provides access to an intermediate object on all the steps including creation, update and query building.
 
 ## Definition
-To define Has Many relation using annotated enties extension use (attention, make sure to create pivot entity):
+To define Many To Many relation using annotated enties extension use (attention, make sure to create pivot entity):
 
 ```php
 /** @entity */ 
