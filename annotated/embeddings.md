@@ -48,7 +48,7 @@ public function __construct()
 }
 ```
 
-You can use embedding after the schema udpate:
+You can use embedding after the schema update:
 
 ```php
 $user = new User();
