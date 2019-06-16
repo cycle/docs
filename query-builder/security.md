@@ -5,7 +5,7 @@ Cycle query builder will automatically pass all of the use parameters as part of
 Avoid using user provided identifiers without proper whitelist:
 
 ```php
-$users = $userRepository()->select();
+$users = $userRepository->select();
 
 $users->where($userParam, '=', $value); // possible SQL injection
 ```
