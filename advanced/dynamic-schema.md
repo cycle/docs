@@ -35,7 +35,9 @@ $entity->getFields()->set('id', $field);
 $registry = new Registry($this->dbal);
 $registry->register($e)->linkTable($e, 'default', 'user');
 
-
+//
+// Compile the ORM schema.
+//
 $schema = (new Compiler())->compile($r, [new RenderTables()]);
 
 print_r($schema);
