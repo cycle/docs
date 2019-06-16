@@ -23,7 +23,7 @@ class Address
 
 > You do not need to define `primary` column, this column will be inherited from parent entity.
 
-To embedd entity to another object use `@embed` annotation:
+To embedd entity to another object use `@embedd` annotation:
 
 ```php
 /**  
