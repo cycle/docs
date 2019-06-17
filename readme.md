@@ -24,7 +24,7 @@ Table of Content
   * [Belongs To](relation/belongs-to.md)
   * [Refers To](relation/refers-to.md)
   * [Many To Many](relation/many-to-many.md)
-  * [Embedding Entities](relations/embedded.md)
+  * [Embedding Entities](relation/embedded.md)
   * ~~[Morphed Relations](relations/morphed.md)~~
 * Query Builder
   * ~~[Basics](query-builder/basic.md)~~
