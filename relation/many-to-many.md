@@ -80,6 +80,7 @@ By default, ORM will generate FK and indexes in `though` entity using role and p
 
 Option      | Value  | Comment
 ---         | ---    | ----
+load        | lazy|eager | Relation load approach (default `eager`)
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
 innerKey    | string | Inner key name in source entity, default to a primary key
 outerKey    | string | Outer key name in target entity, default to a primary key
