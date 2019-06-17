@@ -38,7 +38,9 @@ You can use your relation as standard hasOne after that. **Note, eager loading i
 ORM provide three basic relations for polymorphic connections:
 
 ### BelongsToMorphed
-Use cases: image attached to (post, user, comment). Relation is similar to `belongsTo` but does not support eager loading, FKs or select quering. Relation options include:
+Use cases: image attached to (post, user, comment). Relation is similar to `belongsTo` but does not support eager loading, FKs or select quering. The relation must point to entity interface.
+
+Relation options include:
 
 Option      | Value  | Comment
 ---         | ---    | ----
@@ -51,7 +53,9 @@ morphKeyLength | int | The lenght of morph key, defaults to 32
 indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `true`
 
 ### MorphedHasOne
-Declared the ability to own the entity from multiple entity types (example user/post/comment has image). Additional options include:
+Declared the ability to own the entity from multiple entity types (example user/post/comment has image). The relation must point to entity interface.
+
+Additional options include:
 
 Option      | Value  | Comment
 ---         | ---    | ----
@@ -67,7 +71,9 @@ indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `tr
 > As in case with `belongsToMorphed` FKs are not supported. You can query or eager load this relation as any other relation types.
 
 ### MorphedHasMany
-Declared the ability to own the entity from multiple entity types (example post/article has comments). Additional options include:
+Declared the ability to own the entity from multiple entity types (example post/article has comments). The relation must point to entity interface.
+
+Additional options include:
 
 Option      | Value  | Comment
 ---         | ---    | ----
