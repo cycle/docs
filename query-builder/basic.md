@@ -77,3 +77,20 @@ $select->where([
     'id' => ['>' => 10, '<' => 100]
 ]);
 ```
+
+## Using Parameters
+By default, any passed value will be converted into `Parameter` object internally. Hovewer, you must clearly use `Parameter` while specifying array values:
+
+```php
+$select->where('id', 'in', new Parameter([1,2,3]));
+```
+
+In order cases parameters can be used to specify value after building the query:
+
+```php
+$select->where('id', $id = new Parameter(null));
+
+$id->setValue(10);
+
+print_r($select->fetchAll());
+```
