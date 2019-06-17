@@ -22,3 +22,12 @@ $select->distinct()->where('posts.comments.approved', true);
 ```
 
 > Please note that deepening queries will affect your performance.
+
+## Sorting and pagination
+You can use method `orderBy` in combination with related entity column:
+
+```php
+$select->orderBy('posts.id', 'DESC');
+```
+
+> Please note, that usage of `limit` and `offset` methods only recommended in combination with `distinct`.
