@@ -40,3 +40,57 @@ class User
 ```
 
 > Make sure to init your relation to be able to use newly created model.
+
+Read more about embeddings [here](/annotated/embeddings.md).
+
+Embedded relation support following options:
+
+Option      | Value  | Comment
+---         | ---    | ----
+load        | lazy/eager | Relation load approach (default `eager`)
+
+## Usage
+You can use newly relation right after schema update (emebedded columns will be added to parent entity table):
+
+```php
+$u = new User();
+$u->crendetials->username = 'username';
+$u->crendetials->password = 'password';
+
+$t = new Transaction($orm);
+$t->persist($u);
+$t->run();
+```
+
+
+## Quering
+You can query emebedded entity as your would do for any other relations:
+
+```php
+$select = $orm->getRepository(User::class)->select();
+$select->where('address.country', 'USA');
+```
+
+## Eager and Lazy Loading
+By default, all embedded entities will be loaded with parent object. To alter this behaviour use `load` option of `@embedd` relation annotation:
+
+```php
+/** @entity */
+class User 
+{
+    /** $column(type = primary) */
+    public $id;
+    
+    /** @embedd(target = Address, load = lazy) */
+    public $address;
+}
+```
+
+Now, in order to pre-load embedded entity you have to explicitly use `load()` method of your select:
+
+```php
+$select = $orm->getRepository(User::class)->select();
+$select->where('address.country', 'USA');
+
+print_r($select->load('address')->fetchAll());
+```
