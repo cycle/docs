@@ -48,3 +48,32 @@ You can use `orWhere` and `andWhere` (idential to `where`) to declare more compl
 ```php
 $select->where('balance', '<', 100)->orWhere('status', 'blocked');
 ```
+
+> Read more of complex conditions in the next article.
+
+## Short Notation
+You can also specify some conditions using array notation:
+
+```php
+$select->where([
+    'id'     => ['in' => new Parameter([1, 2, 3])],
+    'status' => ['like' => 'active']
+]);
+```
+
+Such declaration is identical to:
+
+```php
+$select->where(function($select) {
+    $select->where('id', 'in', new Parameter([1, 2, 3]));
+    $select->where('status', 'like', 'active');
+});
+```
+
+Array notation can be used to declare multiple conditions on one field:
+
+```php
+$select->where([
+    'id' => ['>' => 10, '<' => 100]
+]);
+```
