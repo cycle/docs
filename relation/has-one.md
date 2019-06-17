@@ -21,7 +21,7 @@ By default, ORM will generate outer key in relation object using parent entity r
 
 Option      | Value  | Comment
 ---         | ---    | ----
-load        | lazy|eager | Relation load approach (default `lazy`)
+load        | lazy/eager | Relation load approach (default `lazy`)
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
 nullable    | bool   | Defines if relation can be nullable (child can have no parent), defaults to `false`
 innerKey    | string | Inner key in parent entity, defaults to primary key
