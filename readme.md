@@ -28,9 +28,8 @@ Table of Content
   * [Morphed Relations](relation/morphed.md)
 * Query Builder
   * [Basics](query-builder/basic.md)
-  * ~~[Complex Conditions](query-builder/complex.md)~~
+  * ~~[Complex Conditions and Expressions](query-builder/complex.md)~~
   * ~~[Relations](query-builder/relations.md)~~
-  * ~~[Expressions](query-builder/expressions.md)~~
   * [Security](query-builder/security.md)
 * Advanced
   * [Schema](advanced/schema.md)
