@@ -94,3 +94,10 @@ $id->setValue(10);
 
 print_r($select->fetchAll());
 ```
+
+## Sorting and pagination
+Use available methods `offset`, `limit` and `orderBy` to paginate or sort your entities:
+
+```php
+$select->orderBy('id', 'DESC')->limit(1);
+```
