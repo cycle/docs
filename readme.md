@@ -27,7 +27,7 @@ Table of Content
   * [Embedding Entities](relation/embedded.md)
   * [Morphed Relations](relation/morphed.md)
 * Query Builder
-  * ~~[Basics](query-builder/basic.md)~~
+  * [Basics](query-builder/basic.md)
   * ~~[Complex Conditions](query-builder/complex.md)~~
   * ~~[Relations](query-builder/relations.md)~~
   * ~~[Expressions](query-builder/expressions.md)~~
