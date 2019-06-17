@@ -42,6 +42,17 @@ ORM provide three basic relations for polymorphic connections:
 ### BelongsToMorphed
 Use cases: image attached to (post, user, comment). Relation is similar to `belongsTo` but does not support eager loading, FKs or select quering. The relation must point to entity interface.
 
+```php
+/** @entity */
+class Image 
+{
+    // ...
+    
+    /** @belongsToMorphed(target = "ImageHolderInterface") */
+    public $imageHolder;
+}
+```
+
 Relation options include:
 
 Option      | Value  | Comment
@@ -55,7 +66,18 @@ morphKeyLength | int | The lenght of morph key, defaults to 32
 indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `true`
 
 ### MorphedHasOne
-Declared the ability to own the entity from multiple entity types (example user/post/comment has image). The relation must point to entity interface.
+Declared the ability to own the entity from multiple entity types (example user/post/comment has image). The relation must point to entity role or class.
+
+```php
+/** @entity */
+class User 
+{
+    // ...
+    
+    /** @morphedhasOne(target = "Image") */
+    public $image;
+}
+```
 
 Additional options include:
 
@@ -73,7 +95,18 @@ indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `tr
 > As in case with `belongsToMorphed` FKs are not supported. You can query or eager load this relation as any other relation types.
 
 ### MorphedHasMany
-Declared the ability to own the entity from multiple entity types (example post/article has comments). The relation must point to entity interface.
+Declared the ability to own the entity from multiple entity types (example post/article has comments). The relation must point to entity role or class.
+
+```php
+/** @entity */
+class User 
+{
+    // ...
+    
+    /** @morphedhasMany(target = "Image") */
+    public $images;
+}
+```
 
 Additional options include:
 
