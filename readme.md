@@ -47,7 +47,7 @@ Table of Content
   * ~~[Sources and Databases](advanced/source.md)~~
   * ~~[Usage in Long Running Applications](advanced/daemonizing.md)~~
   * ~~[Reconnects and Database Exceptions](advanced/exception.md)~~
-  * ~~[Single Table Inheritance](advanced/single-table-inheritance.md)~~
+  * [Single Table Inheritance](advanced/single-table-inheritance.md)
   * [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
   * [Caching](advanced/caching.md)
   * [Pagination](advanced/pagination.md)
