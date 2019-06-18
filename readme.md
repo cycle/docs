@@ -50,7 +50,6 @@ Table of Content
   * [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
   * [Caching](advanced/caching.md)
   * [Pagination](advanced/pagination.md)
-  * ~~[References and Proxies](advanced/references.md)~~
   * ~~[Column Wrappers](advances/column-wrappers.md)~~
   * [UUID as Primary Key](advanced/uuid.md)
   * [Timestamped Entities](advanced/timestamp.md)
