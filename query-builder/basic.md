@@ -64,7 +64,7 @@ $select->where([
 Such declaration is identical to:
 
 ```php
-$select->where(function($select) {
+$select->where(function(QueryBuilder $select) {
     $select->where('id', 'in', new Parameter([1, 2, 3]));
     $select->where('status', 'like', 'active');
 });
