@@ -4,7 +4,7 @@ using polymorphed relations associated to entity interface. Such approach suppor
 
 Relations points to external entity using complex key [role, outerKey].
 
-> [Avoid use](http://duhallowgreygeek.com/polymorphic-association-bad-sql-smell/) of theese relations when possible.
+> [Avoid use](http://duhallowgreygeek.com/polymorphic-association-bad-sql-smell/) of these relations when possible.
 
 ## Definition
 In order to associate entity with one of multiple external objects you have to define common interface first:
