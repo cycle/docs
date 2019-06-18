@@ -22,7 +22,7 @@ print_r($qb->resolve('id')); // table.column_name
 You can use this identificator inside your expressions:
 
 ```php
-$qb = $select->getQueryBuilder();
+$qb = $select->getBuilder();
 
 // to compare 2 columns
 $select->where(
