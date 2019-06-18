@@ -1,8 +1,10 @@
 # Morphed Relations
 In some cases you might want to associate your entity with any of external entities which support given type. This can be achieved
-using morphed relations associated to entity interface. Such approach supporded for `hasOne`, `hasMany` and `belongsTo` relations.
+using polymorphed relations associated to entity interface. Such approach supporded for `hasOne`, `hasMany` and `belongsTo` relations.
 
 Relations points to external entity using complex key [role, outerKey].
+
+> Avoid use of theese relations when possible.
 
 ## Definition
 In order to associate entity with one of multiple external objects you have to define common interface first:
