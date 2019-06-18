@@ -29,7 +29,7 @@ Table of Contents
 * Query Builder
   * [Basics](query-builder/basic.md)
   * [Relations](query-builder/relations.md)
-  * [Complex Conditions and Expressions](query-builder/complex.md)
+  * [Complex Queries](query-builder/complex.md)
   * [Security](query-builder/security.md)
 * Advanced
   * [Schema](advanced/schema.md)
