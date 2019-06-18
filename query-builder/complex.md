@@ -14,7 +14,7 @@ You are able to use expressions in place of operators or column names. Please no
 To resolve name of column you must gain access to `QueryBuilder` instance available thought `getBuilder` method of `Select` object:
 
 ```php
-$qb = $select->getQueryBuilder();
+$qb = $select->getBuilder();
 
 print_r($qb->resolve('id')); // table.column_name
 ```
