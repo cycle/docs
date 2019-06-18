@@ -62,6 +62,30 @@ WHERE "user"."balance" > "user_orders"."total" AND "user_orders"."status" = 'pen
 
 > You can also use methods `groupBy` on your `Select` object to create more complex conditions.
 
+## Low level queries
+If you want to run complex selection or select only particular columns you can modify underlying query direcly:
+
+```php
+$query = $select->buildQuery();
+
+$query
+    ->columns('id', new Expression('SUM(balance)'))
+    ->groupBy('id');
+
+print_r($query->fetchAll());
+```
+
+The produced query will look like:
+
+```sql
+SELECT
+  "id", SUM("balance")
+FROM "users" AS "user"
+  GROUP BY "id"
+```
+
+> Use `resolve` method to obtain fully qualified column names.
+
 ## Injecting Queries
 It is possible to inject query into another query. In this case you must obtain an instance of entity query first, it can be done
 by calling method `buildQuery()` of `Select` object.
@@ -73,10 +97,12 @@ $users = $orm->getRepository(User::class)->select();
 $orders = $orm->getRepository(Order::class)->select();
 
 // only orders of specific user (fallback to native column name)
-$orders->where('user_id', new Expression($users->getBuilder()->resolve('id')));
+$sumOrders = $orders->where('user_id', new Expression($users->getBuilder()->resolve('id')))->buildQuery();
+
+$sumOrders->columns(new Expression('SUM('. $orders->getBuilder()->resolve('total') .')'));
 
 $users->where(
-    $orders->buildQuery(),
+    $sumOrders,
     '>=',
     new Expression($users->getBuilder()->resolve('balance'))
 );
@@ -86,13 +112,13 @@ The produced SQL will look like:
 
 ```sql
 SELECT
-   ...
+    ...
 FROM "users" AS "user"
-WHERE (
-  SELECT
-      "order"."id" AS "c0", "order"."total" AS "c1", "order"."status" AS "c2", "order"."user_id" AS "c3"
-  FROM "orders" AS "order"
-      WHERE "order"."user_id" = "user"."id"
+  WHERE (
+    SELECT
+    SUM("order"."total")
+    FROM "orders" AS "order"
+    WHERE "order"."user_id" = "user"."id"
   ) >= "user"."balance"
 ```
 
