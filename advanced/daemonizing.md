@@ -43,9 +43,24 @@ for ($i = 0; $i < 100; $i++) {
         $u->status = 'disabled';
         $t->persist($u);
     }
-
     $t->run();
 
     $orm->getHeap()->clean();
+}
+```
+
+## Handling Exceptions
+In some cases you might experience the connection drop to your database. If disconnect happens outside of the transaction Spiral\Database will attempt to automatically reconnect. However, connection issues during the transaction would throw exception `Spiral\Database\Exception\DatabaseException` (more specificially `Spiral\Database\Exception\Statement\ConnectionException`).
+
+Failures in transaction would not affect ORM Heap (EntityManager), this allows you manually reconnect to database and retry:
+
+```php
+try {
+   $t->run();
+} catch (ConnectionException $e) {
+   sleep(1);
+   
+   // try again?
+   $t->run();
 }
 ```
