@@ -44,7 +44,7 @@ Table of Contents
   * [Constrains](advanced/constrain.md)
   * ~~[Node Parser](advanced/node-parser.md)~~
   * ~~[Sources and Databases](advanced/source.md)~~
-  * ~~[Usage in Long Running Applications](advanced/daemonizing.md)~~
+  * [Usage in Long Running Applications](advanced/daemonizing.md)
   * [Single Table Inheritance](advanced/single-table-inheritance.md)
   * [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
   * [Caching](advanced/caching.md)
