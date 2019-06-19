@@ -57,9 +57,3 @@ Table of Contents
   * ~~[Configuring Schema Builder](advanced/schema-builder.md)~~
   * ~~[Testing](advanced/testing.md)~~
   * [Limitations](advanced/limitations.md)
-* Components
-  * ~~[DataMapper Core](component/core.md)~~
-  * ~~[Schema Builder](component/schema-builder.md)~~
-  * ~~[Annotation Parser](component/annotated.md)~~
-  * ~~[Migrations](component/migrations.md)~~
-  * ~~[Proxy Factory](component/proxy-factory.md)~~
