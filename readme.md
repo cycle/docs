@@ -53,7 +53,7 @@ Table of Contents
   * [UUID as Primary Key](advanced/uuid.md)
   * [Timestamped Entities](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
-  * ~~[Syncronizing Database Schema](advanced/sync-schema.md)~~
   * ~~[Configuring Schema Builder](advanced/schema-builder.md)~~
+  * ~~[Syncronizing Database Schema](advanced/sync-schema.md)~~
   * ~~[Testing](advanced/testing.md)~~
   * [Limitations](advanced/limitations.md)
