@@ -1,5 +1,5 @@
 # Quick Start
-This guide provides a quick overview of ORM installation, configuration process and an example using an annotateed entity. Other sections of the documentation will provide deeper insign of various use-cases.
+This guide provides a quick overview of ORM installation, configuration process and an example using an annotated entity. Other sections of the documentation will provide deeper insign of various use-cases.
 
 ## Requirements
   * PHP7.1+
