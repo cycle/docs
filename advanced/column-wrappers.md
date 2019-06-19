@@ -167,4 +167,4 @@ class Uuid implements ValueInterface
 
 Now, Uuid column will be stored in a blob form.
 
-> You can also implement Expression or Parameter interfaces in your column wrapper to implement more complex logic.
+> You can also implement Expression or Parameter interfaces in your column wrapper to achieve more complex logic.
