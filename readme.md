@@ -40,7 +40,7 @@ Table of Contents
   * ~~[Commands and Linked Contexts](advanced/command.md)~~
   * [Entity Iterator](advanced/iterator.md)
   * [Collections](advanced/collections.md)
-  * ~~[References, Promises and Proxies](advanced/promise.md)~~
+  * ~~[References and Proxies](advanced/promise.md)~~
   * [Constrains](advanced/constrain.md)
   * ~~[Node Parser](advanced/node-parser.md)~~
   * ~~[Sources and Databases](advanced/source.md)~~
