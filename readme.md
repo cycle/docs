@@ -49,7 +49,7 @@ Table of Contents
   * [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
   * [Caching](advanced/caching.md)
   * [Pagination](advanced/pagination.md)
-  * ~~[Column Wrappers](advances/column-wrappers.md)~~
+  * [Column Wrappers](advances/column-wrappers.md)
   * [UUID as Primary Key](advanced/uuid.md)
   * [Timestamped Entities](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
