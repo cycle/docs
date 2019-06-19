@@ -52,7 +52,7 @@ class Uuid
 > Please note that, `typecast` method will receive raw value content and database it's associated with. Make sure to implement `__toString`
 method on your wrapper to store it in database.
 
-## Assing to entity
+## Assign to entity
 To assign column wrapper to entity use column option `typecast`, you can specify typecast as function name, method name (:: separater) or 
 class name which defines static method typecast:
 
