@@ -36,7 +36,7 @@ $t->run();
 
 > You must use entity role in reference.
 
-If you use references ofter it might be convinient to create custom object for such purpose:
+If you use references often it might be convinient to create custom object for such purpose:
 
 ```php
 use Cycle\ORM\Promise\ReferenceInterface;
