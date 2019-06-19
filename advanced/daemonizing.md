@@ -2,6 +2,9 @@
 Cycle ORM attemts to simplify the usage of library in daemonized applications, such as PHP workers running under RoadRunner.
 ORM provides you multiple options to avoid memory leaks (same approach can be used for batch operations).
 
+## Connection Configuration
+Make sure to enable `reconnect` option in your database connection. Read more about database configuration [here](/basic/connect.md).
+
 ## Cloning ORM
 First approach is based on the idea of creating separate ORM instance for each user request, each of cloned ORM will have it's own
 `Heap` which will be erased automatically by PHP GC:
