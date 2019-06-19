@@ -1,5 +1,5 @@
 # Usage in Long Running Applications
-Cycle ORM attemts to simplify the usage of library in daemonized applications, such as PHP workers running under RoadRunner.
+Cycle ORM attemts to simplify the usage of library in daemonized applications such as PHP workers running under RoadRunner, Swoole and etc.
 ORM provides you multiple options to avoid memory leaks (same approach can be used for batch operations).
 
 ## Connection Configuration
