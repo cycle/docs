@@ -41,7 +41,7 @@ $migrator = new Migrations\Migrator(
     $config
     $dbal,
     $this->dbal,
-    new Migrations\FileRepository($config, new Spiral\Core\Container())
+    new Migrations\FileRepository($config)
 );
 
 // Init migration table
