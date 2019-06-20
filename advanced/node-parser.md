@@ -55,7 +55,7 @@ The query will return results in a form: [user.id, user.balance, order.id, order
 ]
 ```
 
-Since both tables are merged in one query we have to create and link sub node (array):
+Since both tables are merged in one query we have to create and join sub node (array):
 
 ```php
 $root = new RootNode(
