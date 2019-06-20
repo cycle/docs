@@ -37,7 +37,7 @@ Table of Contents
   * [Mappers](advanced/mapper.md)
   * [Custom Mappers](advanced/custom-mapper.md)
   * [Transactions (Unit of Work)](advanced/transaction.md)
-  * ~~[Commands and Linked Contexts](advanced/command.md)~~
+  * [Commands and Linked Contexts](advanced/command.md)
   * [Entity Iterator](advanced/iterator.md)
   * [Collections](advanced/collections.md)
   * [References and Proxies](advanced/promise.md)
