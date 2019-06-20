@@ -185,6 +185,14 @@ tinyBinary  | ---                       | Tiny binary, same as "binary" for most
 longBinary  | ---                       | Long binary, same as "binary" for most of the databases. Differs only in MySQL.
 json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.
 
+## Enums
+ORM support enum type for all available drivers, you must define enum options using comma separator:
+
+```php
+/** @column(type = "enum(active,disabled)", default = "active") */
+protected $status;
+```
+
 ## Table Extension
 In some cases you might want to specificy additional table columns and indexes without the link to the entity properies. This can be achieved using `@table` annotation:
 
