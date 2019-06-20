@@ -53,7 +53,7 @@ $entity = $repository->findOne([
 ]);
 ```
 
-> You can read more about compound expressions [here](https://spiral-framework.com/guide/database-builders).
+> You can read more about compound expressions [here](/query-builder/complex.md).
 
 To find multiple entitied use:
 
@@ -71,7 +71,7 @@ to low level method `select` which gives you ability to compile more complex que
 $result = $repository->select()->where('balance', '>', 1)->load('address')->fetchAll();
 ```
 
-> It's recommended to avoid usage of `select` method outside of repository classes and instead expose [custom](repository/custom.md) find methods. 
+> It's recommended to avoid usage of `select` method outside of repository classes and instead expose [custom](/basic/respository.md) find methods. 
 
 > You can read more about methods available in select queries [here](https://spiral-framework.com/guide/database-builders).
 
