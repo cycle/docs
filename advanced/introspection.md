@@ -93,4 +93,4 @@ foreach ($schema->getColumns() as $column) {
 
 > Some types can be mapped incorrectly if the table was created outside migrations or ORM.
 
-You can find a complete list of available abstract types [here](/database/declaration.md).
+You can find a complete list of available abstract types [here](/advanced/declaration.md).
