@@ -1,6 +1,6 @@
 # Node Parser
 Cycle ORM provides convinient* way to convert flat structures into data trees. Parser can work using one large query or multiple queries
-using identical approach. Parses work with numeric arrays.
+using identical approach. Parser work with numeric arrays.
 
 > This section is intended for advanced scenarios, make sure you can't achieve given flexibility using default instuments before jumping to this approach.
 
