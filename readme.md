@@ -42,7 +42,7 @@ Table of Contents
   * [Collections](advanced/collections.md)
   * [References and Proxies](advanced/promise.md)
   * [Constrains](advanced/constrain.md)
-  * ~~[Node Parser](advanced/node-parser.md)~~
+  * [Node Parser](advanced/node-parser.md)
   * [Usage in Long Running Applications](advanced/daemonizing.md)
   * [Single Table Inheritance](advanced/single-table-inheritance.md)
   * [Dynamic Schema (StdClass)](advanced/dynamic-schema.md)
