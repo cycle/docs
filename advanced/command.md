@@ -95,10 +95,14 @@ Besided sequences you also have multiple system commands which can be used to cr
 You can use Nil command to state that no changes must be made:
 
 ```php
+use Cycle\ORM\Command\Branch;
+
+// ...
+
 public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
 {
     // disable create
-    return new Nil();
+    return new Branch\Nil();
 }
 ```
 
@@ -106,14 +110,15 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 In some cases you migth want to execute command or branch of commands using some external condition, you can use `Condition` command for this purpose:
 
 ```php
-use Cycle/ORM/Command/Branch;
+use Cycle\ORM\Command\Branch;
+
 // ...
 
 public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
 {
     $cc = parent::queueCreate($entity, $node, $state);
     
-    return new Branch/Condition($cc, function() {
+    return new Branch\Condition($cc, function() {
         return mt_rand(1, 0) === 1; // randomly drop some commands, don't do it.
     });
 }
