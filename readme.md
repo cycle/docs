@@ -34,7 +34,7 @@ Table of Contents
 * Advanced
   * [Schema](advanced/schema.md)
   * [Entity, Heap, Node, State](advanced/entity.md)
-  * ~~[Mappers](advanced/mapper.md)~~
+  * [Mappers](advanced/mapper.md)
   * [Custom Mappers](advanced/custom-mapper.md)
   * ~~[Transactions (Unit of Work)](advanced/transaction.md)~~
   * ~~[Commands and Linked Contexts](advanced/command.md)~~
