@@ -52,6 +52,8 @@ Table of Contents
   * [UUID as Primary Key](advanced/uuid.md)
   * [Timestamped Entities](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
+  * [Database Schema Introspection](advanced/introspection.md)
+  * [Database Schema Declaration](advanced/declaration.md)
   * ~~[Configuring Schema Builder](advanced/schema-builder.md)~~
   * ~~[Syncronizing Database Schema](advanced/sync-schema.md)~~
   * ~~[Testing](advanced/testing.md)~~
