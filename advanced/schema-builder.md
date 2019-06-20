@@ -64,6 +64,7 @@ You can extend this pipeline by implementing your own generator:
 
 ```php
 namespace Cycle\Schema;
+
 interface GeneratorInterface
 {
     /**
