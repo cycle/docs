@@ -1,7 +1,7 @@
 Table of Contents
 ----------------
 
-* Cycle
+* Getting Started
   * [About Cycle ORM](intro/about.md)
   * [**Quick Start**](intro/quick-start.md)
   * [Contributing](contributing.md)
