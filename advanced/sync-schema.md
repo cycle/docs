@@ -37,12 +37,7 @@ $config = new Migrations\Config\MigrationConfig([
     'table'     => 'migrations'                 // database table to store migration status
 ]);
 
-$migrator = new Migrations\Migrator(
-    $config
-    $dbal,
-    $this->dbal,
-    new Migrations\FileRepository($config)
-);
+$migrator = new Migrations\Migrator($config, $dbal, new Migrations\FileRepository($config));
 
 // Init migration table
 $migrator->configure();
