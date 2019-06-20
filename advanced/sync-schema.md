@@ -41,14 +41,7 @@ $migrator = new Migrations\Migrator(
     $config
     $dbal,
     $this->dbal,
-    new Migrations\FileRepository(
-        $config,
-        new Spiral\Core\Container(),                       // to resolve migrations dependencies
-        new Tokenizer(new TokenizerConfig([
-            'directories' => $config->getDirectory(),      // index migration classes
-            'exclude'     => [],
-        ]))
-    )
+    new Migrations\FileRepository($config, new Spiral\Core\Container())
 );
 
 // Init migration table
