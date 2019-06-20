@@ -2,6 +2,8 @@
 Every persist operation with entity must be performed via Transaction object. This object will rely on `Heap` associated with given ORM
 and will request each entity mapper and relation to issue set of persist commands in a form of command chain.
 
+> All transaction are treated as disposable, you can create and delete them as you need.
+
 ## TransactionInterface
 ORM provides convinient class to manage transactions, however, it is recommended to couple your code with underlying interface for 
 the simplicity and easier testing going forward:
