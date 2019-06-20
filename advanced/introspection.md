@@ -11,7 +11,7 @@ if ($database->hasTable('users')) {
 }
 ```
 
-> Read how to get Database instances [here](/databases/overview.md).
+> Read how to get Database instances [here](/basic/connect.md).
 
 Receive all database tables (array of `Spiral\Database\Table`):
 
