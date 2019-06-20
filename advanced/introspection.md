@@ -32,7 +32,7 @@ foreach ($database->getTables() as $table) {
 ```
 
 ## Reading table properties using AbstractTable
-The AbstractTable provides low level access to table information such as column types (internal and abstract), indexes, foreign keys and etc. You can use this information to perform database export, build your own ORM or migration mechanism (see [schema declaration](/database/declaration.md)).
+The AbstractTable provides low level access to table information such as column types (internal and abstract), indexes, foreign keys and etc. You can use this information to perform database export, build your own ORM or migration mechanism (see [schema declaration](/advanced/declaration.md)).
 
 Table primary keys:
 
