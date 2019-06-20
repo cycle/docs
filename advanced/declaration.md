@@ -4,7 +4,7 @@ Spiral/Database ship with included mechanism to declare table structures, FKS an
 > Practically, table changes can be executed using external migration system.
 
 ## Principle of Work
-Before any operation/declaration can be applied to table schema, DBAL will load currently existed structure from database and [normalize it into internal format](/database/introspection.md). 
+Before any operation/declaration can be applied to table schema, DBAL will load currently existed structure from database and [normalize it into internal format](/advanced/introspection.md). 
 
 As result, you are allowed to apply modification to table schema using declarative way instead of imperative, once schema **save** are requested - DBAL will generate set of creation and altering operations based on difference between declared and existed schemas. 
 
@@ -87,8 +87,6 @@ CREATE TABLE "secondary_new_table" (
 ```
 
 > Note, by default every column stated as nullable. Use `nullable` method to overwrite it (see below).
-
-> Use `-vv` CLI debug mode or [Profiler](/modules/profiler.md) module to find out what SQL code is being generated.
 
 Once schema is created you can add new columns into it by only declaring them in your code:
 
