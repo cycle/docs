@@ -1,6 +1,8 @@
 # Dynamic Entity Schema
 Cycle ORM does not limit developer ability to carry entity information using unique classes, it is possible to use specifically crafted model/models to represent entity data in it's own way. ORM support an ability to carry information using StdClass objects out of the box, it is also possible to combine classic annotated entities and StdClasses within one ORM scope.
 
+You can also change ORM schema at runtime.
+
 ## StdMapper
 In order to represent entity as StdClass you have to change it's mapper from default `Cycle\ORM\Mapper\Mapper` to `Cycle\ORM\Mapper\StdMapper`.
 This can be done by either defining your schema using schema builder or by writing schema manually.
