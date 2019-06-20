@@ -31,3 +31,17 @@ $select->orderBy('posts.id', 'DESC');
 ```
 
 > Please note, that usage of `limit` and `offset` methods only recommended in combination with `distinct`.
+
+## Loading Relations
+Cycle ORM can pre-load most of relation types via `load` method called on select:
+
+```php
+$select->load('posts');
+```
+
+The load method will auatomically pick appropriate way to load related data (either using JOIN or WHERE IN approaches). You can also
+use this method to load any relation level via dot notation:
+
+```php
+$select->load('posts.comments.author');
+```
