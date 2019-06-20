@@ -36,7 +36,7 @@ Table of Contents
   * [Entity, Heap, Node, State](advanced/entity.md)
   * [Mappers](advanced/mapper.md)
   * [Custom Mappers](advanced/custom-mapper.md)
-  * ~~[Transactions (Unit of Work)](advanced/transaction.md)~~
+  * [Transactions (Unit of Work)](advanced/transaction.md)
   * ~~[Commands and Linked Contexts](advanced/command.md)~~
   * [Entity Iterator](advanced/iterator.md)
   * [Collections](advanced/collections.md)
