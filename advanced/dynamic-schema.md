@@ -32,7 +32,7 @@ $entity->getFields()->set('id', $field);
 
 
 //
-// And use this sample code to check the result.
+// Add entity defintion into registry.
 //
 $registry = new Registry($this->dbal);
 $registry->register($e)->linkTable($e, 'default', 'user');
