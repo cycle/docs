@@ -41,7 +41,7 @@ $registry->register($e)->linkTable($e, 'default', 'user');
 //
 // Compile the ORM schema.
 //
-$schema = (new Compiler())->compile($r, [new RenderTables()]);
+$schema = (new Compiler())->compile($r, []);
 
 print_r($schema);
 
