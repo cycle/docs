@@ -32,10 +32,11 @@ $entity->getFields()->set('id', $field);
 
 
 //
-// Add entity defintion into registry.
+// Add entity definition into registry.
 //
 $registry = new Registry($this->dbal);
 $registry->register($e)->linkTable($e, 'default', 'user');
+
 
 //
 // Compile the ORM schema.
