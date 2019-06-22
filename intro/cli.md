@@ -30,6 +30,12 @@ $config = Bootstrap\Config::forDatabase(
     ''                    // password
 );
 
+// $config = Bootstrap\Config::forDatabase(
+//    'mysql:host=127.0.0.1;dbname=database', // connection dsn
+//    'mysql',                   // username
+//    'mysql'                    // password
+// );
+
 // which directory contains our entities
 $config = $config->withEntityDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src');
 
