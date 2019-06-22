@@ -39,6 +39,6 @@ It is not reliable to use Cycle with MySQL MyISAM engine as it does not support 
 Please note that turning cascade option off completelly disables relation `store` sequence. This makes uni-directinal relations useles, only use this option if relation is concidered "read-only".
 
 ## Select->fetchOne() behaviour
-Method `fetchOne` of Select will create query without specified `LIMIT` value in order to avoid data corruption on joined data. Make sure to manually set the limit (in case if your selection allows that) or use proper selection constrain.
+Method `fetchOne` of Select will create query without specified `LIMIT` value in order to avoid data corruption on joined data. Make sure to manually set the limit or use proper selection constrain.
 
 > `LIMIT 1` is set in Repository `findOne()`.
