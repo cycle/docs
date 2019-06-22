@@ -1,5 +1,5 @@
 # Direct Database Queries
-You can use query builders not only to select entities but also to perform custom SQL queries.
+You can always talk to database directly without any ORM abstraction at top.
 
 ## Get Access to Entity Database
 In order to receive access to the database specific to the entity you can either call `$dbal->database()` or request it via Source object
