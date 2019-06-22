@@ -40,3 +40,5 @@ Please note that turning cascade option off completelly disables relation `store
 
 ## Select->fetchOne() behaviour
 Method `fetchOne` of Select will create query without specified `LIMIT` value in order to avoid data corruption on joined data. Make sure to manually set the limit (in case if your selection allows that) or use proper selection constrain.
+
+> `LIMIT 1` is set in Repository `findOne()`.
