@@ -19,7 +19,7 @@ $users->orderBy($userParam, $userDirection); // possible SQL injection
 > Same goes for aggregation methods `sum`, `avg`, `min`, `max`.
 
 ## Expression and Fragments
-None of user input must be used in `Fragment` and `Expression` wrappers:
+**None** of user input must be used in `Fragment` and `Expression` wrappers:
 
 ```php
 $users->where($name, '=', new Expression("CONCAT($userValue)")); // possible SQL injection
