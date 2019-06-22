@@ -1,4 +1,4 @@
-# Using Console Toolkit
+# Using Bootstrap Toolkit
 You can install Cycle using Console toolkit for quick integrations. This tutorial assumes that your entity codebase is located in 
 `src/` directory and accessible by Composer Autoloader.
 
@@ -45,6 +45,7 @@ $config = $config->withEntityDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src');
 $orm = Bootstrap\Bootstrap::fromConfig($config);
 ```
 
+## Console Commands
 To enable console commands place file in `config/cycle-cli.php`:
 
 ```php
@@ -53,8 +54,6 @@ To enable console commands place file in `config/cycle-cli.php`:
 require_once 'bootstrap.php';
 return $orm;
 ```
-
-You can create your entities now.
 
 ## Available Console commands
 To display list of found entities:
