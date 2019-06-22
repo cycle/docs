@@ -10,6 +10,7 @@ Table of Contents
   * [Installation](basic/install.md)
   * [Connect to Database](basic/connect.md)
   * [Create, Update, Delete](basic/crud.md)
+  * [Direct Database Queries](basic/direct.md)
   * [Select](basic/select.md)
   * [Custom Repositories](basic/repository.md)
   * [Simple Relation](basic/relation.md)
@@ -28,7 +29,7 @@ Table of Contents
   * [Morphed Relations](relation/morphed.md)
 * Query Builder
   * [Basics](query-builder/basic.md)
-  * [DBAL Insert, Update, Delete](query-builder/crud.md)
+  * [Extended Builder Usage](query-builder/extended.md)
   * [Relations](query-builder/relations.md)
   * [Complex Queries](query-builder/complex.md)
   * [Security](query-builder/security.md)
