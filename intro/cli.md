@@ -45,6 +45,6 @@ To enable console commands place file in `config/cycle-cli.php`:
 ```php
 <?php
 // config/cycle-cli.php
-require_once 'bootstrap.php';
+require_once '../bootstrap.php';
 return $orm;
 ```
