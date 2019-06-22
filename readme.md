@@ -28,6 +28,7 @@ Table of Contents
   * [Morphed Relations](relation/morphed.md)
 * Query Builder
   * [Basics](query-builder/basic.md)
+  * [DBAL Insert, Update, Delete](query-builder/crud.md)
   * [Relations](query-builder/relations.md)
   * [Complex Queries](query-builder/complex.md)
   * [Security](query-builder/security.md)
