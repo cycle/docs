@@ -80,3 +80,5 @@ To display the schema of a specific table:
 ```
 $ /vendor/bin/cycle db:table {table-name}
 ```
+
+> You can execute commands with `-vvv` flag to display SQL queries.
