@@ -1,4 +1,4 @@
-# DBAL Insert, Update, Delete
+# Direct Database Queries
 You can use query builders not only to select entities but also to perform custom SQL queries.
 
 ## Get Access to Entity Database
