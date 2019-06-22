@@ -32,10 +32,10 @@ $config = Bootstrap\Config::forDatabase(
 $config = $config->withEntityDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src');
 
 // log all SQL messages to STDERR
-$config = $config->withLogger(new Bootstrap\StderrLogger(true));
+// $config = $config->withLogger(new Bootstrap\StderrLogger(true));
 
 // enable schema cache (use /vendor/bin/cycle schema:update to flush cache), keep commented to disable caching
-//$config = $config->withCacheDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'cache');
+// $config = $config->withCacheDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'cache');
 
 $orm = Bootstrap\Bootstrap::fromConfig($config);
 ```
