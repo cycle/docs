@@ -4,7 +4,7 @@ Table of Contents
 * Getting Started
   * [About Cycle ORM](intro/about.md)
   * [**Quick Start**](intro/quick-start.md)
-  * [Using Console Toolkit](intro/cli.md)
+  * [Even Quicker Start](intro/cli.md)
   * [Contributing](contributing.md)
   * [LICENSE](license.md)
 * Basics
