@@ -23,9 +23,9 @@ require_once "vendor/autoload.php";
 
 // single database
 $config = Bootstrap\Config::forDatabase(
-    'sqlite:database.db',
-    '',
-    ''
+    'sqlite:database.db', // connection dsn
+    '',                   // username
+    ''                    // password
 );
 
 // which directory contains our entities
@@ -47,4 +47,36 @@ To enable console commands place file in `config/cycle-cli.php`:
 // config/cycle-cli.php
 require_once '../bootstrap.php';
 return $orm;
+```
+
+You can create your entities now.
+
+## Available Console commands
+To display list of found entities:
+
+```
+$ /vendor/bin/cycle entity:list
+```
+
+To alter database schema to match entity declaration:
+
+```
+$ /vendor/bin/cycle schema:sync
+```
+
+To update Cycle without altering database schema (when cache is enabled):
+
+```
+$ /vendor/bin/cycle schema:update
+```
+
+To display list of available tables:
+```
+$ /vendor/bin/cycle db:list
+```
+
+To display the schema of a specific table:
+
+```
+$ /vendor/bin/cycle db:table {table-name}
 ```
