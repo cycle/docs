@@ -35,7 +35,7 @@ $orm = $orm->withSchema(new Schema($schema));
 > Make sure to point class locator the directory with your domain entities only as the indexation operation is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.
 
 ## Notes
-Annotations are made Doctrine-like as a well established pattern. In your annotations you can use lower-cased or upper-cased notations. Both examples are valid:
+Annotations are made Doctrine-like since it's well established pattern. In your annotations you can use lower-cased or upper-cased notations. Both examples are valid:
 
 ```php
 /**
@@ -48,3 +48,5 @@ Annotations are made Doctrine-like as a well established pattern. In your annota
  * @Entity 
  */
 ```
+
+> Please stick to one style within an application.
