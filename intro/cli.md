@@ -17,7 +17,6 @@ In order to enable Console Toolkit we have to define bootstrap file which will c
 ```php
 <?php
 // bootstrap.php
-declare(strict_types=1);
 
 use Cycle\Bootstrap;
 
