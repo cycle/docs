@@ -349,7 +349,7 @@ foreach ($select as $row) {
 You can implement ParameterInterface if you want to declare your own parameter wrappers with custom logic.
 
 ##### SQL Fragments and Expressions
-QueryBuilders allow you to replace some of where statements with custom SQL code or expression. Use `Spiral\Database\Injections\Fragment` and `Spiral\Database\Injections\Expression` for such purposes. 
+QueryBuilders allow you to replace some of where statements with custom SQL code or expression. Use `Spiral\Database\Injection\Fragment` and `Spiral\Database\Injection\Expression` for such purposes. 
 
 Use fragment to include SQL code into your query bypassing escaping:
 
