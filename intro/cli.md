@@ -2,8 +2,6 @@
 You can install Cycle using Console toolkit for quick integrations. This tutorial assumes that your entity codebase is located in 
 `src/` directory and accessible by Composer Autoloader.
 
-> Not intended for production usage.
-
 ## Install
 To install Console Toolkit:
 
