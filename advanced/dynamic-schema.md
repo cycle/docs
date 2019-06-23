@@ -154,8 +154,17 @@ $orm = new ORM(new Factory($dbm), new Schema([
         Schema::DATABASE    => 'default',
         Schema::TABLE       => 'users',
         Schema::PRIMARY_KEY => 'id',
-        Schema::COLUMNS     => ['id', 'name', 'created_at', 'updated_at'],
-        Schema::TYPECAST    => ['id' => 'int', 'created_at' => 'datetime', 'updated_at' => 'datetime'],
+        Schema::COLUMNS     => [
+            'id'         => 'id',         // property => column_name
+            'name'       => 'name',
+            'created_at' => 'created_at', 
+            'updated_at' => 'updated_at'
+        ],
+        Schema::TYPECAST    => [
+            'id'         => 'int', 
+            'created_at' => 'datetime', 
+            'updated_at' => 'datetime'
+        ],
         Schema::RELATIONS   => [],
     ],
 ]));
