@@ -104,3 +104,79 @@ $user = $orm->make('user', [/* fields* /]);
 ```
 
 > You can freely assign custom repositories and constrains to your entities.
+
+# Example
+Example demonstrates database schema declaration and running ORM with manually specified entity schema:
+
+```php
+<?php
+/**
+ * Spiral Framework.
+ *
+ * @license   MIT
+ * @author    Anton Titov (Wolfy-J)
+ */
+
+declare(strict_types=1);
+
+require_once "vendor/autoload.php";
+
+use Cycle\ORM\Factory;
+use Cycle\ORM\Mapper\StdMapper;
+use Cycle\ORM\ORM;
+use Cycle\ORM\Schema;
+use Cycle\ORM\Transaction;
+use Spiral\Database\Config\DatabaseConfig;
+use Spiral\Database\DatabaseManager;
+use Spiral\Database\Driver\SQLite\SQLiteDriver;
+
+$dbm = new DatabaseManager(new DatabaseConfig([
+    'default'     => 'default',
+    'databases'   => [
+        'default' => [
+            'connection' => 'sqlite',
+        ],
+    ],
+    'connections' => [
+        'sqlite' => [
+            'driver'     => SQLiteDriver::class,
+            'connection' => 'sqlite:database.db',
+            'username'   => '',
+            'password'   => '',
+        ],
+    ],
+]));
+
+// ensure schema
+$users = $dbm->database()->table('users')->getSchema();
+$users->primary('id');
+$users->string('name');
+$users->datetime('created_at');
+$users->datetime('updated_at');
+$users->save();
+
+$orm = new ORM(new Factory($dbm), new Schema([
+    'user' => [
+        Schema::MAPPER      => StdMapper::class,
+        Schema::DATABASE    => 'default',
+        Schema::TABLE       => 'users',
+        Schema::PRIMARY_KEY => 'id',
+        Schema::COLUMNS     => ['id', 'name', 'created_at', 'updated_at'],
+        Schema::SCHEMA      => [],
+        Schema::RELATIONS   => [],
+    ],
+]));
+
+$u = $orm->make('user', [
+    'name'       => 'test',
+    'created_at' => new DateTimeImmutable(),
+    'updated_at' => new DateTimeImmutable(),
+]);
+
+(new Transaction($orm))->persist($u)->run();
+
+print_r(
+    $orm->getRepository('user')
+        ->findAll()
+);
+```
