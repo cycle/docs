@@ -79,7 +79,7 @@ No entity can operate without some properties mapped to table columns. To map yo
 /** @entity */
 class User 
 {
-    /** $column(type = primary) */
+    /** @column(type = primary) */
     protected $id;
 }
 ```
@@ -92,7 +92,7 @@ By default, the entity properly will be mapped to the column with the same name 
 /** @entity */
 class User 
 {
-    /** $column(type = "primary") */
+    /** @column(type = "primary") */
     protected $id;
     
     /** @column(type = "string", name = "username") */
@@ -106,7 +106,7 @@ Some column types support additional arguments, such as length, values, etc.
 /** @entity */
 class User 
 {
-    /** $column(type = primary) */
+    /** @column(type = primary) */
     protected $id;
     
     /** @column(type = "string(32)") */
@@ -126,7 +126,7 @@ Use `default` option to specify the default value of the column:
 /** @entity */
 class User 
 {
-    /** $column(type = primary) */
+    /** @column(type = primary) */
     protected $id;
     
     /** @column(type = "enum(active,disabled)", default = "active") */
@@ -140,7 +140,7 @@ While adding new columns to the entities associated with non-empty tables you ar
 /** @entity */
 class User 
 {
-    /** $column(type = primary) */
+    /** @column(type = primary) */
     protected $id;
     
     /** @column(type = "string(64)", nullable = true) */
@@ -209,7 +209,7 @@ In some cases you might want to specificy additional table columns and indexes w
  */
 class User 
 {
-    /** $column(type = primary) */
+    /** @column(type = primary) */
     protected $id;
     
     /** @column(type ="string(32)") */
