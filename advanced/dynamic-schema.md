@@ -106,8 +106,6 @@ $user = $orm->make('user', [/* fields* /]);
 > You can freely assign custom repositories and constrains to your entities.
 
 # Example
-Example demonstrates database schema declaration and running ORM with manually specified entity schema:
-
 ```php
 <?php
 declare(strict_types=1);
