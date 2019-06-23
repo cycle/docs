@@ -31,7 +31,7 @@ To embedd entity to another object use `@embedd` annotation:
  */
 class User 
 {
-    /** $column(type = primary) */
+    /** @column(type = primary) */
     public $id;
     
     /** @embedd(target = Address) */
@@ -89,7 +89,7 @@ By default, all embedded entities will be loaded with parent object. To alter th
 /** @entity */
 class User 
 {
-    /** $column(type = primary) */
+    /** @column(type = primary) */
     public $id;
     
     /** @embedd(target = Address, load = lazy) */
