@@ -39,7 +39,16 @@ print_r($schema);
 $orm = $orm->withSchema(new Schema($schema));
 ```
 
-> Use SyncTable [generator](/advanced/schema-builder.md) to update your database schema.
+> Use SyncTable [generator](/advanced/schema-builder.md) to update your database schema. 
+
+Relations can also be configured usign schema builder:
+
+```php
+$entity->getRelations()->set(
+    'posts',
+    (new Relation())->setTarget('post')->setType('hasMany')
+);
+```
 
 ## Manual Schema Definition
 You can also define StdClass schema manually using set of constants exposed by `Cycle\ORM\Schema` and `Cycle\ORM\Relation` classes:
