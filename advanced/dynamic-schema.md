@@ -61,7 +61,7 @@ $orm = $orm->withSchema(new Schema([
         Schema::TABLE       => 'user',
         Schema::PRIMARY_KEY => 'id',
         Schema::COLUMNS     => ['id', 'email', 'balance'],
-        Schema::SCHEMA      => [],
+        Schema::TYPECAST    => ['id' => 'int', 'balance' => 'float'],
         Schema::RELATIONS   => [
             'comments' => [
                 Relation::TYPE   => Relation::HAS_MANY,
@@ -80,7 +80,7 @@ $orm = $orm->withSchema(new Schema([
         Schema::TABLE       => 'comment',
         Schema::PRIMARY_KEY => 'id',
         Schema::COLUMNS     => ['id', 'user_id', 'message'],
-        Schema::SCHEMA      => [],
+        Schema::TYPECAST    => ['id' => 'int'],
         Schema::RELATIONS   => [],
     ]
 ]));
