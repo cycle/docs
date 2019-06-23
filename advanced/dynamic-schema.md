@@ -1,4 +1,4 @@
-# Dynamic Entity Schema
+# Dynamic Mapping Schema
 Cycle ORM does not limit developer ability to carry entity information using unique classes, it is possible to use specifically crafted model/models to represent entity data in it's own way. ORM support an ability to carry information using StdClass objects out of the box, it is also possible to combine classic annotated entities and StdClasses within one ORM scope.
 
 You can also change ORM schema at runtime.
