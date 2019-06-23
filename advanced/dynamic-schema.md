@@ -141,7 +141,7 @@ $dbm = new DatabaseManager(new DatabaseConfig([
 ]));
 
 // ensure schema
-$users = $dbm->database()->table('users')->getSchema();
+$users = $dbm->database('default')->table('users')->getSchema();
 $users->primary('id');
 $users->string('name');
 $users->datetime('created_at');
