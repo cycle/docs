@@ -11,18 +11,13 @@ This can be done by either defining your schema using schema builder or by writi
 We can build our entities using entity definitions:
 
 ```php
-//
-// Lets create a new entity object.
-//
+// Lets create a new entity definition object.
 $e = new Entity();
 $e->setRole('user');
 $e->setMapper(Cycle\ORM\Mapper\StdMapper::class);
 
 
-//
-// And now we will try to add to it a new field that 
-// was not described in the original mapper.
-//
+// Declare primary field for the entity.
 $field = (new Field())
     ->setType('primary')
     ->setColumn('id')
@@ -31,16 +26,12 @@ $field = (new Field())
 $entity->getFields()->set('id', $field);
 
 
-//
 // Add entity definition into registry.
-//
 $registry = new Registry($this->dbal);
 $registry->register($e)->linkTable($e, 'default', 'user');
 
 
-//
 // Compile the ORM schema.
-//
 $schema = (new Compiler())->compile($r, []);
 
 print_r($schema);
