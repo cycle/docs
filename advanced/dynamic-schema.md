@@ -110,13 +110,6 @@ Example demonstrates database schema declaration and running ORM with manually s
 
 ```php
 <?php
-/**
- * Spiral Framework.
- *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
- */
-
 declare(strict_types=1);
 
 require_once "vendor/autoload.php";
@@ -162,7 +155,7 @@ $orm = new ORM(new Factory($dbm), new Schema([
         Schema::TABLE       => 'users',
         Schema::PRIMARY_KEY => 'id',
         Schema::COLUMNS     => ['id', 'name', 'created_at', 'updated_at'],
-        Schema::SCHEMA      => [],
+        Schema::TYPECAST    => ['id' => 'int', 'created_at' => 'datetime', 'updated_at' => 'datetime'],
         Schema::RELATIONS   => [],
     ],
 ]));
