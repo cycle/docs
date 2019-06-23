@@ -1,6 +1,8 @@
 # Belongs To
 Belongs To relation defines that entity is owned by a related entity on the exclusive matter. Example: post belongs to the author, comment belongs to post. Most of `belongsTo` relations can be created using `inverse` option of the declared `hasOne` or `hasMany` relation.
 
+Entity will be always persisted after related entity.
+
 ## Definition
 To define Belongs To relation using annotated enties extension use:
 
