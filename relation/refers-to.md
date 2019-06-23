@@ -2,6 +2,7 @@
 Refers To relation is very similar to Belongs To but must be used in cases when multiple relations can exist to a related entity
 (including cyclic relations). Example: a user has many comments, the user refers to the last comment
 
+Entity will be persisted before related entity.
 
 ## Definition
 Using annotated extension:
