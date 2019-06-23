@@ -1,5 +1,5 @@
 # Commands and Linked Contexts
-All of the persist operations are performed using set of linked commands. Commands responsible for execution, rollback and change commitment and can depend on values provided by entity state of other command.
+All of the persist operations are performed using set of linked commands. Commands responsible for execution, rollback and change commitment and can depend on values provided by entity state or other command.
 
 ## Command Interface
 To understand how commands work let's review the underlying interface first:
