@@ -33,3 +33,6 @@ $orm = $orm->withSchema(new Schema($schema));
 ```
 
 > Make sure to point class locator the directory with your domain entities only as the indexation operation is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.
+
+## Annotation Syntax
+Cycle annotations are based on Doctrine Lexer, you are free to use syntax similar to Doctrine. Both variant `@entity` and `@Entity` will work.
