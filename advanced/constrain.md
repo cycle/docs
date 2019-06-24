@@ -23,7 +23,7 @@ Constain can be assigned to any entity via schema, in case of `annotated` extens
 
 ```php
 /**
- * @entity(constrain="NotDeletedConstrain")
+ * @Entity(constrain="NotDeletedConstrain")
  */
 class User 
 {

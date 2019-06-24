@@ -5,17 +5,17 @@ and declare relations/columns specific to the child.
 ## Definition
 
 ```php
-/** @entity */
+/** @Entity */
 class Post 
 {
-    /** @column(type=primary) */
+    /** @Column(type=primary) */
     public $id;
 }
 
-/** @entity */
+/** @Entity */
 class Article extends Post
 {
-    /** @column(type=string) */
+    /** @Column(type=string) */
     public $articleTitle;
 }
 ```

@@ -4,37 +4,37 @@ ORM can simplify the definition of large entities by proving the ability to spli
 > Embedded entities does not support relations at the moment.
 
 ## Definition
-To define embeddable entity use `@embeddable` annotation. As with `@entity` you are able to define custom mapper or associate additional columns/indexes using `@table` annotation.
+To define embeddable entity use `@Embeddable` annotation. As with `@Entity` you are able to define custom mapper or associate additional columns/indexes using `@Table` annotation.
 
 ```php
-/** @embeddable */
+/** @Embeddable */
 class Address 
 {
-    /** @column(type = string) */ 
+    /** @Column(type = string) */ 
     public $country;
   
-    /** @column(type = string) */ 
+    /** @Column(type = string) */ 
     public $city;
   
-    /** @column(type = string) */ 
+    /** @Column(type = string) */ 
     public $address;
 }
 ```
 
 > You do not need to define `primary` column, this column will be inherited from parent entity.
 
-To embedd entity to another object use `@embedd` annotation:
+To embedd entity to another object use `@Embedd` annotation:
 
 ```php
 /**  
- * @entity
+ * @Entity
  */
 class User 
 {
-    /** @column(type = primary) */
+    /** @Column(type = primary) */
     public $id;
     
-    /** @embedd(target = Address) */
+    /** @Embedd(target = Address) */
     public $address;
 }
 ```
@@ -57,19 +57,19 @@ $user->address->country = 'USA';
 
 ## Column Mapping
 By default, all embedded entity column will be stored in owning entity table without any prefix, you can define custom prefix using
-`columnPrefix` option of `@embeddable` annotation:
+`columnPrefix` option of `@Embeddable` annotation:
 
 ```php
-/** @embeddable(columnPrefix = "address_") */
+/** @Embeddable(columnPrefix = "address_") */
 class Address 
 {
-    /** @column(type = string) */ 
+    /** @Column(type = string) */ 
     public $country;
   
-    /** @column(type = string) */ 
+    /** @Column(type = string) */ 
     public $city;
   
-    /** @column(type = string) */ 
+    /** @Column(type = string) */ 
     public $address;
 }
 ```
@@ -83,16 +83,16 @@ $select->where('address.country', 'USA');
 ```
 
 ## Eager and Lazy Loading
-By default, all embedded entities will be loaded with parent object. To alter this behaviour use `load` option of `@embedd` relation annotation:
+By default, all embedded entities will be loaded with parent object. To alter this behaviour use `load` option of `@Embedd` relation annotation:
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
-    /** @column(type = primary) */
+    /** @Column(type = primary) */
     public $id;
     
-    /** @embedd(target = Address, load = lazy) */
+    /** @Embedd(target = Address, load = lazy) */
     public $address;
 }
 ```

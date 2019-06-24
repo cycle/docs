@@ -5,12 +5,12 @@ The Has One relation defines that entity exclusively owns another entity in a fo
 To define Has One relation using annotated enties extension use:
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
     
-    /** @hasOne(target = "Address") */
+    /** @HasOne(target = "Address") */
     protected $address;
 }
 ```

@@ -5,12 +5,12 @@ The Has Many relation defines that entity exclusively owns multiple other entiti
 To define Has Many relation using annotated enties extension use:
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
     
-    /** @hasMany(target = "Post") */
+    /** @HasMany(target = "Post") */
     protected $posts;
 }
 ```
@@ -20,12 +20,12 @@ In order to use a newly created entity, you must define the collection to store 
 ```php
 use use Doctrine\Common\Collections\ArrayCollection;
 
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
     
-    /** @hasMany(target = "Post") */
+    /** @HasMany(target = "Post") */
     protected $posts;
 
     public function __construct()
@@ -174,7 +174,7 @@ class User
 {
     // ...
     
-    /** @hasMany(target = "Post", where={"published": true}) */
+    /** @HasMany(target = "Post", where={"published": true}) */
     protected $posts;
 
     public function __construct()

@@ -7,11 +7,11 @@ To define specific column as primary key use annotation option `primary`:
 
 ```php
 /**
- * @entity
+ * @Entity
  */
 class User 
 {
-    /** @column(type = "string(36)", primary = true) */
+    /** @Column(type = "string(36)", primary = true) */
     protected $uuid;
     
     public function getUUID(): string
@@ -44,15 +44,15 @@ class UUIDMapper extends Mapper
 ```
 
 ## Link Entity and Mapper
-In order to associate mapper and entity use `@entity` option mapper:
+In order to associate mapper and entity use `@Entity` option mapper:
 
 ```php
 /**
- * @entity(mapper="Mapper\UUIDMapper")
+ * @Entity(mapper="Mapper\UUIDMapper")
  */
 class User 
 {
-    /** @column(type = "string(36)", primary = true) */
+    /** @Column(type = "string(36)", primary = true) */
     protected $uuid;
 }
 ```

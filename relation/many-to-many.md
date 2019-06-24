@@ -7,12 +7,12 @@ The relation provides access to an intermediate object on all the steps includin
 To define Many To Many relation using annotated enties extension use (attention, make sure to create pivot entity):
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
     
-    /** @manyToMany(target = "Tag", though = "UserTag") */
+    /** @ManyToMany(target = "Tag", though = "UserTag") */
     protected $tags;
 }
 ```
@@ -23,12 +23,12 @@ In order to use a newly created entity, you must define the collection to store 
 ```php
 use use Cycle\ORM\Relation\Pivoted\PivotedCollection;
 
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
     
-   /** @manyToMany(target = "Tag", though = "UserTag") */
+   /** @ManyToMany(target = "Tag", though = "UserTag") */
     protected $tags;
 
     public function __construct()
@@ -46,22 +46,22 @@ class User
 ```
 
 ```php
-/** @entity */
+/** @Entity */
 class UserTag
 {
-    /** @column(type=primary) */
+    /** @Column(type=primary) */
     private $id;
 }
 ```
  
 ```php
-/** @entity */
+/** @Entity */
 class Tag
 {
-    /** @column(type=primary) */
+    /** @Column(type=primary) */
     private $id;
 
-    /** @column(type=string) */
+    /** @Column(type=string) */
     private $name;
 
     public function __construct(string $name)
@@ -161,13 +161,13 @@ control the association between parent and related entities.
 For example, we can add new properly to our `UserTag`:
 
 ```php
-/** @entity */
+/** @Entity */
 class UserTag
 {
-    /** @column(type=primary) */
+    /** @Column(type=primary) */
     private $id;
 
-    /** @column(type=datetime, default = null) */
+    /** @Column(type=datetime, default = null) */
     private $created_at;
 
     public function __construct(\DateTimeInterface $d)

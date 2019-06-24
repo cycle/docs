@@ -10,12 +10,12 @@ Each relation must have proper `target` option. The target must point to either 
 HasOne relation used to define the relation to one child object. This object will be automatically saved with its parent (unless `cascade` option set to `false`). The simplest form of relation definition:
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
     
-    /** @hasOne(target = "Address") */
+    /** @HasOne(target = "Address") */
     protected $address;
 }
 ```
@@ -39,12 +39,12 @@ HasMany relation provides the ability to link multiple child objects to one enti
 
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
     
-    /** @hasMany(target = "Post") */
+    /** @HasMany(target = "Post") */
     protected $posts;
     
     public function __construct()
@@ -71,12 +71,12 @@ indexCreate | bool   | Create an index on outerKey, defaults to `true`
 In order to link the entity to its parent object use relation `belongsTo`. Please note, given relation is `nullable` by default.
 
 ```php
-/** @entity */
+/** @Entity */
 class Post 
 {
     // ...
     
-    /** @belongsTo(target = "User") */
+    /** @BelongsTo(target = "User") */
     protected $author;
 }
 ```
@@ -97,15 +97,15 @@ indexCreate | bool   | Create an index on innerKey, defaults to `true`
 The RefersTo relation is similar to BelongsTo relation but must be used to establish **multiple relations** to the same entity (or in case of **cyclic** relation). The most common example is the ability to store the last post posted by the user.
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
  
-    /** @refersTo(target = "Post") */
+    /** @ReersTo(target = "Post") */
     protected $lastPost;
  
-    /** @hasMany(target = "Post") */
+    /** @HasMany(target = "Post") */
     protected $posts;
     
     public function __construct()
@@ -139,12 +139,12 @@ indexCreate | bool   | Create an index on outerKey, defaults to `true`
 Relation of type ManyToMany provides a more complex connection with the ability to use intermediate entity for the connection. This relation must be represented using `Cycle\ORM\Relation\Pivoted\PivotedCollection`. The relation required the definition of `though` option with similar rules as `target`.
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
 
-    /** @manyToMany(target = "Tag", though = "UserTag") */
+    /** @ManyToMany(target = "Tag", though = "UserTag") */
     protected $tags;
     
     public function __construct()
@@ -174,7 +174,7 @@ indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], default
 Cycle ORM provides support for polymorphic relations. Given relations can be used to link an entity to multiple entity types and select the desired object in runtime. Relations must be assigned to the entity interface rather than a specific role or class name.
 
 ```php
-/** @entity */
+/** @Entity */
 class User implements ImageHolderInterface 
 {
      // ...
@@ -184,12 +184,12 @@ class User implements ImageHolderInterface
 BelongsToMorphed relations allows an entity to belong to any of the parents which implement given interface:
 
 ```php
-/** @entity */
+/** @Entity */
 class Image
 {
     // ...
     
-    /** @belongsToMorphed(target = "ImageHolderInterface")*/
+    /** @BelongsToMorphed(target = "ImageHolderInterface")*/
     protected $parent;
 }
 ```
@@ -209,12 +209,12 @@ indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], default
 MorphedHasOne and MorphedHasMany is an inverse version of BelongsToMorphed.
 
 ```php
-/** @entity */
+/** @Entity */
 class User implements ImageHolderInterface 
 {
      // ...
      
-     /** @morphedHasOne(target = "Image")*/
+     /** @MorphedHasOne(target = "Image")*/
      protected $image;
 }
 ```
@@ -230,12 +230,12 @@ morphKeyLength | int | The lengths of the morphKey, defaults to 32
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
 
 ```php
-/** @entity */
+/** @Entity */
 class User implements ImageHolderInterface 
 {
      // ...
      
-     /** @morphedHasMany(target = "Image")*/
+     /** @MorphedHasMany(target = "Image")*/
      protected $images;
      
      public function __construct() 
@@ -264,12 +264,12 @@ In some cases, you might want to create an inversed relation automatically. Plea
 To inverse relation, you must use the option `inverse` with specified inversed relation name and type.
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class Post 
 {
     // ...
     
-    /** @belongsTo(target = "User", inverse = @inverse(as = "posts", type = hasMany)) */
+    /** @BelongsTo(target = "User", inverse = @Inverse(as = "posts", type = hasMany)) */
     protected $user;
 }
 ```

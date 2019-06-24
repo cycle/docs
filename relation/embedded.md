@@ -7,13 +7,13 @@ loading of embedded entities, or the ability to retrieve entities separally (wit
 To define embedded entity using annotated extension you must declare your embedded entity first:
 
 ```php
-/** @embeddable */
+/** @Embeddable */
 class UserCredentials 
 {
-    /** @column(type="string(255)") */
+    /** @Column(type="string(255)") */
     public $username;
     
-    /** @column(type=string) */
+    /** @Column(type=string) */
     public $password;
 }
 ```
@@ -23,13 +23,13 @@ class UserCredentials
 Now you can declare the usage of such entity if your model using relation of type `embedd`:
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
     /** $column(type = primary) */
     public $id;
     
-    /** @embedd(target = UserCredentials) */
+    /** @Embedd(target = UserCredentials) */
     public $credentials;
     
     public function __construct()
@@ -72,16 +72,16 @@ $select->where('address.country', 'USA');
 ```
 
 ## Eager and Lazy Loading
-By default, all embedded entities will be loaded with parent object. To alter this behaviour use `load` option of `@embedd` relation annotation:
+By default, all embedded entities will be loaded with parent object. To alter this behaviour use `load` option of `@Embedd` relation annotation:
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
     /** $column(type = primary) */
     public $id;
     
-    /** @embedd(target = Address, load = lazy) */
+    /** @Embedd(target = Address, load = lazy) */
     public $address;
 }
 ```

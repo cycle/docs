@@ -6,12 +6,12 @@ ORM will automatically instantiate collection instance for your relations, howev
 collections in your contructor to use newly created entities:
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class User 
 {
     // ...
     
-    /** @hasMany(target = "Post") */
+    /** @HasMany(target = "Post") */
     public $posts;
     
     public function __construct()

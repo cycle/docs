@@ -1,8 +1,8 @@
 # Annotated Entities
-Annotated entities extension is capable to index any domain entity in your project. To indicate that class must be treated as a domain entity make sure to add `@entity` annotation to the docComment.
+Annotated entities extension is capable to index any domain entity in your project. To indicate that class must be treated as a domain entity make sure to add `@Entity` annotation to the docComment.
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
 }
@@ -11,14 +11,14 @@ class User
 > Annotations are based on Doctrine/Lexer package and support syntax similar to the Doctrine one.
 
 ## Entity
-Usually, the single annotation `@entity` is enough to describe your model. In this case, Cycle will automatically assign the generated
+Usually, the single annotation `@Entity` is enough to describe your model. In this case, Cycle will automatically assign the generated
 table name and role based on the class name. In the case of `User` the role will be `user`, database `null` (default) and table `users`.
 
 You can tweak any of this values by setting `entity` options:
 
 ```php
 /**
- * @entity(
+ * @Entity(
  *     role     = "user", 
  *     database = "database", 
  *     table    = "user_table"
@@ -35,7 +35,7 @@ Some options can be used to overwrite default entity behaviour, for example to a
 
 ```php
 /**
- * @entity(repository = "Repository/UserRepository")
+ * @Entity(repository = "Repository/UserRepository")
  */
 class User 
 {
@@ -61,7 +61,7 @@ For example typical entity description might look like:
 
 ```php
 /**
- * @entity(
+ * @Entity(
  *    table      = "users",
  *    repository = "Repository/UserRepository",
  *    constrain  = "Constrain/SortByID"
@@ -73,13 +73,13 @@ class User
 ```
 
 ## Columns
-No entity can operate without some properties mapped to table columns. To map your property to the column add annotation `@column` to it. It's mandatory to specify column type. You must always specify **one** primary (auto incremental) column for your entity.
+No entity can operate without some properties mapped to table columns. To map your property to the column add annotation `@Column` to it. It's mandatory to specify column type. You must always specify **one** primary (auto incremental) column for your entity.
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
-    /** @column(type = primary) */
+    /** @Column(type = primary) */
     protected $id;
 }
 ```
@@ -89,13 +89,13 @@ class User
 By default, the entity properly will be mapped to the column with the same name as the property, you can change it:
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
-    /** @column(type = "primary") */
+    /** @Column(type = "primary") */
     protected $id;
     
-    /** @column(type = "string", name = "username") */
+    /** @Column(type = "string", name = "username") */
     protected $login;
 }
 ```
@@ -103,19 +103,19 @@ class User
 Some column types support additional arguments, such as length, values, etc.
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
-    /** @column(type = primary) */
+    /** @Column(type = primary) */
     protected $id;
     
-    /** @column(type = "string(32)") */
+    /** @Column(type = "string(32)") */
     protected $login;
     
-    /** @column(type = "enum(active,disabled)") */
+    /** @Column(type = "enum(active,disabled)") */
     protected $status;
         
-    /** @column(type = "decimal(5,5)") */
+    /** @Column(type = "decimal(5,5)") */
     protected $balance;
 }
 ```
@@ -123,13 +123,13 @@ class User
 Use `default` option to specify the default value of the column:
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
-    /** @column(type = primary) */
+    /** @Column(type = primary) */
     protected $id;
     
-    /** @column(type = "enum(active,disabled)", default = "active") */
+    /** @Column(type = "enum(active,disabled)", default = "active") */
     protected $status;
 }
 ```
@@ -137,13 +137,13 @@ class User
 While adding new columns to the entities associated with non-empty tables you are required to either specify a default value or mark column as nullable:
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
-    /** @column(type = primary) */
+    /** @Column(type = primary) */
     protected $id;
     
-    /** @column(type = "string(64)", nullable = true) */
+    /** @Column(type = "string(64)", nullable = true) */
     protected $password;
 }
 ```
@@ -189,33 +189,33 @@ json        | ---                       | To store JSON structures, such type us
 ORM support enum type for all available drivers, you must define enum options using comma separator:
 
 ```php
-/** @column(type = "enum(active,disabled)", default = "active") */
+/** @Column(type = "enum(active,disabled)", default = "active") */
 protected $status;
 ```
 
 ## Table Extension
-In some cases you might want to specificy additional table columns and indexes without the link to the entity properies. This can be achieved using `@table` annotation:
+In some cases you might want to specificy additional table columns and indexes without the link to the entity properies. This can be achieved using `@Table` annotation:
 
 ```php
 /**  
- * @entity
- * @table(
- *      columns={"created_at": @column(type = datetime), "deleted_at": @column(type = datetime)},
+ * @Entity
+ * @Table(
+ *      columns={"created_at": @Column(type = datetime), "deleted_at": @Column(type = datetime)},
  *      indexes={
- *             @index(columns = {"username"}, unique = true), 
- *             @index(columns = {"status"})
+ *             @Index(columns = {"username"}, unique = true), 
+ *             @Index(columns = {"status"})
  *      }
  * )
  */
 class User 
 {
-    /** @column(type = primary) */
+    /** @Column(type = primary) */
     protected $id;
     
-    /** @column(type ="string(32)") */
+    /** @Column(type ="string(32)") */
     protected $username;
     
-    /** @column(type = "enum(active,disabled)", default = "active") */
+    /** @Column(type = "enum(active,disabled)", default = "active") */
     protected $status;
 }
 ```
@@ -227,7 +227,7 @@ Annotated Entities extension support ability to merge table definitions provided
 
 ```php
 /**
- * @entity(repository = "Repository/UserRepository")
+ * @Entity(repository = "Repository/UserRepository")
  */
 class User 
 {
@@ -236,9 +236,9 @@ class User
 
 ```php
 /**
- * @table(
- *     columns={"created_at": @column(type = datetime)},
- *     indexes={@index(columns = {"created_at"})}
+ * @Table(
+ *     columns={"created_at": @Column(type = datetime)},
+ *     indexes={@Index(columns = {"created_at"})}
  * ) 
  */
 class UserRepository extends Repository

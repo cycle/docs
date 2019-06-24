@@ -7,12 +7,12 @@ Entity will be always persisted after related entity.
 To define Belongs To relation using annotated enties extension use:
 
 ```php
-/** @entity */ 
+/** @Entity */ 
 class Post 
 {
     // ...
     
-    /** @belongsTo(target = "User") */
+    /** @BelongsTo(target = "User") */
     protected $user;
 }
 ```

@@ -192,9 +192,9 @@ You can now create your entity and associate it with given mapper:
 
 ```php
 /**
- * @entity(
+ * @Entity(
  *    columns = {
- *        id: @column(type=primary)
+ *        id: @Column(type=primary)
  *    },
  *    mapper = "CustomMapper"
  * )

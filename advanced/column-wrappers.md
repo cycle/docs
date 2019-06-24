@@ -57,13 +57,13 @@ To assign column wrapper to entity use column option `typecast`, you can specify
 class name which defines static method typecast:
 
 ```php
-/** @entity */
+/** @Entity */
 class User
 {
-    /** @column(type=primary) */
+    /** @Column(type=primary) */
     public $id;
 
-    /** @column(type=string, typecast="Uuid") */
+    /** @Column(type=string, typecast="Uuid") */
     public $uuid;
 }
 ```

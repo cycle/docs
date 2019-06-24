@@ -9,18 +9,18 @@ First we have to create two entities we want to relate:
 
 ```php
 /**
- * @entity
+ * @Entity
  */
 class User
 {
     /**
-     * @column(type=primary)
+     * @Column(type=primary)
      * @var int
      */
     protected $id;
 
     /**
-     * @column(type=string)
+     * @Column(type=string)
      * @var string
      */
     protected $name;
@@ -46,18 +46,18 @@ And the entity we want to relate to:
 
 ```php
 /**
- * @entity
+ * @Entity
  */
 class Address
 {
     /**
-     * @column(type=primary)
+     * @Column(type=primary)
      * @var int
      */
     protected $id;
 
     /**
-     * @column(type=string)
+     * @Column(type=string)
      * @var string
      */
     protected $city;
@@ -83,14 +83,14 @@ To relate our entities we have to add a new property to one of them and annotate
 
 ```php
 /**
- * @entity
+ * @Entity
  */
 class User
 {
     // ...
 
     /**
-     * @hasOne(target=Address)
+     * @HasOne(target=Address)
      * @var Address|null
      */
     protected $address;

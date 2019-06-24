@@ -10,13 +10,13 @@ Relations points to external entity using complex key [role, outerKey].
 In order to associate entity with one of multiple external objects you have to define common interface first:
 
 ```php
-/** @entity */
+/** @Entity */
 class User implements ImageHolderInterface
 {
     // ...
 }
 
-/** @entity */
+/** @Entity */
 class Post implements ImageHolderInterface
 {
     // ...
@@ -26,12 +26,12 @@ class Post implements ImageHolderInterface
 Now we can declare our entity to point to one of given entities:
 
 ```php
-/** @entity */
+/** @Entity */
 class Image 
 {
     // ...
     
-    /** @belongsToMorphed(target = "ImageHolderInterface") */
+    /** @BelongsToMorphed(target = "ImageHolderInterface") */
     public $imageHolder;
 }
 ```
@@ -45,12 +45,12 @@ ORM provide three basic relations for polymorphic connections:
 Use cases: image attached to (post, user, comment). Relation is similar to `belongsTo` but does not support eager loading, FKs or select quering. The relation must point to entity interface.
 
 ```php
-/** @entity */
+/** @Entity */
 class Image 
 {
     // ...
     
-    /** @belongsToMorphed(target = "ImageHolderInterface") */
+    /** @BelongsToMorphed(target = "ImageHolderInterface") */
     public $imageHolder;
 }
 ```
@@ -71,12 +71,12 @@ indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `tr
 Declared the ability to own the entity from multiple entity types (example user/post/comment has image). The relation must point to entity role or class.
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
     // ...
     
-    /** @morphedhasOne(target = "Image") */
+    /** @MorphedhasOne(target = "Image") */
     public $image;
 }
 ```
@@ -100,12 +100,12 @@ indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `tr
 Declared the ability to own the entity from multiple entity types (example post/article has comments). The relation must point to entity role or class.
 
 ```php
-/** @entity */
+/** @Entity */
 class User 
 {
     // ...
     
-    /** @morphedhasMany(target = "Image") */
+    /** @MorphedhasMany(target = "Image") */
     public $images;
 }
 ```

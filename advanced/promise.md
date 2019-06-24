@@ -12,13 +12,13 @@ scope will be used.
 We can demonstrate it:
 
 ```php
-/** @entity */
+/** @Entity */
 class Post
 {
-    /** @column(type=primary) */
+    /** @Column(type=primary) */
     public $id;
 
-    /** @belongsTo(target=User) */
+    /** @BelongsTo(target=User) */
     public $user;
 }
 ```

@@ -8,15 +8,15 @@ Entity will be persisted before related entity.
 Using annotated extension:
 
 ```php
-/** @entity */
+/** @Entity */
 class User
 {
     // ...
     
-    /** @refersTo(target="Comment") */
+    /** @ReersTo(target="Comment") */
     public $lastComment;
 
-    /** @hasMany(target="Comment") */
+    /** @HasMany(target="Comment") */
     public $comments;
 
     // ...
@@ -105,13 +105,13 @@ print_r($users);
 The RefersTo relation can be used to create self-references.
 
 ```php
-/** @entity */
+/** @Entity */
 class Category 
 {
-    /** @column(type=primary) */
+    /** @Column(type=primary) */
     public $id;
     
-    /** @refersTo(target=Category) */
+    /** @ReersTo(target=Category) */
     public $parent;
     
     // ...

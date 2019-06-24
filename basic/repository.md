@@ -22,7 +22,7 @@ Use `entity` annotation attribute to create the association:
 namespace Example;
 
 /**
- * @entity(repository="Example\Repository\UserRepository")
+ * @Entity(repository="Example\Repository\UserRepository")
  */
 class User 
 {
@@ -36,7 +36,7 @@ You can also specify repository name using relative namespace path:
 namespace Example;
 
 /**
- * @entity(repository="Repository\UserRepository")
+ * @Entity(repository="Repository\UserRepository")
  */
 class User 
 {

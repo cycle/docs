@@ -26,7 +26,7 @@ And assign the entity to the specific mapper:
 
 ```php
 /**
- * @entity(mapper=MyMapper)
+ * @Entity(mapper=MyMapper)
  */
 class User 
 {

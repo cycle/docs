@@ -76,7 +76,7 @@ class NotDeletedConstrain implements ConstrainInterface
 To enable soft deletes for your entity associate newly created mapper and constrain with it:
 
 ```php
-/** @entity(mapper="SoftDeletedMapper", constrain="NotDeletedConstrain") */
+/** @Entity(mapper="SoftDeletedMapper", constrain="NotDeletedConstrain") */
 class User
 {
     // ...

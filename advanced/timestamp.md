@@ -40,8 +40,8 @@ You can use annotated entites extension to automatically declared needed column 
 
 ```php
 /**
- * @table(
- *      columns={created_at: @column(type=datetime), updated_at: @column(type=datetime)},
+ * @Table(
+ *      columns={created_at: @Column(type=datetime), updated_at: @Column(type=datetime)},
  * )
  */
 class TimestampedMapper extends Mapper
@@ -74,7 +74,7 @@ class TimestampedMapper extends Mapper
 Associate your entity with newly created mapper in order to register this columns on schema update:
 
 ```php
-/** @entity(mapper="TimestampedMapper") */
+/** @Entity(mapper="TimestampedMapper") */
 class User
 {
     // ...

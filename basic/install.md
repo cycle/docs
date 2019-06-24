@@ -115,12 +115,12 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Annotated\Embeddings($cl),            // register embeddable entities
     new Annotated\Entities($cl),              // register annotated entities
     new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
-    new Annotated\MergeColumns(),             // copy column declarations from all related classes (@table annotation)
+    new Annotated\MergeColumns(),             // copy column declarations from all related classes (@Table annotation)
     new Schema\Generator\GenerateRelations(), // generate entity relations
     new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
     new Schema\Generator\RenderTables(),      // declare table schemas
     new Schema\Generator\RenderRelations(),   // declare relation keys and indexes
-    new Annotated\MergeIndexes(),             // copy index declarations from all related classes (@table annotation)
+    new Annotated\MergeIndexes(),             // copy index declarations from all related classes (@Table annotation)
     new Schema\Generator\SyncTables(),        // sync table changes to database
     new Schema\Generator\GenerateTypecast(),  // typecast non string columns
 ]);

@@ -101,18 +101,18 @@ To create our first entity in `src` folder we will use capabilities provided by 
 namespace Example;
 
 /**
- * @entity
+ * @Entity
  */
 class User
 {
     /**
-     * @column(type=primary)
+     * @Column(type=primary)
      * @var int
      */
     protected $id;
 
     /**
-     * @column(type=string)
+     * @Column(type=string)
      * @var string
      */
     protected $name;
@@ -136,7 +136,7 @@ class User
 
 Cycle will automatically assign role `user` and table `users` from default database to this entity.
 
-> Attention, `@entity` annotation is required!
+> Attention, `@Entity` annotation is required!
 
 ## Schema Generation
 In order to operate we need to generate ORM Schema which will describe how our entities are configured. Thought we can do it manually 
@@ -249,7 +249,7 @@ You can modify your entity schema to add new columns. Note that you have to eith
 
 ```php
 /**
-* @column(type=int,nullable=true)
+* @Column(type=int,nullable=true)
 * @var int|null
 */
 protected $age;
