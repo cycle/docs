@@ -26,7 +26,7 @@ Now you can declare the usage of such entity if your model using relation of typ
 /** @Entity */
 class User 
 {
-    /** $column(type = primary) */
+    /** @Columntype = primary) */
     public $id;
     
     /** @Embedd(target = UserCredentials) */
@@ -78,7 +78,7 @@ By default, all embedded entities will be loaded with parent object. To alter th
 /** @Entity */
 class User 
 {
-    /** $column(type = primary) */
+    /** @Columntype = primary) */
     public $id;
     
     /** @Embedd(target = Address, load = lazy) */
