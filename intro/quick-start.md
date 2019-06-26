@@ -93,7 +93,7 @@ $ composer dump
 ```
 
 ## Define Entity
-To create our first entity in `src` folder we will use capabilities provided by `cycle/annoted` package to describe desired schema:
+To create our first entity in `src` folder we will use capabilities provided by `cycle/annotated` package to describe desired schema:
 
 ```php
 <?php declare(strict_types=1);
