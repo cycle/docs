@@ -59,6 +59,6 @@ Table of Contents
   * [Database Schema Introspection](advanced/introspection.md)
   * [Database Schema Declaration](advanced/declaration.md)
   * [Configuring Schema Builder](advanced/schema-builder.md)
-  * [Syncronizing Database Schema](advanced/sync-schema.md)
+  * [Syncronizing Database Schema (Migrations)](advanced/sync-schema.md)
   * [Testing](advanced/testing.md)
   * [Limitations](advanced/limitations.md)
