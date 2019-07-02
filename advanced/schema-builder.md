@@ -9,7 +9,7 @@ We can define ORM entity manually using schema builder package, in order to do t
 $r = new Schema\Registry($dbal);
 ```
 
-We can not register our first entity, add it columns and list to specific table:
+We can now register our first entity, add it columns and list to specific table:
 
 ```php
 use Cycle\Schema\Definition;
