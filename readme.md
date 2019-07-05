@@ -55,6 +55,7 @@ Table of Contents
   * [UUID as Primary Key](advanced/uuid.md)
   * [Timestamped Entities](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
+  * [Chained Repository](advanced/chained-repository.md)
   * [DateTime properties](advanced/datetime.md)
   * [Database Schema Introspection](advanced/introspection.md)
   * [Database Schema Declaration](advanced/declaration.md)
