@@ -1,5 +1,5 @@
 # Chained Repository
-The Cycle default Repository implementation provides the ability to be easility clone the resitory object in order to affect the base query.
+The Cycle default Repository implementation provides the ability to be easility cloned without affecting the base query for original instance.
 
 ## Custom Scopes
 To implement the ability to create custom query scope you must implement method to clone the respotitory and customize base select query:
