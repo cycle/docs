@@ -2,7 +2,7 @@
 This guide provides a quick overview of ORM installation, configuration process and an example using an annotated entity. Other sections of the documentation will provide deeper insign of various use-cases.
 
 ## Requirements
-  * PHP7.1+
+  * PHP 7.2+
   * PHP-PDO
   * PDO drivers for desired databases
   
