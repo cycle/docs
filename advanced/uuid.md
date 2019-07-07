@@ -2,7 +2,7 @@
 It is possible to use any type of primary sequence for your entities by altering default `Cycle\ORM\Mapper\Mapper` behaviour. In order to
 do that we have to define custom column with `primary` flag.
 
-> You can also specify primary key directly in your entity, Mapper will accept it as expected value.
+> You can also specify primary key value directly in your entity, Mapper will accept it as expected value.
 
 ## Entity
 To define specific column as primary key use annotation option `primary`:
