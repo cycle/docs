@@ -45,3 +45,36 @@ use this method to load any relation level via dot notation:
 ```php
 $select->load('posts.comments.author');
 ```
+
+## Load with applied condition
+You can load some relations partially (hasMany, manyToMany) and use DB level filtering by applying `where' option:
+
+```php
+$select->load('posts', [
+    'where' => ['published' => true]
+]);
+```
+
+Since Select separate filtered and loaded entities you can use `with` and `load` methods as the same time.
+
+```php
+$select->load('posts', [
+    'where' => ['published' => true]
+])
+->with('posts')->where('posts.flagged', true);
+```
+
+> Find all users with flagged posts and load all published posts.
+
+In some cases you can also combine joining and relation together (make sure you absolutelly know what are you doing). You can do that by pointing the source table alias to the `load` method:
+
+```php
+$selec->with('posts',[
+    'as'    => 'posts', 
+    'where' => ['flagged' => true'])
+])->load('posts', ['using' => 'posts']);
+```
+
+Such query will find all entities with flagged posts and load this posts within one query (make sure to set the DISTINCT). Note, this is NOT optimization technique.
+
+> LIMIT, ORDER BY are currently not supported as fetch scope (no BC expected).
