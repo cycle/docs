@@ -21,7 +21,7 @@ class Address
 }
 ```
 
-> You do not need to define `primary` column, this column will be inherited from parent entity.
+> You do not need to define `primary` column, this column will be inherited from parent entity. Mapper methods `queueDelete`, `queueCreate` and `queueUpdate` would never be invoked due the deletation to the parent mapper.
 
 To embedd entity to another object use `@Embedd` annotation:
 
