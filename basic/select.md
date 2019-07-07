@@ -1,6 +1,6 @@
 # Select Entity
 Cycle ORM provides multiple options to select entity data from the database. 
-The most common and recommended methods to use the associated entity repository.
+The most common and recommended method to use the associated entity repository.
 
 ## Using Repository
 To access repository associated with specific entity use method `getRepository` of orm service:
