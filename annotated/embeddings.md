@@ -1,7 +1,7 @@
 # Embeddings
 ORM can simplify the definition of large entities by proving the ability to split some of the columns into embedded entity. Embedded entities by default will always be loaded with parent object, however, partial entity selection is possible as well.
 
-> Embedded entities does not support relations at the moment.
+> Embedded entities does not support relations at the moment (and most likely will never will due to the conceptual limitation).
 
 ## Definition
 To define embeddable entity use `@Embeddable` annotation. As with `@Entity` you are able to define custom mapper or associate additional columns/indexes using `@Table` annotation.
