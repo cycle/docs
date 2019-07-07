@@ -127,3 +127,6 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 You can link this conditions to the entity state or node to implement more complex logic.
 
 > Make sure to use entity State not Node as condition variable as State will change during the exeuction while Node would not.
+
+## Split command
+Another internal command which is applied by ORM by default is `Split`. The command is used in order to resolve cyclic dependencies by splitting the persistence of the object into Insert and Update.
