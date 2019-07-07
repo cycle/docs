@@ -125,3 +125,5 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 ```
 
 You can link this conditions to the entity state or node to implement more complex logic.
+
+> Make sure to use entity State not Node as condition variable as State will change during the exeuction while Node would not.
