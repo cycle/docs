@@ -56,7 +56,7 @@ $user->address->country = 'USA';
 ```
 
 ## Column Mapping
-By default, all embedded entity column will be stored in owning entity table without any prefix, you can define custom prefix using
+By default, all embedded entity columns will be stored in owning entity table without any prefix, you can define custom prefix using
 `columnPrefix` option of `@Embeddable` annotation:
 
 ```php
