@@ -99,4 +99,4 @@ print_r($post->user);
 ```
 
 > Note, proxy usage applies set of limitations on your entities. You can not use `final` statement as your class won't be extended. 
-Please check this article regarding [typical proxy limitations](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/limitations-and-known-issues.html).
+Please check this article regarding [typical proxy limitations](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/limitations-and-known-issues.html#entities-proxies-and-reflection).
