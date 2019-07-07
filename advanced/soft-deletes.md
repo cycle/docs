@@ -90,5 +90,5 @@ You can select deleted entities from the database by disabling your select const
 
 ```php
 $userSelect = $orm->getRepository(User::class)->select();
-$userSelect->setConstrain(null);
+$userSelect->constrain(null);
 ```
