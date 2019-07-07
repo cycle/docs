@@ -3,7 +3,7 @@ It is possible to automatically set `created_at`, `deleted_at` column values on 
 custom mapper implementation which will be automatically registering such values in entity commands.
 
 ## Timestamped Mapper
-Simples mapper will look like:
+Simplest mapper will look like:
 
 ```php
 class TimestampedMapper extends Mapper
