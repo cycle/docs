@@ -49,6 +49,8 @@ for ($i = 0; $i < 100; $i++) {
 }
 ```
 
+> You can combine `clone` and `reset` in order to create separate ORM instance for batch operations but keep all already loaded entities intact.
+
 ## Handling Exceptions
 In some cases you might experience the connection drop to your database. If disconnect happens outside of the transaction Spiral\Database will attempt to automatically reconnect. However, connection issues during the transaction would throw exception `Spiral\Database\Exception\DatabaseException` (more specificially `Spiral\Database\Exception\Statement\ConnectionException`).
 
