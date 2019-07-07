@@ -75,3 +75,8 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 ```
 
 > Example: see [sample implementation](https://github.com/cycle/orm/blob/master/tests/ORM/Fixtures/UserSnapshotMapper.php) which copies all entity changes into separate table.
+
+## Autoconfiguration
+ORM schema provide one reserved Entity constant `SCHEMA` which can be used to specify custom Mapper behaviour. You can combine schema-builder and custom mapper implementation to create configurable mappers.
+
+> Cycle does not provide such mapper implementation out of the box, feel free to suggest your implementation as an extension.
