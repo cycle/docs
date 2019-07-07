@@ -2,7 +2,7 @@
 In some cases you might want to wrap the value using custom value object (similary to datetime columns which are wrapped as DateTimeImmutable).
 It can be achieved by creating custom column wrapper and typecasting column value to it. 
 
-> Note, all column wrappers must be immutable, you have to reassing properly value to trigger the change.
+> Note, all column wrappers must be immutable, you have to reassing property value to trigger the change.
 
 ## Example
 In order to define column wrapper we have to implement object with static `typecast` method. We would use UUID column as example.
