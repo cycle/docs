@@ -55,3 +55,5 @@ foreach (new ORM\Iterator($orm, User::class, filterByExternal($select, $value)) 
     print_r($user);
 }
 ```
+
+> You can combine this approach with `where` option of `load` method to create complex cross-database queries.
