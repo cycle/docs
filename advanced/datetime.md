@@ -1,7 +1,7 @@
 # DateTime
 All properties with type "date", "datetime", "timestamp" will be represented using DateTimeImmutable object.
 
-By default ORM use single DB specific timezone which can be configured on driver level, all dates selected from database to stored in
+By default ORM use single DB specific timezone which can be configured on driver level, all dates selected from database and to be stored in
 database will be converted into UTC timezone.
 
 DBAL will automatically convert any DateTimeInterface parameter into appropriate timezone to ensure proper data selection.
