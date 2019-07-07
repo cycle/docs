@@ -30,6 +30,8 @@ class User
 }
 ```
 
+> For `annotated` extension only. Other schema declaration approaches will differ in implementation.
+
 You can also specify repository name using relative namespace path:
 
 ```php
