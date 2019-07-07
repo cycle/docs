@@ -7,6 +7,8 @@
 
 Cycle is PHP DataMapper ORM and Data Modelling engine designed to safely work in classic and long-running PHP applications (like [RoadRunner](https://github.com/spiral/roadrunner)). The ORM provides flexible configuration options to model datasets and support dynamic schema configuration. ORM can work with plain PHP objects and support annotation declarations.
 
+Read more about entity life-cycle [here](https://github.com/cycle/docs/blob/master/advanced/entity.md).
+
 Features:
 ---------
 - ORM with many-to-many, many-thought-many and polymorphic relations
