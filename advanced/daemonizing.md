@@ -68,4 +68,4 @@ try {
 ```
 
 > ORM Commands does not limit you to work in SQL scope, Transaction commands must implement `execute`, `complete` and `rollback` methods
-to implement custom commit/compensate strategies, you can use transaction to sync data across distributed services.
+to support custom commit/compensate strategies, you can use transaction to sync data across distributed services.
