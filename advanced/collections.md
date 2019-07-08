@@ -1,6 +1,8 @@
 # Collections
 Cycle ORM use [Doctrine/Collection](https://github.com/doctrine/collections) in order to represent one to many relation types (such as hasMany, manyToMany).
 
+> See https://github.com/cycle/orm/issues/24
+
 ## Accessing collection
 ORM will automatically instantiate collection instance for your relations, however you still required to initiate empty
 collections in your contructor to use newly created entities:
