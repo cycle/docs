@@ -22,3 +22,6 @@ The Heap used to store all loaded entity Nodes and their current states (if any)
 
 ## Transaction
 A transaction used to generate and run a set of operations required to persist or delete given entities. Though all of the operations are performed within single Heap the changes are never written to Node directly and only synced once the transaction is complete.
+
+## Command
+Command is a state changing event applied to the persistence layer. Commands can depend on a values in state which are provided by other commands (relations). The transaction sorts commands by their dependencies iterativelly, executing every command which does not have any unsatisfied dependency. Command execution might or might not resolve one of multiple dependencies.
