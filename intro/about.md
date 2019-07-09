@@ -13,8 +13,7 @@ Features:
 ---------
 - ORM with has-one, has-many, many-thought-many and polymorphic relations
 - embedded entities, lazy/eager loaded embedded partials
-- Plain Old PHP Objects, ActiveRecord-like objects, [same object type for all entities](tests/ORM/Classless)
-- same entity type for multiple repositories
+- Plain Old PHP Objects, ActiveRecord-like objects, [same entity type for multiple repositories](tests/ORM/Classless)
 - query builder with automatic relation resolution
 - eager and lazy loading, proxies support, references support
 - runtime configuration with/without code-generation
