@@ -107,7 +107,7 @@ print_r($select->load('address')->fetchAll());
 ```
 
 ## Query Embedded entity separatelly
-It is possible to query embedded entity separatelly from parent, hovewer, you must clearly know the `role` of such entity as class name is forbidden (in order to allow usage of the emedding inside different parents). Usually such role will be composed using parent and entity role (and ":" s.
+It is possible to query embedded entity separatelly from parent, hovewer, you must clearly know the `role` of such entity as class name is forbidden (in order to allow usage of the emedding inside different parents). Usually such role will be composed using parent and entity role (and ":" separator).
 
 ```php
 $orm->getRepository("user:address")->findAll();
