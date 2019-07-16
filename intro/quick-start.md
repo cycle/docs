@@ -1,7 +1,7 @@
 # Quick Start
 This guide provides a quick overview of ORM installation, configuration process and an example using an annotated entity. Other sections of the documentation will provide deeper insign of various use-cases.
 
-> Use [Bootstrap](/intro/cli.md) to automatically configure Cycle.
+> Use [Bootstrap](/intro/cli.md) to automatically configure Cycle and get access to quick CLI commands.
 
 ## Requirements
   * PHP 7.2+
