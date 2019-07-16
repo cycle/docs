@@ -1,6 +1,8 @@
 # Quick Start
 This guide provides a quick overview of ORM installation, configuration process and an example using an annotated entity. Other sections of the documentation will provide deeper insign of various use-cases.
 
+> Use [Bootstrap](/into/cli.md) for the fastest way to start working with Cycle.
+
 ## Requirements
   * PHP 7.2+
   * PHP-PDO
