@@ -49,7 +49,7 @@ class User
 /** @Entity */
 class UserTag
 {
-    /** @Column(type=primary) */
+    /** @Column(type="primary") */
     private $id;
 }
 ```
@@ -58,10 +58,10 @@ class UserTag
 /** @Entity */
 class Tag
 {
-    /** @Column(type=primary) */
+    /** @Column(type="primary") */
     private $id;
 
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     private $name;
 
     public function __construct(string $name)
@@ -164,10 +164,10 @@ For example, we can add new properly to our `UserTag`:
 /** @Entity */
 class UserTag
 {
-    /** @Column(type=primary) */
+    /** @Column(type="primary") */
     private $id;
 
-    /** @Column(type=datetime, default = null) */
+    /** @Column(type="datetime", default=null) */
     private $created_at;
 
     public function __construct(\DateTimeInterface $d)
