@@ -108,10 +108,10 @@ The RefersTo relation can be used to create self-references.
 /** @Entity */
 class Category 
 {
-    /** @Column(type=primary) */
+    /** @Column(type="primary") */
     public $id;
     
-    /** @ReersTo(target=Category) */
+    /** @ReersTo(target="Category") */
     public $parent;
     
     // ...
