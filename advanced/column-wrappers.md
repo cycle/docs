@@ -60,10 +60,10 @@ class name which defines static method typecast:
 /** @Entity */
 class User
 {
-    /** @Column(type=primary) */
+    /** @Column(type="primary") */
     public $id;
 
-    /** @Column(type=string, typecast="Uuid") */
+    /** @Column(type="string", typecast="Uuid") */
     public $uuid;
 }
 ```
