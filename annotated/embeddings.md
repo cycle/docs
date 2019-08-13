@@ -10,13 +10,13 @@ To define embeddable entity use `@Embeddable` annotation. As with `@Entity` you 
 /** @Embeddable */
 class Address 
 {
-    /** @Column(type = string) */ 
+    /** @Column(type = "string") */ 
     public $country;
   
-    /** @Column(type = string) */ 
+    /** @Column(type = "string") */ 
     public $city;
   
-    /** @Column(type = string) */ 
+    /** @Column(type = "string") */ 
     public $address;
 }
 ```
@@ -31,10 +31,10 @@ To embedd entity to another object use `@Embedd` annotation:
  */
 class User 
 {
-    /** @Column(type = primary) */
+    /** @Column(type = "primary") */
     public $id;
     
-    /** @Embedd(target = Address) */
+    /** @Embedd(target = "Address") */
     public $address;
 }
 ```
@@ -63,13 +63,13 @@ By default, all embedded entity columns will be stored in owning entity table wi
 /** @Embeddable(columnPrefix = "address_") */
 class Address 
 {
-    /** @Column(type = string) */ 
+    /** @Column(type = "string") */ 
     public $country;
   
-    /** @Column(type = string) */ 
+    /** @Column(type = "string") */ 
     public $city;
   
-    /** @Column(type = string) */ 
+    /** @Column(type = "string") */ 
     public $address;
 }
 ```
@@ -89,10 +89,10 @@ By default, all embedded entities will be loaded with parent object. To alter th
 /** @Entity */
 class User 
 {
-    /** @Column(type = primary) */
+    /** @Column(type = "primary") */
     public $id;
     
-    /** @Embedd(target = Address, load = lazy) */
+    /** @Embedd(target = "Address", load = "lazy") */
     public $address;
 }
 ```
