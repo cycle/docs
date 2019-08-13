@@ -162,11 +162,15 @@ Once class locator is established we can create our schema generation pipeline. 
 ```php
 use Cycle\Schema;
 use Cycle\Annotated;
+use Doctrine\Common\Annotations\AnnotationRegisty;
 ```
 
 Now we can define our pipeline:
 
 ```php
+// autoload annotations
+AnnotationRegistry::registerLoader('class_exists');
+
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Annotated\Embeddings($cl),            // register embeddable entities
     new Annotated\Entities($cl),              // register annotated entities
