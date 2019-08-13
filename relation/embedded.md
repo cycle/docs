@@ -13,7 +13,7 @@ class UserCredentials
     /** @Column(type="string(255)") */
     public $username;
     
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     public $password;
 }
 ```
@@ -26,10 +26,10 @@ Now you can declare the usage of such entity if your model using relation of typ
 /** @Entity */
 class User 
 {
-    /** @Columntype = primary) */
+    /** @Column(type = "primary") */
     public $id;
     
-    /** @Embedd(target = UserCredentials) */
+    /** @Embedd(target = "UserCredentials") */
     public $credentials;
     
     public function __construct()
@@ -78,10 +78,10 @@ By default, all embedded entities will be loaded with parent object. To alter th
 /** @Entity */
 class User 
 {
-    /** @Columntype = primary) */
+    /** @Columntype = "primary") */
     public $id;
     
-    /** @Embedd(target = Address, load = lazy) */
+    /** @Embedd(target = "Address", load = "lazy") */
     public $address;
 }
 ```
