@@ -269,7 +269,7 @@ class Post
 {
     // ...
     
-    /** @BelongsTo(target = "User", inverse = @Inverse(as = "posts", type = hasMany)) */
+    /** @BelongsTo(target = "User", inverse = @Inverse(as = "posts", type = "hasMany")) */
     protected $user;
 }
 ```
