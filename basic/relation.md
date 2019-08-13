@@ -14,13 +14,13 @@ First we have to create two entities we want to relate:
 class User
 {
     /**
-     * @Column(type=primary)
+     * @Column(type="primary")
      * @var int
      */
     protected $id;
 
     /**
-     * @Column(type=string)
+     * @Column(type="string")
      * @var string
      */
     protected $name;
@@ -51,13 +51,13 @@ And the entity we want to relate to:
 class Address
 {
     /**
-     * @Column(type=primary)
+     * @Column(type="primary")
      * @var int
      */
     protected $id;
 
     /**
-     * @Column(type=string)
+     * @Column(type="string")
      * @var string
      */
     protected $city;
@@ -90,7 +90,7 @@ class User
     // ...
 
     /**
-     * @HasOne(target=Address)
+     * @HasOne(target="Address")
      * @var Address|null
      */
     protected $address;
