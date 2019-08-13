@@ -21,6 +21,7 @@ interface MapperInterface
      * @return string
      */
     public function getRole(): string;
+    
     /**
      * Init empty entity object an return pre-filtered data (hydration will happen on a later stage). Must
      * return tuple [entity, entityData].
@@ -29,6 +30,7 @@ interface MapperInterface
      * @return array
      */
     public function init(array $data): array;
+    
     /**
      * Hydrate entity with dataset.
      *
@@ -39,6 +41,7 @@ interface MapperInterface
      * @throws MapperException
      */
     public function hydrate($entity, array $data);
+    
     /**
      * Extract all values from the entity.
      *
@@ -46,6 +49,7 @@ interface MapperInterface
      * @return array
      */
     public function extract($entity): array;
+    
     /**
      * Initiate chain of commands require to store object and it's data into persistent storage.
      *
@@ -57,6 +61,7 @@ interface MapperInterface
      * @throws MapperException
      */
     public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface;
+    
     /**
      * Initiate chain of commands required to update object in the persistent storage.
      *
@@ -68,6 +73,7 @@ interface MapperInterface
      * @throws MapperException
      */
     public function queueUpdate($entity, Node $node, State $state): ContextCarrierInterface;
+    
     /**
      * Initiate sequence of of commands required to delete object from the persistent storage.
      *
@@ -194,7 +200,7 @@ You can now create your entity and associate it with given mapper:
 /**
  * @Entity(
  *    columns = {
- *        id: @Column(type=primary)
+ *        "id": @Column(type="primary")
  *    },
  *    mapper = "CustomMapper"
  * )
