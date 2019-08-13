@@ -41,7 +41,7 @@ You can use annotated entites extension to automatically declare needed column f
 ```php
 /**
  * @Table(
- *      columns={created_at: @Column(type=datetime), updated_at: @Column(type=datetime)},
+ *      columns={"created_at": @Column(type="datetime"), "updated_at": @Column(type"=datetime")},
  * )
  */
 class TimestampedMapper extends Mapper
