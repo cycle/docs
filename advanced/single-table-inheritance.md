@@ -8,14 +8,14 @@ and declare relations/columns specific to the child.
 /** @Entity */
 class Post 
 {
-    /** @Column(type=primary) */
+    /** @Column(type="primary") */
     public $id;
 }
 
 /** @Entity */
 class Article extends Post
 {
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     public $articleTitle;
 }
 ```
