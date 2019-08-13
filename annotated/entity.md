@@ -79,7 +79,7 @@ No entity can operate without some properties mapped to table columns. To map yo
 /** @Entity */
 class User 
 {
-    /** @Column(type = primary) */
+    /** @Column(type = "primary") */
     protected $id;
 }
 ```
@@ -106,7 +106,7 @@ Some column types support additional arguments, such as length, values, etc.
 /** @Entity */
 class User 
 {
-    /** @Column(type = primary) */
+    /** @Column(type = "primary") */
     protected $id;
     
     /** @Column(type = "string(32)") */
@@ -126,7 +126,7 @@ Use `default` option to specify the default value of the column:
 /** @Entity */
 class User 
 {
-    /** @Column(type = primary) */
+    /** @Column(type = "primary") */
     protected $id;
     
     /** @Column(type = "enum(active,disabled)", default = "active") */
@@ -140,7 +140,7 @@ While adding new columns to the entities associated with non-empty tables you ar
 /** @Entity */
 class User 
 {
-    /** @Column(type = primary) */
+    /** @Column(type = "primary") */
     protected $id;
     
     /** @Column(type = "string(64)", nullable = true) */
@@ -200,7 +200,7 @@ In some cases you might want to specificy additional table columns and indexes w
 /**  
  * @Entity
  * @Table(
- *      columns={"created_at": @Column(type = datetime), "deleted_at": @Column(type = datetime)},
+ *      columns={"created_at": @Column(type = "datetime"), "deleted_at": @Column(type = "datetime")},
  *      indexes={
  *             @Index(columns = {"username"}, unique = true), 
  *             @Index(columns = {"status"})
@@ -209,7 +209,7 @@ In some cases you might want to specificy additional table columns and indexes w
  */
 class User 
 {
-    /** @Column(type = primary) */
+    /** @Column(type = "primary") */
     protected $id;
     
     /** @Column(type ="string(32)") */
@@ -234,10 +234,12 @@ class User
 }
 ```
 
+You can also use short annotation declaration:
+
 ```php
 /**
  * @Table(
- *     columns={"created_at": @Column(type = datetime)},
+ *     columns={"created_at": @Column("datetime")},
  *     indexes={@Index(columns = {"created_at"})}
  * ) 
  */
