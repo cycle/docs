@@ -108,13 +108,13 @@ namespace Example;
 class User
 {
     /**
-     * @Column(type=primary)
+     * @Column(type="primary")
      * @var int
      */
     protected $id;
 
     /**
-     * @Column(type=string)
+     * @Column(type="string")
      * @var string
      */
     protected $name;
