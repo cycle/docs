@@ -15,10 +15,10 @@ We can demonstrate it:
 /** @Entity */
 class Post
 {
-    /** @Column(type=primary) */
+    /** @Column(type="primary") */
     public $id;
 
-    /** @BelongsTo(target=User) */
+    /** @BelongsTo(target="User") */
     public $user;
 }
 ```
