@@ -1,4 +1,4 @@
-# Manually Defined Entity Schema
+# Manually defined Mapping Schema
 You can avoid the usage of cycle/annotation extension or any other schema related extension and write the ORM mapping schema manually.
 
 ## Custom Schema
