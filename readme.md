@@ -61,5 +61,6 @@ Table of Contents
   * [Database Schema Declaration](advanced/declaration.md)
   * [Configuring Schema Builder](advanced/schema-builder.md)
   * [Syncronizing Database Schema (Migrations)](advanced/sync-schema.md)
+  * [Manually defined Mapping Schema](advanced/manual.md)
   * [Testing](advanced/testing.md)
   * [Limitations](advanced/limitations.md)
