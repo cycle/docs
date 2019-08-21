@@ -46,8 +46,7 @@ $orm = $orm->withSchema(new ORM\Schema($schema));
 > You can also declare relations, indexes and associate custom mappers. See [examples](https://github.com/cycle/schema-builder/tree/master/tests/Schema).
 
 ## Custom Generators
-Upon generating final schema you must pass your registry should set of generators, each of them is response for specific part of
-schema compilation. Simple compilation pipeline will look like:
+Upon generating final schema you can pass your registry should the set of generators, each of them is responsible for the specific part of the schema compilation. Simple compilation pipeline will look like:
 
 ```php
 $schema = (new Schema\Compiler())->compile($r, [
