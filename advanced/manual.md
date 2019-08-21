@@ -47,7 +47,6 @@ $orm = $orm->withSchema(new Schema([
       Schema::TABLE       => 'user',
       Schema::PRIMARY_KEY => 'id',
       Schema::COLUMNS     => ['id', 'email', 'balance'],
-      Schema::SCHEMA      => [],
       Schema::RELATIONS   => [
           'profile' => [
               Relation::TYPE   => Relation::HAS_ONE,
@@ -67,7 +66,6 @@ $orm = $orm->withSchema(new Schema([
       Schema::TABLE       => 'profile',
       Schema::PRIMARY_KEY => 'id',
       Schema::COLUMNS     => ['id', 'user_id', 'image'],
-      Schema::SCHEMA      => [],
       Schema::RELATIONS   => []
   ],
 ]));
