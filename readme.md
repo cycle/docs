@@ -57,11 +57,12 @@ Table of Contents
   * [Timestamped Entities](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
   * [Chained Repository (Query Scopes)](advanced/chained-repository.md)
-* Databases and Mapping Schema 
+* Databases
   * [Database Schema Introspection](advanced/introspection.md)
   * [Database Schema Declaration](advanced/declaration.md)
-  * [Configuring Schema Builder](advanced/schema-builder.md)
   * [Syncronizing Database Schema (Migrations)](advanced/sync-schema.md)
+* Mapping Schema
+  * [Configuring Schema Builder](advanced/schema-builder.md)
   * [Manually defined Mapping Schema](advanced/manual.md)
   * [Dynamic Mapping Schema](advanced/dynamic-schema.md)
 * Extra
