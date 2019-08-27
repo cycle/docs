@@ -44,10 +44,18 @@ Table of Contents
   * [Collections](advanced/collections.md)
   * [References and Proxies](advanced/promise.md)
   * [Node Parser](advanced/node-parser.md)
+* Mapping Schema
+  * [Configuring Schema Builder](advanced/schema-builder.md)
+  * [Manually defined Mapping Schema](advanced/manual.md)
+  * [Dynamic Mapping Schema](advanced/dynamic-schema.md)
 * Columns and Properties
   * [Column Wrappers](advanced/column-wrappers.md)
   * [DateTime properties](advanced/datetime.md)  
   * [UUID as Primary Key](advanced/uuid.md)
+* Databases
+  * [Database Schema Introspection](advanced/introspection.md)
+  * [Database Schema Declaration](advanced/declaration.md)
+  * [Syncronizing Database Schema (Migrations)](advanced/sync-schema.md)
 * Customization
   * [Custom Mappers](advanced/custom-mapper.md)
   * [Constrains](advanced/constrain.md)
@@ -57,15 +65,7 @@ Table of Contents
   * [Timestamped Entities](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
   * [Chained Repository (Query Scopes)](advanced/chained-repository.md)
-* Databases
-  * [Database Schema Introspection](advanced/introspection.md)
-  * [Database Schema Declaration](advanced/declaration.md)
-  * [Syncronizing Database Schema (Migrations)](advanced/sync-schema.md)
-* Mapping Schema
-  * [Configuring Schema Builder](advanced/schema-builder.md)
-  * [Manually defined Mapping Schema](advanced/manual.md)
-  * [Dynamic Mapping Schema](advanced/dynamic-schema.md)
-* Extra
+* Advanced
   * [Usage in Long Running Applications](advanced/daemonizing.md)
   * [Testing](advanced/testing.md)
   * [Limitations](advanced/limitations.md)
