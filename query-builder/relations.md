@@ -78,3 +78,22 @@ $selec->with('posts',[
 Such query will find all entities with flagged posts and load this posts within one query (make sure to set the DISTINCT). Note, this is NOT optimization technique.
 
 > LIMIT, ORDER BY are currently not supported as fetch scope (no BC expected).
+
+## Load with filter by nested relation
+You can not only load the relation chain but also filter your branches by their relations. For example we can load all users and all users posts which have comments.
+
+```php
+$users->load('posts', [
+    'where' => ['comments.id' => ['!=' => null]]
+]);
+```
+
+You can also use alternative notation with additional `distinct` flag:
+
+```php
+$users->load('posts', [
+    'where' => function($qb) {
+        $qb->distinct()->where('comments.id', '!=', null);
+    }
+]);
+```
