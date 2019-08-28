@@ -97,3 +97,89 @@ $users->load('posts', [
     }
 ]);
 ```
+
+Following SQL will be generated:
+
+```sql
+SELECT
+"user"."id" AS "c0", "user"."email" AS "c1", "user"."balance" AS "c2"
+FROM "user" AS "user"
+```
+
+```sql
+SELECT DISTINCT
+"user_posts"."id" AS "c0", "user_posts"."user_id" AS "c1", "user_posts"."title" AS "c2"
+FROM "post" AS "user_posts"
+INNER JOIN "comment" AS "user_posts_comments"
+    ON "user_posts_comments"."post_id" = "user_posts"."id"
+WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NOT NULL)
+```
+
+Please note, the relation is joined using `INNER JOIN` by default. You can alter this behaviour.
+
+To find all users and load only posts without comments:
+
+```php
+$users->load('posts', [
+    'where' => function (Select\QueryBuilder $qb) {
+        $qb->distinct()->with('comments', [
+            'method' => Select\JoinableLoader::LEFT_JOIN]
+        )->where('comments.id', '=', null);
+    }
+]);
+```
+
+```sql
+SELECT
+"user"."id" AS "c0", "user"."email" AS "c1", "user"."balance" AS "c2"
+FROM "user" AS "user"
+```
+
+```sql
+SELECT DISTINCT
+"user_posts"."id" AS "c0", "user_posts"."user_id" AS "c1", "user_posts"."title" AS "c2"
+FROM "post" AS "user_posts"
+LEFT JOIN "comment" AS "user_posts_comments"
+    ON "user_posts_comments"."post_id" = "user_posts"."id"
+WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NULL)
+```
+
+You can also specify join method in primary select query. Let's try to find all users with posts without comments and load only 
+posts with comments for this users. We would have to use `options` of our relation to specify the method:
+
+
+```php
+$users
+    ->distinct()
+    ->with('posts.comments', [
+        'method' => Select\JoinableLoader::LEFT_JOIN,
+    ])
+    ->where('posts.comments.id', null)
+    ->load('posts', [
+        'where' => function (Select\QueryBuilder $qb) {
+            $qb->distinct()->where('comments.id', '!=', null);
+        }
+    ])->orderBy('user.id');
+```
+
+And generated SQLs:
+
+```sql
+SELECT DISTINCT
+    "user"."id" AS "c0", "user"."email" AS "c1", "user"."balance" AS "c2"
+FROM "user" AS "user"
+INNER JOIN "post" AS "user_posts"
+    ON "user_posts"."user_id" = "user"."id"
+LEFT JOIN "comment" AS "user_posts_comments"
+    ON "user_posts_comments"."post_id" = "user_posts"."id"
+WHERE "user_posts_comments"."id" IS NULL
+```
+
+```sql
+SELECT DISTINCT
+    "user_posts"."id" AS "c0", "user_posts"."user_id" AS "c1", "user_posts"."title" AS "c2"
+FROM "post" AS "user_posts"
+INNER JOIN "comment" AS "user_posts_comments"
+    ON "user_posts_comments"."post_id" = "user_posts"."id"
+WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NOT NULL)
+```
