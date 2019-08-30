@@ -138,7 +138,7 @@ $dbm = new DatabaseManager(new DatabaseConfig([
     ],
 ]));
 
-// ensure schema
+// automatically migrate database schema if needed (optional)
 $users = $dbm->database('default')->table('users')->getSchema();
 $users->primary('id');
 $users->string('name');
