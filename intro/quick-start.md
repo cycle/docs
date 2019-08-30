@@ -99,18 +99,21 @@ You can avoid using `cycle/annotated` and ignore sections "Define Entity", "Sche
 
 ```php
 $orm = $orm->withSchema(new Schema([
-     Schema::MAPPER      => Mapper::class,
-     Schema::DATABASE    => 'default',
-     Schema::TABLE       => 'users',
-     Schema::PRIMARY_KEY => 'id',
-     Schema::COLUMNS     => [
-        'id'   => 'id',  // property => column 
-        'name' => 'name'
-     ],
-     Schema::TYPECAST    => [
-        'id' => 'int'
-     ],
-     Schema::RELATIONS   => []
+    'user' => [
+         Schema::MAPPER      => Mapper::class, // default POPO mapper
+         Schema::ENTITY      => User::class, 
+         Schema::DATABASE    => 'default',
+         Schema::TABLE       => 'users',
+         Schema::PRIMARY_KEY => 'id',
+         Schema::COLUMNS     => [
+            'id'   => 'id',  // property => column 
+            'name' => 'name'
+         ],
+         Schema::TYPECAST    => [
+            'id' => 'int'
+         ],
+         Schema::RELATIONS   => []
+     ]
 ]));
 ```
 
