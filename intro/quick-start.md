@@ -94,6 +94,37 @@ Execute:
 $ composer dump
 ```
 
+## Manually Configure Mapping
+You can avoid using `cycle/annotated` and ignore sections "Define Entity", "Schema Generation". To do that we can define ORM schema manually, right in PHP code:
+
+```php
+$orm = $orm->withSchema(new Schema([
+     Schema::MAPPER      => Mapper::class,
+     Schema::DATABASE    => 'default',
+     Schema::TABLE       => 'users',
+     Schema::PRIMARY_KEY => 'id',
+     Schema::COLUMNS     => [
+        'id'   => 'id',  // property => column 
+        'name' => 'name'
+     ],
+     Schema::TYPECAST    => [
+        'id' => 'int'
+     ],
+     Schema::RELATIONS   => []
+]));
+```
+
+You can use ORM now (no annotations is required):
+
+```php
+$user = new User();
+$user->setName("John");
+
+(new Transaction($orm))->persist($user)->run();
+```
+
+> Note, in this case ORM can not automatically migrate your database schema.
+
 ## Define Entity
 To create our first entity in `src` folder we will use capabilities provided by `cycle/annotated` package to describe desired schema:
 
