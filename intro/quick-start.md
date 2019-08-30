@@ -41,20 +41,22 @@ include 'vendor/autoload.php';
 
 use Spiral\Database;
 
-$dbal = new Database\DatabaseManager(new Database\Config\DatabaseConfig([
-    'default'     => 'default',
-    'databases'   => [
-        'default' => ['connection' => 'sqlite']
-    ],
-    'connections' => [
-        'sqlite' => [
-            'driver'  => Database\Driver\SQLite\SQLiteDriver::class,
-            'connection' => 'sqlite:database.db',
-            'username'   => '',
-            'password'   => '',
+$dbal = new Database\DatabaseManager(
+    new Database\Config\DatabaseConfig([
+        'default'     => 'default',
+        'databases'   => [
+            'default' => ['connection' => 'sqlite']
+        ],
+        'connections' => [
+            'sqlite' => [
+                'driver'  => Database\Driver\SQLite\SQLiteDriver::class,
+                'connection' => 'sqlite:database.db',
+                'username'   => '',
+                'password'   => '',
+            ]
         ]
-    ]
-]));
+    ])
+);
 ```
 
 > Read about how to connect to other database types in [next section](/basic/connect.md). You can also configure
