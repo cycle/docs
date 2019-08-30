@@ -132,7 +132,7 @@ $user->setName("John");
 
 > Note, in this case ORM can not automatically migrate your database schema.
 
-Read more about other ways to declare mapping schema in later sections of ORM documentation.
+Read more about other ways to declare mapping schema in later sections of ORM documentation (for example [dynamic mapping](https://github.com/cycle/docs/blob/master/advanced/dynamic-schema.md#example)). 
 
 ## Define Entity
 To create our first entity in `src` folder we will use capabilities provided by `cycle/annotated` package to describe desired schema:
