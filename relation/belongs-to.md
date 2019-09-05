@@ -25,7 +25,7 @@ Option      | Value  | Comment
 ---         | ---    | ----
 load        | lazy/eager | Relation load approach (default `lazy`)
 cascade     | bool   | Automatically save related data with source entity, defaults to `true`
-nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `true`
+nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `false`
 innerKey    | string | Inner key in source entity, defaults to `{relationName}_{outerKey}`
 outerKey    | string | Outer key in the related entity, by default primary key
 fkCreate    | bool   | Set to true to automatically create FK on innerKey, defauls to `true`
