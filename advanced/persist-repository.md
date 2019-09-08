@@ -59,7 +59,7 @@ $orm = $orm->withSchema(new Schema([
 ]));
 ```
 
-You can use repository now to create/update entity in your application:
+You can use the repository now to create/update entity in your application:
 
 ```php
 /** @var UserPersistRepository $users */
