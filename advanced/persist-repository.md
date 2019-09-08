@@ -63,7 +63,7 @@ You can use the repository now to create/update entity in your application:
 
 ```php
 /** @var UserPersistRepository $users */
-$users = $this->orm->getRepository(User::class);
+$users = $orm->getRepository(User::class);
 
 $u = new User();
 $u->email = "test@email.com";
