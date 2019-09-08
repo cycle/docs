@@ -64,6 +64,7 @@ Table of Contents
   * [Timestamped Entities](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
   * [Chained Repository (Query Scopes)](advanced/chained-repository.md)
+  * [Persist Repositories](advanced/persist-repository.md)
 * Advanced
   * [Usage in Long Running Applications](advanced/daemonizing.md)
   * [Testing](advanced/testing.md)
