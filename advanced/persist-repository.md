@@ -6,7 +6,7 @@ However, it is possible to safely add `save` or `delete` method to our repositor
 
 ## Use Repositories with Transaction
 We can create simple `store` method in Repository which will save current entity state and it's loaded relations or entity only.
-In order to do that we have to create transaction object inside our repository:
+In order to do that we have to create transaction inside our object:
 
 ```php
 class UserPersistRepository extends Repository
