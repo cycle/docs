@@ -5,7 +5,7 @@ By default ORM design the Repository object used only for Select logic (read-onl
 However, in some application architectures it might be beneficial to use repository as persister. It can either be responsible for `persist` enentrypoint
 or be responsible for low-level database communication.
 
-## Use Repositories with UoW
+## Use Repositories with Transaction
 We can create simple `store` method in Repository which will save current entity state and it's loaded relations or entity only.
 In order to do that we have to create transaction object inside our repository:
 
