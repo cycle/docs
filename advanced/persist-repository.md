@@ -1,9 +1,8 @@
 # Persisting Repositories
-By default ORM design the Repository object used only for Select logic (read-only), while write operations are controlled via Transactions 
+By default ORM design, the Repository object used only for Select logic (read-only). Write operations are controlled via Transactions 
 (entity -> transaction -> mapper -> command -> storage). 
 
-However, in some application architectures it might be beneficial to use repository as persister. It can either be responsible for `persist` enentrypoint
-or be responsible for low-level database communication.
+However, it is possible to safely add `save` or `delete` method to our repositories to avoid usage of transaction in application code. 
 
 ## Use Repositories with Transaction
 We can create simple `store` method in Repository which will save current entity state and it's loaded relations or entity only.
