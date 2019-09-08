@@ -53,7 +53,7 @@ $orm = $orm->withSchema(new Schema([
         Schema::DATABASE    => 'default',
         Schema::TABLE       => 'user',
         Schema::PRIMARY_KEY => 'id',
-        Schema::COLUMNS     => ['id', 'email', 'balance'],
+        Schema::COLUMNS     => ['id', 'email'],
         Schema::RELATIONS   => []
     ]
 ]));
@@ -67,7 +67,6 @@ $users = $orm->getRepository(User::class);
 
 $u = new User();
 $u->email = "test@email.com";
-$u->balance = 1000;
 
 $users->save($u);
 ```
