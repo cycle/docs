@@ -91,3 +91,67 @@ $ /vendor/bin/cycle db:table {table-name}
 ```
 
 > You can execute commands with `-vvv` flag to display SQL queries if logger is set.
+
+# Example
+Install the bundle and create `config/cycle-cli.php` and `bootstrap.php` files. Make sure that `composer.json` includes:
+
+```json
+"autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+}
+```
+
+You can create your first entity in `src/`:
+
+```php
+<?php
+
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Entity;
+
+/**
+ * @Entity()
+ */
+class User
+{
+    /** @Column(type="primary") */
+    public $id;
+
+    /** @Column(type="string") */
+    public $name;
+}
+```
+
+Generate database schema:
+
+```bash
+$ ./vendor/bin/cycle schema:sync
+```
+
+To use your entity create file `test.php`:
+
+```php
+<?php
+
+use Cycle\ORM;
+
+/** @var ORM\ORMInterface $orm */
+include 'bootstrap.php';
+
+$u = new \User();
+$u->name = "Antony";
+
+(new ORM\Transaction($orm))->persist($u)->run();
+
+foreach ($orm->getRepository(User::class)->findAll() as $u) {
+    print_r($u);
+}
+```
+
+You can test the ORM now:
+
+```bash
+$ php test.php
+```
