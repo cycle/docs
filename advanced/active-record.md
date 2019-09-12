@@ -1,14 +1,12 @@
 # Active Record
-Cycle ORM leaves enough room for developers in order to customize it's behaviour. In this section we will try to create ActiveRecord 
-implementation which is automatically configured based on database introspection. 
+Cycle ORM leaves enough room for developers in order to customize its behavior. In this section, we will try to create ActiveRecord implementation which is automatically configured based on database introspection. 
 
-> Engine is still going to use repositories and mappers behind the hood. In this article we are only going to handle column mapping, relation configuration must be done separatelly.
+> Engine is still going to use repositories and mappers behind the hood. In this article we are only going to handle column mapping, relation configuration must be done separately.
 
 ## Entity
-We would try to simplify our entity by disabling hydration and storing our properties in internal array. We are also going to create `save`, `find`
-and `delete` methods.
+We would try to simplify our entity by disabling hydration and storing our properties in an internal array. We are also going to create `save`, `find` and `delete` methods.
 
-First we will have to ensure access to ORM instance, transaction and repository (globally):
+First, we will have to ensure access to ORM instance, transaction, and repository (globally):
 
 ```php
 use Cycle\ORM;
@@ -48,7 +46,7 @@ class Record
 }
 ```
 
-To store and access entity data we are going to use private array (prefix `__` added to avoid collions with user methods):
+To store and access entity data we are going to use private array (prefix `__` added to avoid collisions with user methods):
 
 ```php
 private $data = [];
@@ -135,8 +133,8 @@ abstract class Record
 ```
 
 ## Mapper
-Now, in order to property initiate and persist entity we have to create mapper specific to our implementation. We can extend `Cycle\ORM\Mapper\DatabaseMapper`
-for this purposes:
+Now, in order to properly initiate and persist entity we have to create mapper specific to our implementation. We can extend `Cycle\ORM\Mapper\DatabaseMapper`
+for these purposes:
 
 ```php
 use Cycle\ORM;
@@ -279,7 +277,7 @@ $schema = (new Compiler())->compile(
 $schema = new Schema($schema);
 ```
 
-> You can store generated schema in cache to speed up application bootstrap.
+> You can store generated schema in the cache to speed up application bootstrap.
 
 ## Using Active Records
 Once the schema is obtained we can start working with our entities:
