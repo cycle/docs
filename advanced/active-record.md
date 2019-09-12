@@ -1,4 +1,4 @@
-# Active Record (Tutorial)
+# Active Record
 Cycle ORM leaves enough room for developers in order to customize it's behaviour. In this section we will try to create ActiveRecord 
 implementation which is automatically configured based on database introspection. 
 
