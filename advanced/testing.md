@@ -12,7 +12,7 @@ public function addOrder(User $u, Order $o, TransactionInterface $t)
 }
 ```
 
-Mock `TransactionInterface` to check the state of entity after method call. Additionally you can mock custom entity repositories:
+Mock `TransactionInterface` to check the state of the entity after method call. Additionally you can mock custom entity repositories:
 
 ```php
 class MyService
