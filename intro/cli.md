@@ -2,6 +2,8 @@
 You can install Cycle using bootstrap toolkit for quick integrations. This tutorial assumes that your entity codebase is located in 
 `src/` directory and accessible by Composer autoloader.
 
+> Bundle comes with annotations support.
+
 ## Install
 To install Console Toolkit:
 
