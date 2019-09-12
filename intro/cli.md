@@ -60,7 +60,6 @@ require_once 'bootstrap.php';
 return $orm;
 ```
 
-## Available Console commands
 To display list of found entities:
 
 ```
