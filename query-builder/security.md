@@ -26,7 +26,7 @@ $users->where($name, '=', new Expression("CONCAT($userValue)")); // possible SQL
 ```
 
 ## Array Parameters
-ORM will not allow you to use array parameters outside of `Prameter` scope:
+ORM will not allow you to use array parameters outside of `Parameter` scope:
 
 ```php
 $users->where($id, 'IN', [1, 2, 3]); // compile exception
