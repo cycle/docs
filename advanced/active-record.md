@@ -14,7 +14,7 @@ $u->save();
 ## Entity
 We would try to simplify our entity by disabling the hydration, properties will be stored in a form of array. We are also going to create `save`, `find` and `delete` methods.
 
-First, we will have to ensure access to ORM instance, transaction, and repository (globally):
+First, we will have to ensure access to the ORM instance, a transaction, and the repository (statically):
 
 ```php
 use Cycle\ORM;
