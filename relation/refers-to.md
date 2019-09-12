@@ -111,7 +111,7 @@ class Category
     /** @Column(type="primary") */
     public $id;
     
-    /** @ReersTo(target="Category") */
+    /** @RefersTo(target="Category") */
     public $parent;
     
     // ...
