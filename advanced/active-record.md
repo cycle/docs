@@ -1,5 +1,5 @@
 # Active Record
-Cycle ORM leaves enough room for developers its behavior. In this section, we will try to create ActiveRecord implementation which is automatically configured based on database introspection. 
+Cycle ORM leaves enough room for developers to alter its behavior. In this section, we will try to create ActiveRecord implementation which is automatically configured based on database introspection. 
 
 > Engine is still going to use repositories and mappers behind the hood. In this article we are only going to handle column mapping, relation configuration must be done separately.
 
