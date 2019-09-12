@@ -19,7 +19,7 @@ First, we will have to ensure access to ORM instance, transaction, and repositor
 ```php
 use Cycle\ORM;
 
-class Record
+abstact class Record
 {
     private static $orm;
 
@@ -57,21 +57,26 @@ class Record
 To store and access entity data we are going to use private array (prefix `__` added to avoid collisions with user methods):
 
 ```php
-private $data = [];
-
-public function __construct(array $data = [])
+abstract class Record
 {
-    $this->__setData($data);
-}
+    private $data = [];
 
-public function __setData(array $data)
-{
-    $this->data = $data;
-}
+    public function __construct(array $data = [])
+    {
+        $this->__setData($data);
+    }
 
-public function __getData(): array
-{
-    return $this->data;
+    public function __setData(array $data)
+    {
+        $this->data = $data;
+    }
+
+    public function __getData(): array
+    {
+        return $this->data;
+    }
+
+    // ...
 }
 ```
 
