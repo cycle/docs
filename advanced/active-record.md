@@ -6,7 +6,7 @@ Cycle ORM leaves enough room for developers to alter it behavior. In this sectio
 We will try to achive following functionality:
 
 ```php
-$u = User::find()->findOne(['name' => "John"]);
+$u = User::find()->findOne(['name' => "John"]) ?? new User();
 $u->name = "new name";
 $u->save();
 ```
