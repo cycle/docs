@@ -109,9 +109,7 @@ You can create your first entity in `src/`:
 
 use Cycle\Annotated\Annotation as Cycle;
 
-/**
- * @Cycle\Entity()
- */
+/** @Cycle\Entity() */
 class User
 {
     /** @Cycle\Column(type="primary") */
