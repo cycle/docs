@@ -2,8 +2,7 @@
 Cycle ORM leaves enough room for developers in order to customize it's behaviour. In this section we will try to create ActiveRecord 
 implementation which is automatically configured based on database introspection. 
 
-> Engine still going to use repositories and mappers behind the hood. In this article we are only going to handle column mapping, relation
-configuration must be done separatelly.
+> Engine is still going to use repositories and mappers behind the hood. In this article we are only going to handle column mapping, relation configuration must be done separatelly.
 
 ## Entity
 We would try to simplify our entity by disabling hydration and storing our properties in internal array. We are also going to create `save`, `find`
