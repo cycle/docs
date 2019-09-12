@@ -19,7 +19,7 @@ In order to enable Console Toolkit we have to define bootstrap file which will c
 // bootstrap.php
 
 use Cycle\Bootstrap;
-use Doctrine\Common\Annotations\AnnotationRegisty;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 require_once "vendor/autoload.php";
 
