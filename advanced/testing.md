@@ -36,7 +36,7 @@ class MyService
 > You can also `run` transaction outside of your service method if you wish to group multiple persist operations together.
 
 ## Mocking The Database
-Another, more complex approch would invole creating test database and running your service code using more realistic scenarios.
+Another, more complex and slower approach would invole creating test database and running your service code using more realistic scenarios.
 
 In order to achieve that you must construct your own `DatabaseManager` instance and replace desired database connection with needed
 driver (for example SQLite):
@@ -62,6 +62,8 @@ $orm = new ORM(new Factory($dbal));
 // you can use already calculated database schema
 $orm = $orm->withSchema(new Schema($cachedSchema));
 ```
+
+> Attention, you would not be able to test if your database constrains operate properly using SQLite. Use dedicated database instance.
 
 You can clean your database state after each iteration using schema introspection appoach:
 
