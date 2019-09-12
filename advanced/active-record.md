@@ -3,7 +3,7 @@ Cycle ORM leaves enough room for developers to alter it behavior. In this sectio
 
 > Engine is still going to use repositories and mappers behind the hood. In this article we are only going to handle column mapping, relation configuration must be done separately.
 
-We will try to achive following functionality:
+We will try to achive the following functionality:
 
 ```php
 $u = User::find()->findOne(['name' => "John"]) ?? new User();
