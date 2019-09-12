@@ -107,18 +107,17 @@ You can create your first entity in `src/`:
 ```php
 <?php
 
-use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation as Cycle;
 
 /**
- * @Entity()
+ * @Cycle\Entity()
  */
 class User
 {
-    /** @Column(type="primary") */
+    /** @Cycle\Column(type="primary") */
     public $id;
 
-    /** @Column(type="string") */
+    /** @Cycle\Column(type="string") */
     public $name;
 }
 ```
