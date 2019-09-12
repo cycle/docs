@@ -187,7 +187,7 @@ we will use the pipeline generator provided by `cycle/schema-builder` package an
 First, we have to create instance of `ClassLocator` which will automatically find needed entities:
 
 ```php
-$finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__]));
+$finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__]);
 $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 ```
 
