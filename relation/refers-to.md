@@ -13,7 +13,7 @@ class User
 {
     // ...
     
-    /** @ReersTo(target="Comment") */
+    /** @RefersTo(target="Comment") */
     public $lastComment;
 
     /** @HasMany(target="Comment") */
