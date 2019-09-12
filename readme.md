@@ -4,7 +4,7 @@ Table of Contents
 * Getting Started
   * [About Cycle ORM](intro/about.md)
   * [**Quick Start**](intro/quick-start.md)
-  * [Console Boostrap](into/bootstrap.md)
+  * [Console Boostrap](into/cli.md)
   * [Contributing](contributing.md)
   * [LICENSE](license.md)
 * Basics
