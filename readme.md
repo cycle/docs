@@ -66,6 +66,7 @@ Table of Contents
   * [Soft Deleted Entities](advanced/soft-deletes.md)
   * [Chained Repository (Query Scopes)](advanced/chained-repository.md)
   * [Persist Repositories](advanced/persist-repository.md)
+  * [Active Record](advanced/active-record.md)
 * Advanced
   * [Usage in Long Running Applications](advanced/daemonizing.md)
   * [Testing](advanced/testing.md)
