@@ -12,7 +12,7 @@ $u->save();
 ```
 
 ## Entity
-We would try to simplify our entity by disabling hydration and storing our properties in an internal array. We are also going to create `save`, `find` and `delete` methods.
+We would try to simplify our entity by disabling the hydration, properties will be stored in a form of array. We are also going to create `save`, `find` and `delete` methods.
 
 First, we will have to ensure access to ORM instance, transaction, and repository (globally):
 
