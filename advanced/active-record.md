@@ -3,6 +3,14 @@ Cycle ORM leaves enough room for developers its behavior. In this section, we wi
 
 > Engine is still going to use repositories and mappers behind the hood. In this article we are only going to handle column mapping, relation configuration must be done separately.
 
+We will try to achive following functionality:
+
+```php
+$u = User::find()->findOne() 
+$u->name = "new name";
+$u->save();
+```
+
 ## Entity
 We would try to simplify our entity by disabling hydration and storing our properties in an internal array. We are also going to create `save`, `find` and `delete` methods.
 
