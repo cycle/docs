@@ -1,11 +1,11 @@
 # Transactions (Unit of Work)
-Every persist operation with entity must be performed via Transaction object. This object will rely on `Heap` associated with given ORM
-and will request each entity mapper and relation to issue set of persist commands in a form of command chain.
+Every persists operation with an entity must be performed via the Transaction object. This object will rely on `Heap` associated with given ORM
+and will request each entity mapper and relation to issue set of persist commands in a form of the command chain.
 
 > All transaction are treated as disposable, you can create and delete them as you need.
 
 ## TransactionInterface
-ORM provides convinient class to manage transactions, however, it is recommended to couple your code with underlying interface for 
+ORM provides the convenient class to manage transactions, however, it is recommended to couple your code with an underlying interface for 
 the simplicity and easier testing going forward:
 
 ```php
@@ -42,7 +42,7 @@ interface TransactionInterface
 ```
 
 ## Example Usage
-To persist your entity simply add it to transaction using `persist` method and call method `run` after that.
+To persist your entity simply add it to the transaction using the `persist` method and call method `run` after that.
 
 ```php
 $t = new Transaction($orm);
@@ -79,7 +79,7 @@ $orm->getHeap()->clean();
 ```
 
 ## Cascade persisting
-By default, Transaction will create command chain to store all entity relations unless the opposite is specified in relation schema.
+By default, Transaction will create a command chain to store all entity relations unless the opposite is specified in relation schema.
 If you would like to store only entity content without it's relations use persist option `MODE_ENTITY_ONLY`:
 
 ```php
@@ -89,8 +89,8 @@ $t->run();
 ```
 
 ## Transaction Runner
-In some cases you might want to implement your own persist logic or sorting for issued commands. You can create your own
-Transaction implementation or provide second argument to the transaction to handle actual command execution:
+In some cases, you might want to implement your own persist logic or sorting for issued commands. You can create your own
+Transaction implementation or provide the second argument to the transaction to handle actual command execution:
 
 ```php
 interface RunnerInterface extends \Countable
@@ -112,7 +112,7 @@ interface RunnerInterface extends \Countable
 }
 ```
 
-For example we can log the order of which commands are being executed by wrapping original transaction Runner:
+For example, we can log the order of which commands are being executed by wrapping the original transaction Runner:
 
 ```php
 class LogRunner implements RunnerInterface
