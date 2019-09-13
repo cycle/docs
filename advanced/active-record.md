@@ -26,7 +26,10 @@ abstract class Record
     public function save(bool $saveChildren = true)
     {
         $tr = new ORM\Transaction(self::getORM());
-        $tr->persist($this, $saveChildren ? ORM\Transaction::MODE_CASCADE : ORM\Transaction::MODE_ENTITY_ONLY);
+        $tr->persist(
+            $this, 
+            $saveChildren ? ORM\Transaction::MODE_CASCADE : ORM\Transaction::MODE_ENTITY_ONLY
+        );
         $tr->run();
     }
 
@@ -117,7 +120,10 @@ abstract class Record
     public function save(bool $saveChildren = true)
     {
         $tr = new ORM\Transaction(self::getORM());
-        $tr->persist($this, $saveChildren ? ORM\Transaction::MODE_CASCADE : ORM\Transaction::MODE_ENTITY_ONLY);
+        $tr->persist(
+            $this, 
+            $saveChildren ? ORM\Transaction::MODE_CASCADE : ORM\Transaction::MODE_ENTITY_ONLY
+        );
         $tr->run();
     }
 
