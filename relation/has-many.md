@@ -1,11 +1,11 @@
 # Has Many
-The Has Many relation defines that entity exclusively owns multiple other entities in a form of parent-children.
+The Has Many relations defines that entity exclusively owns multiple other entities in a form of parent-children.
 
 ## Definition
 To define Has Many relation using annotated enties extension use:
 
 ```php
-/** @Entity */ 
+/** @Entty */ 
 class User 
 {
     // ...
@@ -15,7 +15,7 @@ class User
 }
 ```
 
-In order to use a newly created entity, you must define the collection to store related entities. Do it in your constructor:
+To use a newly created entity, you must define the collection to store related entities. Do it in your constructor:
 
 ```php
 use use Doctrine\Common\Collections\ArrayCollection;
@@ -52,7 +52,7 @@ nullable    | bool   | Defines if the relation can be nullable (child can have n
 innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
 where       | array  | Additional where condition to be applied for the relation, defaults to none.
-fkCreate    | bool   | Set to true to automatically create FK on outerKey, defauls to `true`
+fkCreate    | bool   | Set to true to automatically create FK on outerKey, defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
 indexCreate | bool   | Create an index on outerKey, defaults to `true`
 
@@ -151,7 +151,7 @@ $users = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-Given approach will produce only one SQL query.
+The given approach will produce only one SQL query.
 
 ```sql
 SELECT DISTINCT
