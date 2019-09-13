@@ -1,5 +1,5 @@
 # Annotated Entities
-Annotated entities extension is capable to index any domain entity in your project. To indicate that class must be treated as a domain entity make sure to add `@Entity` annotation to the docComment.
+Annotated entities extension is capable of indexing any domain entity in your project. To indicate that class must be treated as a domain entity make sure to add `@Entity` annotation to the DocComment.
 
 ```php
 /** @Entity */
@@ -29,7 +29,7 @@ class User
 }
 ```
 
-> You must manually set `role` and `table` for your classes if you use models which share the same name.
+> You must manually set `role` and `table` for your classes if you use models that share the same name.
 
 Some options can be used to overwrite default entity behaviour, for example to assign custom entity repository:
 
@@ -48,7 +48,7 @@ Following entity options are available for customization:
 
 Option | Value | Comment 
 --- | --- | ---
-role           | string | Entity role, defaults to lowercases class name without a namespace
+role           | string | Entity role defaults to lowercases class name without a namespace
 mapper         | class  | Mapper class name defaults to `Cycle\ORM\Mapper\Mapper`
 repository     | class  | Repository class to represent read operations for an entity defaults to `Cycle\ORM\Select\Repository`
 table          | string | Entity source table defaults to plural form of entity role
@@ -84,7 +84,7 @@ class User
 }
 ```
 
-> Read how to use non-incremental primary keys (for example UUID) in Advanced section.
+> Read how to use non-incremental primary keys (for example UUID) in the Advanced section.
 
 By default, the entity properly will be mapped to the column with the same name as the property, you can change it:
 
@@ -163,7 +163,7 @@ Following column types are available:
 
 Type        | Parameters                | Description
 ---         | ---                       | ---
-**primary** | ---                       | Special column type, usually mapped as integer + auto incrementing flag and added as table primary index column. You can define only one primary column in your table (you still can create a compound primary key, see below).
+**primary** | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table (you still can create a compound primary key, see below).
 bigPrimary  | ---                       | Same as primary but uses bigInteger to store its values.
 boolean     | ---                       | Boolean type, some databases will store it as integer (1/0).
 integer     | ---                       | Database specific integer (usually 32 bits).
@@ -171,18 +171,18 @@ tinyInteger | ---                       | Small/tiny integer, check your DBMS to
 bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check it's the size.
 **string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed. 
 text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.
-tinyText    | ---                       | Tiny text, same as "text" for most of the databases. Differs only in MySQL.
-longText    | ---                       | Long text, same as "text" for most of the databases. Differs only in MySQL.
+tinyText    | ---                       | Tiny text, same as "text" for most of the databases. It differs only in MySQL.
+longText    | ---                       | Long text, same as "text" for most of the databases. It differs only in MySQL.
 double      | ---                       | [Double precision number.] (https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
 float       | ---                       | Single precision number, usually mapped into "real" type in the database. 
 decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.
 datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.
 date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.
 time        | ---                       | To store time only.
-*timestamp* | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column in your objects to store time (use datetime instead) as timestamps will behave very specific to select DBMS.
+*timestamp* | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column type in your objects to store time (use `datetime` instead) as timestamps will behave very specific to select DBMS.
 binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.
-tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. Differs only in MySQL.
-longBinary  | ---                       | Long binary, same as "binary" for most of the databases. Differs only in MySQL.
+tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. It differs only in MySQL.
+longBinary  | ---                       | Long binary, same as "binary" for most of the databases. It differs only in MySQL.
 json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.
 
 ## Enums
