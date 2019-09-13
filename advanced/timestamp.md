@@ -3,7 +3,7 @@ It is possible to automatically set `created_at`, `deleted_at` column values on 
 custom mapper implementation which will be automatically registering such values in entity commands.
 
 ## Timestamped Mapper
-Simplest mapper will look like:
+The simplest mapper will look like:
 
 ```php
 class TimestampedMapper extends Mapper
@@ -33,7 +33,7 @@ class TimestampedMapper extends Mapper
 }
 ```
 
-> While we can set column values directly in `Insert` command we have to use alternative method `registerAppendix` for `Update`. Such method will only push changes to database if any other entity field has changes (for example if entity FK has been updated though the relation).
+> While we can set column values directly in `Insert` command we have to use the alternative method `registerAppendix` for `Update`. Such method will only push changes to the database if any other entity field has changes (for example if entity FK has been updated through the relation).
 
 ## Automatically Define Columns
 You can use annotated entites extension to automatically declare needed column from inside your mapper:
