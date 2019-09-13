@@ -3,9 +3,9 @@ Cycle ORM use [Doctrine/Collection](https://github.com/doctrine/collections) in 
 
 > See https://github.com/cycle/orm/issues/24
 
-## Accessing collection
-ORM will automatically instantiate collection instance for your relations, however you still required to initiate empty
-collections in your contructor to use newly created entities:
+## Accessing Collection
+ORM will automatically instantiate collection instance for your relations, however, you still required to initiate empty
+collections in your constructor to use newly created entities:
 
 ```php
 /** @Entity */ 
@@ -34,4 +34,4 @@ print_r($u->posts);
 ```
 
 ## Collection API
-You can read more about available collection API [here](https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html).
+You can read more about the available collection API [here](https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html).
