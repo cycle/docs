@@ -88,8 +88,8 @@ interface MapperInterface
 }
 ```
 
-ORM will create mapper using `Spiral\Core\FactoryInterface` which means you Mapper is able to request depenendencies available in
-container associated with ORM Factory. 
+ORM will create mapper using `Spiral\Core\FactoryInterface` which means you Mapper is able to request dependencies available in
+the container associated with ORM Factory. 
 
 Some parameters will be provided by ORM itself, such as: 
   * **role** - entity role
