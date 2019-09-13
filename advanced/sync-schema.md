@@ -1,5 +1,5 @@
-# Syncronizing Database Schema
-Cycle ORM provides multiple way to automatically configure database schema based on entity declarations.
+# Synchronizing Database Schema
+Cycle ORM provides multiple ways to automatically configure database schema based on entity declarations.
 
 ## Automatic Syncronization
 First approach would involve automatic schema declaration without any intermediate migration, to use it add `SyncTables` generetator to your schema compiler:
@@ -18,10 +18,10 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 ]);
 ```
 
-Such approach is useful for development enviroment but might cause issues while working with production database.
+Such an approach is useful for development environments but might cause issues while working with the production database.
 
 ## Generate Migrations
-You can automatically generate set of migration files during schema compilaration. In this case you have a freedom to alter such migrations manually before running them. To achive that you must connect Cycle extension:
+You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom to alter such migrations manually before running them. To achieve that you must connect Cycle extension:
 
 ```php
 composer require cycle/migrations
