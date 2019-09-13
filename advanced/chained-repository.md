@@ -1,8 +1,8 @@
 # Chained Repository
-The Cycle default Repository implementation provides the ability to be easility cloned without affecting the base query for original instance.
+The Cycle default Repository implementation provides the ability to be easily cloned without affecting the base query for the original instance.
 
 ## Custom Scopes
-To implement the ability to create custom query scope you must implement method to clone the respotitory and customize base select query:
+To implement the ability to create custom query scope you must implement a method to clone the repository and customize base select query:
 
 
 ```php
@@ -29,7 +29,7 @@ print_r($r->withActive()->findAll());
 > You can chain as many scope methods as you want, make sure to keep the repository state immutable.
 
 ## Disable the Constrain 
-If you use entity constrain (for example soft-deleted) you can alter your underlying select query to disable it in specific cases:
+If you use entity constraint (for example soft-deleted) you can alter your underlying select query to disable it in specific cases:
 
 ```php
 class UserRepository extends Repository 
@@ -43,4 +43,3 @@ class UserRepository extends Repository
     }
 }
 ```
-
