@@ -1,11 +1,11 @@
 # Column Wrappers
-In some cases you might want to wrap the value using custom value object (similary to datetime columns which are wrapped as DateTimeImmutable).
+In some cases, you might want to wrap the value using custom value object (similarly to DateTime columns which are wrapped as DateTimeImmutable).
 It can be achieved by creating custom column wrapper and typecasting column value to it. 
 
-> Note, all column wrappers must be immutable, you have to reassing property value to trigger the change.
+> Note, all column wrappers must be immutable, you have to reassign property value to trigger the change.
 
 ## Example
-In order to define column wrapper we have to implement object with static `typecast` method. We would use UUID column as example.
+In order to define column wrapper, we have to implement an object with static `typecast` method. We would use UUID column as for an example.
 
 ```php
 use Ramsey\Uuid\Uuid as UuidBody;
@@ -49,8 +49,8 @@ class Uuid
 }
 ```
 
-> Please note that, `typecast` method will receive raw value content and database it's associated with. Make sure to implement `__toString`
-method on your wrapper to store it in database. See below how to use custom serialization strategy.
+> Please note that `typecast` method will receive raw value content and database it's associated with. Make sure to implement `__toString`
+method on your wrapper to store it in the database. See below how to use custom serialization strategy.
 
 ## Assign to entity
 To assign column wrapper to entity use column option `typecast`, you can specify typecast as function name, method name (:: separater) or 
@@ -98,8 +98,8 @@ $t->run();
 ```
 
 ## Raw Values
-In some cases you might want to store values in database in binary form, you can achieve that by implementing `Spiral\Database\Injection\ValueInterface`
-in order to gain access to low level query compilation:
+In some cases you might want to store values in the database in binary form, you can achieve that by implementing `Spiral\Database\Injection\ValueInterface`
+in order to gain access to low-level query compilation:
 
 ```php
 use Ramsey\Uuid\Uuid as UuidBody;
@@ -165,6 +165,6 @@ class Uuid implements ValueInterface
 }
 ```
 
-Now, Uuid column will be stored in a blob form.
+Now, the Uuid column will be stored in a blob form.
 
 > You can also implement Expression or Parameter interfaces in your column wrapper to achieve more complex logic.
