@@ -36,7 +36,7 @@ class SoftDeletedMapper extends Mapper
 }
 ```
 
-You can permently delete needed entities by using DBAL direcly or by adding switch to mapper to fallback to original command.
+You can permanently delete needed entities by using DBAL directly or by adding a switch to the mapper to fallback to the original command.
 
 ```php
 public function queueDelete($entity, Node $node, State $state): CommandInterface
@@ -60,7 +60,7 @@ $tr->run();
 ```
 
 ## Constrain
-To filter only deleted entities create the constrain:
+To filter only deleted entities create the constraint:
 
 ```php
 class NotDeletedConstrain implements ConstrainInterface
