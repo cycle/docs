@@ -75,8 +75,8 @@ $tr->run();
 
 Please note, ORM would not automatically trigger the delete operation for related entities and will rely on foreign key rules set in the database.
 
-## Persisting related Entities
-Persisting entity will also persist all related entities within it.
+## Persisting Related Entities
+An entity persisting will also persist all related entities within it.
  
 ```php
 $user = new User();
