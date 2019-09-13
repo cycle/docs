@@ -1,7 +1,7 @@
 # Belongs To
-Belongs To relation defines that entity is owned by a related entity on the exclusive matter. Example: post belongs to the author, comment belongs to post. Most of `belongsTo` relations can be created using `inverse` option of the declared `hasOne` or `hasMany` relation.
+Belongs To relation defines that entity is owned by a related entity on the exclusive matter. Example: post belongs to the author, comment belongs to post. Most of `belongsTo` relations can be created using the `inverse` option of the declared `hasOne` or `hasMany` relation.
 
-Entity will be always persisted after related entity.
+> The entity will be always persisted after related entity.
 
 ## Definition
 To define Belongs To relation using annotated enties extension use:
@@ -28,7 +28,7 @@ cascade     | bool   | Automatically save related data with source entity, defau
 nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `false`
 innerKey    | string | Inner key in source entity, defaults to `{relationName}_{outerKey}`
 outerKey    | string | Outer key in the related entity, by default primary key
-fkCreate    | bool   | Set to true to automatically create FK on innerKey, defauls to `true`
+fkCreate    | bool   | Set to true to automatically create FK on innerKey, defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
 indexCreate | bool   | Create an index on innerKey, defaults to `true`
 
@@ -86,4 +86,3 @@ $posts = $orm->getRepository(Post::class)
     
 print_r($posts);
 ```
-
