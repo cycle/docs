@@ -1,6 +1,6 @@
 # Pagination
 You are able to paginate any of `Cycle\ORM\Select` objects using two basic methods `limit` and `offset`. In addition to that, 
-the package `spiral/pagination` defines set of basic interfaces which will allow you to easier integrate Cycle to your application.
+the package `spiral/pagination` defines a set of basic interfaces which will allow you to easier integrate Cycle to your application.
 
 ## Example
 To paginate simple User select:
