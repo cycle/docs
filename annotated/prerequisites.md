@@ -34,7 +34,4 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 $orm = $orm->withSchema(new Schema($schema));
 ```
 
-> Make sure to point class locator the directory with your domain entities only as the indexation operation is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.
-
-## Annotation Syntax
-Cycle annotations are based on Doctrine Lexer, you are free to use syntax similar to Doctrine. Both variant `@Entity` and `@Entity` will work.
+> Make sure to point the class locator the directory with your domain entities only as the indexation operation is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.
