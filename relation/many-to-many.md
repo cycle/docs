@@ -1,5 +1,5 @@
 # Many To Many
-Many to Many relation is, in fact, two relations combined together. This relation requires intermediate (pivot) entity to connect the source and target entities. Examples: many users have many tags, many posts have many favorites.
+Many to Many relations are, in fact, two relations combined together. This relation requires intermediate (pivot) entity to connect the source and target entities. Example: many users have many tags, many posts have many favorites.
 
 The relation provides access to an intermediate object on all the steps including creation, update and query building.
 
@@ -249,4 +249,4 @@ $users = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-> Cross database Many To Many is not supported yet.
+> Cross-database Many To Many relations are not supported yet.
