@@ -231,10 +231,7 @@ class ARGenerator implements GeneratorInterface
                 continue;
             }
 
-            $table = $entity->getConstant('TABLE');
-            if ($table !== null) {
-                $this->declareEntity($registry, $entity->getName(), $table);
-            }
+            $this->declareEntity($registry, $entity->getName(), $$entity->getConstant('TABLE'));
         }
 
         return $registry;
