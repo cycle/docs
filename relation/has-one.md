@@ -1,5 +1,5 @@
 # Has One
-The Has One relation defines that entity exclusively owns another entity in a form of parent-children. Consider this relation as form of decomposition with ability to store data in external table.
+The Has One relation defines that entity exclusively owns another entity in a form of parent-children. Consider this relation as a form of decomposition with the ability to store data in external table.
 
 ## Definition
 To define Has One relation using annotated enties extension use:
@@ -15,9 +15,9 @@ class User
 }
 ```
 
-> You must properly handle the cases when relation is not initialized (`null`)!
+> You must properly handle the cases when the relation is not initialized (`null`)!
 
-By default, ORM will generate outer key in relation object using parent entity role and inner key (primary key by default) values. As result column and FK will be added to Address entity on `user_id` column.
+By default, ORM will generate an outer key in relation object using parent entity role and inner key (primary key by default) values. As result column and FK will be added to Address entity on `user_id` column.
 
 Option      | Value  | Comment
 ---         | ---    | ----
@@ -56,7 +56,7 @@ $u->setAddress(null);
 
 The child object will be removed during the persist operation.
 
-> To avoid child object removal (detach) set `nullable` true. In this case child outer key will be reset to `null`.
+> To avoid child object removal (detach) set `nullable` true. In this case, child outer key will be reset to `null`.
 
 ## Loading
 To access related data simply call the method `load` of your `User` `Select` object:
