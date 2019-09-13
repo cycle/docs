@@ -1,13 +1,13 @@
 # Morphed Relations
-In some cases you might want to associate your entity with any of external entities which support given type. This can be achieved
-using polymorphed relations associated to entity interface. Such approach supporded for `hasOne`, `hasMany` and `belongsTo` relations.
+In some cases, you might want to associate your entity with any of the external entities which support the given type. This can be achieved
+using polymorphed relations associated with the entity interface. Such approach supported for `hasOne`, `hasMany` and `belongsTo` relations.
 
-Relations points to external entity using complex key [role, outerKey].
+Relations points to the external entity using a complex key [role, outerKey].
 
 > [Avoid use](http://duhallowgreygeek.com/polymorphic-association-bad-sql-smell/) of these relations when possible.
 
 ## Definition
-In order to associate entity with one of multiple external objects you have to define common interface first:
+In order to associate an entity with one of the multiple external objects you have to define common interface first:
 
 ```php
 /** @Entity */
@@ -39,10 +39,10 @@ class Image
 You can use your relation as standard hasOne after that. **Note, eager loading is not possible with `belongsToMorphed` relation type.**
 
 ## Variations
-ORM provide three basic relations for polymorphic connections:
+ORM provides three basic relations for polymorphic connections:
 
 ### BelongsToMorphed
-Use cases: image attached to (post, user, comment). Relation is similar to `belongsTo` but does not support eager loading, FKs or select quering. The relation must point to entity interface.
+Use cases: image attached to (post, user, comment). The relation is similar to `belongsTo` but does not support eager loading, FKs or select querying. The relation must point to an entity interface.
 
 ```php
 /** @Entity */
@@ -64,11 +64,11 @@ nullable    | bool   | Defines if the relation can be nullable (child can have n
 innerKey    | string | Inner key in source entity, defaults to `{relationName}_{outerKey}`
 outerKey    | string | Outer key in the related entity, by default primary key
 morphKey    | string | Name of key to store related entity role (by default `{relationName}_role`
-morphKeyLength | int | The lenght of morph key, defaults to 32
+morphKeyLength | int | The length of morph key defaults to 32
 indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `true`
 
 ### MorphedHasOne
-Declared the ability to own the entity from multiple entity types (example user/post/comment has image). The relation must point to entity role or class.
+Declared the ability to own the entity from multiple entity types (example user/post/comment has an image). The relation must point to an entity role or class.
 
 ```php
 /** @Entity */
@@ -87,17 +87,17 @@ Option      | Value  | Comment
 ---         | ---    | ----
 load        | lazy/eager | Relation load approach (default `lazy`)
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
-nullable    | bool   | Defines if relation can be nullable (child can have no parent), defaults to `false`
-innerKey    | string | Inner key in parent entity, defaults to primary key
+nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `false`
+innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}` 
 morphKey    | string | Name of key to store related entity role (by default `{relationName}_role`
-morphKeyLength | int | The lenght of morph key, defaults to 32
+morphKeyLength | int | The length of morph key defaults to 32
 indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `true`
 
-> As in case with `belongsToMorphed` FKs are not supported. You can query or eager load this relation as any other relation types.
+> As in the case with `belongsToMorphed` FKs are not supported. You can query or eager load this relation as any other relation types.
 
 ### MorphedHasMany
-Declared the ability to own the entity from multiple entity types (example post/article has comments). The relation must point to entity role or class.
+Declared the ability to own the entity from multiple entity types (example post/article has comments). The relation must point to an entity role or class.
 
 ```php
 /** @Entity */
@@ -121,7 +121,7 @@ innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
 where       | array  | Additional where condition to be applied for the relation, defaults to none.
 morphKey    | string | Name of key to store related entity role (by default `{relationName}_role`
-morphKeyLength | int | The lenght of morph key, defaults to 32
+morphKeyLength | int | The length of morph key defaults to 32
 indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `true`
 
 > As in case with `belongsToMorphed` FKs are not supported. You can query or eager load this relation as any other relation types.
