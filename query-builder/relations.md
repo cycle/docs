@@ -1,6 +1,6 @@
 # Querying Relations
 It is possible to use columns and values of entity relations while composing the query. Relation properties (columns) can be accessed
-using dot notation `relation.property`. Please note, you must use domain specific property names, column names will be mapped automatically.
+using dot notation `relation.property`. Please note, you must use domain-specific property names, column names will be mapped automatically.
 
 ## Simple Condition
 To query entity with constain applied to it's related entity:
@@ -10,7 +10,7 @@ To query entity with constain applied to it's related entity:
 $select->distinct()->where('posts.published', true);
 ```
 
-Please note, all queried relations will be joined to the entity query, do not forget to add `distict` option to your query while joining
+Please note, all queried relations will be joined to the entity query, do not forget to add the `distinct` option to your query while joining
 `hasMany`, `manyToMany` relations.
 
 ## Nested relations
@@ -39,7 +39,7 @@ Cycle ORM can pre-load most of relation types via `load` method called on select
 $select->load('posts');
 ```
 
-The load method will auatomically pick appropriate way to load related data (either using JOIN or WHERE IN approaches). You can also
+The load method will automatically pick the appropriate way to load related data (either using JOIN or WHERE IN approaches). You can also
 use this method to load any relation level via dot notation:
 
 ```php
@@ -55,7 +55,7 @@ $select->load('posts', [
 ]);
 ```
 
-Since Select separate filtered and loaded entities you can use `with` and `load` methods as the same time.
+Select separate filtered and loaded entities you can use `with` and `load` methods at the same time.
 
 ```php
 $select->load('posts', [
@@ -66,7 +66,7 @@ $select->load('posts', [
 
 > Find all users with flagged posts and load all published posts.
 
-In some cases you can also combine joining and relation together (make sure you absolutelly know what are you doing). You can do that by pointing the source table alias to the `load` method:
+In some cases, you can also combine joining and relation together (make sure you know what are you doing). You can do that by pointing the source table alias to the `load` method:
 
 ```php
 $selec->with('posts',[
@@ -75,12 +75,12 @@ $selec->with('posts',[
 ])->load('posts', ['using' => 'posts']);
 ```
 
-Such query will find all entities with flagged posts and load this posts within one query (make sure to set the DISTINCT). Note, this is NOT optimization technique.
+Such query will find all entities with flagged posts and load these posts within one query (make sure to set the DISTINCT). Note, this is NOT optimization technique.
 
 > LIMIT, ORDER BY are currently not supported as fetch scope (no BC expected).
 
 ## Load with filter by nested relation
-You can not only load the relation chain but also filter your branches by their relations. For example we can load all users and all users posts which have comments.
+You can not only load the relation chain but also filter your branches by their relations. For example, we can load all users and all users posts which have comments.
 
 ```php
 $users->load('posts', [
@@ -115,7 +115,7 @@ INNER JOIN "comment" AS "user_posts_comments"
 WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NOT NULL)
 ```
 
-Please note, the relation is joined using `INNER JOIN` by default. You can alter this behaviour.
+Please note, the relation is joined using `INNER JOIN` by default. You can alter this behavior.
 
 To find all users and load only posts without comments:
 
@@ -144,8 +144,7 @@ LEFT JOIN "comment" AS "user_posts_comments"
 WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NULL)
 ```
 
-You can also specify join method in primary select query. Let's try to find all users with posts without comments and load only 
-posts with comments for this users. We would have to use `options` of our relation to specify the method:
+You can also specify the join method in primary select query. Let's try to find all users with posts without comments and load only posts with comments for these users. We would have to use `options` of our relation to specifying the filter:
 
 
 ```php
