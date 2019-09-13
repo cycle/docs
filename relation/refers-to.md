@@ -2,7 +2,7 @@
 Refers To relation is very similar to Belongs To but must be used in cases when multiple relations can exist to a related entity
 (including cyclic relations). Example: a user has many comments, the user refers to the last comment
 
-Entity will be persisted before related entity and then updated.
+> The entity will be persisted before related entity and then updated.
 
 ## Definition
 Using annotated extension:
@@ -40,7 +40,7 @@ cascade     | bool   | Automatically save related data with parent entity, defau
 nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `false`
 innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
-fkCreate    | bool   | Set to true to automatically create FK on outerKey, defauls to `true`
+fkCreate    | bool   | Set to true to automatically create FK on outerKey, defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
 indexCreate | bool   | Create an index on outerKey, defaults to `true`
 
