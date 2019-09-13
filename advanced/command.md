@@ -1,5 +1,5 @@
 # Commands and Linked Contexts
-All of the persist operations are performed using set of linked commands. Commands responsible for execution, rollback and change commitment. Command can depend on values provided by entity state or other command (link).
+All of the persist operations are performed using a set of linked commands. Commands responsible for execution, rollback and change commitment. Command can depend on values provided by entity state or another command (link).
 
 ## Command Interface
 To understand how commands work let's review the underlying interface first:
@@ -40,11 +40,11 @@ interface CommandInterface
 }
 ```
 
-One of the most important method in commands is `isReady`, this method used by Transaction to properly sort depenendency graph in order
+One of the most important methods in commands is `isReady`, this method used by Transaction to properly sort dependency graph in order
 to execute commands in the most optimal order.
 
 ## Linked Commands
-We can review simple command setup in which one command declared column which depends on lastInsertID provided by another command:
+We can review a simple command setup in which one command declared column which depends on lastInsertID provided by another command:
 
 ```php
 use Cycle\ORM\Command\Database;
@@ -89,7 +89,7 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 ```
 
 ## Command Topology
-Besided sequences you also have multiple system commands which can be used to create more complex execution trees.
+Besides sequences, you also have multiple system commands which can be used to create more complex execution trees.
 
 #### Nil Command
 You can use Nil command to state that no changes must be made:
@@ -107,7 +107,7 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 ```
 
 #### Condition Command
-In some cases you migth want to execute command or branch of commands using some external condition, you can use `Condition` command for this purpose:
+In some cases you might want to execute command or branch of commands using some external condition, you can use `Condition` command for this purpose:
 
 ```php
 use Cycle\ORM\Command\Branch;
