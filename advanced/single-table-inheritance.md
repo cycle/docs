@@ -20,7 +20,7 @@ class Article extends Post
 }
 ```
 
-You can store `Article` same way as parent entity.
+You can store `Article` same way as the parent entity.
 
 > Note, ORM will create special column in your entity table `_type` in which child id will be stored.
 
@@ -32,4 +32,4 @@ You have to remember that fetching entities from repository might return any of 
 $posts = $orm->getRepository(Post:class)->findAll();
 ```
 
-You are currently not allowed to assign custom repositories or constrains to child entity. However you can use `_type` in your queries to pre-filter the selection.
+You are currently not allowed to assign custom repositories or constrains to child entity. However, you can use `_type` in your queries to pre-filter the selection.
