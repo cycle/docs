@@ -1,5 +1,5 @@
 # Direct Database Queries
-You can always talk to database directly without any ORM abstraction at top.
+You can always talk to the database directly without any ORM abstraction at the top.
 
 ## Get Access to Entity Database
 In order to receive access to the database specific to the entity you can either call `$dbal->database()` or request it via Source object
