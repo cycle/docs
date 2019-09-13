@@ -1,8 +1,8 @@
 # Node Parser
-Cycle ORM provides convinient* way to convert flat structures into data trees. Parser can work over one large query or multiple queries
-using identical approach. Parser work with numeric arrays.
+Cycle ORM provides convenient* way to convert flat structures into data trees. The parser can work over one large query or multiple queries
+using an identical approach. Parser work with numeric arrays.
 
-> This section is intended for advanced scenarios, make sure you can't achieve required flexibility using default instuments before jumping to this approach.
+> This section is intended for advanced scenarios, make sure you can't achieve required flexibility using default instruments before jumping to this approach.
 
 ## Upack simple query
 We can start with simple example which converts query result into associated array (example is using Database instance):
@@ -27,7 +27,7 @@ foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
 print_r($root->getResult());
 ```
 
-Given code does not do much, but we can use it now to perform more complex transformation. For example we can join some extenrnal table to our query:
+Given code does not do much, but we can use it now to perform more complex transformation. For example, we can join some external table to our query:
 
 ```php
 $query = $db
@@ -55,7 +55,7 @@ The query will return results in a form: [user.id, user.balance, order.id, order
 ]
 ```
 
-Since both tables are merged in one query we have to create and join sub node (array):
+Since both tables are merged in one query we have to create and join sub-node (array):
 
 ```php
 $root = new RootNode(
@@ -105,7 +105,7 @@ foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
 }
 ```
 
-Now, `orders` array in our structure would not be populated, but we can request list of collected ids from the root loader:
+Now, `orders` array in our structure would not be populated, but we can request a list of collected ids from the root loader:
 
 ```php
 // only populated after parsing all the rows by the root node
