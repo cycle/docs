@@ -1,5 +1,5 @@
 # Using Bootstrap Toolkit
-You can install Cycle using bootstrap toolkit for quick integrations. This tutorial assumes that your entity codebase is located in 
+You can install Cycle using a bootstrap toolkit for quick integrations. This tutorial assumes that your entity codebase is located in 
 `src/` directory and accessible by Composer autoloader.
 
 > Bundle comes with annotation and proxies support.
@@ -89,7 +89,7 @@ To display the schema of a specific table:
 $ ./vendor/bin/cycle db:table {table-name}
 ```
 
-> You can execute commands with `-vvv` flag to display SQL queries if logger is set.
+> You can execute commands with `-vvv` flag to display SQL queries if the logger is set.
 
 # Example
 Install the bundle and create `config/cycle-cli.php` and `bootstrap.php` files. Make sure that `composer.json` includes:
