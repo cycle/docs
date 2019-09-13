@@ -1,7 +1,7 @@
 # Embedded Entities
-You can embed one or multiple entities inside another object using parent object table as data source. It can be achieved using
+You can embed one or multiple entities inside another object using the parent object table as a data source. It can be achieved using
 `embedd` relation type and might be helpful to perform de-composition of your entity. Such relation also allows lazy and eager (default)
-loading of embedded entities, or the ability to retrieve entities separally (without loading parent model).
+loading of embedded entities, or the ability to retrieve entities separately (without loading parent model).
 
 ## Definition
 To define embedded entity using annotated extension you must declare your embedded entity first:
@@ -20,7 +20,7 @@ class UserCredentials
 
 > You do not need to declare primary key.
 
-Now you can declare the usage of such entity if your model using relation of type `embedd`:
+Now you can declare the usage of such entity if your model using the relation of type `embedd`:
 
 ```php
 /** @Entity */
@@ -39,7 +39,7 @@ class User
 }
 ```
 
-> Make sure to init your relation to be able to use newly created model.
+> Make sure to init your relation to be able to use a newly created model.
 
 Read more about embeddings [here](/annotated/embeddings.md).
 
@@ -72,7 +72,7 @@ $select->where('address.country', 'USA');
 ```
 
 ## Eager and Lazy Loading
-By default, all embedded entities will be loaded with parent object. To alter this behaviour use `load` option of `@Embedd` relation annotation:
+By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of `@Embedd` relation annotation:
 
 ```php
 /** @Entity */
