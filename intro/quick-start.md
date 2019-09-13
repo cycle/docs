@@ -1,5 +1,5 @@
 # Quick Start
-This guide provides a quick overview of ORM installation, configuration process and an example using an annotated entity. Other sections of the documentation will provide deeper insign of various use-cases.
+This guide provides a quick overview of ORM installation, configuration process and an example using an annotated entity. Other sections of the documentation will provide deeper insight into various use-cases.
 
 > Use [Bootstrap](/intro/cli.md) to automatically configure Cycle and get access to quick CLI commands.
 
@@ -130,7 +130,7 @@ $user->setName("John");
 (new Transaction($orm))->persist($user)->run();
 ```
 
-> Note, in this case ORM can not automatically migrate your database schema.
+> Note, in this case, ORM can not automatically migrate your database schema.
 
 Read more about other ways to declare mapping schema in later sections of ORM documentation (for example [dynamic mapping](https://github.com/cycle/docs/blob/master/advanced/dynamic-schema.md#example)). 
 
@@ -176,13 +176,12 @@ class User
 }
 ```
 
-Cycle will automatically assign role `user` and table `users` from default database to this entity.
+Cycle will automatically assign role `user` and table `users` from the default database to this entity.
 
 > Attention, `@Entity` annotation is required!
 
 ## Schema Generation
-In order to operate we need to generate ORM Schema which will describe how our entities are configured. Thought we can do it manually 
-we will use the pipeline generator provided by `cycle/schema-builder` package and generators from `cycle/annotated`.
+In order to operate we need to generate ORM Schema which will describe how our entities are configured. Thought we can do it manually we will use the pipeline generator provided by `cycle/schema-builder` package and generators from `cycle/annotated`.
 
 First, we have to create instance of `ClassLocator` which will automatically find needed entities:
 
@@ -197,7 +196,7 @@ We can immediatelly check if our class visible (ClassLocator will perform static
 print_r($classLocator->getClasses());
 ```
 
-Once class locator is established we can create our schema generation pipeline. First, we will add needed namespace imports:
+Once the class locator is established we can create our schema generation pipeline. First, we will add needed namespace imports:
 
 ```php
 use Cycle\Schema;
@@ -224,7 +223,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 ]);
 ```
 
-> We will explain what each generator is doing in later sections. Please note, while complining your schema `SyncTables` will automatically adjust your database structure! Do not use it on a real database!
+> We will explain what each generator is doing in later sections. Please note, while computing your schema `SyncTables` will automatically adjust your database structure! Do not use it on a real database!
 
 The resulted schema can be passed to ORM. 
 
