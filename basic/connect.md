@@ -31,7 +31,7 @@ $dbConfig = new Database\Config\DatabaseConfig([
 $dbal = new Database\DatabaseManager($dbConfig);
 ```
 
-> You can instantiate DBAL with empty connection list and configure it in runtime if needed.
+> You can instantiate DBAL with an empty connection list and configure it in runtime if needed.
 
 ## Configure Databases
 Spiral/Database module provides support to manage multiple databases in one application, use read/write connections and logically 
@@ -45,7 +45,7 @@ To register new database simply add it into `databases` section:
 ]
 ```
 
-To give database specific prefix use `prefix` option (all the queries will be affected):
+To give database-specific prefix use `prefix` option (all the queries will be affected):
 
 ```php
 'default' => [
@@ -141,7 +141,7 @@ print_r($dbal->database('default'));
 
 The database will be automatically connected to the first SQL request.
 
-> DBAL will use database specified in `default` config option if the name is `null`.
+> DBAL will use the database specified in the `default` config option if the name is `null`.
 
 Direct SQL queries as possible from this moment:
 
@@ -175,5 +175,4 @@ $dbal->addDatabase(new Database(
 ));
 ```
 
-> This approach can be useful to test your application using database mocks. Attention, DBAL would not allow you to overwrite already exists, you must explicitly configure empty `DatabaseManager`.
-database 
+> This approach can be useful to test your application using database mocks. Attention, DBAL would not allow you to overwrite already exists database, you must explicitly configure empty `DatabaseManager`.
