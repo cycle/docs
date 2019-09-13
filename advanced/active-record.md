@@ -1,5 +1,5 @@
 # Active Record
-Cycle ORM leaves enough room for developers to alter it behavior. In this section, we will try to create ActiveRecord-like entity implementation which is automatically configured based on database introspection. 
+Cycle ORM leaves enough room for developers to alter its behavior. In this section, we will try to create ActiveRecord-like entity implementation which is automatically configured based on database introspection. 
 
 > Engine is still going to use repositories and mappers behind the hood. In this article we are only going to handle column mapping, relation configuration must be done separately.
 
@@ -12,14 +12,14 @@ $u->save();
 ```
 
 ## Entity
-We would try to simplify our entity by disabling the hydration, properties will be stored in a form of array. We are also going to create `save`, `find` and `delete` methods.
+We would try to simplify our entity by disabling the hydration, properties will be stored in the form of an array. We are also going to create `save`, `find` and `delete` methods.
 
 First, we will have to ensure access to the ORM instance, a transaction, and the repository (statically):
 
 ```php
 use Cycle\ORM;
 
-abstact class Record
+abstract class Record
 {
     private static $orm;
 
@@ -146,7 +146,7 @@ abstract class Record
 ```
 
 ## Mapper
-Now, in order to properly initiate and persist entity we have to create mapper specific to our implementation. We can extend `Cycle\ORM\Mapper\DatabaseMapper`
+Now, in order to properly initiate and persist entity, we have to create mapper specific to our implementation. We can extend `Cycle\ORM\Mapper\DatabaseMapper`
 for these purposes:
 
 ```php
@@ -188,7 +188,7 @@ class ARMapper extends ORM\Mapper\DatabaseMapper
 ```
 
 ## Table and Entity
-Since we are using AR approach we are going to use table introspection to drive mapping schema (which can be cached). 
+Since we are using the AR approach we are going to use table introspection to drive mapping schema (which can be cached). 
 
 Assuming we have table `user` with columns (id, name) we can create our first entity `User`:
 
