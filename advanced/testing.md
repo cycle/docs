@@ -1,8 +1,8 @@
 # Testing
-Cycle ORM attempts to simplify the testing of your application by providing well isolated interfaces to load and persist your entities.
+Cycle ORM attempts to simplify the testing of your application by providing well-isolated interfaces to load and persist your entities.
 
 ## Classic Mock Approach
-First approach would involve mocking instances of entity repositories and `TransactionInterface`, for example given code can be well tested without ORM initization:
+The first approach would involve mocking instances of entity repositories and `TransactionInterface`, for the example given code can be well tested without ORM initialization:
 
 ```php
 public function addOrder(User $u, Order $o, TransactionInterface $t)
@@ -12,7 +12,7 @@ public function addOrder(User $u, Order $o, TransactionInterface $t)
 }
 ```
 
-Mock `TransactionInterface` to check the state of the entity after method call. Additionally you can mock custom entity repositories:
+Mock `TransactionInterface` to check the state of the entity after the method call. Additionally, you can mock custom entity repositories:
 
 ```php
 class MyService
@@ -36,7 +36,7 @@ class MyService
 > You can also `run` transaction outside of your service method if you wish to group multiple persist operations together.
 
 ## Mocking The Database
-Another, more complex and slower approach would invole creating test database and running your service code using more realistic scenarios.
+Another, more complex and slower approach would involve creating a test database and running your service code using more realistic scenarios.
 
 In order to achieve that you must construct your own `DatabaseManager` instance and replace desired database connection with needed
 driver (for example SQLite):
@@ -63,9 +63,9 @@ $orm = new ORM(new Factory($dbal));
 $orm = $orm->withSchema(new Schema($cachedSchema));
 ```
 
-> Attention, you would not be able to test if your database constrains operate properly using SQLite. Use dedicated database instance.
+> Attention, you would not be able to test if your database constraints operate properly using SQLite. Use the dedicated database instance.
 
-You can clean your database state after each iteration using schema introspection appoach:
+You can clean your database state after each iteration using schema introspection approach:
 
 ```php
 public function tearDown()
