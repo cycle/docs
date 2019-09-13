@@ -1,10 +1,10 @@
 # Embeddings
-ORM can simplify the definition of large entities by proving the ability to split some of the columns into embedded entity. Embedded entities by default will always be loaded with parent object, however, partial entity selection is possible as well.
+ORM can simplify the definition of large entities by proving the ability to split some of the columns into an embedded entity. Embedded entities by default will always be loaded with parent object, however, partial entity selection is possible as well.
 
-> Embedded entities does not support relations at the moment.
+> Embedded entities do not support relations at the moment.
 
 ## Definition
-To define embeddable entity use `@Embeddable` annotation. As with `@Entity` you are able to define custom mapper or associate additional columns/indexes using `@Table` annotation.
+To define embeddable entity use `@Embeddable` annotation. As with `@Entity`, you are able to define custom mapper or associate additional columns/indexes using `@Table` annotation.
 
 ```php
 /** @Embeddable */
@@ -21,7 +21,7 @@ class Address
 }
 ```
 
-> You do not need to define `primary` column, this column will be inherited from parent entity. Mapper methods `queueDelete`, `queueCreate` and `queueUpdate` would never be invoked due the deletation to the parent mapper.
+> You do not need to define the `primary` column, this column will be inherited from the parent entity. Mapper methods `queueDelete`, `queueCreate` and `queueUpdate` would never be invoked due to the delegation to the parent mapper.
 
 To embedd entity to another object use `@Embedd` annotation:
 
@@ -83,7 +83,7 @@ $select->where('address.country', 'USA');
 ```
 
 ## Eager and Lazy Loading
-By default, all embedded entities will be loaded with parent object. To alter this behaviour use `load` option of `@Embedd` relation annotation:
+By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of `@Embedd` relation annotation:
 
 ```php
 /** @Entity */
@@ -106,8 +106,8 @@ $select->where('address.country', 'USA');
 print_r($select->load('address')->fetchAll());
 ```
 
-## Query Embedded entity separatelly
-It is possible to query embedded entity separatelly from parent, hovewer, you must clearly know the `role` of such entity as class name is forbidden (in order to allow usage of the emedding inside different parents). Usually such role will be composed using parent and entity role (and ":" separator).
+## Query Embedded entity separately
+It is possible to query embedded entity separately from the parent, however, you must clearly know the `role` of such entity as class name is forbidden (in order to allow usage of the embedding inside different parents). Usually, such role will be composed using parent and entity role (and ":" separator).
 
 ```php
 $orm->getRepository("user:address")->findAll();
