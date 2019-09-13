@@ -68,6 +68,6 @@ Table of Contents
   * [Persist Repositories](advanced/persist-repository.md)
   * [Active Record](advanced/active-record.md)
 * Advanced
-  * [Usage in Long Running Applications](advanced/daemonizing.md)
+  * [Usage in Long-Running Applications](advanced/daemonizing.md)
   * [Testing](advanced/testing.md)
   * [Limitations](advanced/limitations.md)
