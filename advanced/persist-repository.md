@@ -2,11 +2,11 @@
 By default ORM design, the Repository object used only for Select logic (read-only). Write operations are controlled via Transactions 
 (entity -> transaction -> mapper -> command -> storage). 
 
-However, it is possible to safely add `save` or `delete` method to our repositories to avoid usage of transaction in application code. 
+However, it is possible to safely add `save` or `delete` method to our repositories to avoid usage of transaction in the application code. 
 
 ## Use Repositories with Transaction
-We can create simple `store` method in Repository which will save current entity state and it's loaded relations or entity only.
-In order to do that we have to create transaction inside our object:
+We can create a simple `store` method in Repository which will save current entity state and it's loaded relations or entity only.
+In order to do that we have to create a transaction inside our object:
 
 ```php
 class UserPersistRepository extends Repository
