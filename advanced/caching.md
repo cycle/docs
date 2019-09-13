@@ -1,8 +1,8 @@
 # Caching
-Cycle ORM does not provide caching abilities on core level, however, it provides an multiple points at which caching can be integrated.
+Cycle ORM does not provide caching abilities on the core level, however, it provides multiple points at which caching can be integrated.
 
 ## Caching the Selection
-In order to cache the selected enties and their relations you are able to utilize method `fetchData` of `Cycle\ORM\Select`.
+In order to cache the selected entities and their relations, you are able to utilize the method `fetchData` of `Cycle\ORM\Select`.
 
 ```php
 $userData = $userRepository->select()->load('profile')->fetchData();
