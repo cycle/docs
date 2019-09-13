@@ -14,8 +14,7 @@ foreach ($select as $u) {
 ```
 
 ## Manual Iteration
-Is it possible to provide input data to iterator manually, using any custom data source or raw SQL query? The data must be provided in 
-a tree for.
+Is it possible to provide input data to iterator manually, using any custom data source or raw SQL query? The data must be provided in a tree for.
 
 > Since Cycle works with entity state using dirty state approach is it possible to load results partially (if default entity values 
 are null and does not trigger updates).
