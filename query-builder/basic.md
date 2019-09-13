@@ -1,8 +1,8 @@
 # Query Builder Basics
-ORM provides control over generated SQL statements and functionaity to set custom conditions and parameters.
+ORM provides control over generated SQL statements and functionality to set custom conditions and parameters.
 
 ## Accessing Query Builder
-You can get access to query builder manually by constructing instance of `Select` object or by using `select()` method of default repository class.
+You can get access to the query builder manually by constructing an instance of `Select` object or by using `select()` method of default repository class.
 
 ```php
 $select = $orm->getRepository(User::class)->select();
@@ -29,7 +29,7 @@ You can set any condition on obtained query builder using method `where`:
 $select->where('status', 'active');
 ```
 
-By default such condition will generate statement like `'status' = "active"` (value will be passed as part of prepared statement).
+By default, such condition will generate statement like `'status' = "active"` (value will be passed as part of the prepared statement).
 
 To specify custom operator declare function with 3 arguments:
 
