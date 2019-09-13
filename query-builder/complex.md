@@ -1,5 +1,5 @@
 # Complex Queries
-You are able to use query builder to compose more complex queries and expression like conditions.
+You are able to use the query builder to compose more complex queries and expression like conditions.
 
 ## Expressions
 It is possible to inject custom SQL logic into the query using `Spiral\Database\Injection\Expression` object:
@@ -8,7 +8,7 @@ It is possible to inject custom SQL logic into the query using `Spiral\Database\
 $select->where('time_created', '>', new Expression("NOW()"));
 ```
 
-You are able to use expressions in place of operators or column names. Please note, that since column name might not necessary be idential to the actual property name you must resolve it's identificator first.
+You are able to use expressions in place of operators or column names. Please note, that since column name might not necessarily be identical to the actual property name you must resolve it's identity first.
 
 ## Name Resolver
 To resolve name of column you must gain access to `QueryBuilder` instance available thought `getBuilder` method of `Select` object:
@@ -84,11 +84,11 @@ FROM "users" AS "user"
   GROUP BY "id"
 ```
 
-> Use `resolve` method to obtain fully qualified column names.
+> Use the `resolve` method to obtain fully qualified column names.
 
 ## Injecting Queries
-It is possible to inject query into another query. In this case you must obtain an instance of entity query first, it can be done
-by calling method `buildQuery()` of `Select` object.
+It is possible to inject query into another query. In this case, you must obtain an instance of entity query first, it can be done
+by calling the method `buildQuery()` of `Select` object.
 
 For example:
 
