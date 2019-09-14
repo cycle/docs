@@ -150,3 +150,6 @@ $t = new Transaction($orm, new LogRunner());
 $t->persist($e);
 $t->run();
 ```
+
+## Reusing same Transaction
+Transaction is clean after `run` invocation, you must assemble new transaction to retry the same set of entities. Since transaction is clean you are able to reuse same transaction over and over again (make sure to keep `persist`, `delete` and `run` operation within one method). 
