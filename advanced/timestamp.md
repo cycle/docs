@@ -1,5 +1,5 @@
-# Timestamped Entities
-It is possible to automatically set `created_at`, `deleted_at` column values on entity update. In order to achieve that you have to write
+# CreatedAt/UpdatedAt Timestamps
+It is possible to automatically set `created_at`, `updated_at` column values on entity update. In order to achieve that you have to write
 custom mapper implementation which will be automatically registering such values in entity commands.
 
 ## Timestamped Mapper
