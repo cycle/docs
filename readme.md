@@ -62,7 +62,7 @@ Table of Contents
   * [Single Table Inheritance](advanced/single-table-inheritance.md)
   * [Caching](advanced/caching.md)
   * [Pagination](advanced/pagination.md)
-  * [Timestamped Entities](advanced/timestamp.md)
+  * [CreatedAt/UpdatedAt Timestamps](advanced/timestamp.md)
   * [Soft Deleted Entities](advanced/soft-deletes.md)
   * [Chained Repository (Query Scopes)](advanced/chained-repository.md)
   * [Persist Repositories](advanced/persist-repository.md)
