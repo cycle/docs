@@ -302,7 +302,7 @@ $schema = new Schema($schema);
 > You can store generated schema in the cache to speed up application bootstrap.
 
 ## Write Schema Manually
-You can also write ORM schema manually for your AR entities, it will allow you to skip compilation and caching phases all together:
+You can also write ORM schema manually for your AR entities. It will allow you to skip the compilation and caching phases all together:
 
 ```php
 use Cycle\ORM\Schema;
