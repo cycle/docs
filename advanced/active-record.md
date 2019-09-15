@@ -301,6 +301,29 @@ $schema = new Schema($schema);
 
 > You can store generated schema in the cache to speed up application bootstrap.
 
+## Write Schema Manually
+You can also write ORM schema manually for your AR entities, it will allow you to skip compilation and caching phases all together:
+
+```php
+use Cycle\ORM\Schema;
+
+$schema = new Schema([
+    'user' => [
+        Schema::ENTITY      => User::class,
+        Schema::MAPPER      => ARMapper::class,
+        Schema::REPOSITORY  => UserRepository::class, // optional, avaible via User::find() 
+        Schema::DATABASE    => 'default',
+        Schema::TABLE       => 'user',
+        Schema::PRIMARY_KEY => 'id',
+        Schema::COLUMNS     => [
+            'id'   => 'id',  // property => column
+            'name' => 'name'
+        ],
+        Schema::RELATIONS   => []
+    ]
+]);
+```
+
 ## Using Active Records
 Once the schema is obtained we can start working with our entities:
 
