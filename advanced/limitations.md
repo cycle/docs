@@ -38,7 +38,7 @@ foreach (new ORM\Iterator($orm, User::class, filterByExternal($select, $value)) 
 It is not reliable to use Cycle with MySQL MyISAM engine as it does not support transaction which can guarantee the recovery from persisting errors. Use InnoDB engine instead.
 
 ## Cascade = false
-Please note that turning cascade option off completelly disables relation `store` sequence. This makes uni-directional relations useless, only use this option if the relation is considered "read-only".
+Please note that turning cascade option off completelly disables relation `store` sequence. This makes uni-directional relations useless for **persisting**, only use this option if the relation is considered "read-only".
 
 ## Select->fetchOne() behaviour
 Method `fetchOne` of Select will create query without specified `LIMIT` value in order to avoid data corruption on joined data. Make sure to manually set the limit or use proper selection constraint.
