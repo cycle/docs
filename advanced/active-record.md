@@ -249,9 +249,13 @@ class ARGenerator implements GeneratorInterface
 In our `declareEntity` method we have to associate table with our entity and fetch all available columns:
 
 ```php
+use Cycle\Schema\Definition;
+
+// ...
+
 private function declareEntity(Registry $registry, string $class, string $table)
 {
-    $e = new Entity();
+    $e = new Definition\Entity();
     $e->setRole($class);
     $e->setClass($class);
     $e->setMapper(ARMapper::class);
@@ -262,7 +266,7 @@ private function declareEntity(Registry $registry, string $class, string $table)
     $schema = $registry->getTableSchema($e);
 
     foreach ($schema->getColumns() as $column) {
-        $field = new Field();
+        $field = new Definition\Field();
         $field->setColumn($column->getName());
 
         if (in_array($column->getName(), $schema->getPrimaryKeys())) {
