@@ -81,4 +81,4 @@ class User
 }
 ```
 
-> You can use one mapper for multiple entities. Note, this example is only for usage with `annotated` extension.
+> You can use one mapper for multiple entities.
