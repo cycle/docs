@@ -193,6 +193,8 @@ class ARMapper extends ORM\Mapper\DatabaseMapper
 }
 ```
 
+> You are free to use any other mapper customizations in combination with AR approach.
+
 ## Table and Entity
 Since we are using the AR approach we are going to use table introspection to drive mapping schema (which can be cached). 
 
