@@ -1,16 +1,16 @@
 # Using ORM without Annotations
-You are able to use ORM engine without using annotations to declare mapping schema. You can either define mapping schema via configuration
+You are able to use the ORM engine without using annotations to declare mapping schema. You can either define mapping schema via configuration
 or use cycle/schema-builder extension to compile it on a fly.
 
 ## Examples
-There is multiple examples of using ORM with manually defined mapping schema:
+There are multiple examples of using ORM with manually defined mapping schema:
 - https://github.com/cycle/docs/blob/master/advanced/manual.md
 - https://github.com/cycle/docs/blob/master/advanced/dynamic-schema.md
 - https://github.com/cycle/docs/blob/master/advanced/schema-builder.md
 - https://github.com/cycle/docs/blob/master/advanced/active-record.md
 
 ## Quick Sample
-We can demonstrate how to create ORM instance which maps objects `User` and `Profile` with `HadOne` relation between them.
+We can demonstrate how to create ORM instance which maps objects `User` and `Profile` with `HasOne` relation between them.
 Such setup does not require any caching as schema defined via code:
 
 ```php
