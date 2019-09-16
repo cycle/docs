@@ -15,6 +15,7 @@ Table of Contents
   * [Select](basic/select.md)
   * [Custom Repositories](basic/repository.md)
   * [Simple Relation](basic/relation.md)
+  * [Without Annotations](basic/no-annotations.md)
 * Annotated Entities
   * [Prerequisites](annotated/prerequisites.md)
   * [Entities](annotated/entity.md)
