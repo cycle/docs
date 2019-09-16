@@ -319,6 +319,9 @@ $schema = new Schema([
             'id'   => 'id',  // property => column
             'name' => 'name'
         ],
+        Schema::TYPECAST    => [
+            'id' => 'int'
+        ]
         Schema::RELATIONS   => []
     ]
 ]);
