@@ -1,5 +1,5 @@
 # Using ORM without Annotations
-You are able to use the ORM engine without annotations to declare mapping schema. You can either define mapping schema via configuration
+You are able to use the ORM engine without annotations. You can either declare mapping schema via configuration
 or use cycle/schema-builder extension to compile it on a fly in OOP way.
 
 ## Examples
