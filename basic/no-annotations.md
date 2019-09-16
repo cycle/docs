@@ -86,4 +86,4 @@ $orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
 print_r($orm->getRepository(User::class)->findOne());
 ```
 
-> You only need `cycle/orm` dependency for this example. You can find more examples in [orm tests](https://github.com/cycle/orm/tree/master/tests/ORM).
+> You only need `cycle/orm` dependency for this example. Note, you can not access `profile` relation without explicitly calling it in the Select, use `cycle/proxy-factory` to enable lazy loading. You can find more examples in [orm tests](https://github.com/cycle/orm/tree/master/tests/ORM).
