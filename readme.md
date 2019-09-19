@@ -6,6 +6,7 @@ Table of Contents
   * [**Quick Start**](intro/quick-start.md)
   * [Very Quick Start](intro/cli.md)
   * [Contributing](contributing.md)
+  * [Versioning](intro/semver.md)
   * [LICENSE](license.md)
 * Basics
   * [Installation](basic/install.md)
