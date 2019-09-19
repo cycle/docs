@@ -185,7 +185,7 @@ external query (post load) by modifying load method:
 ```php
 $result = $orm->getRepository(User::class)
     ->select()
-    ->load('address', ['method' => ORM\Select\JoinableLoader::POSTLOAD])
+    ->load('address', ['method' => Select::OUTER_QUERY])
     ->fetchAll();
 
 foreach ($result as $user) {
