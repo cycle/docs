@@ -147,7 +147,7 @@ $users = $orm->getRepository(User::class)
     ->select()
     ->distinct()
     ->with('posts', ['as' => 'published_posts'])->where('posts.published', true)
-    ->load('posts',['using' => 'published_posts'])
+    ->load('posts', ['using' => 'published_posts'])
     ->fetchAll();
 ```
 
@@ -170,6 +170,7 @@ WHERE `published_posts`.`published` = true
 You can also pre-set the conditions in the relation definition:
 
 ```php
+/** @Entity() */ 
 class User 
 {
     // ...
