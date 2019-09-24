@@ -207,7 +207,7 @@ You can combine this option with many-to-many relations to sort relations by piv
 $users
    ->load('tags', [
         'load' => function (Select\QueryBuilder $qb) {
-            $qb->orderBy('@.@.attached', 'DESC'); 
+            $qb->orderBy('@.@.attached', 'DESC'); // tags.pivot.attached
         }
     ])->orderBy('user.id');
 ```
