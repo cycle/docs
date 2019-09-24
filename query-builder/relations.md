@@ -182,3 +182,32 @@ INNER JOIN "comment" AS "user_posts_comments"
     ON "user_posts_comments"."post_id" = "user_posts"."id"
 WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NOT NULL)
 ```
+
+## Using `load` method
+Alternativelly you can use `load` option which accepts the Closure to specify custom `orderBy` and other conditions:
+
+```php
+$users
+    ->distinct()
+    ->with('posts.comments', [
+        'method' => Select\JoinableLoader::LEFT_JOIN,
+    ])
+    ->where('posts.comments.id', null)
+    ->load('posts', [
+        'load' => function (Select\QueryBuilder $qb) {
+            $qb->orderBy('id', 'DESC');
+        }
+    ])->orderBy('user.id');
+```
+
+You can combine this option with many-to-many relations to sort relations by pivot tables:
+
+
+```php
+$users
+   ->load('tags', [
+        'load' => function (Select\QueryBuilder $qb) {
+            $qb->orderBy('@.@.attached', 'DESC'); // order by tags.pivot.attached
+        }
+    ])->orderBy('user.id');
+```
