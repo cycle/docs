@@ -33,7 +33,7 @@ Table of Contents
 * Query Builder
   * [Basics](query-builder/basic.md)
   * [Extended Builder Usage](query-builder/extended.md)
-  * [Relations](query-builder/relations.md)
+  * [Querying Relations](query-builder/relations.md)
   * [Complex Queries](query-builder/complex.md)
   * [Security](query-builder/security.md)
 * Internals
