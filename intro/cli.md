@@ -97,7 +97,7 @@ Install the bundle and create `config/cycle-cli.php` and `bootstrap.php` files. 
 ```json
 "autoload": {
     "psr-4": {
-      "": "src/"
+      "App\\": "src/"
     }
 }
 ```
@@ -106,6 +106,8 @@ You can create your first entity in `src/`:
 
 ```php
 <?php
+
+namespace App;
 
 use Cycle\Annotated\Annotation as Cycle;
 
@@ -136,12 +138,12 @@ use Cycle\ORM;
 /** @var ORM\ORMInterface $orm */
 include 'bootstrap.php';
 
-$u = new \User();
+$u = new \App\User();
 $u->name = "Antony";
 
 (new ORM\Transaction($orm))->persist($u)->run();
 
-foreach ($orm->getRepository(User::class)->findAll() as $u) {
+foreach ($orm->getRepository(\App\User::class)->findAll() as $u) {
     print_r($u);
 }
 ```
