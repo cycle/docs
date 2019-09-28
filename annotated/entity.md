@@ -19,6 +19,8 @@ table name and role based on the class name. In the case of `User` the role will
 You can tweak any of this values by setting `entity` options:
 
 ```php
+use Cycle\Annotated\Annotation\Entity;
+
 /**
  * @Entity(
  *     role     = "user", 
@@ -36,6 +38,8 @@ class User
 Some options can be used to overwrite default entity behaviour, for example to assign custom entity repository:
 
 ```php
+use Cycle\Annotated\Annotation\Entity;
+
 /**
  * @Entity(repository = "Repository/UserRepository")
  */
@@ -62,6 +66,8 @@ constrain      | class  | Class name of constraint to be applied to every entity
 For example typical entity description might look like:
 
 ```php
+use Cycle\Annotated\Annotation\Entity;
+
 /**
  * @Entity(
  *    table      = "users",
