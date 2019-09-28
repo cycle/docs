@@ -92,8 +92,10 @@ fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey 
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
 
-> You can keep your pivot entity empty, the only requirement is to have defined a primary key.
- 
+You can keep your pivot entity empty, the only requirement is to have defined a primary key.
+
+> Note, current implementation includes typo in pivot table definition, `though` => `through`.
+
 ## Usage
 To associte two entities using Many To Many relation use method `add` of pivot collection:
 
