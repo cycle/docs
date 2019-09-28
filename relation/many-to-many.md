@@ -252,3 +252,71 @@ $users = $orm->getRepository(User::class)
 ```
 
 > Cross-database Many To Many relations are not supported yet.
+
+## Complex loading
+You are able to load related data using conditions and sorts applied to pivot table, use option `load`. 
+
+For example, we can have following entities:
+- category (id, title)
+- photo (id, url)
+- photo_to_category (photo_id, category_id, position)
+
+```php
+$categories = $orm->getRepository('category')->select();
+```
+
+We can load now categories with photos inside them ordered by `photo_to_category` position using `WHERE IN` or `JOIN` query:
+
+
+```php
+$result = $categories->load('photos', [
+    'load' => function (Select\QueryBuilder $q) {
+        $q->orderBy('@.@.position'); // @ current relation (photos), @.@ current relation pivot (photo_to_category)
+    }
+])->fetchAll();
+```
+
+The produced SQL:
+
+```sql
+SELECT
+"category"."id" AS "c0", "category"."title" AS "c1"
+FROM "categories" AS "category"
+```
+
+SQL #2:
+
+```sql
+SELECT
+"l_category_photos_pivot"."id" AS "c0", "l_category_photos_pivot"."position" AS "c1", "l_category_photos_pivot"."photo_id" AS "c2", "l_category_photos_pivot"."category_id" AS "c3", "category_photos"."id" AS "c4", "category_photos"."url" AS "c5"
+FROM "photos" AS "category_photos"
+INNER JOIN "photo_category_positions" AS "l_category_photos_pivot"
+     ON "l_category_photos_pivot"."photo_id" = "category_photos"."id"
+WHERE "l_category_photos_pivot"."category_id" IN (1, 2, 3, 4)
+ORDER BY "l_category_photos_pivot"."position" ASC
+```
+
+We can force ORM to use single query to pull the data (useful for more complex conditions):
+
+```php
+$result = $categories->load('photos', [
+     'method' => Select::SINGLE_QUERY,
+     'load'   => function (Select\QueryBuilder $q) {
+         $q->orderBy('@.@.position');  // @ current relation (photos), @.@ current relation pivot (photo_to_category)
+     }
+])->orderBy('id')->fetchAll();
+```
+
+SQL:
+
+```sql
+SELECT
+"category"."id" AS "c0", "category"."title" AS "c1", "l_l_category_photos_pivot"."id" AS "c2", "l_l_category_photos_pivot"."position" AS "c3",
+"l_l_category_photos_pivot"."photo_id" AS "c4", "l_l_category_photos_pivot"."category_id" AS "c5", "l_category_photos"."id" AS "c6", "l_category_photos"."url" AS "c7"
+FROM "categories" AS "category"
+LEFT JOIN "photo_category_positions" AS "l_l_category_photos_pivot"
+     ON "l_l_category_photos_pivot"."category_id" = "category"."id"
+INNER JOIN "photos" AS "l_category_photos"
+     ON "l_category_photos"."id" = "l_l_category_photos_pivot"."photo_id"
+ORDER BY "category"."id" ASC, "l_l_category_photos_pivot"."position" ASC
+```
