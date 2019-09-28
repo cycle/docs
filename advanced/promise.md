@@ -75,7 +75,7 @@ $t->run();
 ## Proxies and Promises
 More complex variation of references include the ability to gain access to related entity or collection on demand
 (without pre-loading data). By default ORM will wrap lazy loaded data using Promise object which does not extend original
-entity and can not be used with strongly typed entities. However, you can use an extension to generate promise of each
+entity and can not be used with strongly typed (PHP 7.4) entities. However, you can use an extension to generate promise of each
 desired entity.
 
 You must connect Cycle extension to do that:
