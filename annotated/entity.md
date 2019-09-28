@@ -2,6 +2,8 @@
 Annotated entities extension is capable of indexing any domain entity in your project. To indicate that class must be treated as a domain entity make sure to add `@Entity` annotation to the DocComment.
 
 ```php
+use Cycle\Annotated\Annotation\Entity;
+
 /** @Entity */
 class User 
 {
@@ -76,6 +78,9 @@ class User
 No entity can operate without some properties mapped to table columns. To map your property to the column add annotation `@Column` to it. It's mandatory to specify column type. You must always specify **one** primary (auto incremental) column for your entity.
 
 ```php
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
 /** @Entity */
 class User 
 {
@@ -85,6 +90,21 @@ class User
 ```
 
 > Read how to use non-incremental primary keys (for example UUID) in the Advanced section.
+
+You can use import multiple annotations at the same time:
+
+```php
+use Cycle\Annotated\Annotation as Cycle;
+
+/** @Cycle\Entity */
+class User 
+{
+    /** @Cycle\Column(type = "primary") */
+    protected $id;
+}
+```
+
+> Annotation import is ommited in a following sections.
 
 By default, the entity properly will be mapped to the column with the same name as the property, you can change it:
 
