@@ -2,7 +2,7 @@
 Cycle ORM can be installed into any PHP application using `composer` dependency manager.
 
 ## Requirements
-  * PHP7.1+
+  * PHP 7.2+
   * PHP-PDO
   * PDO drivers for desired databases
   
