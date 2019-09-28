@@ -21,8 +21,10 @@ Use `entity` annotation attribute to create the association:
 ```php
 namespace Example;
 
+use Cycle\Annotated\Annotation as Cycle;
+
 /**
- * @Entity(repository="Example\Repository\UserRepository")
+ * @Cycle\Entity(repository="Example\Repository\UserRepository")
  */
 class User 
 {
@@ -37,8 +39,10 @@ You can also specify repository name using relative namespace path:
 ```php
 namespace Example;
 
+use Cycle\Annotated\Annotation as Cycle;
+
 /**
- * @Entity(repository="Repository\UserRepository")
+ * @Cycle\Entity(repository="Repository\UserRepository")
  */
 class User 
 {
