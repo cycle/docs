@@ -1,5 +1,5 @@
 # References and Proxies
-ORM provides the ability to use and reference to the objects which are not currently loaded from the database. Such a thing can be achieved
+ORM provides the ability to reference to the objects which are not currently loaded from the database. Such a thing can be achieved
 using two main abstractions Reference and Promises (proxies).
 
 > Every proxy object is a reference. Note, the terms Proxy and Promise are used in ORM equally. The promise is responsible for the resolution of the remote entity Node on demand, while Proxy can also emulate an Entity as a real object. Every Proxy is a Promise, not every Promise is a Proxy.
