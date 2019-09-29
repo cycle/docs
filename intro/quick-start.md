@@ -142,6 +142,9 @@ To create our first entity in `src` folder we will use capabilities provided by 
 
 namespace Example;
 
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
 /**
  * @Entity
  */
