@@ -11,7 +11,7 @@ As result, you are allowed to apply the modification to table schema using decla
 > See below how to use `Spiral\Database\Schema\Reflector` to sync multiple related tables.
 
 ## To Start
-To get instance of `AbstractTable` use similar way described in [Schema Introspection (make sure your read them first)](/advanced/instrospection.md). 
+To get instance of `AbstractTable` use similar way described in [Schema Introspection (make sure your read them first)](/advanced/introspection.md). 
 
 > No need to check for table existence. 
 
