@@ -232,7 +232,7 @@ You can make index non unique at any moment:
 $schema->index(['name', 'email'])->unique(false);
 ```
 
-> Attention, you can not add indexes to text or binary columns. You have to remember about limitations current DBMS applies to its indexes. For example, you can not create unique index for the non-empty table with invalid (from the standpoint of the index) data. Some databases also have a maximum index size and etc.
+> Attention, you can not add indexes to text or binary columns. You have to remember about limitations current DBMS applies to its indexes. For example, you can not create a unique index for the non-empty table with invalid (from the standpoint of the index) data. Some databases also have a maximum index size and etc.
 
 ## Foreign Keys
 You can link tables together by using FKs:
@@ -277,9 +277,9 @@ $foreignKey->onDelete(ReferenceInterface::CASCADE);
 $foreignKey->onUpdate(ReferenceInterface::CASCADE);
 ```
 
-Now, when record in "first" table will be removed related data from "second" table will be wiped also. You can read more about different actions [here](https://en.wikipedia.org/wiki/Foreign_key#Referential_actions).
+Now, when the record in "first" table will be removed related data from the "second" table will be wiped also. You can read more about different actions [here](https://en.wikipedia.org/wiki/Foreign_key#Referential_actions).
 
-> Please note that not every DBMS support actions outside of NO ACTION and CASCADE. In addition, some databases (hi, Microsoft) may forbid multiple foreign keys with CASCADE action in one table to avoid reference loop.
+> Please note that not every DBMS support actions outside of NO ACTION and CASCADE. In addition, some databases (hi, Microsoft) may forbid multiple foreign keys with CASCADE action in one table to avoid a reference loop.
 
 ## Rename Schemas
 You can rename column in existed table by simply giving it new name or via shortcut method:
@@ -332,7 +332,7 @@ To get access to table state comparator use `getComparator` method of your schem
 dump($schema->getComparator()->addedColumns());
 ```
 
-> You can use comparator to generate migrations instead of letting DBAL to sync your schemas.
+> You can use comparator to generate migrations instead of letting DBAL sync your schemas.
 
 ## Sync multiple Tables
 In some cases you might want to create multiple linked tables. In order to handle such operation feed your table schemas 
