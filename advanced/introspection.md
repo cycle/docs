@@ -76,7 +76,7 @@ foreach ($schema->getColumns() as $column) {
     dump($column->phpType());          //PHP type: int, float, string, bool
 
     dump($column->getDefaultValue());  //Can be instance of SqlFragment
-    
+
     dump($column->getSize());          //Only for strings and decimal values
 
     dump($column->getPrecision());     //Decimals only

@@ -1,5 +1,5 @@
 # Prerequisites
-Make sure to install `cycle/annoated` and `cycle/schema-builder` extenstions in order to use annotated entities. Once installed add 
+Make sure to install `cycle/annoated` and `cycle/schema-builder` extensions in order to use annotated entities. Once installed add
 annotated generators into schema compiler (see more details [here](/basic/install.md)).
 
 > Cycle is using Doctrine/Annotations package, make sure that annotations are loadable (`use`) and the syntax is correct.

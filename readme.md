@@ -52,12 +52,12 @@ Table of Contents
   * [Dynamic Mapping Schema](advanced/dynamic-schema.md)
 * Columns and Properties
   * [Column Wrappers](advanced/column-wrappers.md)
-  * [DateTime properties](advanced/datetime.md)  
+  * [DateTime properties](advanced/datetime.md)
   * [UUID as Primary Key](advanced/uuid.md)
 * Databases
   * [Database Schema Introspection](advanced/introspection.md)
   * [Database Schema Declaration](advanced/declaration.md)
-  * [Syncronizing Database Schema (Migrations)](advanced/sync-schema.md)
+  * [Synchronizing Database Schema (Migrations)](advanced/sync-schema.md)
 * Customization
   * [Custom Mappers](advanced/custom-mapper.md)
   * [Constrains](advanced/constrain.md)

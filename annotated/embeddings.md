@@ -8,32 +8,32 @@ To define embeddable entity use `@Embeddable` annotation. As with `@Entity`, you
 
 ```php
 /** @Embeddable */
-class Address 
+class Address
 {
-    /** @Column(type = "string") */ 
+    /** @Column(type = "string") */
     public $country;
-  
-    /** @Column(type = "string") */ 
+
+    /** @Column(type = "string") */
     public $city;
-  
-    /** @Column(type = "string") */ 
+
+    /** @Column(type = "string") */
     public $address;
 }
 ```
 
 > You do not need to define the `primary` column, this column will be inherited from the parent entity. Mapper methods `queueDelete`, `queueCreate` and `queueUpdate` would never be invoked due to the delegation to the parent mapper.
 
-To embedd entity to another object use `@Embedd` annotation:
+To embed an entity to another object use `@Embedd` annotation:
 
 ```php
-/**  
+/**
  * @Entity
  */
-class User 
+class User
 {
     /** @Column(type = "primary") */
     public $id;
-    
+
     /** @Embedd(target = "Address") */
     public $address;
 }
@@ -61,21 +61,21 @@ By default, all embedded entity columns will be stored in owning entity table wi
 
 ```php
 /** @Embeddable(columnPrefix = "address_") */
-class Address 
+class Address
 {
-    /** @Column(type = "string") */ 
+    /** @Column(type = "string") */
     public $country;
-  
-    /** @Column(type = "string") */ 
+
+    /** @Column(type = "string") */
     public $city;
-  
-    /** @Column(type = "string") */ 
+
+    /** @Column(type = "string") */
     public $address;
 }
 ```
 
-## Quering
-You can query emebedded entity as your would do for any other relations:
+## Querying
+You can query embedded entity as your would do for any other relations:
 
 ```php
 $select = $orm->getRepository(User::class)->select();
@@ -87,11 +87,11 @@ By default, all embedded entities will be loaded with the parent object. To alte
 
 ```php
 /** @Entity */
-class User 
+class User
 {
     /** @Column(type = "primary") */
     public $id;
-    
+
     /** @Embedd(target = "Address", load = "lazy") */
     public $address;
 }

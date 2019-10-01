@@ -1,5 +1,5 @@
 # Using Bootstrap Toolkit
-You can install Cycle using a bootstrap toolkit for quick integrations. This tutorial assumes that your entity codebase is located in 
+You can install Cycle using a bootstrap toolkit for quick integrations. This tutorial assumes that your entity codebase is located in
 `src/` directory and accessible by Composer autoloader.
 
 > Bundle comes with annotation and proxies support.
@@ -97,7 +97,7 @@ Install the bundle and create `config/cycle-cli.php` and `bootstrap.php` files. 
 ```json
 "autoload": {
     "psr-4": {
-      "App\\": "src/"
+        "App\\": "src/"
     }
 }
 ```

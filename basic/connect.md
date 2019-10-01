@@ -34,7 +34,7 @@ $dbal = new Database\DatabaseManager($dbConfig);
 > You can instantiate DBAL with an empty connection list and configure it in runtime if needed.
 
 ## Configure Databases
-Spiral/Database module provides support to manage multiple databases in one application, use read/write connections and logically 
+Spiral/Database module provides support to manage multiple databases in one application, use read/write connections and logically
 separate multiple databases within one connection using prefixes.
 
 To register new database simply add it into `databases` section:
@@ -126,7 +126,7 @@ For `SQLServer`:
 ## Additional connection options
 There are multiple connection options you can use to customize the behavior.
 
-Options | Value | Description 
+Options | Value | Description
 --- | --- | ---
 timezone | string | Default driver timezone (all DateTimeInterface query parameters will be converted into it), defaults to `UTC`.
 reconnect | bool | Allow the driver to automatically reconnect, defaults to `false`.
@@ -150,7 +150,7 @@ $dbal->database('default')->table('users')->select()->fetchAll();
 ```
 
 ## Profiling and Logging
-Each of database Driver implements `Psr\Log\LoggerAwareInterface`, you can enable SQL logging by assigning logger and enabling Driver 
+Each of database Driver implements `Psr\Log\LoggerAwareInterface`, you can enable SQL logging by assigning logger and enabling Driver
 profiling:
 
 ```php

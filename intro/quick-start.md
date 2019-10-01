@@ -7,7 +7,7 @@ This guide provides a quick overview of ORM installation, configuration process 
   * PHP 7.2+
   * PHP-PDO
   * PDO drivers for desired databases
-  
+
 ## Installation
 Cycle ORM is available as composer repository and can be installed using the following command in the root of your project:
 
@@ -85,14 +85,15 @@ We can create our first entity in a directory `src` of our project.
 Register new namespace in your composer.json file:
 
 ```json
+
 "autoload": {
     "psr-4": {
-      "Example\\": "src/"
+        "Example\\": "src/"
     }
   }
 ```
 
-Execute: 
+Execute:
 
 ```bash
 $ composer dump
@@ -105,12 +106,12 @@ You can avoid using `cycle/annotated` and ignore sections "Define Entity", "Sche
 $orm = $orm->withSchema(new Schema([
     'user' => [
          Schema::MAPPER      => Mapper::class, // default POPO mapper
-         Schema::ENTITY      => User::class, 
+         Schema::ENTITY      => User::class,
          Schema::DATABASE    => 'default',
          Schema::TABLE       => 'users',
          Schema::PRIMARY_KEY => 'id',
          Schema::COLUMNS     => [
-            'id'   => 'id',  // property => column 
+            'id'   => 'id',  // property => column
             'name' => 'name'
          ],
          Schema::TYPECAST    => [
@@ -132,7 +133,7 @@ $user->setName("John");
 
 > Note, in this case, ORM can not automatically migrate your database schema.
 
-Read more about other ways to declare mapping schema in later sections of ORM documentation (for example [dynamic mapping](https://github.com/cycle/docs/blob/master/advanced/dynamic-schema.md#example)). 
+Read more about other ways to declare mapping schema in later sections of ORM documentation (for example [dynamic mapping](https://github.com/cycle/docs/blob/master/advanced/dynamic-schema.md#example)).
 
 ## Define Entity
 To create our first entity in `src` folder we will use capabilities provided by `cycle/annotated` package to describe desired schema:
@@ -161,7 +162,7 @@ class User
      * @var string
      */
     protected $name;
-    
+
     public function getId(): int
     {
         return $this->id;
@@ -193,7 +194,7 @@ $finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__]);
 $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 ```
 
-We can immediatelly check if our class visible (ClassLocator will perform static indexation of your code behind the hood):
+We can immediately check if our class visible (ClassLocator will perform static indexation of your code behind the hood):
 
 ```php
 print_r($classLocator->getClasses());
@@ -228,7 +229,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 
 > We will explain what each generator is doing in later sections. Please note, while computing your schema `SyncTables` will automatically adjust your database structure! Do not use it on a real database!
 
-The resulted schema can be passed to ORM. 
+The resulted schema can be passed to ORM.
 
 ```php
 $orm = $orm->withSchema(new ORM\Schema($schema));
@@ -236,7 +237,7 @@ $orm = $orm->withSchema(new ORM\Schema($schema));
 
 > Generated schema is intended to be cached in your application, only re-generate schema when it's needed.
 
-Your ORM is ready for use. 
+Your ORM is ready for use.
 
 > You can dump `schema` variable to check the internal representation of your entity schema.
 
@@ -256,7 +257,7 @@ $t->persist($u);
 $t->run();
 ```
 
-You can immediatelly dump the object to see newly generated primary key:
+You can immediately dump the object to see newly generated primary key:
 
 ```php
 print_r($u);
@@ -286,7 +287,7 @@ $u->setName("New " . mt_rand(0, 1000));
 You can notice that a new name will be displayed on every script iteration.
 
 ## Delete Entity
-To delete entity simply call method `delete` of the Transation:
+To delete entity simply call method `delete` of the Transaction:
 
 ```php
 (new ORM\Transaction($orm))->delete($u)->run();

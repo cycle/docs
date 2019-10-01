@@ -1,5 +1,5 @@
 # Simple Relation
-An important part of any ORM engine is the ability to handle relations between objects. In order to do so, we will use 
+An important part of any ORM engine is the ability to handle relations between objects. In order to do so, we will use
 `cycle/annotated` package to describe the relation.
 
 > Deeper review of different relations, their options, and select methods will be given in further sections.
@@ -24,7 +24,7 @@ class User
      * @var string
      */
     protected $name;
-    
+
     public function getId(): int
     {
         return $this->id;
@@ -94,7 +94,7 @@ class User
      * @var Address|null
      */
     protected $address;
-    
+
     // ...
 
     public function getAddress(): ?Address
@@ -137,7 +137,7 @@ INSERT INTO "users" ("name") VALUES ('Antony');
 INSERT INTO "addresses" ("city", "user_id") VALUES ('New York', 15);
 ```
 
-You can also store objects separatelly, ORM will automatically link them together:
+You can also store objects separately, ORM will automatically link them together:
 
 ```php
 $t = new ORM\Transaction($orm);
@@ -169,10 +169,10 @@ The following construction will produce the SQL similar to:
 
 ```sql
 SELECT
-    "user"."id" AS "c0", 
-    "user"."name" AS "c1", 
-    "l_user_address"."id" AS "c2", 
-    "l_user_address"."city" AS "c3", 
+    "user"."id" AS "c0",
+    "user"."name" AS "c1",
+    "l_user_address"."id" AS "c2",
+    "l_user_address"."city" AS "c3",
     "l_user_address"."user_id" AS "c4"
 FROM "users" AS "user"
 LEFT JOIN "addresses" AS "l_user_address"
@@ -197,12 +197,12 @@ In this case, the resulted SQL will look like:
 
 ```sql
 SELECT
-    "user"."id" AS "c0", 
+    "user"."id" AS "c0",
     "user"."name" AS "c1"
 FROM "users" AS "user";
 SELECT
-    "user_address"."id" AS "c0", 
-    "user_address"."city" AS "c1", 
+    "user_address"."id" AS "c0",
+    "user_address"."city" AS "c1",
     "user_address"."user_id" AS "c2"
 FROM "addresses" AS "user_address"
 WHERE "user_address"."user_id" IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
@@ -225,10 +225,10 @@ The SQL:
 
 ```sql
 SELECT
-    "user"."id" AS "c0", 
-    "user"."name" AS "c1", 
-    "user_address"."id" AS "c2", 
-    "user_address"."city" AS "c3", 
+    "user"."id" AS "c0",
+    "user"."name" AS "c1",
+    "user_address"."id" AS "c2",
+    "user_address"."city" AS "c3",
     "user_address"."user_id" AS "c4"
 FROM "users" AS "user"
 INNER JOIN "addresses" AS "user_address"
@@ -250,13 +250,13 @@ And the resulted SQL:
 
 ```sql
 SELECT
-    "user"."id" AS "c0", 
-    "user"."name" AS "c1", 
-    "l_user_address"."id" AS "c2", 
-    "l_user_address"."city" AS "c3", 
-    "l_user_address"."user_id" AS "c4", 
-    "user_address"."id" AS "c5", 
-    "user_address"."city" AS "c6", 
+    "user"."id" AS "c0",
+    "user"."name" AS "c1",
+    "l_user_address"."id" AS "c2",
+    "l_user_address"."city" AS "c3",
+    "l_user_address"."user_id" AS "c4",
+    "user_address"."id" AS "c5",
+    "user_address"."city" AS "c6",
     "user_address"."user_id" AS "c7"
 FROM "users" AS "user"
 LEFT JOIN "addresses" AS "l_user_address"
@@ -280,13 +280,13 @@ In this case, only one JOIN will be produced:
 
 ```sql
 SELECT
-    "user"."id" AS "c0", 
-    "user"."name" AS "c1", 
-    "user_address"."id" AS "c2", 
-    "user_address"."city" AS "c3", 
+    "user"."id" AS "c0",
+    "user"."name" AS "c1",
+    "user_address"."id" AS "c2",
+    "user_address"."city" AS "c3",
     "user_address"."user_id" AS "c4",
     "user_address"."id" AS "c5",
-    "user_address"."city" AS "c6", 
+    "user_address"."city" AS "c6",
     "user_address"."user_id" AS "c7"
 FROM "users" AS "user"
 INNER JOIN "addresses" AS "user_address"

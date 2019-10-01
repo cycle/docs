@@ -26,8 +26,8 @@ $qb = $select->getBuilder();
 
 // to compare 2 columns
 $select->where(
-  'credits', 
-  '>', 
+  'credits',
+  '>',
   new Expression($qb->resolve('balance'))
 );
 ```
@@ -35,10 +35,10 @@ $select->where(
 Such query will produce similar SQL:
 
 ```sql
-SELECT 
+SELECT
     ...
-FROM "users" AS "user" WHERE 
-  "user"."credits" > "user"."balance" 
+FROM "users" AS "user" WHERE
+  "user"."credits" > "user"."balance"
 ```
 
 You can also resolve names of related entities by using entity path:
@@ -54,16 +54,16 @@ Example SQL:
 ```sql
 SELECT DISTINCT
    ...
-FROM "users" AS "user" 
+FROM "users" AS "user"
 INNER JOIN "orders" AS "user_orders"
-    ON "user_orders"."user_id" = "user"."id" 
+    ON "user_orders"."user_id" = "user"."id"
 WHERE "user"."balance" > "user_orders"."total" AND "user_orders"."status" = 'pending'
 ```
 
 > You can also use methods `groupBy` on your `Select` object to create more complex conditions.
 
 ## Low level queries
-If you want to run complex selection or select only particular columns you can modify underlying query direcly:
+If you want to run complex selection or select only particular columns you can modify underlying query directly:
 
 ```php
 $query = $select->buildQuery();

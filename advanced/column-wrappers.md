@@ -1,6 +1,6 @@
 # Column Wrappers
 In some cases, you might want to wrap the value using custom value object (similarly to DateTime columns which are wrapped as DateTimeImmutable).
-It can be achieved by creating custom column wrapper and typecasting column value to it. 
+It can be achieved by creating custom column wrapper and typecasting column value to it.
 
 > Note, all column wrappers must be immutable, you have to reassign property value to trigger the change.
 
@@ -53,7 +53,7 @@ class Uuid
 method on your wrapper to store it in the database. See below how to use custom serialization strategy.
 
 ## Assign to entity
-To assign column wrapper to entity use column option `typecast`, you can specify typecast as function name, method name (:: separater) or 
+To assign column wrapper to entity use column option `typecast`, you can specify typecast as function name, method name (:: separator) or
 class name which defines static method typecast:
 
 ```php
@@ -157,7 +157,7 @@ class Uuid implements ValueInterface
             // postgres
             $value = fread($value, 16);
         }
-        
+
         $uuid = new static();
         $uuid->uuid = UuidBody::fromBytes((string)$value);
         return $uuid;

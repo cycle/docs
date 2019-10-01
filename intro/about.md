@@ -14,7 +14,7 @@ Cycle is PHP DataMapper ORM and Data Modelling engine designed to safely work in
 Features:
 ---------
 - ORM with has-one, has-many, many-thought-many and polymorphic relations
-- Plain Old PHP objects, [AR](https://github.com/cycle/docs/blob/master/advanced/active-record.md), Custom objects or [same entity type for multiple repositories](tests/ORM/Classless)
+- Plain Old PHP objects, [AR](https://github.com/cycle/docs/blob/master/advanced/active-record.md), Custom objects or [same entity type for multiple repositories](https://github.com/cycle/orm/tree/master/tests/ORM/Classless)
 - eager and lazy loading, query builder with multiple fetch strategies
 - embedded entities, lazy/eager loaded embedded partials
 - runtime configuration with/without code-generation
@@ -26,12 +26,12 @@ Features:
 - schema scaffolding, introspection, and migrations
 - supports global query constrains, UUIDs as PK, soft deletes, auto timestamps
 - disposable UoW, custom column types, FKs to non-primary columns
-- use with or without annotations, proxy classes, and auto-migrations 
+- use with or without annotations, proxy classes, and auto-migrations
 - compatible with Doctrine Collections, Doctrine Annotations, and Zend Hydrator
 
 Extensions:
 ---------
-| Component | Current Status        
+| Component | Current Status
 | ---       | ---
 cycle/schema-builder | [![Latest Stable Version](https://poser.pugx.org/cycle/schema-builder/version)](https://packagist.org/packages/cycle/schema-builder) [![Build Status](https://travis-ci.org/cycle/schema-builder.svg?branch=master)](https://travis-ci.org/cycle/schema-builder) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cycle/schema-builder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cycle/schema-builder/?branch=master) [![Codecov](https://codecov.io/gh/cycle/schema-builder/graph/badge.svg)](https://codecov.io/gh/cycle/schema-builder)
 cycle/annotated | [![Latest Stable Version](https://poser.pugx.org/cycle/annotated/version)](https://packagist.org/packages/cycle/annotated) [![Build Status](https://travis-ci.org/cycle/annotated.svg?branch=master)](https://travis-ci.org/cycle/annotated) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cycle/annotated/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cycle/annotated/?branch=master) [![Codecov](https://codecov.io/gh/cycle/annotated/graph/badge.svg)](https://codecov.io/gh/cycle/annotated)

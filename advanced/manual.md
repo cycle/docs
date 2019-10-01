@@ -22,12 +22,12 @@ $orm = $orm->withSchema(new Schema([
       Schema::TABLE       => 'user',
       Schema::PRIMARY_KEY => 'id',
       Schema::COLUMNS     => [
-          'id'      => 'id',    // property => column 
-          'email'   => 'email', 
+          'id'      => 'id',    // property => column
+          'email'   => 'email',
           'balance' => 'balance'
       ],
      Schema::TYPECAST    => [
-          'id'         => 'int', 
+          'id'         => 'int',
           'balance'    => 'float'
       ],
       Schema::RELATIONS   => []
@@ -71,6 +71,6 @@ $orm = $orm->withSchema(new Schema([
 ]));
 ```
 
-> Extra fields are ommited.
+> Extra fields are omitted.
 
 You can see other relation examples [here](https://github.com/cycle/orm/tree/master/tests).

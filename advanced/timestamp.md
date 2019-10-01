@@ -11,23 +11,23 @@ class TimestampedMapper extends Mapper
     public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
     {
         $cmd = parent::queueCreate($entity, $node, $state);
-        
+
         $state->register('created_at', new \DateTimeImmutable(), true);
         $cmd->register('created_at', new \DateTimeImmutable(), true);
-        
+
         $state->register('updated_at', new \DateTimeImmutable(), true);
         $cmd->register('updated_at', new \DateTimeImmutable(), true);
-        
+
         return $cmd;
     }
     public function queueUpdate($entity, Node $node, State $state): ContextCarrierInterface
     {
         /** @var Update $cmd */
         $cmd = parent::queueUpdate($entity, $node, $state);
-        
+
         $state->register('updated_at', new \DateTimeImmutable(), true);
         $cmd->registerAppendix('updated_at', new \DateTimeImmutable());
-                    
+
         return $cmd;
     }
 }
@@ -36,7 +36,7 @@ class TimestampedMapper extends Mapper
 > While we can set column values directly in `Insert` command we have to use the alternative method `registerAppendix` for `Update`. Such method will only push changes to the database if any other entity field has changes (for example if entity FK has been updated through the relation).
 
 ## Automatically Define Columns
-You can use annotated entites extension to automatically declare needed column from inside your mapper:
+You can use annotated entities extension to automatically declare needed column from inside your mapper:
 
 ```php
 /**
@@ -49,23 +49,23 @@ class TimestampedMapper extends Mapper
     public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
     {
         $cmd = parent::queueCreate($entity, $node, $state);
-        
+
         $state->register('created_at', new \DateTimeImmutable(), true);
         $cmd->register('created_at', new \DateTimeImmutable(), true);
-        
+
         $state->register('updated_at', new \DateTimeImmutable(), true);
         $cmd->register('updated_at', new \DateTimeImmutable(), true);
-        
+
         return $cmd;
     }
     public function queueUpdate($entity, Node $node, State $state): ContextCarrierInterface
     {
         /** @var Update $cmd */
         $cmd = parent::queueUpdate($entity, $node, $state);
-        
+
         $state->register('updated_at', new \DateTimeImmutable(), true);
         $cmd->registerAppendix('updated_at', new \DateTimeImmutable());
-                
+
         return $cmd;
     }
 }

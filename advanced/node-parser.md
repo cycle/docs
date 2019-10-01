@@ -4,7 +4,7 @@ using an identical approach. Parser work with numeric arrays.
 
 > This section is intended for advanced scenarios, make sure you can't achieve required flexibility using default instruments before jumping to this approach.
 
-## Upack simple query
+## Unpack simple query
 We can start with simple example which converts query result into associated array (example is using Database instance):
 
 ```php
@@ -36,7 +36,7 @@ $query = $db
     ->leftJoin('orders as o')->on('o.user_id', 'u.id');
 ```
 
-The query will return results in a form: [user.id, user.balance, order.id, order.user_id, order.total]. Lets upack it into structure like:
+The query will return results in a form: [user.id, user.balance, order.id, order.user_id, order.total]. Lets unpack it into structure like:
 
 ```php
 [

@@ -5,7 +5,7 @@ Annotated entities extension is capable of indexing any domain entity in your pr
 use Cycle\Annotated\Annotation\Entity;
 
 /** @Entity */
-class User 
+class User
 {
 }
 ```
@@ -23,12 +23,12 @@ use Cycle\Annotated\Annotation\Entity;
 
 /**
  * @Entity(
- *     role     = "user", 
- *     database = "database", 
+ *     role     = "user",
+ *     database = "database",
  *     table    = "user_table"
  * )
  */
-class User 
+class User
 {
 }
 ```
@@ -43,7 +43,7 @@ use Cycle\Annotated\Annotation\Entity;
 /**
  * @Entity(repository = "Repository/UserRepository")
  */
-class User 
+class User
 {
 }
 ```
@@ -52,7 +52,7 @@ class User
 
 Following entity options are available for customization:
 
-Option | Value | Comment 
+Option | Value | Comment
 --- | --- | ---
 role           | string | Entity role defaults to lowercases class name without a namespace
 mapper         | class  | Mapper class name defaults to `Cycle\ORM\Mapper\Mapper`
@@ -75,7 +75,7 @@ use Cycle\Annotated\Annotation\Entity;
  *    constrain  = "Constrain/SortByID"
  * )
  */
-class User 
+class User
 {
 }
 ```
@@ -88,7 +88,7 @@ use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 
 /** @Entity */
-class User 
+class User
 {
     /** @Column(type = "primary") */
     protected $id;
@@ -103,24 +103,24 @@ You can use import multiple annotations at the same time:
 use Cycle\Annotated\Annotation as Cycle;
 
 /** @Cycle\Entity */
-class User 
+class User
 {
     /** @Cycle\Column(type = "primary") */
     protected $id;
 }
 ```
 
-> Annotation import is ommited in a following sections.
+> Annotation import is omitted in a following sections.
 
 By default, the entity properly will be mapped to the column with the same name as the property, you can change it:
 
 ```php
 /** @Entity */
-class User 
+class User
 {
     /** @Column(type = "primary") */
     protected $id;
-    
+
     /** @Column(type = "string", name = "username") */
     protected $login;
 }
@@ -130,17 +130,17 @@ Some column types support additional arguments, such as length, values, etc.
 
 ```php
 /** @Entity */
-class User 
+class User
 {
     /** @Column(type = "primary") */
     protected $id;
-    
+
     /** @Column(type = "string(32)") */
     protected $login;
-    
+
     /** @Column(type = "enum(active,disabled)") */
     protected $status;
-        
+
     /** @Column(type = "decimal(5,5)") */
     protected $balance;
 }
@@ -150,11 +150,11 @@ Use `default` option to specify the default value of the column:
 
 ```php
 /** @Entity */
-class User 
+class User
 {
     /** @Column(type = "primary") */
     protected $id;
-    
+
     /** @Column(type = "enum(active,disabled)", default = "active") */
     protected $status;
 }
@@ -164,11 +164,11 @@ While adding new columns to the entities associated with non-empty tables you ar
 
 ```php
 /** @Entity */
-class User 
+class User
 {
     /** @Column(type = "primary") */
     protected $id;
-    
+
     /** @Column(type = "string(64)", nullable = true) */
     protected $password;
 }
@@ -195,12 +195,12 @@ boolean     | ---                       | Boolean type, some databases will stor
 integer     | ---                       | Database specific integer (usually 32 bits).
 tinyInteger | ---                       | Small/tiny integer, check your DBMS to check it's the size.
 bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check it's the size.
-**string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed. 
+**string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.
 text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.
 tinyText    | ---                       | Tiny text, same as "text" for most of the databases. It differs only in MySQL.
 longText    | ---                       | Long text, same as "text" for most of the databases. It differs only in MySQL.
 double      | ---                       | [Double precision number.] (https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
-float       | ---                       | Single precision number, usually mapped into "real" type in the database. 
+float       | ---                       | Single precision number, usually mapped into "real" type in the database.
 decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.
 datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.
 date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.
@@ -220,27 +220,27 @@ protected $status;
 ```
 
 ## Table Extension
-In some cases you might want to specificy additional table columns and indexes without the link to the entity properies. This can be achieved using `@Table` annotation:
+In some cases you might want to specify additional table columns and indexes without the link to the entity properties. This can be achieved using `@Table` annotation:
 
 ```php
-/**  
+/**
  * @Entity
  * @Table(
  *      columns={"created_at": @Column(type = "datetime"), "deleted_at": @Column(type = "datetime")},
  *      indexes={
- *             @Index(columns = {"username"}, unique = true), 
+ *             @Index(columns = {"username"}, unique = true),
  *             @Index(columns = {"status"})
  *      }
  * )
  */
-class User 
+class User
 {
     /** @Column(type = "primary") */
     protected $id;
-    
+
     /** @Column(type ="string(32)") */
     protected $username;
-    
+
     /** @Column(type = "enum(active,disabled)", default = "active") */
     protected $status;
 }
@@ -255,7 +255,7 @@ Annotated Entities extension support ability to merge table definitions provided
 /**
  * @Entity(repository = "Repository/UserRepository")
  */
-class User 
+class User
 {
 }
 ```
@@ -267,7 +267,7 @@ You can also use short annotation declaration:
  * @Table(
  *     columns={"created_at": @Column("datetime")},
  *     indexes={@Index(columns = {"created_at"})}
- * ) 
+ * )
  */
 class UserRepository extends Repository
 {

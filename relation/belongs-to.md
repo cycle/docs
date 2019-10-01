@@ -4,14 +4,14 @@ Belongs To relation defines that entity is owned by a related entity on the excl
 > The entity will be always persisted after related entity.
 
 ## Definition
-To define Belongs To relation using annotated enties extension use:
+To define Belongs To relation using annotated entities extension use:
 
 ```php
-/** @Entity */ 
-class Post 
+/** @Entity */
+class Post
 {
     // ...
-    
+
     /** @BelongsTo(target = "User") */
     protected $user;
 }
@@ -29,7 +29,7 @@ nullable    | bool   | Defines if the relation can be nullable (child can have n
 innerKey    | string | Inner key in source entity, defaults to `{relationName}_{outerKey}`
 outerKey    | string | Outer key in the related entity, by default primary key
 fkCreate    | bool   | Set to true to automatically create FK on innerKey, defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`
 indexCreate | bool   | Create an index on innerKey, defaults to `true`
 
 # Usage
@@ -44,7 +44,7 @@ $t->persist($post);
 $t->run();
 ```
 
-You can only de-associate related entity if relation set as `nullable`, in other scenarious you will get an integrity exception:
+You can only de-associate related entity if relation set as `nullable`, in other scenarios you will get an integrity exception:
 
 ```php
 $post = $orm->getRepository(Post::class)->findOne();
@@ -72,7 +72,7 @@ $posts = $orm->getRepository(Post::class)
     ->select()
     ->with('user')->where('user.status', 'active')
     ->fetchAll();
-    
+
 print_r($posts);
 ```
 
@@ -83,6 +83,6 @@ $posts = $orm->getRepository(Post::class)
     ->select()
     ->where('user.status', 'active')
     ->fetchAll();
-    
+
 print_r($posts);
 ```

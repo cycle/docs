@@ -1,9 +1,9 @@
 # Active Record
-Cycle ORM leaves enough room for developers to alter its behavior. In this section, we will try to create ActiveRecord-like entity implementation which is automatically configured based on database introspection. 
+Cycle ORM leaves enough room for developers to alter its behavior. In this section, we will try to create ActiveRecord-like entity implementation which is automatically configured based on database introspection.
 
 > Engine is still going to use repositories and mappers behind the hood. In this article we are only going to handle column mapping, relation configuration must be done separately.
 
-We will try to achive the following functionality:
+We will try to achieve the following functionality:
 
 ```php
 $u = User::find()->findOne(['name' => "John"]) ?? new User();
@@ -27,7 +27,7 @@ abstract class Record
     {
         $tr = new ORM\Transaction(self::getORM());
         $tr->persist(
-            $this, 
+            $this,
             $saveChildren ? ORM\Transaction::MODE_CASCADE : ORM\Transaction::MODE_ENTITY_ONLY
         );
         $tr->run();
@@ -121,7 +121,7 @@ abstract class Record
     {
         $tr = new ORM\Transaction(self::getORM());
         $tr->persist(
-            $this, 
+            $this,
             $saveChildren ? ORM\Transaction::MODE_CASCADE : ORM\Transaction::MODE_ENTITY_ONLY
         );
         $tr->run();
@@ -172,7 +172,7 @@ class ARMapper extends ORM\Mapper\DatabaseMapper
     {
         /** @var Record $entity */
         $entity->__setData($data);
-        
+
         return $entity;
     }
 
@@ -196,7 +196,7 @@ class ARMapper extends ORM\Mapper\DatabaseMapper
 > You are free to use any other mapper customizations in combination with AR approach.
 
 ## Table and Entity
-Since we are using the AR approach we are going to use table introspection to drive mapping schema (which can be cached). 
+Since we are using the AR approach we are going to use table introspection to drive mapping schema (which can be cached).
 
 Assuming we have table `user` with columns (id, name) we can create our first entity `User`:
 
@@ -207,7 +207,7 @@ class User extends Record {
 ```
 
 ## Generation
-Next step is to create generator capable of finding and configuring our entity. We are going to use `Spiral\Tokenizer\ClassesInterface` 
+Next step is to create generator capable of finding and configuring our entity. We are going to use `Spiral\Tokenizer\ClassesInterface`
 to automatically locate our `Record` classes:
 
 ```php
@@ -278,7 +278,7 @@ private function declareEntity(Registry $registry, string $class, string $table)
 }
 ```
 
-> Error checking is ommited.
+> Error checking is omitted.
 
 ## Generating Schema
 Now we have all the pieces to compile our ORM mapping schema:
@@ -311,7 +311,7 @@ $schema = new Schema([
     'user' => [
         Schema::ENTITY      => User::class,
         Schema::MAPPER      => ARMapper::class,
-        Schema::REPOSITORY  => UserRepository::class, // optional, available via User::find() 
+        Schema::REPOSITORY  => UserRepository::class, // optional, available via User::find()
         Schema::DATABASE    => 'default',
         Schema::TABLE       => 'user',
         Schema::PRIMARY_KEY => 'id',

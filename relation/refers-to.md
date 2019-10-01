@@ -12,7 +12,7 @@ Using annotated extension:
 class User
 {
     // ...
-    
+
     /** @RefersTo(target="Comment") */
     public $lastComment;
 
@@ -41,7 +41,7 @@ nullable    | bool   | Defines if the relation can be nullable (child can have n
 innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
 fkCreate    | bool   | Set to true to automatically create FK on outerKey, defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`
 indexCreate | bool   | Create an index on outerKey, defaults to `true`
 
 > Please note, default `fkAction` is `SET NULL`, the relation is nullable by default.
@@ -86,7 +86,7 @@ $users = $orm->getRepository(User::class)
     ->select()
     ->with('lastComment')->where('lastComment.approved', true)
     ->fetchAll();
-    
+
 print_r($users);
 ```
 
@@ -97,7 +97,7 @@ $users = $orm->getRepository(User::class)
     ->select()
     ->where('lastComment.approved', true)
     ->fetchAll();
-    
+
 print_r($users);
 ```
 
@@ -106,14 +106,14 @@ The RefersTo relation can be used to create self-references.
 
 ```php
 /** @Entity */
-class Category 
+class Category
 {
     /** @Column(type="primary") */
     public $id;
-    
+
     /** @RefersTo(target="Category") */
     public $parent;
-    
+
     // ...
 }
 ```
@@ -131,7 +131,7 @@ $t->persist($category2);
 $t->run();
 ```
 
-You can load relations like that on any level (concidering memory and performance limitations):
+You can load relations like that on any level (considering memory and performance limitations):
 
 ```php
 $result = $orm->getRepository(Category::class)

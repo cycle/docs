@@ -22,7 +22,7 @@ $field = (new Field())
     ->setType('primary')
     ->setColumn('id')
     ->setPrimary(true);
-    
+
 $entity->getFields()->set('id', $field);
 
 
@@ -39,9 +39,9 @@ print_r($schema);
 $orm = $orm->withSchema(new Schema($schema));
 ```
 
-> Use SyncTable [generator](/advanced/schema-builder.md) to update your database schema. 
+> Use SyncTable [generator](/advanced/schema-builder.md) to update your database schema.
 
-Relations can also be configured usign schema builder:
+Relations can also be configured using schema builder:
 
 ```php
 $entity->getRelations()->set(
@@ -155,12 +155,12 @@ $orm = new ORM(new Factory($dbm), new Schema([
         Schema::COLUMNS     => [
             'id'         => 'id',         // property => column_name
             'name'       => 'name',
-            'created_at' => 'created_at', 
+            'created_at' => 'created_at',
             'updated_at' => 'updated_at'
         ],
         Schema::TYPECAST    => [
-            'id'         => 'int', 
-            'created_at' => 'datetime', 
+            'id'         => 'int',
+            'created_at' => 'datetime',
             'updated_at' => 'datetime'
         ],
         Schema::RELATIONS   => [],

@@ -8,11 +8,11 @@ To define embedded entity using annotated extension you must declare your embedd
 
 ```php
 /** @Embeddable */
-class UserCredentials 
+class UserCredentials
 {
     /** @Column(type="string(255)") */
     public $username;
-    
+
     /** @Column(type="string") */
     public $password;
 }
@@ -24,14 +24,14 @@ Now you can declare the usage of such entity if your model using the relation of
 
 ```php
 /** @Entity */
-class User 
+class User
 {
     /** @Column(type = "primary") */
     public $id;
-    
+
     /** @Embedd(target = "UserCredentials") */
     public $credentials;
-    
+
     public function __construct()
     {
         $this->credentials = new UserCredentials();
@@ -50,7 +50,7 @@ Option      | Value  | Comment
 load        | lazy/eager | Relation load approach (default `eager`)
 
 ## Usage
-You can use newly relation right after schema update (emebedded columns will be added to parent entity table):
+You can use newly relation right after schema update (embedded columns will be added to parent entity table):
 
 ```php
 $u = new User();
@@ -63,8 +63,8 @@ $t->run();
 ```
 
 
-## Quering
-You can query emebedded entity as your would do for any other relations:
+## Querying
+You can query embedded entity as your would do for any other relations:
 
 ```php
 $select = $orm->getRepository(User::class)->select();
@@ -76,11 +76,11 @@ By default, all embedded entities will be loaded with the parent object. To alte
 
 ```php
 /** @Entity */
-class User 
+class User
 {
     /** @Columntype = "primary") */
     public $id;
-    
+
     /** @Embedd(target = "Address", load = "lazy") */
     public $address;
 }

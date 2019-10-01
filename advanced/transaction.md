@@ -5,7 +5,7 @@ and will request each entity mapper and relation to issue set of persist command
 > All transaction are treated as disposable, you can create and delete them as you need.
 
 ## TransactionInterface
-ORM provides the convenient class to manage transactions, however, it is recommended to couple your code with an underlying interface for 
+ORM provides the convenient class to manage transactions, however, it is recommended to couple your code with an underlying interface for
 the simplicity and easier testing going forward:
 
 ```php
@@ -14,7 +14,7 @@ interface TransactionInterface
     // how to store/delete entity
     public const MODE_CASCADE     = 0;
     public const MODE_ENTITY_ONLY = 1;
-    
+
     /**
      * Persist the entity.
      *
@@ -22,7 +22,7 @@ interface TransactionInterface
      * @param int    $mode
      */
     public function persist($entity, int $mode = self::MODE_CASCADE);
-    
+
     /**
      * Delete entity from the database.
      *
@@ -30,7 +30,7 @@ interface TransactionInterface
      * @param int    $mode
      */
     public function delete($entity, int $mode = self::MODE_CASCADE);
-    
+
     /**
      * Execute all nested commands in transaction, if failed - transaction MUST automatically
      * rollback and exception instance MUST be thrown.
@@ -64,7 +64,7 @@ $t2->persist($e2);
 $t2->run();
 ```
 
-After execution Transaction will be cleared and can be re-used for next batch of commands, please note, ORM Heap would not be reset 
+After execution Transaction will be cleared and can be re-used for next batch of commands, please note, ORM Heap would not be reset
 after the transaction, you must clean it manually if needed.
 
 ```php
@@ -99,12 +99,12 @@ interface RunnerInterface extends \Countable
      * @param CommandInterface $command
      */
     public function run(CommandInterface $command);
-    
+
     /**
      * Complete/commit all executed changes. Must clean the state of the runner.
      */
     public function complete();
-    
+
     /**
      * Rollback all executed changes. Must clean the state of the runner.
      */
@@ -118,27 +118,27 @@ For example, we can log the order of which commands are being executed by wrappi
 class LogRunner implements RunnerInterface
 {
     private $runner;
-    
+
     public function __construct()
     {
         $this->runner = new Cycle\ORM\Transaction\Runner();
     }
-  
+
     public function run(CommandInterface $command)
     {
         print_r($command);
         $this->runner->run($command);
     }
-    
+
     public function complete()
     {
         $this->runner->complete();
     }
-    
+
     public function rollback()
     {
         $this->runner->rollback();
-    
+
     }
 }
 ```
@@ -152,4 +152,4 @@ $t->run();
 ```
 
 ## Reusing same Transaction
-Transaction is clean after `run` invocation, you must assemble new transaction to retry the same set of entities. Since transaction is clean you are able to reuse same transaction over and over again (make sure to keep `persist`, `delete` and `run` operation within one method). 
+Transaction is clean after `run` invocation, you must assemble new transaction to retry the same set of entities. Since transaction is clean you are able to reuse same transaction over and over again (make sure to keep `persist`, `delete` and `run` operation within one method).

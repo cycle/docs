@@ -6,7 +6,7 @@ and declare relations/columns specific to the child.
 
 ```php
 /** @Entity */
-class Post 
+class Post
 {
     /** @Column(type="primary") */
     public $id;

@@ -8,14 +8,14 @@ ORM will automatically instantiate collection instance for your relations, howev
 collections in your constructor to use newly created entities:
 
 ```php
-/** @Entity */ 
-class User 
+/** @Entity */
+class User
 {
     // ...
-    
+
     /** @HasMany(target = "Post") */
     public $posts;
-    
+
     public function __construct()
     {
         $this->address = new ArrayCollection();
@@ -29,7 +29,7 @@ The collection properly will be set automatically on the selection:
 $users = $orm->getRepository(User::class)
     ->select()
     ->with('posts')->limit(1)->fetchOne();
-    
+
 print_r($u->posts);
 ```
 

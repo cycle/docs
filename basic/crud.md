@@ -59,7 +59,7 @@ Note, by default, ORM will update only changed entity fields (a.k.a. dirty state
 SQL code similar to:
 
 ```sql
-UPDATE `users` SET `name` = "John" WHERE `id` = 1 
+UPDATE `users` SET `name` = "John" WHERE `id` = 1
 ```
 
 ## Delete Entity
@@ -77,7 +77,7 @@ Please note, ORM would not automatically trigger the delete operation for relate
 
 ## Persisting Related Entities
 An entity persisting will also persist all related entities within it.
- 
+
 ```php
 $user = new User();
 $user->setAddress(new Address());
@@ -91,7 +91,7 @@ print_r($user->getAddress()->getID());
 ```
 
 This behavior is enabled by default by the persisting entity with `Transaction::MODE_CASCADE` flag.
-Code above can be equally rewtitted as:
+Code above can be equally rewritten as:
 
 ```php
 $tr = new Transaction($orm);
@@ -99,7 +99,7 @@ $tr->persist($user, Transaction::MODE_CASCADE);
 $tr->run();
 ```
 
-Pass `Transaction::MODE_ENTITY_ONLY` flag to disable casacade persising of related entities:
+Pass `Transaction::MODE_ENTITY_ONLY` flag to disable cascade persisting of related entities:
 
 ```php
 $tr = new Transaction($orm);

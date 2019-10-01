@@ -6,13 +6,13 @@ To implement the ability to create custom query scope you must implement a metho
 
 
 ```php
-class UserRepository extends Repository 
+class UserRepository extends Repository
 {
     public function withActive(): self
     {
         $r = clone $this;
         $r->select->where('status', 'active');
-        
+
         return $r;
     }
 }
@@ -28,17 +28,17 @@ print_r($r->withActive()->findAll());
 
 > You can chain as many scope methods as you want, make sure to keep the repository state immutable.
 
-## Disable the Constrain 
+## Disable the Constrain
 If you use entity constraint (for example soft-deleted) you can alter your underlying select query to disable it in specific cases:
 
 ```php
-class UserRepository extends Repository 
+class UserRepository extends Repository
 {
     public function withDeleted(): self
     {
         $r = clone $this;
         $r->select->constrain(null);
-        
+
         return $r;
     }
 }

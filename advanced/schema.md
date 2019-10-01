@@ -3,7 +3,7 @@ The Cycle ORM relies on the Schema instance to define its behavior. All of the e
 located in such schema and must be pre-calculated prior to runtime usage. In fact, schema operates as a nested hash table providing quick access to each of the definition.
 
 ## Access Schema
-To access schema from intiiated ORM instance use method `getSchema`:
+To access schema from initiated ORM instance use method `getSchema`:
 
 ```php
 // print the table associated with the entity
@@ -19,15 +19,15 @@ $orm2 = $orm->withSchema(new Schema([...]));
 > The original ORM instance won't be affected.
 
 ## Schema Properties
-Most of the schema properties are intended for internal use, however accessing them might give your application an ability to configure environment (for example automatic binding to Container). 
+Most of the schema properties are intended for internal use, however accessing them might give your application an ability to configure environment (for example automatic binding to Container).
 
 All schema properties are available in a form of public constants on class `Cycle\ORM\SchemaInterface` or `Cycle\ORM\Schema`:
 
 Property | Type   | Description
 ---      | ---    | ---
-ROLE     | string | Unique entity name (can be omitted when schema supplied in [role => schema] form).   
-ENTITY   | class  | Class name to represent the entity can be null if alternative mapper implementation is used.   
-MAPPER   | class  | Class to hydrate and extract data from entities and initiate command chains. Defaults to `Cycle\ORM\Mapper\Mapper`. 
+ROLE     | string | Unique entity name (can be omitted when schema supplied in [role => schema] form).
+ENTITY   | class  | Class name to represent the entity can be null if alternative mapper implementation is used.
+MAPPER   | class  | Class to hydrate and extract data from entities and initiate command chains. Defaults to `Cycle\ORM\Mapper\Mapper`.
 SOURCE    | class | Class to represent gateway object to entity database and table. Defaults to `Cycle\ORM\Select\Source`.
 REPOSITORY | class | Class to aggregate all entity select operations. Defaults to `Cycle\ORM\Select\Repository`.
 DATABASE   | string | Database name associated with an entity. Defaults to `null` (default database).
