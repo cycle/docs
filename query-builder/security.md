@@ -1,5 +1,5 @@
 # Security
-Cycle query builder will automatically pass all of the use parameters as part of the prepared statement. However, you have to remember that column and table names are escaped on the application level. 
+Cycle query builder will automatically pass all of the use parameters as part of the prepared statement. However, you have to remember that column and table names are escaped on the application level.
 
 ## Identifiers
 Avoid using user provided identifiers without proper whitelist:

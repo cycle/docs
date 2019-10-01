@@ -4,22 +4,22 @@ Spiral/Database ships with an included mechanism to declare table structures, FK
 > Practically, table changes can be executed using an external migration system.
 
 ## Principle of Work
-Before any operation/declaration can be applied to table schema, DBAL will load currently existed structure from database and [normalize it into internal format](/advanced/introspection.md). 
+Before any operation/declaration can be applied to table schema, DBAL will load currently existed structure from database and [normalize it into internal format](/advanced/introspection.md).
 
-As result, you are allowed to apply the modification to table schema using declarative way instead of imperative, once schema **save** are requested - DBAL will generate set of creation and altering operations based on the difference between declared and existed schemas. 
+As result, you are allowed to apply the modification to table schema using declarative way instead of imperative, once schema **save** are requested - DBAL will generate set of creation and altering operations based on the difference between declared and existed schemas.
 
 > See below how to use `Spiral\Database\Schema\Reflector` to sync multiple related tables.
 
 ## To Start
-To get instance of `AbstractTable` use similar way described in [Schema Introspection (make sure your read them first)](/advanced/introspection.md). 
+To get instance of `AbstractTable` use similar way described in [Schema Introspection (make sure your read them first)](/advanced/introspection.md).
 
-> No need to check for table existence. 
+> No need to check for table existence.
 
 ```php
 protected function indexAction(Database $database)
 {
     $schema = $database->table('new_table')->getSchema();
-    
+
     //Schema suppose to be empty
     dump($schema);
     dump($schema->exists());
@@ -126,12 +126,12 @@ boolean     | ---                       | Boolean type, some databases will stor
 integer     | ---                       | Database specific integer (usually 32 bits).
 tinyInteger | ---                       | Small/tiny integer, check your DBMS to check its size.
 bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check its size.
-**string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed. 
+**string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.
 text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.
 tinyText    | ---                       | Tiny text, same as "text" for most of the databases. Differs only in MySQL.
 longText    | ---                       | Long text, same as "text" for most of the databases. Differs only in MySQL.
 double      | ---                       | [Double precision number.] (https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
-float       | ---                       | Single precision number, usually mapped into "real" type in the database. 
+float       | ---                       | Single precision number, usually mapped into "real" type in the database.
 decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.
 datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.
 date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.
@@ -143,7 +143,7 @@ longBinary  | ---                       | Long binary, same as "binary" for most
 json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.
 
 > Attention, in some cases type returned by `ColumnSchema->abstractType()` might not be the same as declared one, such problem may occur in cases when DBMS uses same internal type for multiple abstract types (for example most of the databases does not differentiate long/short/medium text and binary types).
- 
+
 > However, such thing does not break anything in schema synchronization as DBAL creates operations based on the difference in internal database type, not based on declared abstract one.
 
 ### Enum Type
@@ -156,7 +156,7 @@ $schema->column('status')->enum(['active', 'disabled']);
 $schema->enum('statusB', ['active', 'disabled']);
 ```
 
-> As in other cases declared schema will be synced will database one, so you can add and remove enum values at any moment. 
+> As in other cases declared schema will be synced will database one, so you can add and remove enum values at any moment.
 
 ### Default values
 It's recommended to set default value for enum and some other columns, setting default value can be performed using `defaultValue()`:
@@ -188,7 +188,7 @@ $schema->integer('new_column')->nullable(false)->defaultValue(0);
 > ORM will automatically resolve default value for NOT NULL casted columns.
 
 ## Primary Index
-Table primary index can be set only while creation. DBAL will set PK automatically based on the column with type "primary" or "bigPrimary" declared in your schema. 
+Table primary index can be set only while creation. DBAL will set PK automatically based on the column with type "primary" or "bigPrimary" declared in your schema.
 
 To declare compound or custom primary keys, use table method `setPrimaryKeys()`.
 
@@ -318,7 +318,7 @@ $schema->save();
 
 ## Clean Table schema
 In some cases you might want table schema strictly follow declared elements and automatically delete all non declared columns:
- 
+
 ```php
 $schema->setState(null);
 ```
@@ -335,7 +335,7 @@ dump($schema->getComparator()->addedColumns());
 > You can use comparator to generate migrations instead of letting DBAL sync your schemas.
 
 ## Sync multiple Tables
-In some cases you might want to create multiple linked tables. In order to handle such operation feed your table schemas 
+In some cases you might want to create multiple linked tables. In order to handle such operation feed your table schemas
 into `Spiral\Database\Schema\Reflector`:
 
 ```php

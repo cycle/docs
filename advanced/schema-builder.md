@@ -35,7 +35,7 @@ $r->register($e);
 $r->linkTable($e, 'default', 'users');
 ```
 
-You can generate ORM schema immediatelly using `Schema\Compiler`:
+You can generate ORM schema immediately using `Schema\Compiler`:
 
 ```php
 $schema = (new Schema\Compiler())->compile($r, []);

@@ -27,7 +27,7 @@ And assign the entity to the specific mapper:
 /**
  * @Entity(mapper="MyMapper")
  */
-class User 
+class User
 {
    //...
 }
@@ -49,7 +49,7 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 }
 ```
 
-In case of Create, the primary key sequence won't be available at the moment of `queueCreate` call (it will be available after `SQL INSERT` query). 
+In case of Create, the primary key sequence won't be available at the moment of `queueCreate` call (it will be available after `SQL INSERT` query).
 
 This value must be forwarded to our command using `forward` method from `$cmd`:
 
@@ -61,7 +61,7 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 
     // wait for cmd_id value or fail
     $our->waitContext('cmd_id', true);
-    
+
     // send lastID value as cmd_id to $our command
     $cmd->forward(Insert::INSERT_ID, $our, 'cmd_id');
 

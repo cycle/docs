@@ -6,7 +6,7 @@ using two main abstractions Reference and Promises (proxies).
 
 ## References
 References provide the ability to replace actual entity with Reference object which points to entity role and it's scope (columns used for relations). In some case, like in relations `belongsTo` and `refersTo` object would not be fetched from the database and manually specified
-scope will be used. 
+scope will be used.
 
 We can demonstrate it:
 
@@ -35,7 +35,7 @@ $t->run();
 
 > You must use entity role in reference.
 
-If you use references often it might be convinient to create custom object for such purpose:
+If you use references often it might be convenient to create custom object for such purpose:
 
 ```php
 use Cycle\ORM\Promise\ReferenceInterface;
@@ -84,7 +84,7 @@ You must connect Cycle extension to do that:
 $ composer require cycle/proxy-factory
 ```
 
-And configure your orm intance:
+And configure your orm instance:
 
 ```php
 $orm = $orm->withPromiseFactory(new \Cycle\ORM\Promise\ProxyFactory());
@@ -97,5 +97,5 @@ $post = $orm->getRepository(Post::class)->findOne();
 print_r($post->user);
 ```
 
-> Note, proxy usage applies set of limitations on your entities. You can not use `final` statement as your class won't be extended. 
+> Note, proxy usage applies set of limitations on your entities. You can not use `final` statement as your class won't be extended.
 Please check this article regarding [typical proxy limitations](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/limitations-and-known-issues.html#entities-proxies-and-reflection).

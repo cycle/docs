@@ -44,8 +44,8 @@ $orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
       Schema::TABLE       => 'user',
       Schema::PRIMARY_KEY => 'id',
       Schema::COLUMNS     => [
-          'id'        => 'id', 
-          'email'     => 'email', 
+          'id'        => 'id',
+          'email'     => 'email',
           'balance'   => 'balance'
       ],
       Schema::TYPECAST    => [
@@ -58,7 +58,7 @@ $orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
               Relation::TARGET => 'profile',
               Relation::SCHEMA => [
                   Relation::CASCADE   => true,
-                  Relation::INNER_KEY => 'id',      
+                  Relation::INNER_KEY => 'id',
                   Relation::OUTER_KEY => 'user_id',
               ],
           ]
@@ -71,8 +71,8 @@ $orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
       Schema::TABLE       => 'profile',
       Schema::PRIMARY_KEY => 'id',
       Schema::COLUMNS     => [
-          'id'      => 'id', 
-          'user_id' => 'user_id', 
+          'id'      => 'id',
+          'user_id' => 'user_id',
           'image'   => 'image'
       ],
       Schema::TYPECAST    => [

@@ -14,25 +14,25 @@ interface CommandInterface
      * @return bool
      */
     public function isReady(): bool;
-    
+
     /**
      * Indicates that command has been executed.
      *
      * @return bool
      */
     public function isExecuted(): bool;
-    
+
     /**
      * Executes command.
      */
     public function execute();
-    
+
     /**
      * Complete command, method to be called when all other commands are already executed and
      * transaction is closed.
      */
     public function complete();
-    
+
     /**
      * Rollback command or declare that command been rolled back.
      */
@@ -79,11 +79,11 @@ Since you can only issue one command from your mapper you can use `Sequence` or 
 public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
 {
     $cc = parent::queueCreate($entity, $node, $state);
-    
+
     $cs = new ContextSequence();
     $cs->addPrimary($cc);
     $cs->addCommand(new CustomCommand());
-    
+
     return $cs;
 }
 ```
@@ -117,7 +117,7 @@ use Cycle\ORM\Command\Branch;
 public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
 {
     $cc = parent::queueCreate($entity, $node, $state);
-    
+
     return new Branch\Condition($cc, function() {
         return mt_rand(1, 0) === 1; // randomly drop some commands, don't do it.
     });
@@ -126,7 +126,7 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 
 You can link this conditions to the entity state or node to implement more complex logic.
 
-> Make sure to use entity State not Node as condition variable as State will change during the exeuction while Node would not.
+> Make sure to use entity State not Node as condition variable as State will change during the execution while Node would not.
 
 ## Split command
 Another internal command which is applied by ORM by default is `Split`. The command is used in order to resolve cyclic dependencies by splitting the persistence of the object into Insert and Update.

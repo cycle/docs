@@ -21,7 +21,7 @@ interface MapperInterface
      * @return string
      */
     public function getRole(): string;
-    
+
     /**
      * Init empty entity object an return pre-filtered data (hydration will happen on a later stage). Must
      * return tuple [entity, entityData].
@@ -30,7 +30,7 @@ interface MapperInterface
      * @return array
      */
     public function init(array $data): array;
-    
+
     /**
      * Hydrate entity with dataset.
      *
@@ -41,7 +41,7 @@ interface MapperInterface
      * @throws MapperException
      */
     public function hydrate($entity, array $data);
-    
+
     /**
      * Extract all values from the entity.
      *
@@ -49,7 +49,7 @@ interface MapperInterface
      * @return array
      */
     public function extract($entity): array;
-    
+
     /**
      * Initiate chain of commands require to store object and it's data into persistent storage.
      *
@@ -61,7 +61,7 @@ interface MapperInterface
      * @throws MapperException
      */
     public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface;
-    
+
     /**
      * Initiate chain of commands required to update object in the persistent storage.
      *
@@ -73,7 +73,7 @@ interface MapperInterface
      * @throws MapperException
      */
     public function queueUpdate($entity, Node $node, State $state): ContextCarrierInterface;
-    
+
     /**
      * Initiate sequence of of commands required to delete object from the persistent storage.
      *
@@ -89,13 +89,13 @@ interface MapperInterface
 ```
 
 ORM will create mapper using `Spiral\Core\FactoryInterface` which means you Mapper is able to request dependencies available in
-the container associated with ORM Factory. 
+the container associated with ORM Factory.
 
-Some parameters will be provided by ORM itself, such as: 
+Some parameters will be provided by ORM itself, such as:
   * **role** - entity role
   * **schema** - entity schema
   * **orm** - orm instance
-  
+
 You are able to use single Mapper implement for multiple entities.
 
 ## Database Mapper
@@ -103,30 +103,30 @@ You can implement your own mapper to implement custom entity carrying model but 
 Let's define our model first:
 
 ```php
-class Entity 
+class Entity
 {
     private $data = [];
-    
+
     public function __construct(array $data = [])
     {
         $this->data = $data;
     }
-    
+
     public function setData(array $data)
     {
         $this->data = $data;
     }
-        
+
     public function getData(): array
     {
         return $this->data;
     }
-    
+
     public function __get($name)
     {
         return $this->data[$name] ?? null;
     }
-    
+
     // ...
 }
 ```
@@ -146,11 +146,11 @@ class CustomMapper extends DatabaseMapper
     public function __construct(ORMInterface $orm, string $role)
     {
         parent::__construct($orm, $role);
-        
+
         // entity class
         $this->class = $orm->getSchema()->define($role, Schema::ENTITY);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -159,7 +159,7 @@ class CustomMapper extends DatabaseMapper
         $class = $this->class;
         return [new $class, $data];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -168,7 +168,7 @@ class CustomMapper extends DatabaseMapper
         $entity->setData($data);
         return $entity;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -176,7 +176,7 @@ class CustomMapper extends DatabaseMapper
     {
         return $entity->getData();
     }
-    
+
     /**
      * Get entity columns.
      *
@@ -213,23 +213,23 @@ class User extends Entity
 
 Update your ORM schema to register entity. You can use your entity freely after this operation.
 
-> ORM can work with different types or entites within one system.
+> ORM can work with different types or entities within one system.
 
-## ActiveRecord 
+## ActiveRecord
 Similar approach can be used to implement AR like entities. You would have to expose global instance of ORM in order to gain access to it
 from your entity `save()` and `delete()` methods:
 
 ```php
-class Entity 
+class Entity
 {
     // ...
-    
+
     public function save()
     {
         $orm = App::getORM();
         (new Transaction($orm))->persist($this)->run();
     }
-   
+
     public function delete()
     {
         $orm = App::getORM();

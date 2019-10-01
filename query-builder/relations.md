@@ -3,7 +3,7 @@ It is possible to use columns and values of entity relations while composing the
 using dot notation `relation.property`. Please note, you must use domain-specific property names, column names will be mapped automatically.
 
 ## Simple Condition
-To query entity with constain applied to it's related entity:
+To query entity with constraint applied to it's related entity:
 
 ```php
 // find all users with published posts
@@ -70,7 +70,7 @@ In some cases, you can also combine joining and relation together (make sure you
 
 ```php
 $selec->with('posts',[
-    'as'    => 'posts', 
+    'as'    => 'posts',
     'where' => ['flagged' => true'])
 ])->load('posts', ['using' => 'posts']);
 ```
@@ -184,7 +184,7 @@ WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NOT NU
 ```
 
 ## Using `load` method
-Alternativelly you can use `load` option which accepts the Closure to specify custom `orderBy` and other conditions:
+Alternatively you can use `load` option which accepts the Closure to specify custom `orderBy` and other conditions:
 
 ```php
 $users

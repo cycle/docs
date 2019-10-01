@@ -27,10 +27,10 @@ Now we can declare our entity to point to one of given entities:
 
 ```php
 /** @Entity */
-class Image 
+class Image
 {
     // ...
-    
+
     /** @BelongsToMorphed(target = "ImageHolderInterface") */
     public $imageHolder;
 }
@@ -46,10 +46,10 @@ Use cases: image attached to (post, user, comment). The relation is similar to `
 
 ```php
 /** @Entity */
-class Image 
+class Image
 {
     // ...
-    
+
     /** @BelongsToMorphed(target = "ImageHolderInterface") */
     public $imageHolder;
 }
@@ -72,10 +72,10 @@ Declared the ability to own the entity from multiple entity types (example user/
 
 ```php
 /** @Entity */
-class User 
+class User
 {
     // ...
-    
+
     /** @MorphedhasOne(target = "Image") */
     public $image;
 }
@@ -89,7 +89,7 @@ load        | lazy/eager | Relation load approach (default `lazy`)
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
 nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `false`
 innerKey    | string | Inner key in parent entity defaults to the primary key
-outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}` 
+outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
 morphKey    | string | Name of key to store related entity role (by default `{relationName}_role`
 morphKeyLength | int | The length of morph key defaults to 32
 indexCreate | bool   | Create an index on morphKey and innerKey, defaults to `true`
@@ -101,10 +101,10 @@ Declared the ability to own the entity from multiple entity types (example post/
 
 ```php
 /** @Entity */
-class User 
+class User
 {
     // ...
-    
+
     /** @MorphedhasMany(target = "Image") */
     public $images;
 }

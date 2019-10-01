@@ -12,13 +12,13 @@ class SoftDeletedMapper extends Mapper
         // identify entity as being "deleted"
         $state->setStatus(Node::SCHEDULED_DELETE);
         $state->decClaim();
-        
+
         $cmd = new Update(
             $this->source->getDatabase(),
             $this->source->getTable(),
             ['deleted_at' => new \DateTimeImmutable()]
         );
-        
+
         // forward primaryKey value from entity state
         // this sequence is only required if entity created and deleted within
         // one transaction
@@ -30,7 +30,7 @@ class SoftDeletedMapper extends Mapper
             true,
             ConsumerInterface::SCOPE
         );
-        
+
         return $cmd;
     }
 }
@@ -44,7 +44,7 @@ public function queueDelete($entity, Node $node, State $state): CommandInterface
     if ($state->getStatus() == Node::SCHEDULED_DELETE) {
         return parent::queueDelete($entity, $node, $state);
     }
-   
+
     // ...
 }
 ```
@@ -83,7 +83,7 @@ class User
 }
 ```
 
-Now all entity deletes will issue Update command instead. 
+Now all entity deletes will issue Update command instead.
 
 ## Select Deleted
 You can select deleted entities from the database by disabling your select constrain:

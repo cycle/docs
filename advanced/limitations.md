@@ -7,7 +7,7 @@ ORM relies on a unique primary key to create a proper entity map, using complex 
 See https://github.com/cycle/orm/issues/22
 
 ## Filter by relations from external databases
-It is currently not possible to automatically filter the selection based on values of related entities located in an external source. 
+It is currently not possible to automatically filter the selection based on values of related entities located in an external source.
 You must manually filter the selected result after loading all the data. Though, it is possible to use `fetchData` of
 `Cycle\ORM\Select` to avoid entity instantiation before the filtering.
 
@@ -16,7 +16,7 @@ Since you can provide any iterable source to the `Cycle\ORM\Iterator` you can cr
 ```php
 use Cycle\ORM;
 
-function filterByExternal(ORM\Select $select, $value) 
+function filterByExternal(ORM\Select $select, $value)
 {
     foreach($select->load('external')->fetchData() as $item) {
         if ($line['external']['value'] == $item) {
@@ -40,7 +40,7 @@ You can also use `load` option of `Select->load` to pre-filter data.
 It is not reliable to use Cycle with MySQL MyISAM engine as it does not support transaction which can guarantee the recovery from persisting errors. Use InnoDB engine instead.
 
 ## Cascade = false
-Please note that turning cascade option off completelly disables relation `store` sequence. This makes uni-directional relations useless for **persisting**, only use this option if the relation is considered "read-only".
+Please note that turning cascade option off completely disables relation `store` sequence. This makes uni-directional relations useless for **persisting**, only use this option if the relation is considered "read-only".
 
 ## Select->fetchOne() behaviour
 Method `fetchOne` of Select will create query without specified `LIMIT` value in order to avoid data corruption on joined data. Make sure to manually set the limit or use proper selection constraint.

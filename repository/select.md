@@ -19,7 +19,7 @@ $entity = $repository->findByPK(1);
 
 > Note, method will return `null` if no entity found.
 
-To find enity by any of it's field(s) use:
+To find entity by any of it's field(s) use:
 
 ```php
 $entity = $repository->findOne([
@@ -34,7 +34,7 @@ You can use any amount of fields in request:
 ```php
 $entity = $repository->findOne([
   'name'    => 'Antony',
-  'balance' => 100 
+  'balance' => 100
 ]);
 ```
 
@@ -49,7 +49,7 @@ $entity = $repository->findOne([
 
 > You can read more about compound expressions [here](https://spiral-framework.com/guide/database-builders).
 
-To find multiple entitied use:
+To find multiple entities use:
 
 ```php
 foreach($repository->findAll(['status' => 'active']) as $e) {
@@ -58,13 +58,13 @@ foreach($repository->findAll(['status' => 'active']) as $e) {
 ```
 
 ## Working with SelectQuery
-If repository entity is an instance of `Cycle\ORM\Select\Repository` (default SQL repository) you are also albe to get access
+If repository entity is an instance of `Cycle\ORM\Select\Repository` (default SQL repository) you are also able to get access
 to low level method `select` which gives you ability to compile more complex queries or pre-load related entities:
 
 ```php
 $result = $repository->select()->where('balance', '>', 1)->load('address')->fetchAll();
 ```
 
-> It's recommended to avoid usage of `select` method outside of repository classes and instead expose [custom](repository/custom.md) find methods. 
+> It's recommended to avoid usage of `select` method outside of repository classes and instead expose [custom](repository/custom.md) find methods.
 
 > You can read more about methods available in select queries [here](https://spiral-framework.com/guide/database-builders).

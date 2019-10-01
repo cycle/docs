@@ -10,7 +10,7 @@ namespace Example\Repository;
 
 use Cycle\ORM\Select;
 
-class UserRepository extends Select\Repository 
+class UserRepository extends Select\Repository
 {
 
 }
@@ -26,7 +26,7 @@ use Cycle\Annotated\Annotation as Cycle;
 /**
  * @Cycle\Entity(repository="Example\Repository\UserRepository")
  */
-class User 
+class User
 {
   // ...
 }
@@ -44,7 +44,7 @@ use Cycle\Annotated\Annotation as Cycle;
 /**
  * @Cycle\Entity(repository="Repository\UserRepository")
  */
-class User 
+class User
 {
   // ...
 }
@@ -59,17 +59,17 @@ print_r(get_class($orm->getRepository(\Example\User::class)));
 > You can assign one repository implementation to multiple entities.
 
 ## Custom Selects
-The main reason for using custom repositories is the ability to write your own `find` methods. You can do that using 
+The main reason for using custom repositories is the ability to write your own `find` methods. You can do that using
 base `select` method which returns you the instance of `Cycle\ORM\Select`:
 
 ```php
 namespace Example\Repository;
 
-use Cycle\ORM\Select; 
+use Cycle\ORM\Select;
 
-class UserRepository extends Select\Repository 
+class UserRepository extends Select\Repository
 {
-    public function findActive(): Select 
+    public function findActive(): Select
     {
         return $this->select()->where('status', 'active');
     }
@@ -89,11 +89,11 @@ print_r($orm->getRepository(\Example\User::class)->findActive()->fetchAll());
 Another use-case is to automatically pre-load some of the entity relations using custom find method:
 
 ```php
-class UserRepository extends Select\Repository 
+class UserRepository extends Select\Repository
 {
     // ...
 
-    public function findActiveUsersLoadAddress(): Select 
+    public function findActiveUsersLoadAddress(): Select
     {
         return $this->findActive()->load('address');
     }

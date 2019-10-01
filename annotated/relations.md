@@ -10,11 +10,11 @@ Each relation must have proper `target` option. The target must point to either 
 HasOne relation used to define the relation to one child object. This object will be automatically saved with its parent (unless `cascade` option set to `false`). The simplest form of relation definition:
 
 ```php
-/** @Entity */ 
-class User 
+/** @Entity */
+class User
 {
     // ...
-    
+
     /** @HasOne(target = "Address") */
     protected $address;
 }
@@ -29,9 +29,9 @@ Option      | Value  | Comment
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
 nullable    | bool   | Defines if relation can be nullable (child can have no parent), defaults to `false`
 innerKey    | string | Inner key in parent entity, defaults to primary key
-outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}` 
-fkCreate    | bool   | Set to true to automatically create FK on outerKey, defauls to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
+outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
+fkCreate    | bool   | Set to true to automatically create FK on outerKey, defaults to `true`
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`
 indexCreate | bool   | Create index on outerKey, defaults to `true`
 
 ## HasMany
@@ -39,14 +39,14 @@ HasMany relation provides the ability to link multiple child objects to one enti
 
 
 ```php
-/** @Entity */ 
-class User 
+/** @Entity */
+class User
 {
     // ...
-    
+
     /** @HasMany(target = "Post") */
     protected $posts;
-    
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -64,7 +64,7 @@ innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
 where       | array  | Additional where condition to be applied for the relation, defaults to none.
 fkCreate    | bool   | Set to true to automatically create FK on outerKey, defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`
 indexCreate | bool   | Create an index on outerKey, defaults to `true`
 
 ## BelongsTo
@@ -72,10 +72,10 @@ In order to link the entity to its parent object use relation `belongsTo`. Pleas
 
 ```php
 /** @Entity */
-class Post 
+class Post
 {
     // ...
-    
+
     /** @BelongsTo(target = "User") */
     protected $author;
 }
@@ -89,30 +89,30 @@ cascade     | bool   | Automatically save related data with source entity, defau
 nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `true`
 innerKey    | string | Inner key in source entity, defaults to `{relationName}_{outerKey}`
 outerKey    | string | Outer key in the related entity, by default primary key
-fkCreate    | bool   | Set to true to automatically create FK on innerKey, defauls to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
+fkCreate    | bool   | Set to true to automatically create FK on innerKey, defaults to `true`
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`
 indexCreate | bool   | Create an index on innerKey, defaults to `true`
 
 ## RefersTo
 The RefersTo relation is similar to BelongsTo relation but must be used to establish **multiple relations** to the same entity (or in case of **cyclic** relation). The most common example is the ability to store the last post posted by the user.
 
 ```php
-/** @Entity */ 
-class User 
+/** @Entity */
+class User
 {
     // ...
- 
+
     /** @ReersTo(target = "Post") */
     protected $lastPost;
- 
+
     /** @HasMany(target = "Post") */
     protected $posts;
-    
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
     }
-    
+
     public function addPost(Post $p)
     {
         $this->posts->add($p);
@@ -129,8 +129,8 @@ cascade     | bool   | Automatically save related data with parent entity, defau
 nullable    | bool   | Defines if the relation can be nullable (child can have no parent), defaults to `false`
 innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
-fkCreate    | bool   | Set to true to automatically create FK on outerKey, defauls to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
+fkCreate    | bool   | Set to true to automatically create FK on outerKey, defaults to `true`
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`
 indexCreate | bool   | Create an index on outerKey, defaults to `true`
 
 > You must use `refersTo` relation for cyclic dependencies.
@@ -139,14 +139,14 @@ indexCreate | bool   | Create an index on outerKey, defaults to `true`
 Relation of type ManyToMany provides a more complex connection with the ability to use intermediate entity for the connection. This relation must be represented using `Cycle\ORM\Relation\Pivoted\PivotedCollection`. The relation required the definition of `though` option with similar rules as `target`.
 
 ```php
-/** @Entity */ 
-class User 
+/** @Entity */
+class User
 {
     // ...
 
     /** @ManyToMany(target = "Tag", though = "UserTag") */
     protected $tags;
-    
+
     public function __construct()
     {
         $this->tags = new PivotedCollection();
@@ -162,12 +162,12 @@ cascade     | bool   | Automatically save related data with parent entity, defau
 nullable    | bool   | Defines if the relation can be nullable (pivot entity can exist without the parent(s)), defaults to `true`
 innerKey    | string | Inner key name in source entity, default to the primary key
 outerKey    | string | Outer key name in target entity, default to the primary key
-thoughInnerKey | string | Key name connected to the innerKey of source entity, defaults to `{sourceRole}_{innerKey}` 
-thoughOuterKey | string | Key name connected to the outerKey of a related entity defaults to `{targetRole}_{outerKey}` 
+thoughInnerKey | string | Key name connected to the innerKey of source entity, defaults to `{sourceRole}_{innerKey}`
+thoughOuterKey | string | Key name connected to the outerKey of a related entity defaults to `{targetRole}_{outerKey}`
 thoughWhere | array | Where conditions applied to `though` entity
 where       | array | Where conditions applied to the related entity
 fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey, defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
 
 ## Morphed Relations
@@ -175,7 +175,7 @@ Cycle ORM provides support for polymorphic relations. Given relations can be use
 
 ```php
 /** @Entity */
-class User implements ImageHolderInterface 
+class User implements ImageHolderInterface
 {
      // ...
 }
@@ -188,7 +188,7 @@ BelongsToMorphed relations allows an entity to belong to any of the parents whic
 class Image
 {
     // ...
-    
+
     /** @BelongsToMorphed(target = "ImageHolderInterface")*/
     protected $parent;
 }
@@ -210,10 +210,10 @@ MorphedHasOne and MorphedHasMany is an inverse version of BelongsToMorphed.
 
 ```php
 /** @Entity */
-class User implements ImageHolderInterface 
+class User implements ImageHolderInterface
 {
      // ...
-     
+
      /** @MorphedHasOne(target = "Image")*/
      protected $image;
 }
@@ -231,14 +231,14 @@ indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], default
 
 ```php
 /** @Entity */
-class User implements ImageHolderInterface 
+class User implements ImageHolderInterface
 {
      // ...
-     
+
      /** @MorphedHasMany(target = "Image")*/
      protected $images;
-     
-     public function __construct() 
+
+     public function __construct()
      {
          $this->images = new ArrayCollection();
      }
@@ -264,11 +264,11 @@ In some cases, you might want to create an inversed relation automatically. Plea
 To inverse relation, you must use the option `inverse` with specified inversed relation name and type.
 
 ```php
-/** @Entity */ 
-class Post 
+/** @Entity */
+class Post
 {
     // ...
-    
+
     /** @BelongsTo(target = "User", inverse = @Inverse(as = "posts", type = "hasMany")) */
     protected $user;
 }

@@ -4,14 +4,14 @@ Many to Many relations are, in fact, two relations combined together. This relat
 The relation provides access to an intermediate object on all the steps including creation, update and query building.
 
 ## Definition
-To define Many To Many relation using annotated enties extension use (attention, make sure to create pivot entity):
+To define Many To Many relation using annotated entities extension use (attention, make sure to create pivot entity):
 
 ```php
-/** @Entity */ 
-class User 
+/** @Entity */
+class User
 {
     // ...
-    
+
     /** @ManyToMany(target = "Tag", though = "UserTag") */
     protected $tags;
 }
@@ -23,11 +23,11 @@ In order to use a newly created entity, you must define the collection to store 
 ```php
 use use Cycle\ORM\Relation\Pivoted\PivotedCollection;
 
-/** @Entity */ 
-class User 
+/** @Entity */
+class User
 {
     // ...
-    
+
    /** @ManyToMany(target = "Tag", though = "UserTag") */
     protected $tags;
 
@@ -35,9 +35,9 @@ class User
     {
         $this->tags = new PivotedCollection();
     }
-       
+
     // ...
-    
+
     public function getTags()
     {
         return $this->tags;
@@ -53,7 +53,7 @@ class UserTag
     private $id;
 }
 ```
- 
+
 ```php
 /** @Entity */
 class Tag
@@ -84,12 +84,12 @@ load        | lazy/eager | Relation load approach (default `lazy`)
 cascade     | bool   | Automatically save related data with parent entity, defaults to `false`
 innerKey    | string | Inner key name in source entity, default to a primary key
 outerKey    | string | Outer key name in target entity, default to a primary key
-thoughInnerKey | string | Key name connected to the innerKey of source entity defaults to `{sourceRole}_{innerKey}` 
-thoughOuterKey | string | Key name connected to the outerKey of a related entity defaults to `{targetRole}_{outerKey}` 
+thoughInnerKey | string | Key name connected to the innerKey of source entity defaults to `{sourceRole}_{innerKey}`
+thoughOuterKey | string | Key name connected to the outerKey of a related entity defaults to `{targetRole}_{outerKey}`
 thoughWhere | array | Where conditions applied to `though` entity
 where       | array | Where conditions applied to a related entity
 fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey, defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`  
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
 
 You can keep your pivot entity empty, the only requirement is to have defined a primary key.
@@ -97,7 +97,7 @@ You can keep your pivot entity empty, the only requirement is to have defined a 
 > Note, current implementation includes typo in pivot table definition, `though` => `through`.
 
 ## Usage
-To associte two entities using Many To Many relation use method `add` of pivot collection:
+To associate two entities using Many To Many relation use method `add` of pivot collection:
 
 ```php
 $u = new User();
@@ -133,7 +133,7 @@ $users = $orm->getRepository(User::class)
     ->select()
     ->load('tags')
     ->fetchAll();
-    
+
 foreach ($users as $u) {
     print_r($u->getTags()->toArray());
 }
@@ -148,7 +148,7 @@ $users = $orm->getRepository(User::class)
     ->select()
     ->load('tags')
     ->fetchAll();
-    
+
 foreach ($users as $u) {
     foreach ($u->getTags() as $t) {
          print_r($t);
@@ -184,12 +184,12 @@ Now we can assign this entity to newly created connection:
 ```php
 $u = new User();
 $u->setName("Antony");
-        
+
 $tag = new Tag("tag a");
 
 $u->tags->add($tag);
 $u->tags->setPivot($tag, new UserTag(new \DateTimeImmutable()));
-    
+
 $t->persist($u);
 $t->run();
 ```
@@ -217,7 +217,7 @@ $users = $orm->getRepository(User::class)
 
 Following SQL will be produced:
 
-```sql 
+```sql
 SELECT DISTINCT
 `user`.`id` AS `c0`, `user`.`name` AS `c1`
 FROM `users` AS `user`
@@ -254,7 +254,7 @@ $users = $orm->getRepository(User::class)
 > Cross-database Many To Many relations are not supported yet.
 
 ## Complex loading
-You are able to load related data using conditions and sorts applied to pivot table, use option `load`. 
+You are able to load related data using conditions and sorts applied to pivot table, use option `load`.
 
 For example, we can have following entities:
 - category (id, title)

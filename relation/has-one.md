@@ -2,14 +2,14 @@
 The Has One relation defines that entity exclusively owns another entity in a form of parent-children. Consider this relation as a form of decomposition with the ability to store data in external table.
 
 ## Definition
-To define Has One relation using annotated enties extension use:
+To define Has One relation using annotated entities extension use:
 
 ```php
-/** @Entity */ 
-class User 
+/** @Entity */
+class User
 {
     // ...
-    
+
     /** @HasOne(target = "Address") */
     protected $address;
 }
@@ -25,9 +25,9 @@ load        | lazy/eager | Relation load approach (default `lazy`)
 cascade     | bool   | Automatically save related data with parent entity, defaults to `true`
 nullable    | bool   | Defines if relation can be nullable (child can have no parent), defaults to `false`
 innerKey    | string | Inner key in parent entity, defaults to primary key
-outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}` 
-fkCreate    | bool   | Set to true to automatically create FK on outerKey, defauls to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
+outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
+fkCreate    | bool   | Set to true to automatically create FK on outerKey, defaults to `true`
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`
 indexCreate | bool   | Create index on outerKey, defaults to `true`
 
 ## Usage
@@ -74,7 +74,7 @@ $users = $orm->getRepository(User::class)
     ->select()
     ->with('address')->where('address.city', 'New York')
     ->fetchAll();
-    
+
 print_r($users);
 ```
 
@@ -85,7 +85,7 @@ $users = $orm->getRepository(User::class)
     ->select()
     ->where('address.city', 'New York')
     ->fetchAll();
-    
+
 print_r($users);
 ```
 

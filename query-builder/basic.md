@@ -43,7 +43,7 @@ For `between` and `not between` conditions you can use notation with 4 arguments
 $select->where('id', 'between', 10, 20);
 ```
 
-You can use `orWhere` and `andWhere` (idential to `where`) to declare more complex conditions:
+You can use `orWhere` and `andWhere` (identical to `where`) to declare more complex conditions:
 
 ```php
 $select->where('balance', '<', 100)->orWhere('status', 'blocked');
@@ -79,7 +79,7 @@ $select->where([
 ```
 
 ## Using Parameters
-By default, any passed value will be converted into `Parameter` object internally. Hovewer, you must clearly use `Parameter` while specifying array values:
+By default, any passed value will be converted into `Parameter` object internally. However, you must clearly use `Parameter` while specifying array values:
 
 ```php
 $select->where('id', 'in', new Parameter([1,2,3]));

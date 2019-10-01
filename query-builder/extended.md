@@ -2,7 +2,7 @@
 Spiral Database provides query builders for Insert, Update, Delete and Select operations and multiple shortcuts for common functionality.
 
 ## Before we start
-Make sure to get access to desired datbase using DatabaseManager or via entity source:
+Make sure to get access to desired database using DatabaseManager or via entity source:
 
 ```php
 $db = $dbal->database('default');
@@ -80,7 +80,7 @@ protected function indexAction(Database $database)
 {
     $select = $database->table('test')->select();
     $select = $database->select()->from('test');
-    
+
     //Alternative
     $select = $database->test->select();
 }
@@ -93,7 +93,7 @@ By default, SelectQuery selects every column (`*`) from its related table. We ca
 $database->users->select()->columns('name')->fetchAll();
 ```
 
-You can use your select query as proper iterator or use `run` method which will return instance of `PDOStatement`: 
+You can use your select query as proper iterator or use `run` method which will return instance of `PDOStatement`:
 
 ```php
 foreach($select->getIterator() as $row) {
@@ -116,7 +116,7 @@ dump($database->users->select()->columns('name')->sqlStatement());
 ```
 
 ### Where Statements
-Add WHERE conditions to your query using `where`, `andWhere`, `orWhere` methods. 
+Add WHERE conditions to your query using `where`, `andWhere`, `orWhere` methods.
 
 ##### Basics
 Let's add simple condition on `status` column of our table:
@@ -138,7 +138,7 @@ protected function indexAction(Database $database)
 SELECT
 `id`, `status`, `name`
 FROM `primary_test`
-WHERE `status` = 'active'        
+WHERE `status` = 'active'
 ```
 
 > Note, that prepared statement will be used behind the scenes.
@@ -169,7 +169,7 @@ Resulted SQL:
 SELECT
 `id`, `status`, `name`
 FROM `primary_test`
-WHERE `id` BETWEEN 10 AND 20  
+WHERE `id` BETWEEN 10 AND 20
 ```
 
 ##### Multiple Where Conditions
@@ -237,7 +237,7 @@ Result:
 SELECT
 `id`, `status`, `name`
 FROM `primary_test`
-WHERE `id` = 1 OR (`status` = 'active' AND `id` = 10)     
+WHERE `id` = 1 OR (`status` = 'active' AND `id` = 10)
 ```
 
 > You can nest as many conditions as you want.
@@ -347,7 +347,7 @@ foreach ($select as $row) {
 You can implement ParameterInterface if you want to declare your parameter wrappers with custom logic.
 
 ##### SQL Fragments and Expressions
-QueryBuilders allow you to replace some of where statements with custom SQL code or expression. Use `Spiral\Database\Injection\Fragment` and `Spiral\Database\Injection\Expression` for such purposes. 
+QueryBuilders allow you to replace some of where statements with custom SQL code or expression. Use `Spiral\Database\Injection\Fragment` and `Spiral\Database\Injection\Expression` for such purposes.
 
 Use fragment to include SQL code into your query bypassing escaping:
 
@@ -378,7 +378,7 @@ WHERE DAYOFYEAR(concat('2015-09-', `id`)) = 255
 
 > Note that all column identifiers in Expressions will be quoted.
 
-Join multiple columns same way: 
+Join multiple columns same way:
 
 ```php
 $select->where(new Expression("CONCAT(id, '-', status)"), '1-active');
@@ -479,7 +479,7 @@ FROM `primary_test`
 WHERE `id` IN  (SELECT
 `id`
 FROM `primary_test`
-WHERE `id` BETWEEN 10 AND 100)  
+WHERE `id` BETWEEN 10 AND 100)
 ```
 
 You can compare nested query return value in where statements:
@@ -497,7 +497,7 @@ FROM `primary_test`
 WHERE (SELECT
 COUNT(*)
 FROM `primary_test`
-WHERE `id` BETWEEN 10 AND 100) > 1   
+WHERE `id` BETWEEN 10 AND 100) > 1
 ```
 
 You can exchange column identifiers between parent and nested query using `Expression` class:
@@ -523,10 +523,10 @@ FROM `primary_users`
 WHERE `id` = `primary_test`.`id` AND `id` != 100) = 'Anton'
 ```
 
-> Nested queries will only work when nested query belongs to the same database as a primary builder. 
+> Nested queries will only work when nested query belongs to the same database as a primary builder.
 
 ### Having
-Use methods `having`, `orHaving` and `andHaving` methods to define HAVING conditions. rSyntax is identical to WHERE statement. 
+Use methods `having`, `orHaving` and `andHaving` methods to define HAVING conditions. rSyntax is identical to WHERE statement.
 
 > Yep, it was quick.
 
@@ -542,7 +542,7 @@ $select->leftJoin('users', 'u')->on('users.id', 'test.id');
 ```sql
  SELECT
 `x_test`.*, `u`.`name` AS `u`
-FROM `x_test` 
+FROM `x_test`
 LEFT JOIN `x_users` AS `u`
     ON `x_users`.`id` = `x_test`.`id`
 ```
@@ -569,9 +569,9 @@ Generated SQL:
 ```sql
 SELECT
 `primary_test`.*, `primary_users`.`name` as `user_name`
-FROM `primary_test`  
+FROM `primary_test`
 LEFT JOIN `primary_users`
-    ON (`primary_users`.`id` = `primary_test`.`id` OR `primary_users`.`id` = `primary_test`.`balance`)    
+    ON (`primary_users`.`id` = `primary_test`.`id` OR `primary_users`.`id` = `primary_test`.`balance`)
 ```
 
 ##### On Where statement
@@ -584,7 +584,7 @@ $select->innerJoin('users')->on(['users.id' => 'test.id'])->onWhere('users.name'
 ```sql
 SELECT
 `primary_test`.*, `primary_users`.`name` as `user_name`
-FROM `primary_test`  
+FROM `primary_test`
 INNER JOIN `primary_users`
     ON `primary_users`.`id` = `primary_test`.`id` AND `primary_users`.`name` = 'Anton'
 ```
@@ -607,9 +607,9 @@ $select->innerJoin('users as uu')->onWhere('uu.name', 'Anton');
 ```sql
 SELECT
 `primary_test`.*, `uu`.`name` as `user_name`
-FROM `primary_test`  
+FROM `primary_test`
 INNER JOIN `primary_users` as `uu`
-    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton'       
+    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton'
 ```
 
 ### OrderBy
@@ -644,9 +644,9 @@ Both ways will produce such SQL:
 ```sql
 SELECT
 `primary_test`.*, `uu`.`name` as `user_name`
-FROM `primary_test`  
+FROM `primary_test`
 INNER JOIN `primary_users` as `uu`
-    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton' 
+    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton'
 ORDER BY `primary_test`.`name` DESC, `primary_test`.`id` ASC
 ```
 
@@ -681,7 +681,7 @@ Since you can manipulate with selected columns including COUNT and other aggrega
 $select = $database->table('test')->select(['COUNT(*)']);
 ```
 
-Though, in many cases you want to get query count or summarize results without column manipulations, 
+Though, in many cases you want to get query count or summarize results without column manipulations,
 use `count`, `avg`, `sum`, `max` and `min` methods to do that:
 
 ```php
@@ -750,7 +750,7 @@ SET `name` = (SELECT
 `name`
 FROM `primary_users`
 WHERE `id` = 1)
-WHERE `id` < 10 
+WHERE `id` < 10
 ```
 
 > Where methods work identically as in SelectQuery.

@@ -18,7 +18,7 @@ Mock `TransactionInterface` to check the state of the entity after the method ca
 class MyService
 {
     private $users;
-    
+
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
@@ -71,17 +71,17 @@ You can clean your database state after each iteration using schema introspectio
 public function tearDown()
 {
     $db = $this->dbal->database('default');
-    
+
     // delete all FKs first
     foreach ($database->getTables() as $table) {
         $schema = $table->getSchema();
         foreach ($schema->getForeignKeys() as $foreign) {
             $schema->dropForeignKey($foreign->getColumn());
         }
-        
+
         $schema->save(Handler::DROP_FOREIGN_KEYS);
     }
-    
+
     // delete tables
     foreach ($database->getTables() as $table) {
         $schema = $table->getSchema();

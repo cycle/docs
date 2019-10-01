@@ -2,14 +2,14 @@
 The Has Many relations defines that entity exclusively owns multiple other entities in a form of parent-children.
 
 ## Definition
-To define Has Many relation using annotated enties extension use:
+To define Has Many relation using annotated entities extension use:
 
 ```php
-/** @Entty */ 
-class User 
+/** @Entty */
+class User
 {
     // ...
-    
+
     /** @HasMany(target = "Post") */
     protected $posts;
 }
@@ -20,11 +20,11 @@ To use a newly created entity, you must define the collection to store related e
 ```php
 use use Doctrine\Common\Collections\ArrayCollection;
 
-/** @Entity */ 
-class User 
+/** @Entity */
+class User
 {
     // ...
-    
+
     /** @HasMany(target = "Post") */
     protected $posts;
 
@@ -32,9 +32,9 @@ class User
     {
         $this->address = new ArrayCollection();
     }
-       
+
     // ...
-    
+
     public function getPosts()
     {
         return $this->posts;
@@ -53,7 +53,7 @@ innerKey    | string | Inner key in parent entity defaults to the primary key
 outerKey    | string | Outer key name, defaults to `{parentRole}_{innerKey}`
 where       | array  | Additional where condition to be applied for the relation, defaults to none.
 fkCreate    | bool   | Set to true to automatically create FK on outerKey, defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`  
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `CASCADE`
 indexCreate | bool   | Create an index on outerKey, defaults to `true`
 
 ## Usage
@@ -93,7 +93,7 @@ $users = $orm->getRepository(User::class)
     ->wherePK(1)
     ->fetchAll();
 
-foreach ($users as $u) {  
+foreach ($users as $u) {
     print_r($u->getPosts());
 }
 ```
@@ -109,7 +109,7 @@ $users = $orm->getRepository(User::class)
     ->distinct()
     ->with('posts')->where('posts.published', true)
     ->fetchAll();
-    
+
 print_r($users);
 ```
 
@@ -123,7 +123,7 @@ $users = $orm->getRepository(User::class)
     ->distinct()
     ->where('posts.published', true)
     ->fetchAll();
-    
+
 print_r($users);
 ```
 
@@ -139,7 +139,7 @@ $users = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-Another option is to use the `with` selection to drive the data for the pre-loaded entities. You can point your `load` method to use 
+Another option is to use the `with` selection to drive the data for the pre-loaded entities. You can point your `load` method to use
 `with` filtered relation data via `using` flag:
 
 ```php
@@ -155,12 +155,12 @@ The given approach will produce only one SQL query.
 
 ```sql
 SELECT DISTINCT
-  `user`.`id` AS `c0`, 
-  `user`.`name` AS `c1`, 
-  `published_posts`.`id` AS `c2`, 
-  `published_posts`.`title` AS `c3`, 
-  `published_posts`.`published` AS `c4`, 
-  `published_posts`.`user_id` AS  `c5`, 
+  `user`.`id` AS `c0`,
+  `user`.`name` AS `c1`,
+  `published_posts`.`id` AS `c2`,
+  `published_posts`.`title` AS `c3`,
+  `published_posts`.`published` AS `c4`,
+  `published_posts`.`user_id` AS  `c5`,
 FROM `spiral_users` AS `user`
 INNER JOIN `spiral_posts` AS `published_posts`
     ON `published_posts`.`user_id` = `user`.`id`
@@ -170,11 +170,11 @@ WHERE `published_posts`.`published` = true
 You can also pre-set the conditions in the relation definition:
 
 ```php
-/** @Entity() */ 
-class User 
+/** @Entity() */
+class User
 {
     // ...
-    
+
     /** @HasMany(target = "Post", where={"published": true}) */
     protected $posts;
 
@@ -182,9 +182,9 @@ class User
     {
         $this->address = new ArrayCollection();
     }
-       
+
     // ...
-    
+
     public function getPosts()
     {
         return $this->posts;

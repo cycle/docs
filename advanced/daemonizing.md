@@ -21,7 +21,7 @@ Alternative is to use single ORM instance across all user requests but reset the
 // do something with orm
 while ($action = getAction()) {
     do($action);
-    
+
     $orm->getHeap()->clean();
 }
 ```
@@ -37,7 +37,7 @@ Identical approach can be used while working with batch data sets:
 $users = $orm->getRepository(User::class)->select();
 for ($i = 0; $i < 100; $i++) {
     $users = $users->offset($i*1000)->limit(1000)->fetchAll();
-  
+
     $t = new Transaction($orm);
     foreach ($users as $u) {
         $u->status = 'disabled';
@@ -63,7 +63,7 @@ try {
    $t->run();
 } catch (ConnectionException $e) {
    sleep(1);
-   
+
    // retry
    $t->persist($entity);
    $t->run();
