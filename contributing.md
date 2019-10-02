@@ -1,7 +1,6 @@
 # Contributing
 Feel free to contribute to the development of the Cycle ORM or its components.
-Please make sure that the following
- requirements are satisfied before submitting your pull request:
+Please make sure that the following requirements are satisfied before submitting your pull request:
 
 * KISS
 * PSR-2 ([your PRs will be automatically tested](https://github.com/cycle/orm/blob/master/.travis.yml#L26))
@@ -19,7 +18,7 @@ If you want to help but don't know where to start:
 * Check [Open Issues](https://github.com/spiral/framework/issues)
 * More tests are always welcome
 
-Feel free to propose any ideas related to architecture, guide (___docs are never complete___),  adaptation or community.
+Feel free to propose any ideas related to architecture, docs (___docs are never complete___),  adaptation or community.
 
 > Original guide author is not a native English speaker, feel free to create PR for any text corrections.
 
