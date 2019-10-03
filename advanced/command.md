@@ -8,8 +8,8 @@ To understand how commands work let's review the underlying interface first:
 interface CommandInterface
 {
     /**
-     * Must return true when command is ready for the execution. UnitOfWork will throw
-     * an exception if any of the command are stuck in non ready state.
+     * Must return true when the command is ready for the execution. UnitOfWork will throw
+     * an exception if any of the commands are stuck in non ready state.
      *
      * @return bool
      */
