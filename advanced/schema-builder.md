@@ -1,15 +1,15 @@
 # Configuring Schema Builder
-Though using annotated entities provide a very easy way to configure your ORM and Database schema you might want to use some alternative
-schema declaration notation or perform some calculations on ORM schema (for example default values, custom columns and etc). This functionality is available in `cycle/schema-builder` extension.
+Though the usage of annotated entities provides a very easy way to configure your ORM and Database schema, you might want to use some alternative
+schema declaration notation, or perform some calculations on the ORM schema (for example default values, custom columns and etc). This functionality is available in `cycle/schema-builder` extension.
 
 ## Manually Define Entity
-We can define ORM entity manually using schema builder package, in order to do that we have to create `Registry` object first:
+We can define an ORM entity manually using the schema builder package. In order to do that we have to create `Registry` object first:
 
 ```php
 $r = new Schema\Registry($dbal);
 ```
 
-We can now register our first entity, add it columns and link to a specific table:
+We can now register our first entity, add its columns and link to a specific table:
 
 ```php
 use Cycle\Schema\Definition;
@@ -46,7 +46,7 @@ $orm = $orm->withSchema(new ORM\Schema($schema));
 > You can also declare relations, indexes, and associate custom mappers. See [examples](https://github.com/cycle/schema-builder/tree/master/tests/Schema).
 
 ## Custom Generators
-Upon generating final schema you can pass your registry should the set of generators, each of them is responsible for the specific part of the schema compilation. Simple compilation pipeline will look like:
+Upon generating the final schema, you can pass your registry a set of generators, each of them is responsible for the specific part of the schema compilation. Simple compilation pipeline will look like:
 
 ```php
 $schema = (new Schema\Compiler())->compile($r, [

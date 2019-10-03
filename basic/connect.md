@@ -1,11 +1,11 @@
 # Connect to Database
-Cycle ORM required at least one connection to the database in order to operate. The DBAL functionality is
+Cycle ORM requires at least one connection to the database in order to operate. The DBAL functionality is
 provided by the package `spiral/database`.
 
 > Make sure to install all required dependencies listed in the previous section.
 
 ## Instantiate DBAL
-In order to start, we have to initialize `DatabaseManager` service used to automatically create and manage a set of application databases.
+In order to start, we have to initialize the `DatabaseManager` service used to automatically create and manage a set of application databases.
 The list of available connections and databases can be listed in the initial configuration.
 
 ```php
@@ -34,10 +34,10 @@ $dbal = new Database\DatabaseManager($dbConfig);
 > You can instantiate DBAL with an empty connection list and configure it in runtime if needed.
 
 ## Configure Databases
-Spiral/Database module provides support to manage multiple databases in one application, use read/write connections and logically
+The Spiral/Database module provides support to manage multiple databases in one application, use read/write connections and logically
 separate multiple databases within one connection using prefixes.
 
-To register new database simply add it into `databases` section:
+To register a new database simply add it into `databases` section:
 
 ```php
 'default' => [
@@ -45,7 +45,7 @@ To register new database simply add it into `databases` section:
 ]
 ```
 
-To give database-specific prefix use `prefix` option (all the queries will be affected):
+To use a database-specific prefix use the `prefix` option (all the queries will be affected):
 
 ```php
 'default' => [
@@ -66,7 +66,7 @@ To use read/write connections use sections `connection` and `readConnection` acc
 
 ## Connections
 Each database instance must have an associated connection object. Connections used to provide low-level functionality and wrap
-different database drivers. To register new connection you have to specify driver class and it's connection options:
+different database drivers. To register new a connection you have to specify the driver class and its connection options:
 
 For **SQLite**:
 
@@ -96,7 +96,7 @@ For `MySQL` and `MariaDB`:
 ],
 ```
 
-For `PosgresSQL`:
+For `PostgresSQL`:
 
 ```php
 'postgres'  => [
@@ -121,25 +121,25 @@ For `SQLServer`:
   ],
 ],
 ```
-> Make sure to instance proper PDO extension!
+> Make sure to install the proper PDO extensions!
 
 ## Additional connection options
 There are multiple connection options you can use to customize the behavior.
 
 Options | Value | Description
 --- | --- | ---
-timezone | string | Default driver timezone (all DateTimeInterface query parameters will be converted into it), defaults to `UTC`.
-reconnect | bool | Allow the driver to automatically reconnect, defaults to `false`.
-profiling | bool | Enable SQL profiling (logging), defaults to `false`.
+timezone | string | Default driver timezone (all DateTimeInterface query parameters will be converted into it). Defaults to `UTC`.
+reconnect | bool | Allow the driver to automatically reconnect. Defaults to `false`.
+profiling | bool | Enable SQL profiling (logging). Defaults to `false`.
 
 ## Access Database
-To access database using `DatabaseManager` use method `database`:
+To access the database using the `DatabaseManager`, use the method `database`:
 
 ```php
 print_r($dbal->database('default'));
 ```
 
-The database will be automatically connected to the first SQL request.
+The database will be automatically connected on the first SQL request.
 
 > DBAL will use the database specified in the `default` config option if the name is `null`.
 
@@ -150,7 +150,7 @@ $dbal->database('default')->table('users')->select()->fetchAll();
 ```
 
 ## Profiling and Logging
-Each of database Driver implements `Psr\Log\LoggerAwareInterface`, you can enable SQL logging by assigning logger and enabling Driver
+Each of the database drivers implements the `Psr\Log\LoggerAwareInterface`. You can enable SQL logging by assigning a logger and enabling Driver
 profiling:
 
 ```php

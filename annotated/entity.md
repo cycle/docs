@@ -1,5 +1,5 @@
 # Annotated Entities
-Annotated entities extension is capable of indexing any domain entity in your project. To indicate that class must be treated as a domain entity make sure to add `@Entity` annotation to the DocComment.
+The annotated entities extension is capable of indexing any domain entity in your project. To indicate that the class must be treated as a domain entity make sure to add the `@Entity` annotation to the DocComment.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -10,13 +10,13 @@ class User
 }
 ```
 
-> Annotations are based on Doctrine/Lexer package and support syntax similar to the Doctrine one.
+> Annotations are based on the Doctrine/Lexer package and support syntax similar to the Doctrine one.
 
 ## Entity
 Usually, the single annotation `@Entity` is enough to describe your model. In this case, Cycle will automatically assign the generated
 table name and role based on the class name. In the case of `User` the role will be `user`, database `null` (default) and table `users`.
 
-You can tweak any of this values by setting `entity` options:
+You can tweak all of these values by setting `entity` options:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -35,7 +35,7 @@ class User
 
 > You must manually set `role` and `table` for your classes if you use models that share the same name.
 
-Some options can be used to overwrite default entity behaviour, for example to assign custom entity repository:
+Some options can be used to overwrite default entity behaviour, for example to assign a custom entity repository:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -48,22 +48,22 @@ class User
 }
 ```
 
-> Cycle can locate repository class name automatically, using current entity namespace as the base path.
+> Cycle can locate repository class names automatically, using current entity namespace as the base path.
 
 Following entity options are available for customization:
 
 Option | Value | Comment
 --- | --- | ---
-role           | string | Entity role defaults to lowercases class name without a namespace
-mapper         | class  | Mapper class name defaults to `Cycle\ORM\Mapper\Mapper`
-repository     | class  | Repository class to represent read operations for an entity defaults to `Cycle\ORM\Select\Repository`
-table          | string | Entity source table defaults to plural form of entity role
-database       | string | Database name, defaults to `null` (default database)
-readonlySchema | bool   | Set to true to disable schema synchronization for the assigned table, defaults to `false`
-source         | class  | Entity source class (internal), defaults to `Cycle\ORM\Select\Source`
-constrain      | class  | Class name of constraint to be applied to every entity query, defaults to `null`
+role           | string | Entity role. Defaults to the lowercase class name without a namespace
+mapper         | class  | Mapper class name. Defaults to `Cycle\ORM\Mapper\Mapper`
+repository     | class  | Repository class to represent read operations for an entity. Defaults to `Cycle\ORM\Select\Repository`
+table          | string | Entity source table. Defaults to plural form of entity role
+database       | string | Database name. Defaults to `null` (default database)
+readonlySchema | bool   | Set to true to disable schema synchronization for the assigned table. Defaults to `false`
+source         | class  | Entity source class (internal). Defaults to `Cycle\ORM\Select\Source`
+constrain      | class  | Class name of constraint to be applied to every entity query. Defaults to `null`
 
-For example typical entity description might look like:
+For example, a  typical entity description might look like:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -81,7 +81,7 @@ class User
 ```
 
 ## Columns
-No entity can operate without some properties mapped to table columns. To map your property to the column add annotation `@Column` to it. It's mandatory to specify column type. You must always specify **one** primary (auto incremental) column for your entity.
+No entity can operate without some properties mapped to table columns. To map your property to the column add the annotation `@Column` to it. It's mandatory to specify the column type. You must always specify **one** primary (auto incremental) column for your entity.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -97,7 +97,7 @@ class User
 
 > Read how to use non-incremental primary keys (for example UUID) in the Advanced section.
 
-You can use import multiple annotations at the same time:
+You can use multiple annotations at the same time:
 
 ```php
 use Cycle\Annotated\Annotation as Cycle;
@@ -112,7 +112,8 @@ class User
 
 > Annotation import is omitted in a following sections.
 
-By default, the entity properly will be mapped to the column with the same name as the property, you can change it:
+By default, the entity property will be mapped to the column with the same name as the property.
+You can change it as follows:
 
 ```php
 /** @Entity */
@@ -146,7 +147,7 @@ class User
 }
 ```
 
-Use `default` option to specify the default value of the column:
+Use the `default` option to specify the default value of the column:
 
 ```php
 /** @Entity */
@@ -160,7 +161,7 @@ class User
 }
 ```
 
-While adding new columns to the entities associated with non-empty tables you are required to either specify a default value or mark column as nullable:
+While adding new columns to entities associated with non-empty tables you are required to either specify a default value or mark the column as nullable:
 
 ```php
 /** @Entity */
@@ -178,12 +179,12 @@ Following options are available for configuration:
 
 Option | Value | Comment
 --- | --- | ---
-name | string | Column name, default to the property name.
+name | string | Column name. Defaults to the property name.
 type | string | Column type with arguments.
-primary | bool | Explicitly set column as primary key defaults to `false`
-typecast | callable | Column typecast function, defaults to one of (int|float|bool|datetime) based on column type
-nullable | bool | Set column as nullable, defaults to `false`
-default | mixed | Default column value defaults to `none`
+primary | bool | Explicitly set column as primary key. Defaults to `false`
+typecast | callable | Column typecast function. Defaults to one of (int|float|bool|datetime) based on column type
+nullable | bool | Set column as nullable. Defaults to `false`
+default | mixed | Default column value. Defaults to `none`
 
 Following column types are available:
 
@@ -212,7 +213,7 @@ longBinary  | ---                       | Long binary, same as "binary" for most
 json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.
 
 ## Enums
-ORM support enum type for all available drivers, you must define enum options using comma separator:
+THe ORM supports the enum type for all available drivers. You must define enum options using comma separator:
 
 ```php
 /** @Column(type = "enum(active,disabled)", default = "active") */
@@ -249,7 +250,7 @@ class User
 > The column definition is identical to the one used for the property.
 
 ## Merging annotations
-Annotated Entities extension support ability to merge table definitions provided by linked Mapper, Source, Repository and Constrain classes. Such an approach can be useful in cases when you want to implement domain wise functionality like auto timestamps or soft deletes.
+The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source, Repository and Constrain classes. This approach can be useful in cases where when you want to implement domain functionality like auto timestamps or soft deletes.
 
 ```php
 /**

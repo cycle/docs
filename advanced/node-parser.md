@@ -1,11 +1,11 @@
 # Node Parser
-Cycle ORM provides convenient* way to convert flat structures into data trees. The parser can work over one large query or multiple queries
-using an identical approach. Parser work with numeric arrays.
+Cycle ORM provides a convenient* way to convert flat structures into data trees. The parser can work over one large query or multiple queries
+using an identical approach. The parser works with numeric arrays.
 
 > This section is intended for advanced scenarios, make sure you can't achieve required flexibility using default instruments before jumping to this approach.
 
 ## Unpack simple query
-We can start with simple example which converts query result into associated array (example is using Database instance):
+We can start with a simple example which converts a query result into an associated array (example is using Database instance):
 
 ```php
 $query = $db->select('id', 'balance')->from('users');
@@ -27,7 +27,7 @@ foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
 print_r($root->getResult());
 ```
 
-Given code does not do much, but we can use it now to perform more complex transformation. For example, we can join some external table to our query:
+The given code doesn't do much, but we can use it to perform more complex transformations. For example, we can join some external table to our query:
 
 ```php
 $query = $db
@@ -36,7 +36,7 @@ $query = $db
     ->leftJoin('orders as o')->on('o.user_id', 'u.id');
 ```
 
-The query will return results in a form: [user.id, user.balance, order.id, order.user_id, order.total]. Lets unpack it into structure like:
+The query will return results in a form: [user.id, user.balance, order.id, order.user_id, order.total]. Lets unpack it into a structure like:
 
 ```php
 [
@@ -79,7 +79,7 @@ foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
 > Check SingularNode for one to one associations.
 
 ## External Queries
-In some cases (for example for one-to-many) associations it might be useful to execute relation query using external SQL SELECT and `WHERE IN` statement. This can be achieved by linking nodes together to aggregate query context:
+In some cases (for example for one-to-many associations) it might be useful to execute a relation query using external SQL SELECT and `WHERE IN` statement. This can be achieved by linking nodes together to aggregate query context:
 
 ```php
 $query = $db->select('u.id', 'u.balance')->from('users as u');
@@ -105,7 +105,7 @@ foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
 }
 ```
 
-Now, `orders` array in our structure would not be populated, but we can request a list of collected ids from the root loader:
+Now, the `orders` array in our structure would not be populated, but we can request a list of collected ids from the root loader:
 
 ```php
 // only populated after parsing all the rows by the root node

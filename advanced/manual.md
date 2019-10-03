@@ -1,8 +1,8 @@
 # Manually defined Mapping Schema
-You can avoid the usage of cycle/annotation extension or any other schema related extension and write the ORM mapping schema manually.
+You can avoid the usage of the cycle/annotation extension or any other schema related extension and write the ORM mapping schema manually.
 
 ## Custom Schema
-You can define custom schema by passing `Schema` object into your ORM instance:
+You can define a custom schema by passing a `Schema` object into your ORM instance:
 
 ```php
 $orm = $orm->withSchema(new Schema([
@@ -11,7 +11,7 @@ $orm = $orm->withSchema(new Schema([
 ```
 
 ## Define the Entity
-To add simple POPO entity mapping:
+To add a simple POPO entity mapping:
 
 ```php
 $orm = $orm->withSchema(new Schema([
@@ -36,7 +36,7 @@ $orm = $orm->withSchema(new Schema([
 ```
 
 ## Define the relation
-To define the relation you must ensure that both entities added to the schema and then populate RELATION section:
+To define the relation you must ensure that both entities are added to the schema and then populate RELATION section:
 
 ```php
 $orm = $orm->withSchema(new Schema([

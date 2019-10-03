@@ -1,16 +1,16 @@
 # Schema
-The Cycle ORM relies on the Schema instance to define its behavior. All of the entity fields, relations, options are
-located in such schema and must be pre-calculated prior to runtime usage. In fact, schema operates as a nested hash table providing quick access to each of the definition.
+The Cycle ORM relies on the Schema instance to define its behavior. All of the entity fields, relations, and options are
+located in such a schema and must be pre-calculated prior to runtime usage. In fact, schema operates as a nested hash table providing quick access to each of the definition.
 
 ## Access Schema
-To access schema from initiated ORM instance use method `getSchema`:
+To access the schema from an initiated ORM instance, use the method `getSchema`:
 
 ```php
 // print the table associated with the entity
 print_r($orm->getSchema()->define(User::class, Schema::TABLE));
 ```
 
-You can create new ORM instance with altered schema using `withSchema` method:
+You can create a new ORM instance with an altered schema using `withSchema` method:
 
 ```php
 $orm2 = $orm->withSchema(new Schema([...]));
@@ -19,22 +19,22 @@ $orm2 = $orm->withSchema(new Schema([...]));
 > The original ORM instance won't be affected.
 
 ## Schema Properties
-Most of the schema properties are intended for internal use, however accessing them might give your application an ability to configure environment (for example automatic binding to Container).
+Most of the schema properties are intended for internal use. However, accessing them might give your application the ability to configure the environment (for example automatic binding to Container).
 
-All schema properties are available in a form of public constants on class `Cycle\ORM\SchemaInterface` or `Cycle\ORM\Schema`:
+All schema properties are available as public constants on class `Cycle\ORM\SchemaInterface` or `Cycle\ORM\Schema`:
 
 Property | Type   | Description
 ---      | ---    | ---
 ROLE     | string | Unique entity name (can be omitted when schema supplied in [role => schema] form).
-ENTITY   | class  | Class name to represent the entity can be null if alternative mapper implementation is used.
+ENTITY   | class  | Class name to represent the entity can be null if an alternative mapper implementation is used.
 MAPPER   | class  | Class to hydrate and extract data from entities and initiate command chains. Defaults to `Cycle\ORM\Mapper\Mapper`.
 SOURCE    | class | Class to represent gateway object to entity database and table. Defaults to `Cycle\ORM\Select\Source`.
 REPOSITORY | class | Class to aggregate all entity select operations. Defaults to `Cycle\ORM\Select\Repository`.
 DATABASE   | string | Database name associated with an entity. Defaults to `null` (default database).
 TABLE       | string | Table name associated with the entity.
-PRIMARY_KEY | string | Property used to represent an entity primary key.
+PRIMARY_KEY | string | Property used to represent an entity's primary key.
 FIND_BY_KEYS | array | List of fields used to reference entity by other entity relations used to speed up memory lookup. Automatically generated.
-COLUMNS      | array | Associated array of field name assigned with the table column name.
+COLUMNS      | array | Associative array of field names assigned with the table column name.
 RELATIONS    | array | List of relations assigned to the given entity, see below.
 CHILDREN     | array | List of classes which extends given entity class. Used for Single Table Inheritance.
 CONSTRAIN    | class | Class name to represent the constraint applied to all entity queries. Defaults to none.
@@ -66,5 +66,5 @@ THOUGH_ENTITY   | string | Thought entity role name.
 THOUGH_WHERE   | array | Additional where conditions added for related entities.
 
 ## Serialization
-ORM Schema can be serialized in order to cache it and avoid calculations on each request. Cycle encourages schema compilation in
-background (see [cycle/schema-builder](https://github.com/cycle/schema-builder)).
+The ORM Schema can be serialized in order to cache it and avoid calculations on each request. Cycle encourages schema compilation in
+the background (see [cycle/schema-builder](https://github.com/cycle/schema-builder)).

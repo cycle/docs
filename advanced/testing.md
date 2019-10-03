@@ -2,7 +2,7 @@
 Cycle ORM attempts to simplify the testing of your application by providing well-isolated interfaces to load and persist your entities.
 
 ## Classic Mock Approach
-The first approach would involve mocking instances of entity repositories and `TransactionInterface`, for the example given code can be well tested without ORM initialization:
+The first approach would involve mocking instances of entity repositories and `TransactionInterface`, for example the given code can be well tested without ORM initialization:
 
 ```php
 public function addOrder(User $u, Order $o, TransactionInterface $t)
@@ -33,12 +33,12 @@ class MyService
 }
 ```
 
-> You can also `run` transaction outside of your service method if you wish to group multiple persist operations together.
+> You can also `run` transactions outside of your service method if you wish to group multiple persist operations together.
 
 ## Mocking The Database
-Another, more complex and slower approach would involve creating a test database and running your service code using more realistic scenarios.
+Another, more complex and slower, approach would involve creating a test database and running your service code using more realistic scenarios.
 
-In order to achieve that you must construct your own `DatabaseManager` instance and replace desired database connection with needed
+In order to achieve that you must construct your own `DatabaseManager` instance and replace the desired database connection with the required
 driver (for example SQLite):
 
 ```php

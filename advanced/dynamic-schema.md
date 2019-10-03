@@ -1,11 +1,11 @@
 # Dynamic Mapping Schema
-Cycle ORM does not limit developer ability to carry entity information using unique classes, it is possible to use specifically crafted model/models to represent entity data in its way. ORM support an ability to carry information using StdClass objects out of the box, it is also possible to combine classic annotated entities and StdClasses within one ORM scope.
+Cycle ORM does not limit the developer's ability to carry entity information using unique classes, it is possible to use specifically crafted model/models to represent entity data in its way. The ORM supports the ability to carry information using StdClass objects out of the box. It is also possible to combine classic annotated entities and StdClasses within one ORM scope.
 
-You can also change ORM schema at runtime.
+You can also change the ORM schema at runtime.
 
 ## StdMapper
-To represent entity as StdClass you have to change its mapper from default `Cycle\ORM\Mapper\Mapper` to `Cycle\ORM\Mapper\StdMapper`.
-This can be done by either defining your schema using schema builder or by writing schema manually.
+To represent an entity as StdClass you have to change its mapper from the default `Cycle\ORM\Mapper\Mapper` to `Cycle\ORM\Mapper\StdMapper`.
+This can be done by either defining your schema using the schema builder or by writing the schema manually.
 
 ## Using Schema Builder
 We can build our entities using entity definitions:
@@ -51,7 +51,7 @@ $entity->getRelations()->set(
 ```
 
 ## Manual Schema Definition
-You can also define StdClass schema manually using set of constants exposed by `Cycle\ORM\Schema` and `Cycle\ORM\Relation` classes:
+You can also define StdClass schema manually using a set of constants exposed by `Cycle\ORM\Schema` and `Cycle\ORM\Relation` classes:
 
 ```php
 $orm = $orm->withSchema(new Schema([
@@ -103,7 +103,7 @@ It is also required to create new entities using role specification instead of `
 $user = $orm->make('user', [/* fields* /]);
 ```
 
-> You can freely assign custom repositories and constrains to your entities.
+> You can freely assign custom repositories and constraints to your entities.
 
 # Example
 ```php

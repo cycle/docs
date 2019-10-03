@@ -1,11 +1,11 @@
 # UUID as primary key
-It is possible to use any type of primary sequence for your entities by altering default `Cycle\ORM\Mapper\Mapper` behavior. In order to
-do that we have to define a custom column with `primary` flag.
+It is possible to use any type of primary sequence for your entities by altering the default `Cycle\ORM\Mapper\Mapper` behavior. In order to
+do that we have to define a custom column with the `primary` flag.
 
-> You can also specify primary key value directly in your entity, Mapper will accept it as expected value.
+> You can also specify a primary key value directly in your entity, the Mapper will accept it as the expected value.
 
 ## Entity
-To define specific column as primary key use annotation option `primary`:
+To define a specific column as the primary key, use the annotation option `primary`:
 
 ```php
 /**
@@ -24,7 +24,7 @@ class User
 ```
 
 ## Mapper
-In order to alter the default sequence behavior alter the default mapper implementation by modifying the method `nextPrimaryKey`:
+In order to alter the default sequence behavior, alter the default mapper implementation by modifying the method `nextPrimaryKey`:
 
 ```php
 use Ramsey\Uuid\Uuid;
@@ -46,7 +46,7 @@ class UUIDMapper extends Mapper
 ```
 
 ## Link Entity and Mapper
-In order to associate mapper and entity use `@Entity` option mapper:
+In order to associate the mapper and the entity use the `@Entity` option `mapper`:
 
 ```php
 /**
@@ -59,7 +59,7 @@ class User
 }
 ```
 
-Now, entity primary key will be generated on application end during the persist operation:
+Now the entity's primary key will be generated on application end during the persist operation:
 
 ```php
 $u = new User();

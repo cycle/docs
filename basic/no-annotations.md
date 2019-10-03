@@ -1,17 +1,17 @@
 # Using ORM without Annotations
-You are able to use the ORM engine without annotations. You can either declare mapping schema via configuration
-or use cycle/schema-builder extension to compile it on a fly via OOP wrappers.
+You can use the ORM engine without annotations. You can either declare a mapping schema via configuration
+or use the cycle/schema-builder extension to compile it on the fly via OOP wrappers.
 
 ## Examples
-There are multiple examples of using ORM with manually defined mapping schema:
+There are multiple examples of using the ORM with manually defined mapping schema:
 - https://github.com/cycle/docs/blob/master/advanced/manual.md
 - https://github.com/cycle/docs/blob/master/advanced/dynamic-schema.md
 - https://github.com/cycle/docs/blob/master/advanced/schema-builder.md
 - https://github.com/cycle/docs/blob/master/advanced/active-record.md
 
 ## Quick Sample
-We can demonstrate how to create ORM instance which maps objects `User` and `Profile` with `HasOne` relation between them.
-Such setup does not require any caching as schema defined via code:
+We can demonstrate how to create an ORM instance which maps objects `User` and `Profile` with a `HasOne` relation between them.
+Such setup does not require any caching as the schema is defined in code:
 
 ```php
 <?php declare(strict_types=1);
@@ -86,4 +86,4 @@ $orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
 print_r($orm->getRepository(User::class)->findOne());
 ```
 
-> You only need `cycle/orm` dependency for this example. Note, you can not access `profile` relation without explicitly calling it in the Select, use `cycle/proxy-factory` to enable lazy loading. You can find more examples in [orm tests](https://github.com/cycle/orm/tree/master/tests/ORM).
+> You only need the `cycle/orm` dependency for this example. Note, you cannot access the `profile` relation without explicitly calling it in the Select, use `cycle/proxy-factory` to enable lazy loading. You can find more examples in [orm tests](https://github.com/cycle/orm/tree/master/tests/ORM).

@@ -1,8 +1,8 @@
 # Prerequisites
 Make sure to install `cycle/annoated` and `cycle/schema-builder` extensions in order to use annotated entities. Once installed add
-annotated generators into schema compiler (see more details [here](/basic/install.md)).
+annotated generators into the schema compiler (see more details [here](/basic/install.md)).
 
-> Cycle is using Doctrine/Annotations package, make sure that annotations are loadable (`use`) and the syntax is correct.
+> Cycle is using the Doctrine/Annotations package, make sure that annotations are loadable (`use`) and the syntax is correct.
 
 ## Compiler Pipeline
 The complete pipeline with annotated entities support will look like:
@@ -26,7 +26,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
     new Schema\Generator\RenderTables(),      // declare table schemas
     new Schema\Generator\RenderRelations(),   // declare relation keys and indexes
-    new Annotated\MergeIndexes(),              // register non entity indexes (table level)
+    new Annotated\MergeIndexes(),             // register non entity indexes (table level)
     new Schema\Generator\SyncTables(),        // sync table changes to database
     new Schema\Generator\GenerateTypecast(),  // typecast non string columns
 ]);
@@ -34,4 +34,4 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 $orm = $orm->withSchema(new Schema($schema));
 ```
 
-> Make sure to point the class locator the directory with your domain entities only as the indexation operation is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.
+> Make sure to point the class locator to the directory with your domain entities only as the indexation operation is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.

@@ -78,4 +78,4 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 ## Autoconfiguration
 ORM schema provides one reserved Entity constant `SCHEMA` which can be used to specify custom Mapper behavior. You can combine schema-builder and custom mapper implementation to create configurable mappers.
 
-> Cycle does not provide such mapper implementation (a.k.a. "behaviors") out of the box, feel free to suggest your implementation as an extension.
+> Cycle does not provide such mapper implementations (a.k.a. "behaviors") out of the box, feel free to suggest your implementation as an extension.

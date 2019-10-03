@@ -1,5 +1,5 @@
 # Limitations
-Current implementation of Cycle ORM includes multiple limitations.
+The current implementation of Cycle ORM includes multiple limitations.
 
 ## Compound Primary Keys
 ORM relies on a unique primary key to create a proper entity map, using complex primary keys is currently not implemented.
@@ -32,17 +32,17 @@ foreach (new ORM\Iterator($orm, User::class, filterByExternal($select, $value)) 
 }
 ```
 
-> Given approach will minimize the amount of allocated memory.
+> The given approach will minimize the amount of allocated memory.
 
-You can also use `load` option of `Select->load` to pre-filter data.
+You can also use the `load` option of `Select->load` to pre-filter data.
 
 ## MyISAM
-It is not reliable to use Cycle with MySQL MyISAM engine as it does not support transaction which can guarantee the recovery from persisting errors. Use InnoDB engine instead.
+It is not reliable to use Cycle with MySQL MyISAM engine as it does not support transactions, which can guarantee the recovery from persisting errors. Use the InnoDB engine instead.
 
 ## Cascade = false
 Please note that turning cascade option off completely disables relation `store` sequence. This makes uni-directional relations useless for **persisting**, only use this option if the relation is considered "read-only".
 
 ## Select->fetchOne() behaviour
-Method `fetchOne` of Select will create query without specified `LIMIT` value in order to avoid data corruption on joined data. Make sure to manually set the limit or use proper selection constraint.
+Method `fetchOne` of Select will create a query without specified `LIMIT` value in order to avoid data corruption on joined data. Make sure to manually set the limit or use a proper selection constraint.
 
 > `LIMIT 1` is set in Repository `findOne()`.

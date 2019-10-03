@@ -1,6 +1,6 @@
 # Simple Relation
 An important part of any ORM engine is the ability to handle relations between objects. In order to do so, we will use
-`cycle/annotated` package to describe the relation.
+the `cycle/annotated` package to describe the relation.
 
 > Deeper review of different relations, their options, and select methods will be given in further sections.
 
@@ -79,7 +79,7 @@ class Address
 }
 ```
 
-To relate our entities we have to add a new property to one of them and annotate it properly, we should also add getters and setters.
+To relate our entities we have to add a new property to one of them and annotate it properly. We should also add getters and setters.
 
 ```php
 /**
@@ -109,12 +109,12 @@ class User
 }
 ```
 
-Once you will update the schema and sync your database schema (or run migration) you are ready to use this relation.
+Once you update the schema and sync your database schema (or run migrations), you are ready to use this relation.
 
-> ORM will automatically create FK on `address.user_id`. We will describe later how to alter this value.
+> ORM will automatically create a FK on `address.user_id`. We will describe how to alter this value later.
 
 ## Store with related entity
-To store related entity with it's parent simply `persist` the object which defines the relation:
+To store the related entity with its parent simply `persist` the object which defines the relation:
 
 ```php
 $user = new User();
@@ -137,7 +137,7 @@ INSERT INTO "users" ("name") VALUES ('Antony');
 INSERT INTO "addresses" ("city", "user_id") VALUES ('New York', 15);
 ```
 
-You can also store objects separately, ORM will automatically link them together:
+You can also store objects separately, the ORM will automatically link them together:
 
 ```php
 $t = new ORM\Transaction($orm);
@@ -146,13 +146,13 @@ $t->persist($user);
 $t->run();
 ```
 
-The generated command chain will be automatically sorted to keep the proper order of SQL operations.
+The generated command chain will automatically be sorted to keep the proper order of SQL operations.
 
 ## Retrieve the related entity
-Though Cycle ORM support lazy loading using proxies (see extension `cycle/proxy-factory`) it is recommended to pre-load needed
+Though Cycle ORM support lazy loading using proxies (see extension `cycle/proxy-factory`), it is recommended to pre-load needed
 relations using custom repository methods.
 
-To load related object use `load` method of `Cycle\ORM\Select`. The relation can be loaded using property name:
+To load related object use the `load` method of `Cycle\ORM\Select`. The relation can be loaded using property name:
 
 ```php
 $result = $orm->getRepository(User::class)
@@ -165,7 +165,7 @@ foreach ($result as $user) {
 }
 ```
 
-The following construction will produce the SQL similar to:
+This will produce the SQL similar to:
 
 ```sql
 SELECT
@@ -179,8 +179,8 @@ LEFT JOIN "addresses" AS "l_user_address"
     ON "l_user_address"."user_id" = "user"."id";
 ```
 
-Please note, by default ORM will try to load `hasOne` relation using `LEFT JOIN`. You can alter this behaviour and force loading using
-external query (post load) by modifying load method:
+Please note, by default ORM will try to load a `hasOne` relation using `LEFT JOIN`. You can alter this behaviour and force loading using an
+external query (post load) by modifying the load method:
 
 ```php
 $result = $orm->getRepository(User::class)
@@ -211,8 +211,8 @@ WHERE "user_address"."user_id" IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 1
 > You can load relation level using dot notation `$select->load('post.comments.author')`
 
 ## Filter by relation
-To filter the selection using related data use method `with`, once such method is invoked you can address to relation fields
-in where method using relation name as prefix:
+To filter the selection using related data use the method `with`. Once this method is invoked you can address the relation fields
+in the where method using the relation name as a prefix:
 
 ```php
 $result = $orm->getRepository(User::class)

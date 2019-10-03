@@ -1,5 +1,5 @@
 # Mappers
-Every entity in Cycle ORM must have associated Mapper object. Mappers responsible for entity creation, hydration and they must issue set of persist commands which later will be processed within the transaction.
+Every entity in Cycle ORM must have an associated Mapper object. Mappers are responsible for entity creation and hydration, and they must issue a set of persist commands which will be processed later within the transaction.
 
 ## Interface
 You can implement your own Mapper using `Cycle/ORM/MapperInterface`:
@@ -11,19 +11,19 @@ use Cycle\ORM\Exception\MapperException;
 use Cycle\ORM\Heap\Node;
 use Cycle\ORM\Heap\State;
 /**
- * Provides basic capabilities for CRUD operations with given entity class (role).
+ * Provides basic capabilities for CRUD operations with a given entity class (role).
  */
 interface MapperInterface
 {
     /**
-     * Get role name mapper is responsible for.
+     * Get the role name the mapper is responsible for.
      *
      * @return string
      */
     public function getRole(): string;
 
     /**
-     * Init empty entity object an return pre-filtered data (hydration will happen on a later stage). Must
+     * Init an empty entity object an return pre-filtered data (hydration will happen on a later stage). Must
      * return tuple [entity, entityData].
      *
      * @param array $data
@@ -32,7 +32,7 @@ interface MapperInterface
     public function init(array $data): array;
 
     /**
-     * Hydrate entity with dataset.
+     * Hydrate the entity with a dataset.
      *
      * @param object $entity
      * @param array  $data
@@ -51,7 +51,7 @@ interface MapperInterface
     public function extract($entity): array;
 
     /**
-     * Initiate chain of commands require to store object and it's data into persistent storage.
+     * Initiate chain of commands required to store the object and it's data into persistent storage.
      *
      * @param object $entity
      * @param Node   $node
@@ -63,7 +63,7 @@ interface MapperInterface
     public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface;
 
     /**
-     * Initiate chain of commands required to update object in the persistent storage.
+     * Initiate chain of commands required to update the object in the persistent storage.
      *
      * @param object $entity
      * @param Node   $node
@@ -75,7 +75,7 @@ interface MapperInterface
     public function queueUpdate($entity, Node $node, State $state): ContextCarrierInterface;
 
     /**
-     * Initiate sequence of of commands required to delete object from the persistent storage.
+     * Initiate sequence of commands required to delete the object from the persistent storage.
      *
      * @param object $entity
      * @param Node   $node
@@ -88,7 +88,7 @@ interface MapperInterface
 }
 ```
 
-ORM will create mapper using `Spiral\Core\FactoryInterface` which means you Mapper is able to request dependencies available in
+THe ORM will create a mapper using `Spiral\Core\FactoryInterface` which means you Mapper is able to request dependencies available in
 the container associated with ORM Factory.
 
 Some parameters will be provided by ORM itself, such as:
@@ -96,7 +96,7 @@ Some parameters will be provided by ORM itself, such as:
   * **schema** - entity schema
   * **orm** - orm instance
 
-You are able to use single Mapper implement for multiple entities.
+You are able to use a single Mapper implementation for multiple entities.
 
 ## Database Mapper
 You can implement your own mapper to implement custom entity carrying model but still rely on common SQL functionality.
@@ -194,7 +194,7 @@ class CustomMapper extends DatabaseMapper
 }
 ```
 
-You can now create your entity and associate it with given mapper:
+You can now create your entity and associate it with the custom mapper:
 
 ```php
 /**
@@ -211,13 +211,13 @@ class User extends Entity
 }
 ```
 
-Update your ORM schema to register entity. You can use your entity freely after this operation.
+Update your ORM schema to register the entity. You can use your entity freely after this operation.
 
 > ORM can work with different types or entities within one system.
 
 ## ActiveRecord
-Similar approach can be used to implement AR like entities. You would have to expose global instance of ORM in order to gain access to it
-from your entity `save()` and `delete()` methods:
+A similar approach can be used to implement AR-like entities. You would have to expose a global instance of ORM in order to gain access to it
+from your entity's `save()` and `delete()` methods:
 
 ```php
 class Entity

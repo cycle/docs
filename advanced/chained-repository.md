@@ -2,7 +2,7 @@
 The Cycle default Repository implementation provides the ability to be easily cloned without affecting the base query for the original instance.
 
 ## Custom Scopes
-To implement the ability to create custom query scope you must implement a method to clone the repository and customize base select query:
+To implement the ability to create a custom query scope you must implement a method to clone the repository and customize the base select query:
 
 
 ```php
@@ -18,7 +18,7 @@ class UserRepository extends Repository
 }
 ```
 
-You can use this method now to change the repository behaviour:
+You can now use this method to change the repository behaviour:
 
 ```php
 $r = $orm->getRepository(User::class);

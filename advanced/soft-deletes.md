@@ -1,8 +1,8 @@
 # Soft Deleted Entities
-The soft deletion functionality can be achieved by applying custom delete strategy in mapper and global entity constrain to limit the selection.
+The soft deletion functionality can be achieved by applying a custom delete strategy in the mapper, combined with a global entity constrain to limit the selection.
 
 ## Mapper
-You can alter `queueDelete` method of the mapper and replace it with `Update` command instead:
+You can alter the `queueDelete` method of the mapper and replace it with an `Update` command instead:
 
 ```php
 class SoftDeletedMapper extends Mapper
@@ -20,8 +20,8 @@ class SoftDeletedMapper extends Mapper
         );
 
         // forward primaryKey value from entity state
-        // this sequence is only required if entity created and deleted within
-        // one transaction
+        // this sequence is only required if the entity is created and deleted 
+        // within one transaction
         $cmd->waitScope($this->primaryColumn);
         $state->forward(
             $this->primaryKey,
@@ -60,7 +60,7 @@ $tr->run();
 ```
 
 ## Constrain
-To filter only deleted entities create the constraint:
+To filter out deleted entities create the constraint:
 
 ```php
 class NotDeletedConstrain implements ConstrainInterface
@@ -73,7 +73,7 @@ class NotDeletedConstrain implements ConstrainInterface
 ```
 
 ## Usage
-To enable soft deletes for your entity associate newly created mapper and constrain with it:
+To enable soft deletes for your entity associate the newly created mapper and constrain with it:
 
 ```php
 /** @Entity(mapper="SoftDeletedMapper", constrain="NotDeletedConstrain") */
@@ -83,7 +83,7 @@ class User
 }
 ```
 
-Now all entity deletes will issue Update command instead.
+Now all entity deletes will issue Update commands instead.
 
 ## Select Deleted
 You can select deleted entities from the database by disabling your select constrain:

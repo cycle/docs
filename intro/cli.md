@@ -1,8 +1,8 @@
 # Using Bootstrap Toolkit
-You can install Cycle using a bootstrap toolkit for quick integrations. This tutorial assumes that your entity codebase is located in
-`src/` directory and accessible by Composer autoloader.
+You can install Cycle using a bootstrap toolkit for quick integrations. This tutorial assumes that your entity codebase is located in the
+`src/` directory and accessible by the Composer autoloader.
 
-> Bundle comes with annotation and proxies support.
+> The bundle comes with annotation and proxies support.
 
 ## Install
 To install Console Toolkit:
@@ -12,7 +12,7 @@ $ composer require cycle/bootstrap
 ```
 
 ## Configure
-In order to enable Console Toolkit we have to define bootstrap file which will configure your environment:
+In order to enable Console Toolkit we have to define a bootstrap file which will configure your environment:
 
 ```php
 <?php
@@ -51,7 +51,7 @@ $orm = Bootstrap\Bootstrap::fromConfig($config);
 ```
 
 ## Console Commands
-To enable console commands place file in `config/cycle-cli.php`:
+To enable console commands, place the file in `config/cycle-cli.php`:
 
 ```php
 <?php
@@ -66,19 +66,19 @@ To display list of found entities:
 $ ./vendor/bin/cycle entity:list
 ```
 
-To alter database schema to match entity declaration:
+To alter the database schema to match entity declaration:
 
 ```
 $ ./vendor/bin/cycle schema:sync
 ```
 
-To update Cycle without altering database schema (when cache is enabled):
+To update Cycle without altering the database schema (when cache is enabled):
 
 ```
 $ ./vendor/bin/cycle schema:update
 ```
 
-To display list of available tables:
+To display a list of available tables:
 ```
 $ ./vendor/bin/cycle db:list
 ```
@@ -89,7 +89,7 @@ To display the schema of a specific table:
 $ ./vendor/bin/cycle db:table {table-name}
 ```
 
-> You can execute commands with `-vvv` flag to display SQL queries if the logger is set.
+> You can execute commands with the `-vvv` flag to display SQL queries if the logger is set.
 
 # Example
 Install the bundle and create `config/cycle-cli.php` and `bootstrap.php` files. Make sure that `composer.json` includes:
@@ -128,7 +128,7 @@ Generate database schema:
 $ ./vendor/bin/cycle schema:sync
 ```
 
-To use your entity create file `test.php`:
+To use your entity create the file `test.php`:
 
 ```php
 <?php

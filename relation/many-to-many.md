@@ -1,10 +1,10 @@
 # Many To Many
-Many to Many relations are, in fact, two relations combined together. This relation requires intermediate (pivot) entity to connect the source and target entities. Example: many users have many tags, many posts have many favorites.
+Many to Many relations are, in fact, two relations combined together. This relation requires an intermediate (pivot) entity to connect the source and target entities. Example: many users have many tags, many posts have many favorites.
 
-The relation provides access to an intermediate object on all the steps including creation, update and query building.
+The relation provides access to an intermediate object on all the steps, including creation, update and query building.
 
 ## Definition
-To define Many To Many relation using annotated entities extension use (attention, make sure to create pivot entity):
+To define a Many To Many relation using the annotated entities extension, use (attention, make sure to create pivot entity):
 
 ```php
 /** @Entity */
@@ -76,28 +76,28 @@ class Tag
 }
 ```
 
-By default, ORM will generate FK and indexes in `though` entity using role and primary keys of linked objects. Following values are available for the configuration:
+By default, ORM will generate FK and indexes in `though` entity using the role and primary keys of the linked objects. Following values are available for the configuration:
 
 Option      | Value  | Comment
 ---         | ---    | ----
-load        | lazy/eager | Relation load approach (default `lazy`)
-cascade     | bool   | Automatically save related data with parent entity, defaults to `false`
-innerKey    | string | Inner key name in source entity, default to a primary key
-outerKey    | string | Outer key name in target entity, default to a primary key
-thoughInnerKey | string | Key name connected to the innerKey of source entity defaults to `{sourceRole}_{innerKey}`
-thoughOuterKey | string | Key name connected to the outerKey of a related entity defaults to `{targetRole}_{outerKey}`
+load        | lazy/eager | Relation load approach. Defaults to `lazy`
+cascade     | bool   | Automatically save related data with parent entity. Defaults to `false`
+innerKey    | string | Inner key name in source entity. Defaults to a primary key
+outerKey    | string | Outer key name in target entity. Defaults to a primary key
+thoughInnerKey | string | Key name connected to the innerKey of source entity. Defaults to `{sourceRole}_{innerKey}`
+thoughOuterKey | string | Key name connected to the outerKey of a related entity. Defaults to `{targetRole}_{outerKey}`
 thoughWhere | array | Where conditions applied to `though` entity
 where       | array | Where conditions applied to a related entity
-fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey, defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action, defaults to `SET NULL`
-indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey], defaults to `true`
+fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey. Defaults to `true`
+fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
+indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
 
 You can keep your pivot entity empty, the only requirement is to have defined a primary key.
 
-> Note, current implementation includes typo in pivot table definition, `though` => `through`.
+> Note, current implementation includes a typo in the pivot table definition, `though` => `through`.
 
 ## Usage
-To associate two entities using Many To Many relation use method `add` of pivot collection:
+To associate two entities using Many To Many relation, use the method `add` of pivot collection:
 
 ```php
 $u = new User();
@@ -110,14 +110,14 @@ $t->persist($u);
 $t->run();
 ```
 
-To remove association to the object using `remove` or `removeElement` methods. Disassociation will remove `UserTag` not `Tag` entity.
+To remove the association to the object, use the `remove` or `removeElement` methods. Disassociation will remove the `UserTag` entity, and not the `Tag` entity.
 
 ```php
 $u->getTags()->removeElement($tag);
 ```
 
 ## Loading
-Use method `load` of your `Select` object to pre-load data of related and pivot entities:
+Use the method `load` of your `Select` object to pre-load data of related and pivot entities:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -140,8 +140,8 @@ foreach ($users as $u) {
 ```
 
 ## Accessing Pivot Entity
-Many To Many relation provides you ability to access the pivot entity data using the `PivotedCollection` object. You can do that
-using `getPivot` method:
+Many To Many relation provides you the ability to access the pivot entity's data using the `PivotedCollection` object. You can do that
+using the `getPivot` method:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -160,7 +160,7 @@ foreach ($users as $u) {
 You can change the values of this entity as they will be persisted with the parent entity. This approach allows you to easier
 control the association between parent and related entities.
 
-For example, we can add new properly to our `UserTag`:
+For example, we can add a new property to our `UserTag`:
 
 ```php
 /** @Entity */
@@ -179,7 +179,7 @@ class UserTag
 }
 ```
 
-Now we can assign this entity to newly created connection:
+Now we can assign this entity to the newly created connection:
 
 ```php
 $u = new User();
@@ -195,7 +195,7 @@ $t->run();
 ```
 
 ## Filtering
-Similar to Has Many the entity query can be filtered using `with` method:
+Similar to Has Many the entity query can be filtered using the `with` method:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -205,7 +205,7 @@ $users = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-You can filter the entity results using `where` method on related properties:
+You can filter the entity results using the `where` method on related properties:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -241,7 +241,7 @@ $users = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-You can also load/filter the relations assigned to pivot entity.
+You can also load/filter the relations assigned to the pivot entity.
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -254,9 +254,9 @@ $users = $orm->getRepository(User::class)
 > Cross-database Many To Many relations are not supported yet.
 
 ## Complex loading
-You are able to load related data using conditions and sorts applied to pivot table, use option `load`.
+You can load related data using conditions and sorts applied to the pivot table using the option `load`.
 
-For example, we can have following entities:
+For example, we can have the following entities:
 - category (id, title)
 - photo (id, url)
 - photo_to_category (photo_id, category_id, position)
@@ -265,7 +265,7 @@ For example, we can have following entities:
 $categories = $orm->getRepository('category')->select();
 ```
 
-We can load now categories with photos inside them ordered by `photo_to_category` position using `WHERE IN` or `JOIN` query:
+We can now load categories with photos inside them ordered by `photo_to_category` position using a `WHERE IN` or `JOIN` query:
 
 
 ```php
@@ -296,7 +296,7 @@ WHERE "l_category_photos_pivot"."category_id" IN (1, 2, 3, 4)
 ORDER BY "l_category_photos_pivot"."position" ASC
 ```
 
-We can force ORM to use single query to pull the data (useful for more complex conditions):
+We can force the ORM to use a single query to pull the data (useful for more complex conditions):
 
 ```php
 $result = $categories->load('photos', [

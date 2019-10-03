@@ -1,9 +1,9 @@
 # Pagination
-You are able to paginate any of `Cycle\ORM\Select` objects using two basic methods `limit` and `offset`. In addition to that,
-the package `spiral/pagination` defines a set of basic interfaces which will allow you to easier integrate Cycle to your application.
+You can paginate any of the `Cycle\ORM\Select` objects using two basic methods: `limit` and `offset`. In addition to that,
+the package `spiral/pagination` defines a set of basic interfaces which will allow you to easier integrate Cycle into your application.
 
 ## Example
-To paginate simple User select:
+To paginate a simple User select:
 
 ```php
 $select = $orm->getRepository(User::class)->select()->orderBy('id', 'DESC');
@@ -16,14 +16,14 @@ print_r($select->fetchAll());
 ```
 
 ## Counting results
-The Select instance implements `Countable` interface and can be used to calculate number of records prior to the selection:
+The Select instance implements the `Countable` interface and can be used to calculate the number of records prior to the selection:
 
 ```php
 print_r($select->count());
 ```
 
 ## Paginating with relations
-Please note that pagination is happens on database end. This forces you to explicitly set the result set as `distinct` if relations
+Please note that pagination happens on the database end. This forces you to explicitly set the result set as `distinct` if relations
 like `hasMany`, `manyToMany` are joined to your query:
 
 ```php

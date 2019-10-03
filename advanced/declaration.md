@@ -4,14 +4,14 @@ Spiral/Database ships with an included mechanism to declare table structures, FK
 > Practically, table changes can be executed using an external migration system.
 
 ## Principle of Work
-Before any operation/declaration can be applied to table schema, DBAL will load currently existed structure from database and [normalize it into internal format](/advanced/introspection.md).
+Before any operation/declaration can be applied to the table schema, DBAL will load the currently existing structure from the database and [normalize it into internal format](/advanced/introspection.md).
 
-As result, you are allowed to apply the modification to table schema using declarative way instead of imperative, once schema **save** are requested - DBAL will generate set of creation and altering operations based on the difference between declared and existed schemas.
+As a result, you are allowed to apply the modification to the table schema using a declarative way instead of an imperative one. Once schema **save** is requested, DBAL will generate a set of creation and altering operations based on the difference between the declared and existing schemas.
 
 > See below how to use `Spiral\Database\Schema\Reflector` to sync multiple related tables.
 
 ## To Start
-To get instance of `AbstractTable` use similar way described in [Schema Introspection (make sure your read them first)](/advanced/introspection.md).
+To get an instance of `AbstractTable` use a similar way as described in [Schema Introspection (make sure your read them first)](/advanced/introspection.md).
 
 > No need to check for table existence.
 
@@ -20,14 +20,14 @@ protected function indexAction(Database $database)
 {
     $schema = $database->table('new_table')->getSchema();
 
-    //Schema suppose to be empty
+    // Schema is supposed to be empty
     dump($schema);
     dump($schema->exists());
 }
 ```
 
 ## Columns and Abstract Types
-You can add columns to specific schema by simply setting their type. Use following example to start:
+You can add columns to a specific schema by simply setting their type. Use the following example to start:
 
 ```php
 $schema = $database->table('new_table')->getSchema();
@@ -41,7 +41,7 @@ $schema->column('description')->text();
 
 > All of the listed methods are added into the table and column doc comments so your IDE/editor will highlight them.
 
-Use shorter version if you find it easier:
+Use the shorter version if you find it easier:
 
 ```php
 $schema = $database->table('new_table')->getSchema();
@@ -53,13 +53,13 @@ $schema->decimal('balance', 10, 2);
 $schema->text('description');
 ```
 
-To create table schema in database we have to call the method `save` of our AbstractTable:
+To create the table schema in the database we have to call the method `save` of our AbstractTable:
 
 ```php
 $schema->save();
 ```
 
-Depending on database driver you using DBAL will generate different SQL statements to create a table:
+Depending on which database driver you are using, DBAL will generate different SQL statements to create a table:
 
 ```sql
 CREATE TABLE `primary_new_table` (
@@ -74,7 +74,7 @@ CREATE TABLE `primary_new_table` (
 
 > Note that database prefix has been addressed automatically.
 
-In Postgres create syntax will look like:
+In Postgres the create syntax will look like:
 
 ```sql
 CREATE TABLE "secondary_new_table" (
@@ -87,9 +87,9 @@ CREATE TABLE "secondary_new_table" (
 )
 ```
 
-> Note, by default every column stated as nullable. Use `nullable` method to overwrite it (see below).
+> Note, by default every column is created as nullable. Use the `nullable` method to overwrite it (see below).
 
-Once schema is created you can add new columns into it by only declaring them in your code:
+Once the schema is created you can add new columns into it by only declaring them in your code:
 
 ```php
 $schema = $database->table('new_table')->getSchema();
@@ -116,13 +116,13 @@ ALTER TABLE `primary_new_table` ADD COLUMN `count_visits` int (11) NULL;
 
 
 ### Abstract Types
-As you can notice, DBAL uses set of "abstract" (common for all DBMS) types to declare table columns. Internally such types are mapped to appropriate internal DBMS column type.
+As you can notice, DBAL uses a set of "abstract" (common for all DBMS) types to declare table columns. Internally such types are mapped to appropriate internal DBMS column type.
 
 Type        | Parameters                | Description
 ---         | ---                       | ---
-**primary** | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table (you still can create a compound primary key, see below).
+**primary** | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table (you can still create a compound primary key, see below).
 bigPrimary  | ---                       | Same as primary but uses `bigInteger` to store its values.
-boolean     | ---                       | Boolean type, some databases will store it as integer (1/0).
+boolean     | ---                       | Boolean type, some databases store it as an integer (1/0).
 integer     | ---                       | Database specific integer (usually 32 bits).
 tinyInteger | ---                       | Small/tiny integer, check your DBMS to check its size.
 bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check its size.
@@ -140,14 +140,14 @@ time        | ---                       | To store time only.
 binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.
 tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. Differs only in MySQL.
 longBinary  | ---                       | Long binary, same as "binary" for most of the databases. Differs only in MySQL.
-json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.
+json        | ---                       | To store JSON structures, usually mapped to "text", only Postgres supports it natively.
 
-> Attention, in some cases type returned by `ColumnSchema->abstractType()` might not be the same as declared one, such problem may occur in cases when DBMS uses same internal type for multiple abstract types (for example most of the databases does not differentiate long/short/medium text and binary types).
+> Attention, in some cases the type returned by `ColumnSchema->abstractType()` might not be the same as declared one, such problem may occur in cases when DBMS uses the same internal type for multiple abstract types (for example most of the databases does not differentiate long/short/medium text and binary types).
 
-> However, such thing does not break anything in schema synchronization as DBAL creates operations based on the difference in internal database type, not based on declared abstract one.
+> However, this  does not break anything in schema synchronization as DBAL creates operations based on the difference in internal database types, not based on the declared abstract one.
 
 ### Enum Type
-Enum type natively exists only in MySQL database, in other DBMS it will be emulated using string type with associated constrain. To define enum type you have to list it's values:
+The Enum type only exists natively in the MySQL database, in other DBMS it will be emulated using string type with associated constrain. To define enum type you have to list it's values:
 
 ```php
 $schema->column('status')->enum(['active', 'disabled']);
@@ -159,14 +159,14 @@ $schema->enum('statusB', ['active', 'disabled']);
 > As in other cases declared schema will be synced will database one, so you can add and remove enum values at any moment.
 
 ### Default values
-It's recommended to set default value for enum and some other columns, setting default value can be performed using `defaultValue()`:
+It's recommended to set a default value for enum and some other columns. This can be performed using `defaultValue()`:
 
 ```php
 $schema->column('status')->enum(['active', 'disabled'])->defaultValue('disabled');
 $schema->enum('status_b', ['active', 'disabled'])->defaultValue('active');
 ```
 
-And again, you can change default value at any moment. If you wish to drop the default value simple set method argument as `null`.
+And again, you can change the default value at any moment. If you wish to drop the default value simple set the method argument as `null`.
 
 ```php
 $schema->enum('statusB', ['active', 'disabled'])->defaultValue(null);

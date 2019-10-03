@@ -1,9 +1,9 @@
 # Database Schema Introspection
-Spiral/Database layer provides the ability to read and analyze the basic properties of a given database or a given table. DBAL layer includes a set of "abstract" types assigned to each column based on DBMS specific
+Spiral/Database layer provides the ability to read and analyze the basic properties of a given database or a given table. The DBAL layer includes a set of "abstract" types assigned to each column, based on DBMS specific
 mapping in order to unify different engines.
 
 ## List of database tables
-To check if database has table use `hasTable`:
+To check if the database has a specific table use `hasTable`:
 
 ```php
 if ($database->hasTable('users')) {
@@ -21,7 +21,7 @@ foreach ($database->getTables() as $table) {
 }
 ```
 
-> Only tables specific to database prefix (if any) have resulted.
+> Only tables specific to the database prefix (if any) are returned.
 
 Schema Reader/Builder (`AbstractTable`) is available using `getSchema` method:
 
@@ -32,7 +32,7 @@ foreach ($database->getTables() as $table) {
 ```
 
 ## Reading table properties using AbstractTable
-The AbstractTable provides low-level access to table information such as column types (internal and abstract), indexes, foreign keys and etc. You can use this information to perform database export, build your own ORM or migration mechanism (see [schema declaration](/advanced/declaration.md)).
+The AbstractTable provides low-level access to table information, such as column types (internal and abstract), indexes, foreign keys, etc. You can use this information to perform a database export, or to build your own ORM or migration mechanism (see [schema declaration](/advanced/declaration.md)).
 
 Table primary keys:
 
