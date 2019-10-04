@@ -10,7 +10,7 @@ Version  | Release Date | End of Active Support
 1.*      | Feb 2019     | Feb 2021
 
 ## Language Version support
-As of 2019 the engine support:
+As of 2019 the engine supports:
 
 Language | Version
 ---      | ---

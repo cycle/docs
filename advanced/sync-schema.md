@@ -1,8 +1,8 @@
 # Synchronizing Database Schema
-Cycle ORM provides multiple ways to automatically configure database schema based on entity declarations.
+Cycle ORM provides multiple ways to automatically configure your database schema based on entity declarations.
 
 ## Automatic Synchronization
-First approach would involve automatic schema declaration without any intermediate migration, to use it add `SyncTables` generator to your schema compiler:
+A first approach would involve automatic schema declaration without any intermediate migration, to use it add `SyncTables` generator to your schema compiler:
 
 ```php
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
@@ -18,16 +18,16 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 ]);
 ```
 
-Such an approach is useful for development environments but might cause issues while working with the production database.
+Such an approach is useful for development environments, but might cause issues while working with the production database.
 
 ## Generate Migrations
-You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom to alter such migrations manually before running them. To achieve that you must connect Cycle extension:
+You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom to alter such migrations manually before running them. To achieve that you must install the Cycle Migrations extension:
 
 ```php
 composer require cycle/migrations
 ```
 
-Migrations are based on `Spiral/Migrations` package and require proper configuration first:
+Migrations are based on the `Spiral/Migrations` package and require proper configuration first:
 
 ```php
 use Spiral\Migrations;
@@ -43,7 +43,7 @@ $migrator = new Migrations\Migrator($config, $dbal, new Migrations\FileRepositor
 $migrator->configure();
 ```
 
-You can now add new Compiler generator to render schema changes into migration files:
+You can now add a new Compiler generator to render schema changes into migration files:
 
 ```php
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
@@ -55,26 +55,26 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\RenderTables(),                                   // declare table schemas
     new Schema\Generator\RenderRelations(),                                // declare relation keys and indexes
     new \Cycle\Migrations\GenerateMigrations($migrator->getRepository()),  // generate migrations
-    new Schema\Generator\GenerateTypecast(),                               // typecast non string columns
+    new Schema\Generator\GenerateTypecast(),                               // typecast non-string columns
 ]);
 ```
 
 > Make sure to remove `SyncTables`.
 
 ## Run Migrations
-To get list of available migrations:
+To get a list of available migrations:
 
 ```php
 print_r($migrator->getMigrations());
 ```
 
-To run all outstanding migration:
+To run all outstanding migrations:
 
 ```php
 while($migrator->run() !== null) { }
 ```
 
-To rollback last migration:
+To rollback the last migration:
 
 ```php
 $migrator->rollback();

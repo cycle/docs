@@ -1,5 +1,5 @@
 # Complex Queries
-You are able to use the query builder to compose more complex queries and expression like conditions.
+You can use the the query builder to compose more complex queries and expressions.
 
 ## Expressions
 It is possible to inject custom SQL logic into the query using `Spiral\Database\Injection\Expression` object:
@@ -8,10 +8,10 @@ It is possible to inject custom SQL logic into the query using `Spiral\Database\
 $select->where('time_created', '>', new Expression("NOW()"));
 ```
 
-You are able to use expressions in place of operators or column names. Please note, that since column name might not necessarily be identical to the actual property name you must resolve it's identity first.
+You can use expressions in place of operators or column names. Please note that, since a column name might not necessarily be identical to the actual property name, you must resolve its identity first.
 
 ## Name Resolver
-To resolve name of column you must gain access to `QueryBuilder` instance available thought `getBuilder` method of `Select` object:
+To resolve the name of column you must gain access to `QueryBuilder` instance available through the `getBuilder` method of the `Select` object:
 
 ```php
 $qb = $select->getBuilder();
@@ -19,7 +19,7 @@ $qb = $select->getBuilder();
 print_r($qb->resolve('id')); // table.column_name
 ```
 
-You can use this identificator inside your expressions:
+You can use this identification inside your expressions:
 
 ```php
 $qb = $select->getBuilder();
@@ -32,7 +32,7 @@ $select->where(
 );
 ```
 
-Such query will produce similar SQL:
+Such a query will produce similar SQL:
 
 ```sql
 SELECT
@@ -41,7 +41,7 @@ FROM "users" AS "user" WHERE
   "user"."credits" > "user"."balance"
 ```
 
-You can also resolve names of related entities by using entity path:
+You can also resolve names of related entities by using the entity path:
 
 ```php
 $select->distinct()
@@ -60,10 +60,10 @@ INNER JOIN "orders" AS "user_orders"
 WHERE "user"."balance" > "user_orders"."total" AND "user_orders"."status" = 'pending'
 ```
 
-> You can also use methods `groupBy` on your `Select` object to create more complex conditions.
+> You can also use the method `groupBy` on your `Select` object to create more complex conditions.
 
 ## Low level queries
-If you want to run complex selection or select only particular columns you can modify underlying query directly:
+If you want to run complex selection or select only particular columns you can modify the underlying query directly:
 
 ```php
 $query = $select->buildQuery();
@@ -87,7 +87,7 @@ FROM "users" AS "user"
 > Use the `resolve` method to obtain fully qualified column names.
 
 ## Injecting Queries
-It is possible to inject query into another query. In this case, you must obtain an instance of entity query first, it can be done
+It is possible to inject a query into another query. In this case, you must obtain an instance of the entity query first. It can be done
 by calling the method `buildQuery()` of `Select` object.
 
 For example:
@@ -122,4 +122,4 @@ FROM "users" AS "user"
   ) >= "user"."balance"
 ```
 
-> Both entities must locate within one physical database.
+> Both entities must be located within one physical database.

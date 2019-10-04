@@ -1,10 +1,10 @@
 # Embedded Entities
-You can embed one or multiple entities inside another object using the parent object table as a data source. It can be achieved using
-`embedd` relation type and might be helpful to perform de-composition of your entity. Such relation also allows lazy and eager (default)
+You can embed one or multiple entities inside another object using the parent object table as a data source. It can be achieved using the
+`embedd` relation type and might be useful to perform de-composition of your entity. Such a relation also allows lazy and eager (default)
 loading of embedded entities, or the ability to retrieve entities separately (without loading parent model).
 
 ## Definition
-To define embedded entity using annotated extension you must declare your embedded entity first:
+To define embedded entity using the annotated extension, you must first declare your embedded entity:
 
 ```php
 /** @Embeddable */
@@ -18,9 +18,9 @@ class UserCredentials
 }
 ```
 
-> You do not need to declare primary key.
+> You do not need to declare a primary key.
 
-Now you can declare the usage of such entity if your model using the relation of type `embedd`:
+Now you can declare the usage of this entity if your model using the relation of type `embedd`:
 
 ```php
 /** @Entity */
@@ -43,14 +43,14 @@ class User
 
 Read more about embeddings [here](/annotated/embeddings.md).
 
-Embedded relation support following options:
+Embedded relations support the following options:
 
 Option      | Value  | Comment
 ---         | ---    | ----
-load        | lazy/eager | Relation load approach (default `eager`)
+load        | lazy/eager | Relation load approach. Defaults to `eager`)
 
 ## Usage
-You can use newly relation right after schema update (embedded columns will be added to parent entity table):
+You can use the relation right after a schema update (embedded columns will be added to parent entity table):
 
 ```php
 $u = new User();
@@ -64,7 +64,7 @@ $t->run();
 
 
 ## Querying
-You can query embedded entity as your would do for any other relations:
+You can query embedded entities as your would do for any other relation:
 
 ```php
 $select = $orm->getRepository(User::class)->select();
@@ -72,7 +72,7 @@ $select->where('address.country', 'USA');
 ```
 
 ## Eager and Lazy Loading
-By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of `@Embedd` relation annotation:
+By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of the `@Embedd` relation annotation:
 
 ```php
 /** @Entity */
@@ -86,7 +86,7 @@ class User
 }
 ```
 
-Now, in order to pre-load embedded entity you have to explicitly use `load()` method of your select:
+Now, in order to pre-load embedded entity you have to explicitly use the `load()` method of your select:
 
 ```php
 $select = $orm->getRepository(User::class)->select();

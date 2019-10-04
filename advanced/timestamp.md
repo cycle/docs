@@ -1,6 +1,6 @@
 # CreatedAt/UpdatedAt Timestamps
-It is possible to automatically set `created_at`, `updated_at` column values on entity update. In order to achieve that you have to write
-custom mapper implementation which will be automatically registering such values in entity commands.
+It is possible to automatically set `created_at` and `updated_at` column values on entity update. In order to achieve that you have to write a
+custom mapper implementation to automatically register these values in entity commands.
 
 ## Timestamped Mapper
 The simplest mapper will look like:
@@ -33,10 +33,10 @@ class TimestampedMapper extends Mapper
 }
 ```
 
-> While we can set column values directly in `Insert` command we have to use the alternative method `registerAppendix` for `Update`. Such method will only push changes to the database if any other entity field has changes (for example if entity FK has been updated through the relation).
+> While we can set column values directly in the `Insert` command, we have to use the alternative method `registerAppendix` for `Update`. This method will only push changes to the database if any other entity field has changes (for example if entity FK has been updated through the relation).
 
 ## Automatically Define Columns
-You can use annotated entities extension to automatically declare needed column from inside your mapper:
+You can use the annotated entities extension to automatically declare the needed columns from inside your mapper:
 
 ```php
 /**
@@ -71,7 +71,7 @@ class TimestampedMapper extends Mapper
 }
 ```
 
-Associate your entity with newly created mapper in order to register this columns on schema update:
+Associate your entity with the newly created mapper in order to register these columns on schema update:
 
 ```php
 /** @Entity(mapper="TimestampedMapper") */

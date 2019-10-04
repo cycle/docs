@@ -1,11 +1,11 @@
 # Persisting Repositories
-By default ORM design, the Repository object used only for Select logic (read-only). Write operations are controlled via Transactions
+By default ORM design, the Repository object is used only for Select logic (read-only). Write operations are controlled via Transactions
 (entity -> transaction -> mapper -> command -> storage).
 
-However, it is possible to safely add `save` or `delete` method to our repositories to avoid usage of transaction in the application code.
+However, it is possible to safely add a `save` or `delete` method to your repositories to avoid usage of transactions in the application code.
 
 ## Use Repositories with Transaction
-We can create a simple `store` method in Repository which will save current entity state and it's loaded relations or entity only.
+We can create a simple `store` method in the Repository, which will save the entity's current state and it's loaded relations or entity only.
 In order to do that we have to create a transaction inside our object:
 
 ```php
@@ -42,7 +42,7 @@ class UserPersistRepository extends Repository
 }
 ```
 
-You can associate repository to your entity via annotation `@Entity(repository="UserPersistRepository")` or manually:
+You can associate the repository to your entity via the annotation `@Entity(repository="UserPersistRepository")`, or manually:
 
 ```php
 $orm = $orm->withSchema(new Schema([

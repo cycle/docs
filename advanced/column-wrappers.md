@@ -1,11 +1,11 @@
 # Column Wrappers
-In some cases, you might want to wrap the value using custom value object (similarly to DateTime columns which are wrapped as DateTimeImmutable).
-It can be achieved by creating custom column wrapper and typecasting column value to it.
+In some cases, you might want to wrap the value using a custom value object (similarly to DateTime columns which are wrapped as DateTimeImmutable).
+It can be achieved by creating a custom column wrapper and typecasting the column value to it.
 
 > Note, all column wrappers must be immutable, you have to reassign property value to trigger the change.
 
 ## Example
-In order to define column wrapper, we have to implement an object with static `typecast` method. We would use UUID column as for an example.
+In order to define a column wrapper, we have to implement an object with a static `typecast` method. We will use a UUID column as an example.
 
 ```php
 use Ramsey\Uuid\Uuid as UuidBody;
@@ -49,12 +49,12 @@ class Uuid
 }
 ```
 
-> Please note that `typecast` method will receive raw value content and database it's associated with. Make sure to implement `__toString`
-method on your wrapper to store it in the database. See below how to use custom serialization strategy.
+> Please note that the `typecast` method will receive the raw value content and the database it's associated with. Make sure to implement the `__toString`
+method on your wrapper to store it in the database. See below how to use a custom serialization strategy.
 
 ## Assign to entity
-To assign column wrapper to entity use column option `typecast`, you can specify typecast as function name, method name (:: separator) or
-class name which defines static method typecast:
+To assign a column wrapper to an entity use the column option `typecast`. You can specify typecast as a function name, a method name (:: separator), or
+a class name which defines static method typecast:
 
 ```php
 /** @Entity */
@@ -79,14 +79,14 @@ $t->persist($u);
 $t->run();
 ```
 
-Column will be automatically wrapped upon selection entity from the database:
+The column will be automatically wrapped upon retrieving the entity from the database:
 
 ```php
 $u = $orm->getRepository(User::class)->findOne();
 print_r($u);
 ```
 
-To change wrapped column value you have to create new object:
+To change the wrapped column value you have to create new object:
 
 ```php
 $u = $orm->getRepository(User::class)->findOne();
@@ -167,4 +167,4 @@ class Uuid implements ValueInterface
 
 Now, the Uuid column will be stored in a blob form.
 
-> You can also implement Expression or Parameter interfaces in your column wrapper to achieve more complex logic.
+> You can also implement the Expression or Parameter interfaces in your column wrapper to achieve more complex logic.

@@ -6,15 +6,14 @@ Cycle ORM can be installed into any PHP application using `composer` dependency 
   * PHP-PDO
   * PDO drivers for desired databases
 
-
 ## Installation
-Cycle ORM is available as composer repository and can be installed using the following command in the root of your project:
+Cycle ORM is available as a composer package and can be installed using the following command in the root of your project:
 
 ```bash
 $ composer require cycle/orm
 ```
 
-In order to enable support for annotated entities you have to request an additional package:
+In order to enable support for annotated entities you have to install an additional package:
 
 ```bash
 $ composer require cycle/annotated
@@ -31,17 +30,17 @@ include 'vendor/autoload.php';
 
 ## Connect Database
 In order to connect Cycle to the proper database instance, you must configure the instance of `Spiral\Database\DatabaseManager`.
-The details of configuration process described in a [following section](/basic/connect.md).
+The details of this configuration process described in a [following section](/basic/connect.md).
 
 ## Instantiate ORM
-An ORM service can be instantiated using `Cycle\ORM\ORM` class which takes only one dependency on `Cycle\ORM\Factory`:
+An ORM service can be instantiated using the `Cycle\ORM\ORM` class, which takes only one dependency on `Cycle\ORM\Factory`:
 
 ```php
 $orm = new ORM\ORM(new ORM\Factory($dbal));
 ```
 
 ## Schema Generation (Schema Update)
-In order to operate Cycle ORM require schema definition. The schema will contain a list of available entities, their relations, and association with a specific database.
+In order to operate Cycle ORM a schema definition is required. The schema will contain a list of available entities, their relations, and association with a specific database.
 
 The schema can be described manually by instantiating `Cycle\ORM\Schema` object:
 
@@ -99,7 +98,7 @@ $orm = $orm->withSchema($schema);
 
 However, in order to simplify the integration, it is recommended to use a schema compiler provided by `cycle/schema-builder` extension. Such compiler is able to automatically index all available entities, perform database introspection and reflection.
 
-To compile the schema using annotated entities and automatically configure the database using the following pipeline:
+To compile the schema using annotated entities and automatically configure the database use the following pipeline:
 
 ```php
 use Cycle\Schema;
@@ -128,7 +127,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 $orm = $orm->withSchema(new Schema($schema));
 ```
 
-The result of schema builder has compiled schema, given schema can be cached in order to avoid expensive calculations on each request.
+The result of the schema builder is a compiled schema. The given schema can be cached in order to avoid expensive calculations on each request.
 
 > In the following section the terming `update schema` will be referenced to this process.
 

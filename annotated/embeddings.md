@@ -1,10 +1,10 @@
 # Embeddings
-ORM can simplify the definition of large entities by proving the ability to split some of the columns into an embedded entity. Embedded entities by default will always be loaded with parent object, however, partial entity selection is possible as well.
+THe ORM can simplify the definition of large entities by proving the ability to split some of the columns into an embedded entity. Embedded entities by default will always be loaded with the parent object. However, partial entity selection is possible as well.
 
 > Embedded entities do not support relations at the moment.
 
 ## Definition
-To define embeddable entity use `@Embeddable` annotation. As with `@Entity`, you are able to define custom mapper or associate additional columns/indexes using `@Table` annotation.
+To define an embeddable entity use the `@Embeddable` annotation. As with `@Entity`, you are able to define a custom mapper or associate additional columns/indexes using the `@Table` annotation.
 
 ```php
 /** @Embeddable */
@@ -23,7 +23,7 @@ class Address
 
 > You do not need to define the `primary` column, this column will be inherited from the parent entity. Mapper methods `queueDelete`, `queueCreate` and `queueUpdate` would never be invoked due to the delegation to the parent mapper.
 
-To embed an entity to another object use `@Embedd` annotation:
+To embed an entity to another object use the `@Embedd` annotation:
 
 ```php
 /**
@@ -56,8 +56,8 @@ $user->address->country = 'USA';
 ```
 
 ## Column Mapping
-By default, all embedded entity columns will be stored in owning entity table without any prefix, you can define custom prefix using
-`columnPrefix` option of `@Embeddable` annotation:
+By default, all embedded entity columns will be stored in the owning entity table without any prefix.
+If desired, you can define a custom prefix using the `columnPrefix` option of the `@Embeddable` annotation:
 
 ```php
 /** @Embeddable(columnPrefix = "address_") */
@@ -75,7 +75,7 @@ class Address
 ```
 
 ## Querying
-You can query embedded entity as your would do for any other relations:
+You can query an embedded entity as your would do for any other relations:
 
 ```php
 $select = $orm->getRepository(User::class)->select();
@@ -97,7 +97,7 @@ class User
 }
 ```
 
-Now, in order to pre-load embedded entity you have to explicitly use `load()` method of your select:
+Now, in order to pre-load the embedded entity you have to explicitly use `load()` method of your select:
 
 ```php
 $select = $orm->getRepository(User::class)->select();
@@ -107,10 +107,10 @@ print_r($select->load('address')->fetchAll());
 ```
 
 ## Query Embedded entity separately
-It is possible to query embedded entity separately from the parent, however, you must clearly know the `role` of such entity as class name is forbidden (in order to allow usage of the embedding inside different parents). Usually, such role will be composed using parent and entity role (and ":" separator).
+It is possible to query the embedded entity separately from the parent, however, you must clearly know the `role` of such entity as using the class name is forbidden (in order to allow usage of the embedding inside different parents). Usually, such role will be composed using parent and entity role (and ":" separator).
 
 ```php
 $orm->getRepository("user:address")->findAll();
 ```
 
-> Make sure you know what you doing.
+> Make sure you know what you are doing.

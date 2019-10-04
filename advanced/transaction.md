@@ -1,11 +1,11 @@
 # Transactions (Unit of Work)
-Every persists operation with an entity must be performed via the Transaction object. This object will rely on `Heap` associated with given ORM
-and will request each entity mapper and relation to issue set of persist commands in a form of the command chain.
+Every persist operation for an entity must be performed via the Transaction object. This object will rely on `Heap` associated with the given ORM
+and will request each entity mapper and relation to issue a set of persist commands in the form of a command chain.
 
-> All transaction are treated as disposable, you can create and delete them as you need.
+> All transactions are treated as disposable, you can create and delete them as you need.
 
 ## TransactionInterface
-ORM provides the convenient class to manage transactions, however, it is recommended to couple your code with an underlying interface for
+ORM provides a convenient class to manage transactions, however, it is recommended to couple your code with an underlying interface for
 the simplicity and easier testing going forward:
 
 ```php
@@ -42,7 +42,7 @@ interface TransactionInterface
 ```
 
 ## Example Usage
-To persist your entity simply add it to the transaction using the `persist` method and call method `run` after that.
+To persist your entity simply add it to the transaction using the `persist` method and call the method `run` after that.
 
 ```php
 $t = new Transaction($orm);
@@ -52,7 +52,7 @@ $t->run();
 
 > Do not forget to handle `Spiral\Database\Exception\DatabaseException`.
 
-You can handle multiple transactions within one scope, they can overlap or be responsible for separate entities:
+You can handle multiple transactions within one scope. They can overlap or be responsible for separate entities:
 
 ```php
 $t = new Transaction($orm);
@@ -64,7 +64,7 @@ $t2->persist($e2);
 $t2->run();
 ```
 
-After execution Transaction will be cleared and can be re-used for next batch of commands, please note, ORM Heap would not be reset
+After execution the Transaction will be cleared and can be re-used for the next batch of commands. Please note, ORM Heap would not be reset
 after the transaction, you must clean it manually if needed.
 
 ```php
@@ -79,8 +79,8 @@ $orm->getHeap()->clean();
 ```
 
 ## Cascade persisting
-By default, Transaction will create a command chain to store all entity relations unless the opposite is specified in relation schema.
-If you would like to store only entity content without it's relations use persist option `MODE_ENTITY_ONLY`:
+By default, Transaction will create a command chain to store all entity relations unless the opposite is specified in the relation schema.
+If you would like to store only entity content without it's relations use the persist option `MODE_ENTITY_ONLY`:
 
 ```php
 $t = new Transaction($orm);
@@ -152,4 +152,4 @@ $t->run();
 ```
 
 ## Reusing same Transaction
-Transaction is clean after `run` invocation, you must assemble new transaction to retry the same set of entities. Since transaction is clean you are able to reuse same transaction over and over again (make sure to keep `persist`, `delete` and `run` operation within one method).
+The Transaction is clean after the `run` invocation. You must assemble a new transaction to retry the same set of entities. Since the transaction is clean you are able to reuse the same transaction over and over again (make sure to keep `persist`, `delete` and `run` operations within one method).

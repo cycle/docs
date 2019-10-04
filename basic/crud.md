@@ -1,10 +1,10 @@
 # Create, Update and Delete entities
-Any persistence operation with entity or entities has to be done using `Cycle\ORM\Transaction` object.
+Any persistence operation with entity or entities has to be done using the `Cycle\ORM\Transaction` object.
 
-> Read how to [describe entity here](https://github.com/cycle/docs/blob/master/annotated/entity.md).
+> Read how to [describe your entity here](https://github.com/cycle/docs/blob/master/annotated/entity.md).
 
 ## Create Entity
-In order to create an entity simply pass it's instance to the transaction object and invoke method `run`:
+In order to create an entity simply pass its instance to the transaction object and invoke the method `run`:
 
 ```php
 $user = new User();
@@ -15,8 +15,8 @@ $tr->persist($user);
 $tr->run();
 ```
 
-In order to process persistent errors make sure to handle exceptions produced by `run` method:
-
+In order to process persistent errors make sure to handle exceptions produced by the `run` method:
+, y
 ```php
 try {
    $tr->run();
@@ -25,7 +25,7 @@ try {
 }
 ```
 
-One of the most important types of exception you must handle is `Spiral\Database\Exception\DatabaseException`. This exception branched
+One of the most important types of exception you must handle is `Spiral\Database\Exception\DatabaseException`. This exception branches
 into multiple types for each of the error types:
 
 ```php
@@ -63,7 +63,7 @@ UPDATE `users` SET `name` = "John" WHERE `id` = 1
 ```
 
 ## Delete Entity
-Any entity can be deleted using transaction method `delete`:
+Any entity can be deleted using the transaction method `delete`:
 
 ```php
 $user = $orm->getRepository(User::class)->findByPK(1);
@@ -73,10 +73,10 @@ $tr->delete($user);
 $tr->run();
 ```
 
-Please note, ORM would not automatically trigger the delete operation for related entities and will rely on foreign key rules set in the database.
+Please note, the ORM will not automatically trigger the delete operation for related entities and will rely on foreign key rules set in the database.
 
 ## Persisting Related Entities
-An entity persisting will also persist all related entities within it.
+Persisting an entity will also persist all related entities within it.
 
 ```php
 $user = new User();
@@ -90,7 +90,7 @@ $tr->run();
 print_r($user->getAddress()->getID());
 ```
 
-This behavior is enabled by default by the persisting entity with `Transaction::MODE_CASCADE` flag.
+This behavior is enabled by default by persisting the entity with the `Transaction::MODE_CASCADE` flag.
 Code above can be equally rewritten as:
 
 ```php
@@ -99,7 +99,7 @@ $tr->persist($user, Transaction::MODE_CASCADE);
 $tr->run();
 ```
 
-Pass `Transaction::MODE_ENTITY_ONLY` flag to disable cascade persisting of related entities:
+Pass the `Transaction::MODE_ENTITY_ONLY` flag to disable cascade persisting of related entities:
 
 ```php
 $tr = new Transaction($orm);
@@ -107,6 +107,6 @@ $tr->persist($user, Transaction::MODE_ENTITY_ONLY);
 $tr->run();
 ```
 
-> `Transaction::MODE_ENTITY_ONLY` flag can be used while creating or updating the entity.
+> The `Transaction::MODE_ENTITY_ONLY` flag can be used while creating or updating the entity.
 
 You can also turn off cascading on the relation level by setting `cascade` flag to `false`.

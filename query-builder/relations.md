@@ -1,20 +1,20 @@
 # Querying Relations
 It is possible to use columns and values of entity relations while composing the query. Relation properties (columns) can be accessed
-using dot notation `relation.property`. Please note, you must use domain-specific property names, column names will be mapped automatically.
+using dot notation `relation.property`. Please note, you must use domain-specific property names; column names will be mapped automatically.
 
 ## Simple Condition
-To query entity with constraint applied to it's related entity:
+To query an entity with a constraint applied to its related entity:
 
 ```php
 // find all users with published posts
 $select->distinct()->where('posts.published', true);
 ```
 
-Please note, all queried relations will be joined to the entity query, do not forget to add the `distinct` option to your query while joining
+Please note, all queried relations will be joined to the entity query. Do not forget to add the `distinct` option to your query while joining
 `hasMany`, `manyToMany` relations.
 
 ## Nested relations
-It is possible to filter entity using any level of relations. For example:
+It is possible to filter entities using any level of relations. For example:
 
 ```php
 // find all users with posts which have approved comments
@@ -24,16 +24,16 @@ $select->distinct()->where('posts.comments.approved', true);
 > Please note that deepening queries will affect your performance.
 
 ## Sorting and pagination
-You can use method `orderBy` in combination with related entity column:
+You can use method `orderBy` in combination with a related entity column:
 
 ```php
 $select->orderBy('posts.id', 'DESC');
 ```
 
-> Please note, that usage of `limit` and `offset` methods only recommended in combination with `distinct`.
+> Please note that the usage of `limit` and `offset` methods are only recommended in combination with `distinct`.
 
 ## Loading Relations
-Cycle ORM can pre-load most of relation types via `load` method called on select:
+Cycle ORM can pre-load most of the relation types via the `load` method called on select:
 
 ```php
 $select->load('posts');
@@ -47,7 +47,7 @@ $select->load('posts.comments.author');
 ```
 
 ## Load with applied condition
-You can load some relations partially (hasMany, manyToMany) and use DB level filtering by applying `where' option:
+You can load some relations partially (hasMany, manyToMany) and use DB level filtering by applying the `where` option:
 
 ```php
 $select->load('posts', [
@@ -55,7 +55,7 @@ $select->load('posts', [
 ]);
 ```
 
-Select separate filtered and loaded entities you can use `with` and `load` methods at the same time.
+Select separates filtered and loaded entities. You can use `with` and `load` methods at the same time.
 
 ```php
 $select->load('posts', [
@@ -66,7 +66,7 @@ $select->load('posts', [
 
 > Find all users with flagged posts and load all published posts.
 
-In some cases, you can also combine joining and relation together (make sure you know what are you doing). You can do that by pointing the source table alias to the `load` method:
+In some cases, you can also combine joining and relation (make sure you know what are you doing). You can do that by pointing the source table alias to the `load` method:
 
 ```php
 $selec->with('posts',[
@@ -75,12 +75,12 @@ $selec->with('posts',[
 ])->load('posts', ['using' => 'posts']);
 ```
 
-Such query will find all entities with flagged posts and load these posts within one query (make sure to set the DISTINCT). Note, this is NOT optimization technique.
+This query will find all entities with flagged posts and load these posts within one query (make sure to set the DISTINCT). Note, this is NOT an optimization technique.
 
 > LIMIT, ORDER BY are currently not supported as fetch scope (no BC expected).
 
 ## Load with filter by nested relation
-You can not only load the relation chain but also filter your branches by their relations. For example, we can load all users and all users posts which have comments.
+Not only can you load the relation chain, but you can also filter your branches by their relations. For example, we can load all users and all user posts which have comments.
 
 ```php
 $users->load('posts', [
@@ -88,7 +88,7 @@ $users->load('posts', [
 ]);
 ```
 
-You can also use alternative notation with additional `distinct` flag:
+You can also use alternative notation with the additional `distinct` flag:
 
 ```php
 $users->load('posts', [
@@ -144,7 +144,7 @@ LEFT JOIN "comment" AS "user_posts_comments"
 WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NULL)
 ```
 
-You can also specify the join method in primary select query. Let's try to find all users with posts without comments and load only posts with comments for these users. We would have to use `options` of our relation to specifying the filter:
+You can also specify the join method in the primary select query. Let's try to find all users with posts without comments, and load only posts with comments for these users. We would have to use `options` of our relation to specifying the filter:
 
 
 ```php
@@ -161,7 +161,7 @@ $users
     ])->orderBy('user.id');
 ```
 
-And generated SQLs:
+And generated SQL queries:
 
 ```sql
 SELECT DISTINCT
@@ -183,8 +183,8 @@ INNER JOIN "comment" AS "user_posts_comments"
 WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NOT NULL)
 ```
 
-## Using `load` method
-Alternatively you can use `load` option which accepts the Closure to specify custom `orderBy` and other conditions:
+## Using the `load` method
+Alternatively you can use the `load` option, which accepts a closure to specify custom `orderBy` and other conditions:
 
 ```php
 $users
