@@ -10,7 +10,7 @@ Please make sure that the following requirements are satisfied before submitting
 > Use our discord server to check for the advice or suggestion https://discord.gg/FZ9BCWg
 
 ## Testing Cycle
-To test ORM engine locally, download the repository and start docker containers inside test folder:
+To test ORM engine locally, download the `cycle/orm` repository and start docker containers inside the tests folder:
 
 ```bash
 $ cd tests/
