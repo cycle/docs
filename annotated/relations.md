@@ -170,6 +170,8 @@ fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey 
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
 
+> Note, the relation option `though` is a typo of `through`, it will remain in this package until next major release.
+
 ## Morphed Relations
 Cycle ORM provides support for polymorphic relations. Given relations can be used to link an entity to multiple entity types and select the desired object in runtime. Relations must be assigned to the entity interface rather than a specific role or class name.
 
