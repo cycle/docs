@@ -5,7 +5,7 @@ The Has Many relations defines that an entity exclusively owns multiple other en
 To define a Has Many relation using the annotated entities extension, use:
 
 ```php
-/** @Entty */
+/** @Entity */
 class User
 {
     // ...
