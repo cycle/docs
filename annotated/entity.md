@@ -190,7 +190,7 @@ Following column types are available:
 
 Type        | Parameters                | Description
 ---         | ---                       | ---
-**primary** | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table (you still can create a compound primary key, see below).
+**primary** | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table.
 bigPrimary  | ---                       | Same as primary but uses bigInteger to store its values.
 boolean     | ---                       | Boolean type, some databases will store it as integer (1/0).
 integer     | ---                       | Database specific integer (usually 32 bits).
