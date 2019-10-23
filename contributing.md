@@ -3,7 +3,7 @@ Feel free to contribute to the development of the Cycle ORM or its components.
 Please make sure that the following requirements are satisfied before submitting your pull request:
 
 * KISS
-* PSR-2 ([your PRs will be automatically tested](https://github.com/cycle/orm/blob/master/.travis.yml#L26))
+* PSR-12
 * `declare(strict_types=1);` is mandatory
 * Your code must include tests
 
