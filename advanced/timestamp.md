@@ -41,7 +41,7 @@ You can use the annotated entities extension to automatically declare the needed
 ```php
 /**
  * @Table(
- *      columns={"created_at": @Column(type="datetime"), "updated_at": @Column(type"=datetime")},
+ *      columns={"created_at": @Column(type="datetime"), "updated_at": @Column(type="datetime")},
  * )
  */
 class TimestampedMapper extends Mapper
@@ -58,6 +58,7 @@ class TimestampedMapper extends Mapper
 
         return $cmd;
     }
+    
     public function queueUpdate($entity, Node $node, State $state): ContextCarrierInterface
     {
         /** @var Update $cmd */
