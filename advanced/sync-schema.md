@@ -6,13 +6,13 @@ A first approach would involve automatic schema declaration without any intermed
 
 ```php
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
+    new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
     new Annotated\Embeddings($cl),            // register embeddable entities
     new Annotated\Entities($cl),              // register annotated entities
-    new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
-    new Schema\Generator\GenerateRelations(), // generate entity relations
-    new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
     new Annotated\MergeColumns(),             // add @Table column declarations
     new Annotated\MergeIndexes(),             // add @Table column declarations
+    new Schema\Generator\GenerateRelations(), // generate entity relations
+    new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
     new Schema\Generator\RenderTables(),      // declare table schemas
     new Schema\Generator\RenderRelations(),   // declare relation keys and indexes
     new Schema\Generator\SyncTables(),        // sync table changes to database
@@ -49,9 +49,11 @@ You can now add a new Compiler generator to render schema changes into migration
 
 ```php
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
+    new Schema\Generator\ResetTables(),                                    // re-declared table schemas (remove columns)
     new Annotated\Embeddings($cl),                                         // register embeddable entities
     new Annotated\Entities($cl),                                           // register annotated entities
-    new Schema\Generator\ResetTables(),                                    // re-declared table schemas (remove columns)
+    new Annotated\MergeColumns(),                                          // add @Table column declarations
+    new Annotated\MergeIndexes(),                                          // add @Table column declarations
     new Schema\Generator\GenerateRelations(),                              // generate entity relations
     new Schema\Generator\ValidateEntities(),                               // make sure all entity schemas are correct
     new Annotated\MergeColumns(),                                          // add @Table column declarations
