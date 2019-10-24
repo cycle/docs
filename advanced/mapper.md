@@ -88,7 +88,7 @@ interface MapperInterface
 }
 ```
 
-THe ORM will create a mapper using `Spiral\Core\FactoryInterface` which means you Mapper is able to request dependencies available in
+The ORM will create a mapper using `Spiral\Core\FactoryInterface` which means you Mapper is able to request dependencies available in
 the container associated with ORM Factory.
 
 Some parameters will be provided by ORM itself, such as:
