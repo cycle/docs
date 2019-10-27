@@ -4,10 +4,10 @@ or use the cycle/schema-builder extension to compile it on the fly via OOP wrapp
 
 ## Examples
 There are multiple examples of using the ORM with manually defined mapping schema:
-- https://github.com/cycle/docs/blob/master/advanced/manual.md
-- https://github.com/cycle/docs/blob/master/advanced/dynamic-schema.md
-- https://github.com/cycle/docs/blob/master/advanced/schema-builder.md
-- https://github.com/cycle/docs/blob/master/advanced/active-record.md
+- [Manually defined Mapping Schema](/advanced/manual.md)
+- [Dynamic Mapping Schema](/advanced/dynamic-schema.md)
+- [Configuring Schema Builder](/advanced/schema-builder.md)
+- [Active Record](/advanced/active-record.md)
 
 ## Quick Sample
 We can demonstrate how to create an ORM instance which maps objects `User` and `Profile` with a `HasOne` relation between them.
