@@ -36,7 +36,7 @@
   {
     "title": "Relations",
     "links": {
-      "relation/has-one": "Has One]",
+      "relation/has-one": "Has One",
       "relation/has-many": "Has Many",
       "relation/belongs-to": "Belongs To",
       "relation/refers-to": "Refers To",
