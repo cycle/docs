@@ -311,7 +311,8 @@ SQL:
 
 ```sql
 SELECT
-"category"."id" AS "c0", "category"."title" AS "c1", "l_l_category_photos_pivot"."id" AS "c2", "l_l_category_photos_pivot"."position" AS "c3",
+"category"."id" AS "c0", "category"."title" AS "c1", 
+"l_l_category_photos_pivot"."id" AS "c2", "l_l_category_photos_pivot"."position" AS "c3",
 "l_l_category_photos_pivot"."photo_id" AS "c4", "l_l_category_photos_pivot"."category_id" AS "c5", "l_category_photos"."id" AS "c6", "l_category_photos"."url" AS "c7"
 FROM "categories" AS "category"
 LEFT JOIN "photo_category_positions" AS "l_l_category_photos_pivot"
