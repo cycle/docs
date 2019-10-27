@@ -1,2 +1,9 @@
 [
+  {
+    "title": "Getting Started",
+    "links": {
+      "readme": "Table of Contents",
+      "intro/about": "About Cycle ORM"
+    }
+  }
 ]
