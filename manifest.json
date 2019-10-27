@@ -4,7 +4,7 @@
     "links": {
       "readme": "Table of Contents",
       "intro/about": "About Cycle ORM",
-      "intro/quick-start": "<b>Quick Start</b>",
+      "intro/quick-start": "Quick Start",
       "intro/cli": "Very Quick Start",
       "contributing": "Contributing",
       "intro/semver": "Versioning",
@@ -103,7 +103,7 @@
       "advanced/pagination": "Pagination",
       "advanced/timestamp": "Auto Timestamps",
       "advanced/soft-deletes": "Soft Deleted Entities",
-      "advanced/chained-repository": "Chained Repository (Query Scopes)",
+      "advanced/chained-repository": "Chained Repository",
       "advanced/persist-repository": "Persist Repositories",
       "advanced/active-record": "Active Record"
     }
@@ -111,7 +111,7 @@
   {
     "title": "Advanced",
     "links": {
-      "advanced/daemonizing": "Usage in Long-Running Applications",
+      "advanced/daemonizing": "Long-Running Applications",
       "advanced/testing": "Testing",
       "advanced/limitations": "Limitations"
     }
