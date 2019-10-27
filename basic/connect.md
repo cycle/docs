@@ -150,13 +150,11 @@ $dbal->database('default')->table('users')->select()->fetchAll();
 ```
 
 ## Profiling and Logging
-Each of the database drivers implements the `Psr\Log\LoggerAwareInterface`. You can enable SQL logging by assigning a logger and enabling Driver
-profiling:
+Each of the database drivers implements the `Psr\Log\LoggerAwareInterface`. You can enable SQL logging by assigning a logger :
 
 ```php
 $driver = $dbal->database('default')->getDriver();
 $driver->setLogger($myLogger);
-$driver->setProfiling(true);
 ```
 
 ## Runtime Configuration
