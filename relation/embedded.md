@@ -63,7 +63,7 @@ $t->run();
 ```
 
 
-## Querying
+### Querying
 You can query embedded entities as your would do for any other relation:
 
 ```php
