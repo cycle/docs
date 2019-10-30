@@ -32,7 +32,7 @@ fkCreate    | bool   | Set to true to automatically create FK on innerKey. Defau
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
 indexCreate | bool   | Create an index on innerKey. Defaults to `true`
 
-# Usage
+## Usage
 Cycle will automatically save the related entity (unless `cascade` set to `false`).
 
 ```php
