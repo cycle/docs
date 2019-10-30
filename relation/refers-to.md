@@ -47,7 +47,7 @@ indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 > Please note, default `fkAction` is `SET NULL`, the relation is nullable by default.
 
 
-# Usage
+## Usage
 Cycle will automatically save the related entity and link to it (unless `cascade` set to `false`).
 
 ```php
@@ -70,7 +70,7 @@ $t->persist($post);
 $t->run();
 ```
 
-## Loading
+### Loading
 To access related data call the method `load` of your `Post`'s `Select` object:
 
 ```php
@@ -78,7 +78,7 @@ $u = $orm->getRepository(User::class)->select()->load('lastComment')->wherePK(1)
 print_r($u->getLastComment());
 ```
 
-## Filtering
+### Filtering
 You can filter entity selection using related data, call the method `with` of your entity's `Select` to join the related entity table:
 
 ```php
@@ -101,7 +101,7 @@ $users = $orm->getRepository(User::class)
 print_r($users);
 ```
 
-## Self References
+### Self References
 The RefersTo relation can be used to create self-references.
 
 ```php
