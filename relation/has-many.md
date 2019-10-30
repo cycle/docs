@@ -83,7 +83,7 @@ The child object will be removed during the persist operation.
 
 > Set the relation option `nullable` as true to nullify the outer key instead of entity removal.
 
-## Loading
+### Loading
 To access related data simply call the method `load` of your `User`'s `Select` object:
 
 ```php
@@ -100,7 +100,7 @@ foreach ($users as $u) {
 
 Please note, by default ORM will load HasMany related entities using an external query (`WHERE IN`).
 
-## Filtering
+### Filtering
 You can filter entity selection using related data. Call the method `with` of your entity's `Select` to join the related entity table:
 
 ```php
@@ -127,7 +127,7 @@ $users = $orm->getRepository(User::class)
 print_r($users);
 ```
 
-## Load filtered
+### Load filtered
 Another option available for HasMany relation is to pre-filter related data on the database level. To do that, use the `where` option of the relation, or the`load` method. For example, we can load all users with at least one post and pre-load only published posts:
 
 ```php
