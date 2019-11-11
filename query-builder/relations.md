@@ -183,7 +183,7 @@ INNER JOIN "comment" AS "user_posts_comments"
 WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NOT NULL)
 ```
 
-## Using the `load` method
+## Using the load method
 Alternatively you can use the `load` option, which accepts a closure to specify custom `orderBy` and other conditions:
 
 ```php
