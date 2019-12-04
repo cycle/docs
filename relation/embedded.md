@@ -1,6 +1,6 @@
 # Embedded Entities
 You can embed one or multiple entities inside another object using the parent object table as a data source. It can be achieved using the
-`embedd` relation type and might be useful to perform de-composition of your entity. Such a relation also allows lazy and eager (default)
+`embedded` relation type and might be useful to perform de-composition of your entity. Such a relation also allows lazy and eager (default)
 loading of embedded entities, or the ability to retrieve entities separately (without loading parent model).
 
 ## Definition
@@ -29,7 +29,7 @@ class User
     /** @Column(type = "primary") */
     public $id;
 
-    /** @Embedd(target = "UserCredentials") */
+    /** @Embedded(target = "UserCredentials") */
     public $credentials;
 
     public function __construct()
@@ -81,7 +81,7 @@ class User
     /** @Columntype = "primary") */
     public $id;
 
-    /** @Embedd(target = "Address", load = "lazy") */
+    /** @Embedded(target = "Address", load = "lazy") */
     public $address;
 }
 ```
