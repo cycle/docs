@@ -78,7 +78,7 @@ By default, all embedded entities will be loaded with the parent object. To alte
 /** @Entity */
 class User
 {
-    /** @Columntype = "primary") */
+    /** @Column(type = "primary") */
     public $id;
 
     /** @Embedded(target = "Address", load = "lazy") */
