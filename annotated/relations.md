@@ -102,7 +102,7 @@ class User
 {
     // ...
 
-    /** @ReersTo(target = "Post") */
+    /** @RefersTo(target = "Post") */
     protected $lastPost;
 
     /** @HasMany(target = "Post") */
