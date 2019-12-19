@@ -1,7 +1,7 @@
 # Create, Update and Delete entities
 Any persistence operation with entity or entities has to be done using the `Cycle\ORM\Transaction` object.
 
-> Read how to [describe your entity here](https://github.com/cycle/docs/blob/master/annotated/entity.md).
+> Read how to [describe your entity here](/annotated/entity.md).
 
 ## Create Entity
 In order to create an entity simply pass its instance to the transaction object and invoke the method `run`:

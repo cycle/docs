@@ -32,7 +32,7 @@ fkCreate    | bool   | Set to true to automatically create FK on innerKey. Defau
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
 indexCreate | bool   | Create an index on innerKey. Defaults to `true`
 
-# Usage
+## Usage
 Cycle will automatically save the related entity (unless `cascade` set to `false`).
 
 ```php
@@ -56,7 +56,7 @@ $t->persist($post);
 $t->run();
 ```
 
-## Loading
+### Loading
 To access related data simply call the method `load` of your `Post` `Select` object:
 
 ```php
@@ -64,7 +64,7 @@ $p = $orm->getRepository(Post::class)->select()->load('user')->wherePK(1)->fetch
 print_r($p->getAddress());
 ```
 
-## Filtering
+### Filtering
 You can filter entity selection using related data, call the method `with` of your entity's `Select` to join the related entity table:
 
 ```php

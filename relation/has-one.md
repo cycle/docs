@@ -58,7 +58,7 @@ The child object will be removed during the persist operation.
 
 > To avoid child object removal (detach) set `nullable` true. In this case, child outer key will be reset to `null`.
 
-## Loading
+### Loading
 To access related data simply call the method `load` of your `User`'s `Select` object:
 
 ```php
@@ -66,7 +66,7 @@ $u = $orm->getRepository(User::class)->select()->load('address')->wherePK(1)->fe
 print_r($u->getAddress());
 ```
 
-## Filtering
+### Filtering
 You can filter entity selection using related data, call the method `with` of your entity's `Select` to join the related entity table:
 
 ```php
@@ -89,7 +89,7 @@ $users = $orm->getRepository(User::class)
 print_r($users);
 ```
 
-## Transfer Children
+### Transfer Children
 You can transfer a related entity between two parents:
 
 ```php

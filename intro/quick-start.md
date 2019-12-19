@@ -70,7 +70,7 @@ print_r($dbal->database('default')->getTables());
 
 > Run `php {filename}.php`, the result must be empty array.
 
-## ORM
+### ORM
 Initiate ORM service:
 
 ```php
@@ -79,7 +79,7 @@ $orm = new ORM\ORM(new ORM\Factory($dbal));
 
 > Make sure to add `use Cycle\ORM;` at top of your file.
 
-## Register Namespace
+### Register Namespace
 We can create our first entity in a directory `src` of our project.
 
 Register the new namespace in your composer.json file:
@@ -99,7 +99,7 @@ Execute:
 $ composer dump
 ```
 
-## Manually Configure Mapping
+### Manually Configure Mapping
 You can avoid using `cycle/annotated` and ignore sections "Define Entity" and "Schema Generation". To do that we can define the ORM schema manually, right in PHP code:
 
 ```php
@@ -184,7 +184,7 @@ Cycle will automatically assign the role `user` and table `users` from the defau
 
 > Attention, `@Entity` annotation is required!
 
-## Schema Generation
+### Schema Generation
 In order to operate we need to generate an ORM Schema which will describe how our entities are configured. Though we can do it manually, we will use the pipeline generator provided by `cycle/schema-builder` package, and generators from `cycle/annotated`.
 
 First, we have to create instance of `ClassLocator` which will automatically find the required entities:
@@ -215,13 +215,15 @@ Now we can define our pipeline:
 AnnotationRegistry::registerLoader('class_exists');
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
+    new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
     new Annotated\Embeddings($cl),            // register embeddable entities
     new Annotated\Entities($cl),              // register annotated entities
-    new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
+    new Annotated\MergeColumns(),             // add @Table column declarations
     new Schema\Generator\GenerateRelations(), // generate entity relations
     new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
     new Schema\Generator\RenderTables(),      // declare table schemas
     new Schema\Generator\RenderRelations(),   // declare relation keys and indexes
+    new Annotated\MergeIndexes(),             // add @Table column declarations
     new Schema\Generator\SyncTables(),        // sync table changes to database
     new Schema\Generator\GenerateTypecast(),  // typecast non string columns
 ]);
@@ -241,7 +243,10 @@ Your ORM is now ready for use.
 
 > You can dump the `schema` variable to check the internal representation of your entity schema.
 
-## Persist Entity
+## Work with Entity
+You can start working with entities once your ORM is fully configured.
+
+### Persist Entity
 Now we can init and persist our first entity in the database:
 
 ```php
@@ -263,7 +268,7 @@ You can immediately dump the object to see newly generated primary key:
 print_r($u);
 ```
 
-## Select Entity
+### Select Entity
 You can select the entity from the database using its primary key and associated repository:
 
 ```php
@@ -272,7 +277,7 @@ $u = $orm->getRepository(\Example\User::class)->findByPK(1);
 
 > Remove the code from the section above to avoid fetching the entity from memory.
 
-## Update Entity
+### Update Entity
 To update the entity data simply change its value before persisting it in the transaction:
 
 ```php
@@ -286,7 +291,7 @@ $u->setName("New " . mt_rand(0, 1000));
 
 Notice how a new name will be displayed on every script iteration.
 
-## Delete Entity
+### Delete Entity
 To delete the entity simply call the method `delete` of the Transaction:
 
 ```php

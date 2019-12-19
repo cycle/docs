@@ -116,7 +116,7 @@ To remove the association to the object, use the `remove` or `removeElement` met
 $u->getTags()->removeElement($tag);
 ```
 
-## Loading
+### Loading
 Use the method `load` of your `Select` object to pre-load data of related and pivot entities:
 
 ```php
@@ -139,7 +139,7 @@ foreach ($users as $u) {
 }
 ```
 
-## Accessing Pivot Entity
+### Accessing Pivot Entity
 Many To Many relation provides you the ability to access the pivot entity's data using the `PivotedCollection` object. You can do that
 using the `getPivot` method:
 
@@ -194,7 +194,7 @@ $t->persist($u);
 $t->run();
 ```
 
-## Filtering
+### Filtering
 Similar to Has Many the entity query can be filtered using the `with` method:
 
 ```php
@@ -228,7 +228,7 @@ INNER JOIN `tags` AS `user_tags`
 WHERE `user_tags`.`name` = 'tag a'
 ```
 
-## Chain Filtering
+### Chain Filtering
 Pivot entity data is available for filtering as well, you must use the keyword `@` to access it.
 
 ```php
@@ -253,7 +253,7 @@ $users = $orm->getRepository(User::class)
 
 > Cross-database Many To Many relations are not supported yet.
 
-## Complex loading
+## Complex Loading
 You can load related data using conditions and sorts applied to the pivot table using the option `load`.
 
 For example, we can have the following entities:
@@ -311,7 +311,8 @@ SQL:
 
 ```sql
 SELECT
-"category"."id" AS "c0", "category"."title" AS "c1", "l_l_category_photos_pivot"."id" AS "c2", "l_l_category_photos_pivot"."position" AS "c3",
+"category"."id" AS "c0", "category"."title" AS "c1", 
+"l_l_category_photos_pivot"."id" AS "c2", "l_l_category_photos_pivot"."position" AS "c3",
 "l_l_category_photos_pivot"."photo_id" AS "c4", "l_l_category_photos_pivot"."category_id" AS "c5", "l_category_photos"."id" AS "c6", "l_category_photos"."url" AS "c7"
 FROM "categories" AS "category"
 LEFT JOIN "photo_category_positions" AS "l_l_category_photos_pivot"

@@ -5,13 +5,15 @@
 [![Codecov](https://codecov.io/gh/cycle/orm/graph/badge.svg)](https://codecov.io/gh/cycle/orm)
 <a href="https://discord.gg/TFeEmCs"><img src="https://img.shields.io/badge/discord-chat-magenta.svg"></a>
 
+<img src="https://cycle-orm.dev/cycle.png" height="135px" alt="Cycle ORM" align="left"/>
+
 Cycle is a PHP DataMapper ORM and Data Modelling engine designed to safely work in classic and daemonized PHP applications (like [RoadRunner](https://github.com/spiral/roadrunner)). The ORM provides flexible configuration options to model datasets, a powerful query builder, and supports dynamic mapping schemas. The engine can work with plain PHP objects, support annotation declarations, and proxies via extensions.
 
 <p align="center">
 	<a href="https://github.com/cycle/docs"><b>Documentation</b></a> | <a href="https://github.com/cycle/docs/issues/3">Comparison with Eloquent and Doctrine</a>
 </p>
 
-Features:
+Features
 ---------
 - ORM with has-one, has-many, many-thought-many and polymorphic relations
 - Plain Old PHP objects, [AR](https://github.com/cycle/docs/blob/master/advanced/active-record.md), Custom objects or [same entity type for multiple repositories](https://github.com/cycle/orm/tree/master/tests/ORM/Classless)
@@ -29,7 +31,7 @@ Features:
 - use with or without annotations, proxy classes, and auto-migrations
 - compatible with Doctrine Collections, Doctrine Annotations, and Zend Hydrator
 
-Extensions:
+Extensions
 ---------
 | Component | Current Status
 | ---       | ---
@@ -38,6 +40,6 @@ cycle/annotated | [![Latest Stable Version](https://poser.pugx.org/cycle/annotat
 cycle/proxy-factory | [![Latest Stable Version](https://poser.pugx.org/cycle/proxy-factory/version)](https://packagist.org/packages/cycle/proxy-factory) [![Build Status](https://travis-ci.org/cycle/proxy-factory.svg?branch=master)](https://travis-ci.org/cycle/proxy-factory) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cycle/proxy-factory/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cycle/proxy-factory/?branch=master) [![Codecov](https://codecov.io/gh/cycle/proxy-factory/graph/badge.svg)](https://codecov.io/gh/cycle/proxy-factory)
 cycle/migrations | [![Latest Stable Version](https://poser.pugx.org/cycle/migrations/version)](https://packagist.org/packages/cycle/migrations) [![Build Status](https://travis-ci.org/cycle/migrations.svg?branch=master)](https://travis-ci.org/cycle/migrations) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cycle/migrations/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cycle/migrations/?branch=master) [![Codecov](https://codecov.io/gh/cycle/migrations/graph/badge.svg)](https://codecov.io/gh/cycle/migrations)
 
-License:
+License
 --------
 The MIT License (MIT). Please see [`LICENSE`](./LICENSE) for more information. Maintained by [Spiral Scout](https://spiralscout.com).
