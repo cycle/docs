@@ -54,8 +54,8 @@ You can use the relation right after a schema update (embedded columns will be a
 
 ```php
 $u = new User();
-$u->crendetials->username = 'username';
-$u->crendetials->password = 'password';
+$u->credentials->username = 'username';
+$u->credentials->password = 'password';
 
 $t = new Transaction($orm);
 $t->persist($u);
