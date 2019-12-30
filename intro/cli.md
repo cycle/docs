@@ -49,7 +49,12 @@ $config = $config->withEntityDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src');
 
 $orm = Bootstrap\Bootstrap::fromConfig($config);
 ```
-
+Files tree will look like this:
+```ROOD_DIRECTORY/
+├── src/
+│   └── //app files
+└── bootstrap.php
+```
 ## Console Commands
 To enable console commands, place the file in `config/cycle-cli.php`:
 
@@ -59,7 +64,15 @@ To enable console commands, place the file in `config/cycle-cli.php`:
 require_once 'bootstrap.php';
 return $orm;
 ```
-
+Files tree will look like this:
+```
+ROOD_DIRECTORY/
+├── src/
+│   └── //app files
+├── config/
+│   └── config-cli.php
+└── bootstrap.php
+```
 To display list of found entities:
 
 ```
