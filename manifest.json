@@ -19,7 +19,7 @@
       "basic/crud": "Create, Update, Delete",
       "basic/direct": "Direct Database Queries",
       "basic/select": "Select",
-      "basic/repository": "Custom Repositorie",
+      "basic/repository": "Custom Repositories",
       "basic/relation": "Simple Relation",
       "basic/no-annotations": "Without Annotations"
     }
