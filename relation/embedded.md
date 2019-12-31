@@ -68,7 +68,7 @@ You can query embedded entities as your would do for any other relation:
 
 ```php
 $select = $orm->getRepository(User::class)->select();
-$select->where('address.country', 'USA');
+$select->where('credentials.username', 'username');
 ```
 
 ## Eager and Lazy Loading
@@ -81,8 +81,8 @@ class User
     /** @Column(type = "primary") */
     public $id;
 
-    /** @Embedded(target = "Address", load = "lazy") */
-    public $address;
+    /** @Embedded(target = "UserCredentials", load = "lazy") */
+    public $credentials;
 }
 ```
 
@@ -90,7 +90,7 @@ Now, in order to pre-load embedded entity you have to explicitly use the `load()
 
 ```php
 $select = $orm->getRepository(User::class)->select();
-$select->where('address.country', 'USA');
+$select->where('credentials.username', 'username');
 
-print_r($select->load('address')->fetchAll());
+print_r($select->load('credentials')->fetchAll());
 ```
