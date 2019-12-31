@@ -50,7 +50,8 @@ $config = $config->withEntityDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src');
 $orm = Bootstrap\Bootstrap::fromConfig($config);
 ```
 Files tree will look like this:
-```ROOD_DIRECTORY/
+```
+ROOD_DIRECTORY/
 ├── src/
 │   └── //app files
 └── bootstrap.php
