@@ -216,8 +216,8 @@ AnnotationRegistry::registerLoader('class_exists');
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
-    new Annotated\Embeddings($cl),            // register embeddable entities
-    new Annotated\Entities($cl),              // register annotated entities
+    new Annotated\Embeddings($classLocator),  // register embeddable entities
+    new Annotated\Entities($classLocator),    // register annotated entities
     new Annotated\MergeColumns(),             // add @Table column declarations
     new Schema\Generator\GenerateRelations(), // generate entity relations
     new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
