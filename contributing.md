@@ -7,7 +7,7 @@ Please make sure that the following requirements are satisfied before submitting
 * `declare(strict_types=1);` is mandatory
 * Your code must include tests
 
-> Use our discord server to check for the advice or suggestion https://discord.gg/FZ9BCWg
+> Use our discord server to check for the advice or suggestion https://discord.gg/kNUhSev
 
 ## Testing Cycle
 To test ORM engine locally, download the `cycle/orm` repository and start docker containers inside the tests folder:
