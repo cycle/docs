@@ -190,7 +190,7 @@ In order to operate we need to generate an ORM Schema which will describe how ou
 First, we have to create instance of `ClassLocator` which will automatically find the required entities:
 
 ```php
-$finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__]);
+$finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__]); // __DIR__ here is folder with entities
 $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 ```
 
