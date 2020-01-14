@@ -303,7 +303,7 @@ You can modify your entity schema to add new columns. Note that you have to eith
 
 ```php
 /**
-* @Column(type=int,nullable=true)
+* @Column(type="int",nullable=true)
 * @var int|null
 */
 protected $age;
