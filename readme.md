@@ -60,6 +60,7 @@ Table of Contents
   * [Database Schema Declaration](advanced/declaration.md)
   * [Synchronizing Database Schema (Migrations)](advanced/sync-schema.md)
 * Customization
+  * [Customize default Repository, Mapper, Source and Constrain classes](advanced/default-classes.md)
   * [Custom Mappers](advanced/custom-mapper.md)
   * [Constrains](advanced/constrain.md)
   * [Single Table Inheritance](advanced/single-table-inheritance.md)
