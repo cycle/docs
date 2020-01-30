@@ -30,7 +30,7 @@ class User
 
     public function __construct()
     {
-        $this->address = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     // ...
@@ -180,7 +180,7 @@ class User
 
     public function __construct()
     {
-        $this->address = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     // ...
