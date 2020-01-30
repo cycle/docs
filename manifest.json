@@ -96,6 +96,7 @@
   {
     "title": "Customization",
     "links": {
+      "advanced/default-classes": "Customize default Repository, Mapper, Source and Constrain classes",
       "advanced/custom-mapper": "Custom Mappers",
       "advanced/constrain": "Constrains",
       "advanced/single-table-inheritance": "Single Table Inheritance",
