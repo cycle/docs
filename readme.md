@@ -55,6 +55,7 @@ Table of Contents
   * [DateTime properties](advanced/datetime.md)
   * [UUID as Primary Key](advanced/uuid.md)
 * Databases
+  * [Full Documentation](advanced/full-db.md)
   * [Database Schema Introspection](advanced/introspection.md)
   * [Database Schema Declaration](advanced/declaration.md)
   * [Synchronizing Database Schema (Migrations)](advanced/sync-schema.md)
