@@ -1,6 +1,5 @@
 # Database - Full documentation
 You can find the full documentation on `spiral/database` here:
-
     * [Installation and Configuration](https://spiral.dev/docs/database-configuration)
     * [Access Database](https://spiral.dev/docs/database-access)
     * [Database Isolation](https://spiral.dev/docs/database-/isolation)
