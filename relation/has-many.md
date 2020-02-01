@@ -18,7 +18,7 @@ class User
 To use a newly created entity you must define the collection to store related entities. Do it in your constructor:
 
 ```php
-use use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /** @Entity */
 class User
