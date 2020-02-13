@@ -73,7 +73,7 @@ $result = $repository->select()->where('balance', '>', 1)->load('address')->fetc
 
 > It's recommended to avoid usage of `select` method outside of repository classes and instead expose [custom](/basic/repository.md) find methods.
 
-> You can read more about the methods available in select queries [here](https://spiral-framework.com/guide/database-builders).
+> You can read more about the methods available in select queries [here](https://spiral.dev/docs/database-query-builders).
 
 ## The repository Scope
 Please note, in Cycle ORM the Repository object is only responsible for entity retrieval. All persist operations must be handled by transactions, entity mappers and command chains.
