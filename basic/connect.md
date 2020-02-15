@@ -42,6 +42,7 @@ To register a new database simply add it into `databases` section:
 ```php
 'default' => [
   'connection' => 'sqlite'
+  'driver': 'sqlite'
 ]
 ```
 
