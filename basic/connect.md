@@ -13,7 +13,8 @@ $dbConfig = new Database\Config\DatabaseConfig([
     'default'     => 'default',
     'databases'   => [
         'default' => [
-            'connection' => 'sqlite'
+            'connection' => 'sqlite',
+            'driver'     => 'sqlite'
         ]
     ],
     'connections' => [
