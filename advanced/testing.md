@@ -76,7 +76,7 @@ public function tearDown()
     foreach ($database->getTables() as $table) {
         $schema = $table->getSchema();
         foreach ($schema->getForeignKeys() as $foreign) {
-            $schema->dropForeignKey($foreign->getColumn());
+            $schema->dropForeignKey($foreign->getColumns());
         }
 
         $schema->save(Handler::DROP_FOREIGN_KEYS);
