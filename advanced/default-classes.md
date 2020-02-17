@@ -1,4 +1,4 @@
-# Customize Schema
+# Customize Schema Defaults
 You can set default Repository, Mapper, Source or Constrain for all entity classes
 
 ```php
