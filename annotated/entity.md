@@ -182,7 +182,7 @@ Option | Value | Comment
 name | string | Column name. Defaults to the property name.
 type | string | Column type with arguments.
 primary | bool | Explicitly set column as primary key. Defaults to `false`
-typecast | callable | Column typecast function. Defaults to one of (int|float|bool|datetime) based on column type
+typecast | callable | Column typecast function. Defaults to one of (int\|float\|bool\|datetime) based on column type
 nullable | bool | Set column as nullable. Defaults to `false`
 default | mixed | Default column value. Defaults to `none`
 
