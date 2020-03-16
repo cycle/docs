@@ -23,7 +23,7 @@ class Address
 
 > You do not need to define the `primary` column, this column will be inherited from the parent entity. Mapper methods `queueDelete`, `queueCreate` and `queueUpdate` would never be invoked due to the delegation to the parent mapper.
 
-To embed an entity to another object use the `@Embedd` annotation:
+To embed an entity to another object use the `@Embedded` annotation:
 
 ```php
 /**
@@ -34,7 +34,7 @@ class User
     /** @Column(type = "primary") */
     public $id;
 
-    /** @Embedd(target = "Address") */
+    /** @Embedded(target = "Address") */
     public $address;
 }
 ```
@@ -92,7 +92,7 @@ class User
     /** @Column(type = "primary") */
     public $id;
 
-    /** @Embedd(target = "Address", load = "lazy") */
+    /** @Embedded(target = "Address", load = "lazy") */
     public $address;
 }
 ```
