@@ -22,6 +22,12 @@ The Select instance implements the `Countable` interface and can be used to calc
 print_r($select->count());
 ```
 
+Paginate and count: 
+
+```php
+$paginator->withPage(2)->paginate($select)->countPages(); 
+```
+
 ## Paginating with relations
 Please note that pagination happens on the database end. This forces you to explicitly set the result set as `distinct` if relations
 like `hasMany`, `manyToMany` are joined to your query:
