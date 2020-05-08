@@ -105,7 +105,7 @@ $user = $orm->make('user', [/* fields* /]);
 
 > You can freely assign custom repositories and constraints to your entities.
 
-# Example
+## Example
 ```php
 <?php
 declare(strict_types=1);
