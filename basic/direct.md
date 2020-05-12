@@ -3,7 +3,7 @@ You can always talk to the database directly without any ORM abstraction on top 
 
 ## Get Access to Entity Database
 In order to receive access to the database specific to the entity you can either call `$dbal->database()` or request it via the Source object
-available trough the ORM:
+available through the ORM:
 
 ```php
 $source = $orm->getSource(User::class);

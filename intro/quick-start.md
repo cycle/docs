@@ -190,7 +190,7 @@ In order to operate we need to generate an ORM Schema which will describe how ou
 First, we have to create instance of `ClassLocator` which will automatically find the required entities:
 
 ```php
-$finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__]);
+$finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__]); // __DIR__ here is folder with entities
 $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 ```
 
@@ -216,8 +216,8 @@ AnnotationRegistry::registerLoader('class_exists');
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
-    new Annotated\Embeddings($cl),            // register embeddable entities
-    new Annotated\Entities($cl),              // register annotated entities
+    new Annotated\Embeddings($classLocator),  // register embeddable entities
+    new Annotated\Entities($classLocator),    // register annotated entities
     new Annotated\MergeColumns(),             // add @Table column declarations
     new Schema\Generator\GenerateRelations(), // generate entity relations
     new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
@@ -303,7 +303,7 @@ You can modify your entity schema to add new columns. Note that you have to eith
 
 ```php
 /**
-* @Column(type=int,nullable=true)
+* @Column(type="int",nullable=true)
 * @var int|null
 */
 protected $age;

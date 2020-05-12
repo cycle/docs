@@ -55,10 +55,12 @@ Table of Contents
   * [DateTime properties](advanced/datetime.md)
   * [UUID as Primary Key](advanced/uuid.md)
 * Databases
+  * [Full Documentation](advanced/full-db.md)
   * [Database Schema Introspection](advanced/introspection.md)
   * [Database Schema Declaration](advanced/declaration.md)
   * [Synchronizing Database Schema (Migrations)](advanced/sync-schema.md)
 * Customization
+  * [Customize Schema Defaults](advanced/default-classes.md)
   * [Custom Mappers](advanced/custom-mapper.md)
   * [Constrains](advanced/constrain.md)
   * [Single Table Inheritance](advanced/single-table-inheritance.md)

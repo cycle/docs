@@ -88,6 +88,7 @@
   {
     "title": "Databases",
     "links": {
+      "advanced/full-db": "Full Documentation",
       "advanced/introspection": "Schema Introspection",
       "advanced/declaration": "Schema Declaration",
       "advanced/sync-schema": "Database Migrations"
@@ -96,6 +97,7 @@
   {
     "title": "Customization",
     "links": {
+      "advanced/default-classes": "Customize Schema Defaults",
       "advanced/custom-mapper": "Custom Mappers",
       "advanced/constrain": "Constrains",
       "advanced/single-table-inheritance": "Single Table Inheritance",

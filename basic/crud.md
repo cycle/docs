@@ -34,7 +34,7 @@ try {
 } catch (ConnectionException $e) {
    print_r("database has gone away");
 } catch (ConstrainException $e) {
-   print_r("database constrain not met, nulable field?");
+   print_r("database constrain not met, nullable field?");
 }
 ```
 
