@@ -58,7 +58,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\RenderTables(),                                   // declare table schemas
     new Schema\Generator\RenderRelations(),                                // declare relation keys and indexes
     new Annotated\MergeIndexes(),                                          // add @Table column declarations
-    new \Cycle\Migrations\GenerateMigrations($migrator->getRepository()),  // generate migrations
+    new \Cycle\Migrations\GenerateMigrations($migrator->getRepository(), $migrator->getConfig()),  // generate migrations
     new Schema\Generator\GenerateTypecast(),                               // typecast non-string columns
 ]);
 ```
