@@ -205,7 +205,7 @@ Once the class locator is established we can create our schema generation pipeli
 ```php
 use Cycle\Schema;
 use Cycle\Annotated;
-use Doctrine\Common\Annotations\AnnotationRegisty;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 ```
 
 Now we can define our pipeline:
