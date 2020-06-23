@@ -76,7 +76,7 @@ class User
 {
     // ...
 
-    /** @MorphedhasOne(target = "Image") */
+    /** @MorphedHasOne(target = "Image") */
     public $image;
 }
 ```
@@ -105,7 +105,7 @@ class User
 {
     // ...
 
-    /** @MorphedhasMany(target = "Image") */
+    /** @MorphedHasMany(target = "Image") */
     public $images;
 }
 ```
