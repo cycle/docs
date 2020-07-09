@@ -18,7 +18,7 @@ class User
 
     public function getUUID(): string
     {
-        return $uuid;
+        return $this->uuid;
     }
 }
 ```
