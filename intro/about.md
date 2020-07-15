@@ -15,7 +15,7 @@ Cycle is a PHP DataMapper ORM and Data Modelling engine designed to safely work 
 
 Features
 ---------
-- ORM with has-one, has-many, many-thought-many and polymorphic relations
+- ORM with has-one, has-many, many-through-many and polymorphic relations
 - Plain Old PHP objects, [AR](https://github.com/cycle/docs/blob/master/advanced/active-record.md), Custom objects or [same entity type for multiple repositories](https://github.com/cycle/orm/tree/master/tests/ORM/Classless)
 - eager and lazy loading, query builder with multiple fetch strategies
 - embedded entities, lazy/eager loaded embedded partials
@@ -26,7 +26,7 @@ Features
 - designed to work in long-running applications: immutable service core, disposable UoW
 - supports MySQL, MariaDB, PostgresSQL, SQLServer, SQLite
 - schema scaffolding, introspection, and migrations
-- supports global query constrains, UUIDs as PK, soft deletes, auto timestamps
+- supports global query constraints, UUIDs as PK, soft deletes, auto timestamps
 - custom column types, FKs to non-primary columns
 - use with or without annotations, proxy classes, and auto-migrations
 - compatible with Doctrine Collections, Doctrine Annotations, and Zend Hydrator
