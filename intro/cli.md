@@ -51,7 +51,7 @@ $orm = Bootstrap\Bootstrap::fromConfig($config);
 ```
 Files tree will look like this:
 ```
-ROOD_DIRECTORY/
+ROOT_DIRECTORY/
 ├── src/
 │   └── //app files
 └── bootstrap.php
@@ -67,7 +67,7 @@ return $orm;
 ```
 Files tree will look like this:
 ```
-ROOD_DIRECTORY/
+ROOT_DIRECTORY/
 ├── src/
 │   └── //app files
 ├── config/
