@@ -31,13 +31,6 @@ $result = $db->query('SELECT * FROM users WHERE id = :id', [
 print_r($result->fetchAll());
 ```
 
-Or:
-
-```php
-$result = $db->query('SELECT * FROM users WHERE id = ?', [1]);
-print_r($result->fetchAll());
-```
-
 To execute a non-SELECT query:
 
 ```php
