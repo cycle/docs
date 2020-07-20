@@ -6,7 +6,7 @@ provided by the package `spiral/database`.
 
 ## Instantiate DBAL
 In order to start, we have to initialize the `DatabaseManager` service used to automatically create and manage a set of application databases.
-The list of available connections and databases can be listed in the initial configuration.
+The list of available connections and databases can be provided in the initial configuration.
 
 ```php
 $dbConfig = new Database\Config\DatabaseConfig([
@@ -66,7 +66,7 @@ To use read/write connections use sections `connection` and `readConnection` acc
 
 ## Connections
 Each database instance must have an associated connection object. Connections used to provide low-level functionality and wrap
-different database drivers. To register new a connection you have to specify the driver class and its connection options:
+different database drivers. To register a new connection you have to specify the driver class and its connection options:
 
 For **SQLite**:
 
@@ -128,7 +128,7 @@ There are multiple connection options you can use to customize the behavior.
 
 Options | Value | Description
 --- | --- | ---
-timezone | string | Default driver timezone (all DateTimeInterface query parameters will be converted into it). Defaults to `UTC`.
+timezone | string | Default driver timezone (all `DateTimeInterface` query parameters will be converted into it). Defaults to `UTC`.
 reconnect | bool | Allow the driver to automatically reconnect. Defaults to `false`.
 profiling | bool | Enable SQL profiling (logging). Defaults to `false`.
 
@@ -143,14 +143,14 @@ The database will be automatically connected on the first SQL request.
 
 > DBAL will use the database specified in the `default` config option if the name is `null`.
 
-Direct SQL queries as possible from this moment:
+Direct SQL queries are possible from this moment:
 
 ```php
 $dbal->database('default')->table('users')->select()->fetchAll();
 ```
 
 ## Profiling and Logging
-Each of the database drivers implements the `Psr\Log\LoggerAwareInterface`. You can enable SQL logging by assigning a logger :
+Each of the database drivers implements the `Psr\Log\LoggerAwareInterface`. You can enable SQL logging by assigning a logger:
 
 ```php
 $driver = $dbal->database('default')->getDriver();
