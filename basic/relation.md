@@ -79,7 +79,7 @@ class Address
 }
 ```
 
-To relate our entities we have to add a new property to one of them and annotate it properly. We should also add getters and setters.
+To relate our entities we have to add a new property to one of them and annotate it properly. We should also add getter and setter for this property.
 
 ```php
 /**
@@ -149,7 +149,7 @@ $t->run();
 The generated command chain will automatically be sorted to keep the proper order of SQL operations.
 
 ## Retrieve the related entity
-Though Cycle ORM support lazy loading using proxies (see extension `cycle/proxy-factory`), it is recommended to pre-load needed
+Though Cycle ORM supports lazy loading using proxies (see extension `cycle/proxy-factory`), it is recommended to pre-load needed
 relations using custom repository methods.
 
 To load related object use the `load` method of `Cycle\ORM\Select`. The relation can be loaded using property name:
@@ -180,7 +180,7 @@ LEFT JOIN "addresses" AS "l_user_address"
 ```
 
 Please note, by default ORM will try to load a `hasOne` relation using `LEFT JOIN`. You can alter this behaviour and force loading using an
-external query (post load) by modifying the load method:
+external query (post load) by modifying the `load` method:
 
 ```php
 $result = $orm->getRepository(User::class)
@@ -211,8 +211,8 @@ WHERE "user_address"."user_id" IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 1
 > You can load relation level using dot notation `$select->load('post.comments.author')`
 
 ## Filter by relation
-To filter the selection using related data use the method `with`. Once this method is invoked you can address the relation fields
-in the where method using the relation name as a prefix:
+To filter the selection using related data use the `with` method. Once this method is invoked you can address the relation fields
+in the `where` method using the relation name as a prefix:
 
 ```php
 $result = $orm->getRepository(User::class)
@@ -236,7 +236,7 @@ INNER JOIN "addresses" AS "user_address"
 WHERE "user_address"."city" = 'New York';
 ```
 
-You can freely combine `load` and `with` method, ORM will help you to avoid collisions:
+You can freely combine `load` and `with` methods, ORM will help you to avoid collisions:
 
 ```php
 $result = $orm->getRepository(User::class)
@@ -276,7 +276,7 @@ $result = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-In this case, only one JOIN will be produced:
+In this case, only one `JOIN` will be produced:
 
 ```sql
 SELECT
