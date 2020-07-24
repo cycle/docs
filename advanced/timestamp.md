@@ -83,3 +83,12 @@ class User
 ```
 
 > You can use one mapper for multiple entities.
+
+
+NOTE: ORM Heap would not be reset after the transaction, you must clean it manually if needed.
+After save in db, fetch entity from db return null on TimestampedMapper fields, need clean heap.
+
+```
+$this->repository->save($entity);
+$orm->getHeap()->clean();
+```
