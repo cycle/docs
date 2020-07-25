@@ -1,5 +1,5 @@
 # Embeddings
-THe ORM can simplify the definition of large entities by proving the ability to split some of the columns into an embedded entity. Embedded entities by default will always be loaded with the parent object. However, partial entity selection is possible as well.
+The ORM can simplify the definition of large entities by providing the ability to split some of the columns into an embedded entity. Embedded entities by default will always be loaded with the parent object. However, partial entity selection is possible as well.
 
 > Embedded entities do not support relations at the moment.
 
@@ -83,7 +83,7 @@ $select->where('address.country', 'USA');
 ```
 
 ## Eager and Lazy Loading
-By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of `@Embedd` relation annotation:
+By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of `@Embedded` relation annotation:
 
 ```php
 /** @Entity */
@@ -107,7 +107,7 @@ print_r($select->load('address')->fetchAll());
 ```
 
 ## Query Embedded entity separately
-It is possible to query the embedded entity separately from the parent, however, you must clearly know the `role` of such entity as using the class name is forbidden (in order to allow usage of the embedding inside different parents). Usually, such role will be composed using parent and entity role (and ":" separator).
+It is possible to query the embedded entity separately from the parent, however, you must clearly know the `role` of such entity as using the class name is forbidden (in order to allow usage of the embedding inside different parents). Usually, such role will be composed using parent and entity role with ":" separator.
 
 ```php
 $orm->getRepository("user:address")->findAll();
