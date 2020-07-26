@@ -14,9 +14,9 @@ We can now register our first entity, add its columns and link to a specific tab
 ```php
 use Cycle\Schema\Definition;
 
-$e = new Definition\Entity();
-$e->setRole('user');
-$e->setClass(User::class);
+$entity = new Definition\Entity();
+$entity->setRole('user');
+$entity->setClass(User::class);
 
 // add fields
 $entity->getFields()->set(
@@ -29,10 +29,10 @@ $entity->getFields()->set(
 );
 
 // register entity
-$r->register($e);
+$r->register($entity);
 
 // associate table
-$r->linkTable($e, 'default', 'users');
+$r->linkTable($entity, 'default', 'users');
 ```
 
 You can generate ORM schema immediately using `Schema\Compiler`:
@@ -46,7 +46,7 @@ $orm = $orm->withSchema(new ORM\Schema($schema));
 > You can also declare relations, indexes, and associate custom mappers. See [examples](https://github.com/cycle/schema-builder/tree/master/tests/Schema).
 
 ## Custom Generators
-Upon generating the final schema, you can pass your registry a set of generators, each of them is responsible for the specific part of the schema compilation. Simple compilation pipeline will look like:
+Upon generating the final schema, you can pass a set of generators to your registry, each of them is responsible for the specific part of the schema compilation. Simple compilation pipeline will look like:
 
 ```php
 $schema = (new Schema\Compiler())->compile($r, [
