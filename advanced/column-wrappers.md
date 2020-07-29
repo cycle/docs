@@ -63,7 +63,7 @@ class User
     /** @Column(type="primary") */
     public $id;
 
-    /** @Column(type="string", typecast="Uuid") */
+    /** @Column(type="string", typecast=Uuid::class) */
     public $uuid;
 }
 ```
