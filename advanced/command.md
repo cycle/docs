@@ -49,24 +49,24 @@ We can review a simple command setup in which one command declares a column whic
 ```php
 use Cycle\ORM\Command\Database;
 
-$update = new Database\Update($dbal->database('default'), 'table', $data, $where);
+$update = new Update($dbal->database('default'), 'table', $data, $where);
 $insert = new Insert($dbal->database('default'), 'table', $data);
 ```
 
-Now we have to declare for the update command to wait for the context provided by insert:
+Now we have to declare for the `$update` command to wait for the context provided by `$insert`:
 
 ```php
 // command would be not ready until the context is provided
 $update->waitContext('some_id');
 ```
 
-And ask Insert command to forward context value once it's available:
+And ask `$insert` command to forward context value once it's available:
 
 ```php
 $insert->forward(Insert::INSERT_ID, $update, 'some_id');
 ```
 
-Now, no matter what in which order commands were added to the Transaction the Update will always be executed after the Insert command.
+Now, no matter what in which order commands were added to the Transaction the `$update` will always be executed after the `$insert` command.
 
 ## Joining Commands in Mappers
 If you want to implement and issue custom commands you must pick a place where to create them. You can do this inside a custom relation `queue` method or alter one of the methods of entity mappers.
