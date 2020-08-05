@@ -59,7 +59,7 @@ mapper         | class  | Mapper class name. Defaults to `Cycle\ORM\Mapper\Mappe
 repository     | class  | Repository class to represent read operations for an entity. Defaults to `Cycle\ORM\Select\Repository`
 table          | string | Entity source table. Defaults to plural form of entity role
 database       | string | Database name. Defaults to `null` (default database)
-readonlySchema | bool   | Set to true to disable schema synchronization for the assigned table. Defaults to `false`
+readonlySchema | bool   | Set to `true` to disable schema synchronization for the assigned table. Defaults to `false`
 source         | class  | Entity source class (internal). Defaults to `Cycle\ORM\Select\Source`
 constrain      | class  | Class name of constraint to be applied to every entity query. Defaults to `null`
 
@@ -110,7 +110,7 @@ class User
 }
 ```
 
-> Annotation import is omitted in a following sections.
+> Annotation import is omitted in the following sections.
 
 By default, the entity property will be mapped to the column with the same name as the property.
 You can change it as follows:
@@ -182,7 +182,7 @@ Option | Value | Comment
 name | string | Column name. Defaults to the property name.
 type | string | Column type with arguments.
 primary | bool | Explicitly set column as primary key. Defaults to `false`
-typecast | callable | Column typecast function. Defaults to one of (int\|float\|bool\|datetime) based on column type
+typecast | callable | Column typecast function. Defaults to one of (`int`\|`float`\|`bool`\|`datetime`) based on column type
 nullable | bool | Set column as nullable. Defaults to `false`
 default | mixed | Default column value. Defaults to `none`
 
@@ -194,13 +194,13 @@ Type        | Parameters                | Description
 bigPrimary  | ---                       | Same as primary but uses bigInteger to store its values.
 boolean     | ---                       | Boolean type, some databases will store it as integer (1/0).
 integer     | ---                       | Database specific integer (usually 32 bits).
-tinyInteger | ---                       | Small/tiny integer, check your DBMS to check it's the size.
-bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check it's the size.
+tinyInteger | ---                       | Small/tiny integer, check your DBMS to find size limitations.
+bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to find size limitations.
 **string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.
 text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.
 tinyText    | ---                       | Tiny text, same as "text" for most of the databases. It differs only in MySQL.
 longText    | ---                       | Long text, same as "text" for most of the databases. It differs only in MySQL.
-double      | ---                       | [Double precision number.] (https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
+double      | ---                       | [Double precision number.](https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
 float       | ---                       | Single precision number, usually mapped into "real" type in the database.
 decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.
 datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.
@@ -213,7 +213,7 @@ longBinary  | ---                       | Long binary, same as "binary" for most
 json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.
 
 ## Enums
-THe ORM supports the enum type for all available drivers. You must define enum options using comma separator:
+The ORM supports the enum type for all available drivers. You must define enum options using comma separator:
 
 ```php
 /** @Column(type = "enum(active,disabled)", default = "active") */
@@ -250,7 +250,7 @@ class User
 > The column definition is identical to the one used for the property.
 
 ## Merging annotations
-The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source, Repository and Constrain classes. This approach can be useful in cases where when you want to implement domain functionality like auto timestamps or soft deletes.
+The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source, Repository and Constrain classes. This approach can be useful in cases when you want to implement domain functionality like auto timestamps or soft deletes.
 
 ```php
 /**
