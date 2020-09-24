@@ -227,7 +227,7 @@ WHERE `id` = 1 AND (`status` = 'active' OR `id` = 10)
 Boolean joiners are respected:
 
 ```php
-$select->where('id', 1)->orWhere(function (SelectQuery $select) {
+$select->where('id', 1)->orWhere(function (QueryBuilder $select) {
     $select->where('status', 'active')->andWhere('id', 10);
 });
 ```
