@@ -119,14 +119,14 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
     $cc = parent::queueCreate($entity, $node, $state);
 
     return new Branch\Condition($cc, function() {
-        return mt_rand(1, 0) === 1; // randomly drop some commands, don't do it.
+        return mt_rand(0, 1) === 1; // randomly drop some commands, don't do it.
     });
 }
 ```
 
 You can link these conditions to the entity state or node to implement more complex logic.
 
-> Make sure to use entity State, not Node ,as a condition variable as State will change during the execution while Node will not.
+> Make sure to use entity State, not Node, as a condition variable as State will change during the execution while Node will not.
 
 ## Split command
 Another internal command which is applied by the ORM by default is `Split`. The command is used in order to resolve cyclic dependencies by splitting the persistence of the object into Insert and Update.
