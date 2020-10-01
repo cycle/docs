@@ -1,5 +1,5 @@
 # Node Parser
-Cycle ORM provides a convenient* way to convert flat structures into data trees. The parser can work over one large query or multiple queries
+Cycle ORM provides a convenient way to convert flat structures into data trees. The parser can work over one large query or multiple queries
 using an identical approach. The parser works with numeric arrays.
 
 > This section is intended for advanced scenarios, make sure you can't achieve required flexibility using default instruments before jumping to this approach.
@@ -36,7 +36,7 @@ $query = $db
     ->leftJoin('orders as o')->on('o.user_id', 'u.id');
 ```
 
-The query will return results in a form: [user.id, user.balance, order.id, order.user_id, order.total]. Lets unpack it into a structure like:
+The query will return results in a form: [user.id, user.balance, order.id, order.user_id, order.total]. Let's unpack it into a structure like:
 
 ```php
 [
@@ -79,7 +79,7 @@ foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
 > Check SingularNode for one to one associations.
 
 ## External Queries
-In some cases (for example for one-to-many associations) it might be useful to execute a relation query using external SQL SELECT and `WHERE IN` statement. This can be achieved by linking nodes together to aggregate query context:
+In some cases (for example for one-to-many associations) it might be useful to execute a relation query using external SQL `SELECT` and `WHERE IN` statement. This can be achieved by linking nodes together to aggregate query context:
 
 ```php
 $query = $db->select('u.id', 'u.balance')->from('users as u');
