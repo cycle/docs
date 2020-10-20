@@ -487,7 +487,9 @@ You can compare nested query return value in where statements:
 
 ```php
 $select->where(
-    $database->select('COUNT(*)')->from('test')->where('id', 'BETWEEN', 10, 100), '>', 1
+    $database->select('COUNT(*)')->from('test')->where('id', 'BETWEEN', 10, 100),
+    '>',
+    1
 );
 ```
 
