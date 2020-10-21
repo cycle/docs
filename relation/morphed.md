@@ -38,6 +38,8 @@ class Image
 
 You can use your relation as a standard hasOne after that. **Note, eager loading is not possible with `belongsToMorphed` relation type.**
 
+Note: In order to be able to use the annotation as `@BelongsToMorphed`, you need to import it with `use Cycle\Annotated\Annotation\Relation\Morphed\BelongsToMorphed;`
+
 ## Variations
 The ORM provides three basic relations for polymorphic connections:
 
