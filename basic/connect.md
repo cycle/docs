@@ -18,7 +18,7 @@ $dbConfig = new Database\Config\DatabaseConfig([
     ],
     'connections' => [
         'sqlite' => [
-            'driver'  => Database\Driver\SQLite\SQLiteDriver::class,
+            'driver'  => Spiral\Database\Driver\SQLite\SQLiteDriver::class,
             'options' => [
                 'connection' => 'sqlite:database.db',
                 'username'   => '',
@@ -72,7 +72,7 @@ For **SQLite**:
 
 ```php
 'sqlite' => [
-    'driver'  => Driver\SQLite\SQLiteDriver::class,
+    'driver'  => Spiral\Database\Driver\SQLite\SQLiteDriver::class,
     'options' => [
         'connection' => 'sqlite:database.db',
         'username'   => '',
@@ -87,7 +87,7 @@ For `MySQL` and `MariaDB`:
 
 ```php
 'mysql'     => [
-  'driver'  => Driver\MySQL\MySQLDriver::class,
+  'driver'  => Spiral\Database\Driver\MySQL\MySQLDriver::class,
   'options' => [
     'connection' => 'mysql:host=127.0.0.1;dbname=database',
     'username'   => 'mysql',
@@ -100,7 +100,7 @@ For `PostgresSQL`:
 
 ```php
 'postgres'  => [
-  'driver'   => Driver\Postgres\PostgresDriver::class,
+  'driver'   => Spiral\Database\Driver\Postgres\PostgresDriver::class,
   'options' => [
       'connection' => 'pgsql:host=127.0.0.1;dbname=database',
       'username'   => 'postgres',
@@ -113,7 +113,7 @@ For `SQLServer`:
 
 ```php
 'sqlServer' => [
-  'driver'  => Driver\SQLServer\SQLServerDriver::class,
+  'driver'  => Spiral\Database\Driver\SQLServer\SQLServerDriver::class,
   'options' => [
     'connection' => 'sqlsrv:Server=OWNER;Database=DATABASE',
     'username'   => 'sqlServer',
