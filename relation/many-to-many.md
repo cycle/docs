@@ -88,6 +88,7 @@ thoughInnerKey | string | Key name connected to the innerKey of source entity. D
 thoughOuterKey | string | Key name connected to the outerKey of a related entity. Defaults to `{targetRole}_{outerKey}`
 thoughWhere | array | Where conditions applied to `though` entity
 where       | array | Where conditions applied to a related entity
+orderBy     | array  | Additional sorting rules
 fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`

@@ -51,7 +51,8 @@ cascade     | bool   | Automatically save related data with parent entity. Defau
 nullable    | bool   | Defines if the relation can be nullable (child can have no parent). Defaults to `false`
 innerKey    | string | Inner key in parent entity. Defaults to the primary key
 outerKey    | string | Outer key name. Defaults to `{parentRole}_{innerKey}`
-where       | array  | Additional where condition to be applied for the relation. Defaults to none.
+where       | array  | Additional where condition to be applied for the relation. Defaults to none
+orderBy     | array  | Additional sorting rules. Defaults to none
 fkCreate    | bool   | Set to true to automatically create FK on outerKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
 indexCreate | bool   | Create an index on outerKey. Defaults to `true`
@@ -128,7 +129,9 @@ print_r($users);
 ```
 
 ### Load filtered
-Another option available for HasMany relation is to pre-filter related data on the database level. To do that, use the `where` option of the relation, or the`load` method. For example, we can load all users with at least one post and pre-load only published posts:
+Another option available for HasMany relation is to pre-filter related data on the database level.
+To do that, use the `where` option of the relation, or the`load` method.
+For example, we can load all users with at least one post and pre-load only published posts:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -139,8 +142,8 @@ $users = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-Another option is to use the `with` selection to drive the data for the pre-loaded entities. You can point your `load` method to use
-`with` filtered relation data via `using` flag:
+Another option is to use the `with` selection to drive the data for the pre-loaded entities.
+You can point your `load` method to use `with` filtered relation data via `using` flag:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -189,5 +192,33 @@ class User
     {
         return $this->posts;
     }
+}
+```
+
+### Load sorted
+
+You can specify the sort order of the loaded data. The new rule will override the default if specified.
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->distinct()
+    ->with('posts')
+    ->load('posts', ['where' => ['published' => true], ['orderBy' => ['published_at' => 'DESC']]])
+    ->fetchAll();
+```
+
+The default sort order can also be preset in the relationship definition:
+
+```php
+/** @Entity() */
+class User
+{
+    // ...
+
+    /** @HasMany(target = "Post", orderBy={"published_at": "DESC"}) */
+    protected $posts;
+    
+    // ...
 }
 ```
