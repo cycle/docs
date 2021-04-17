@@ -41,7 +41,7 @@ Some options can be used to overwrite default entity behaviour, for example to a
 use Cycle\Annotated\Annotation\Entity;
 
 /**
- * @Entity(repository = "Repository/UserRepository")
+ * @Entity(repository = "Repository\UserRepository")
  */
 class User
 {
@@ -71,7 +71,7 @@ use Cycle\Annotated\Annotation\Entity;
 /**
  * @Entity(
  *    table      = "users",
- *    repository = "Repository/UserRepository",
+ *    repository = "Repository\UserRepository",
  *    constrain  = "Constrain/SortByID"
  * )
  */
