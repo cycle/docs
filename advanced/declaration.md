@@ -214,7 +214,7 @@ $schema->string('email');
 $schema->index(['email']); //Simple index
 $schema->column('email')->index(); //You can also use alternative declaration for simple indexes
 
-$schema->index(['name', 'email']; //Compound index
+$schema->index(['name', 'email']); //Compound index
 
 $schema->save();
 ```
