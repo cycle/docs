@@ -74,7 +74,7 @@ We can use this column wrapper after the schema update:
 $u = new User();
 $u->uuid = Uuid::create();
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($u);
 $t->run();
 ```
@@ -92,7 +92,7 @@ To change the wrapped column value you have to create new object:
 $u = $orm->getRepository(User::class)->findOne();
 $u->uuid = Uuid::create();
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($u);
 $t->run();
 ```

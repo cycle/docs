@@ -21,7 +21,7 @@ In order to use a newly created entity, you must define the collection to store 
 `Cycle\ORM\Relation\Pivoted\PivotedCollection`. Do it in your constructor:
 
 ```php
-use use Cycle\ORM\Relation\Pivoted\PivotedCollection;
+use Cycle\ORM\Relation\Pivoted\PivotedCollection;
 
 /** @Entity */
 class User
@@ -106,7 +106,7 @@ $u->setName("Antony");
 
 $u->getTags()->add(new Tag("tag a"));
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($u);
 $t->run();
 ```
@@ -271,7 +271,7 @@ We can now load categories with photos inside them ordered by `photo_to_category
 
 ```php
 $result = $categories->load('photos', [
-    'load' => function (Select\QueryBuilder $q) {
+    'load' => function (\Cycle\ORM\Select\QueryBuilder $q) {
         $q->orderBy('@.@.position'); // @ current relation (photos), @.@ current relation pivot (photo_to_category)
     }
 ])->fetchAll();
@@ -302,7 +302,7 @@ We can force the ORM to use a single query to pull the data (useful for more com
 ```php
 $result = $categories->load('photos', [
      'method' => Select::SINGLE_QUERY,
-     'load'   => function (Select\QueryBuilder $q) {
+     'load'   => function (\Cycle\ORM\Select\QueryBuilder $q) {
          $q->orderBy('@.@.position');  // @ current relation (photos), @.@ current relation pivot (photo_to_category)
      }
 ])->orderBy('id')->fetchAll();

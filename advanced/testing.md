@@ -5,7 +5,7 @@ Cycle ORM attempts to simplify the testing of your application by providing well
 The first approach would involve mocking instances of entity repositories and `TransactionInterface`, for example the given code can be well tested without ORM initialization:
 
 ```php
-public function addOrder(User $u, Order $o, TransactionInterface $t)
+public function addOrder(User $u, Order $o, \Cycle\ORM\TransactionInterface $t)
 {
     $u->orders->add($o);
     $t->persist($u)->run();
@@ -24,7 +24,7 @@ class MyService
         $this->users = $users;
     }
 
-    public function disableUser($id, TransactionInterface $t)
+    public function disableUser($id, \Cycle\ORM\TransactionInterface $t)
     {
         $u = $this->users->findByPK($id);
         $u->status = 'disabled';
@@ -42,6 +42,9 @@ In order to achieve that you must construct your own `DatabaseManager` instance 
 driver (for example SQLite):
 
 ```php
+use Cycle\ORM;
+use Spiral\Database;
+
 $dbal = new Database\DatabaseManager(new Database\Config\DatabaseConfig([
     'default'     => 'default',
     'databases'   => [
@@ -57,10 +60,10 @@ $dbal = new Database\DatabaseManager(new Database\Config\DatabaseConfig([
     ]
 ]));
 
-$orm = new ORM(new Factory($dbal));
+$orm = new ORM\ORM(new ORM\Factory($dbal));
 
 // you can use already calculated database schema
-$orm = $orm->withSchema(new Schema($cachedSchema));
+$orm = $orm->withSchema(new ORM\Schema($cachedSchema));
 ```
 
 > Attention, you would not be able to test if your database constraints operate properly using SQLite. Use the dedicated database instance.
@@ -79,7 +82,7 @@ public function tearDown()
             $schema->dropForeignKey($foreign->getColumns());
         }
 
-        $schema->save(Handler::DROP_FOREIGN_KEYS);
+        $schema->save(\Spiral\Database\Driver\HandlerInterface::DROP_FOREIGN_KEYS);
     }
 
     // delete tables

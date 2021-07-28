@@ -14,7 +14,7 @@ We can build our entities using entity definitions:
 // Lets create a new entity definition object.
 $e = new Entity();
 $e->setRole('user');
-$e->setMapper(Cycle\ORM\Mapper\StdMapper::class);
+$e->setMapper(\Cycle\ORM\Mapper\StdMapper::class);
 
 
 // Declare primary field for the entity.
@@ -54,6 +54,10 @@ $entity->getRelations()->set(
 You can also define StdClass schema manually using a set of constants exposed by `Cycle\ORM\Schema` and `Cycle\ORM\Relation` classes:
 
 ```php
+use Cycle\ORM\Schema;
+use Cycle\ORM\Relation;
+use Cycle\ORM\Mapper\StdMapper;
+
 $orm = $orm->withSchema(new Schema([
   'user'    => [
         Schema::MAPPER      => StdMapper::class,

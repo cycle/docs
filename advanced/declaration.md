@@ -16,7 +16,7 @@ To get an instance of `AbstractTable` use a similar way as described in [Schema 
 > No need to check for table existence.
 
 ```php
-protected function indexAction(Database $database)
+protected function indexAction(\Spiral\Database\Database $database)
 {
     $schema = $database->table('new_table')->getSchema();
 
@@ -347,7 +347,7 @@ $schemaB->primary('id');
 $schemaB->integer('a_id');
 $schemaB->foreign('a_id')->references('table_a', 'id');
 
-$r = new Spiral\Database\Schema\Reflector();
+$r = new \Spiral\Database\Schema\Reflector();
 $r->addTable($schemaB);
 $r->addTable($schema);
 

@@ -86,6 +86,8 @@ abstract class Record
 We can use `__get` and `__set` to access our data, the resulting base entity will look like:
 
 ```php
+use Cycle\ORM;
+
 abstract class Record
 {
     private static $orm;

@@ -49,8 +49,8 @@ We can review a simple command setup in which one command declares a column whic
 ```php
 use Cycle\ORM\Command\Database;
 
-$update = new Update($dbal->database('default'), 'table', $data, $where);
-$insert = new Insert($dbal->database('default'), 'table', $data);
+$update = new Database\Update($dbal->database('default'), 'table', $data, $where);
+$insert = new Database\Insert($dbal->database('default'), 'table', $data);
 ```
 
 Now we have to declare for the `$update` command to wait for the context provided by `$insert`:
@@ -63,7 +63,7 @@ $update->waitContext('some_id');
 And ask `$insert` command to forward context value once it's available:
 
 ```php
-$insert->forward(Insert::INSERT_ID, $update, 'some_id');
+$insert->forward(\Cycle\ORM\Command\Database\Insert::INSERT_ID, $update, 'some_id');
 ```
 
 Now, no matter what in which order commands were added to the Transaction the `$update` will always be executed after the `$insert` command.

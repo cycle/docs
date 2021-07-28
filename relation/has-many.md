@@ -68,7 +68,7 @@ $u->getPosts()->add(new Post("test post"));
 The related object(s) can be immediately saved into the database by persisting the parent entity:
 
 ```php
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($u);
 $t->run();
 ```
@@ -173,6 +173,8 @@ WHERE `published_posts`.`published` = true
 You can also pre-set the conditions in the relation definition:
 
 ```php
+use Doctrine\Common\Collections\ArrayCollection;
+
 /** @Entity() */
 class User
 {

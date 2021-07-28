@@ -9,7 +9,11 @@ We can create a simple `save` method in the Repository, which will save the enti
 In order to do that we have to create a transaction inside our object:
 
 ```php
-class UserPersistRepository extends Repository
+use Cycle\ORM\Select;
+use Cycle\ORM\Transaction;
+use Cycle\ORM\ORMInterface;
+
+class UserPersistRepository extends Select\Repository
 {
     /** @var Transaction */
     private $transaction;
@@ -45,6 +49,9 @@ class UserPersistRepository extends Repository
 You can associate the repository to your entity via the annotation `@Entity(repository="UserPersistRepository")`, or manually:
 
 ```php
+use Cycle\ORM\Schema;
+use Cycle\ORM\Mapper\Mapper;
+
 $orm = $orm->withSchema(new Schema([
     User::class => [
         Schema::ROLE        => 'user',

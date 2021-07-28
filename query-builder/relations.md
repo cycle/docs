@@ -120,6 +120,8 @@ Please note, the relation is joined using `INNER JOIN` by default. You can alter
 To find all users and load only posts without comments:
 
 ```php
+use Cycle\ORM\Select;
+
 $users->load('posts', [
     'where' => function (Select\QueryBuilder $qb) {
         $qb->distinct()->with('comments', [
@@ -148,6 +150,8 @@ You can also specify the join method in the primary select query. Let's try to f
 
 
 ```php
+use Cycle\ORM\Select;
+
 $users
     ->distinct()
     ->with('posts.comments', [
@@ -187,6 +191,8 @@ WHERE "user_posts"."user_id" IN (1, 2) AND ("user_posts_comments"."id" IS NOT NU
 Alternatively you can use the `load` option, which accepts a closure to specify custom `orderBy` and other conditions:
 
 ```php
+use Cycle\ORM\Select;
+
 $users
     ->distinct()
     ->with('posts.comments', [
@@ -204,6 +210,8 @@ You can combine this option with many-to-many relations to sort relations by piv
 
 
 ```php
+use Cycle\ORM\Select;
+
 $users
    ->load('tags', [
         'load' => function (Select\QueryBuilder $qb) {

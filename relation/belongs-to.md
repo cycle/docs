@@ -39,7 +39,7 @@ Cycle will automatically save the related entity (unless `cascade` set to `false
 $post = new Post();
 $post->setUser(new User("Antony"));
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($post);
 $t->run();
 ```
@@ -51,7 +51,7 @@ $post = $orm->getRepository(Post::class)->findOne();
 
 $post->setUser(null);
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($post);
 $t->run();
 ```

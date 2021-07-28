@@ -6,6 +6,12 @@ custom mapper implementation to automatically register these values in entity co
 The simplest mapper will look like:
 
 ```php
+use Cycle\ORM\Mapper\Mapper;
+use Cycle\ORM\Heap\Node;
+use Cycle\ORM\Heap\State;
+use Cycle\ORM\Command\Database\Update;
+use Cycle\ORM\Command\ContextCarrierInterface;
+
 class TimestampedMapper extends Mapper
 {
     public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
@@ -39,6 +45,12 @@ class TimestampedMapper extends Mapper
 You can use the annotated entities extension to automatically declare the needed columns from inside your mapper:
 
 ```php
+use Cycle\ORM\Mapper\Mapper;
+use Cycle\ORM\Heap\Node;
+use Cycle\ORM\Heap\State;
+use Cycle\ORM\Command\Database\Update;
+use Cycle\ORM\Command\ContextCarrierInterface;
+
 /**
  * @Table(
  *      columns={"created_at": @Column(type="datetime"), "updated_at": @Column(type="datetime")},

@@ -27,6 +27,7 @@ class User
 In order to alter the default sequence behavior, alter the default mapper implementation by modifying the method `nextPrimaryKey`:
 
 ```php
+use Cycle\ORM\Mapper\Mapper;
 use Ramsey\Uuid\Uuid;
 
 class UUIDMapper extends Mapper
@@ -39,7 +40,7 @@ class UUIDMapper extends Mapper
         try {
             return Uuid::uuid4()->toString();
         } catch (\Exception $e) {
-            throw new MapperException($e->getMessage(), $e->getCode(), $e);
+            throw new \Cycle\ORM\Exception\MapperException($e->getMessage(), $e->getCode(), $e);
         }
     }
 }
@@ -64,7 +65,7 @@ Now the entity's primary key will be generated on application end during the per
 ```php
 $u = new User();
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($u);
 $t->run();
 

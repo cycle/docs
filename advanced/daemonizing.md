@@ -38,7 +38,7 @@ $users = $orm->getRepository(User::class)->select();
 for ($i = 0; $i < 100; $i++) {
     $users = $users->offset($i*1000)->limit(1000)->fetchAll();
 
-    $t = new Transaction($orm);
+    $t = new \Cycle\ORM\Transaction($orm);
     foreach ($users as $u) {
         $u->status = 'disabled';
         $t->persist($u);
@@ -61,7 +61,7 @@ Failures in the transaction would not affect ORM Heap (EntityManager). But the t
 try {
    $t->persist($entity);
    $t->run();
-} catch (ConnectionException $e) {
+} catch (\Spiral\Database\Exception\StatementException\ConnectionException $e) {
    sleep(1);
 
    // retry

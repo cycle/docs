@@ -5,7 +5,7 @@ You can use the the query builder to compose more complex queries and expression
 It is possible to inject custom SQL logic into the query using `Spiral\Database\Injection\Expression` object:
 
 ```php
-$select->where('time_created', '>', new Expression("NOW()"));
+$select->where('time_created', '>', new \Spiral\Database\Injection\Expression("NOW()"));
 ```
 
 You can use expressions in place of operators or column names. Please note that, since a column name might not necessarily be identical to the actual property name, you must resolve its identity first.
@@ -28,7 +28,7 @@ $qb = $select->getBuilder();
 $select->where(
   'credits',
   '>',
-  new Expression($qb->resolve('balance'))
+  new \Spiral\Database\Injection\Expression($qb->resolve('balance'))
 );
 ```
 
@@ -45,7 +45,7 @@ You can also resolve names of related entities by using the entity path:
 
 ```php
 $select->distinct()
-    ->where('balance', '>', new Expression($qb->resolve('orders.total')))
+    ->where('balance', '>', new \Spiral\Database\Injection\Expression($qb->resolve('orders.total')))
     ->andWhere('orders.status', 'pending');
 ```
 
@@ -69,7 +69,7 @@ If you want to run complex selection or select only particular columns you can m
 $query = $select->buildQuery();
 
 $query
-    ->columns('id', new Expression('SUM(balance)'))
+    ->columns('id', new \Spiral\Database\Injection\Expression('SUM(balance)'))
     ->groupBy('id');
 
 print_r($query->fetchAll());
@@ -93,6 +93,8 @@ by calling the method `buildQuery()` of `Select` object.
 For example:
 
 ```php
+use \Spiral\Database\Injection\Expression;
+
 $users = $orm->getRepository(User::class)->select();
 $orders = $orm->getRepository(Order::class)->select();
 

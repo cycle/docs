@@ -36,6 +36,8 @@ The details of this configuration process described in a [following section](/ba
 An ORM service can be instantiated using the `Cycle\ORM\ORM` class, which takes only one dependency on `Cycle\ORM\Factory`:
 
 ```php
+use Cycle\ORM;
+
 $orm = new ORM\ORM(new ORM\Factory($dbal));
 ```
 
@@ -45,6 +47,10 @@ In order to operate Cycle ORM a schema definition is required. The schema will c
 The schema can be described manually by instantiating `Cycle\ORM\Schema` object:
 
 ```php
+use Cycle\ORM\Schema;
+use Cycle\ORM\Relation;
+use Cycle\ORM\Mapper\Mapper;
+
 $schema = new Schema([
     'user' => [
         Schema::ENTITY      => User::class,

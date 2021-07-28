@@ -39,6 +39,8 @@ The HasMany relation provides the ability to link multiple child objects to one 
 
 
 ```php
+use Doctrine\Common\Collections\ArrayCollection;
+
 /** @Entity */
 class User
 {
@@ -97,6 +99,8 @@ indexCreate | bool   | Create an index on innerKey. Defaults to `true`
 The RefersTo relation is similar to the BelongsTo relation, but must be used to establish **multiple relations** to the same entity (or in case of a **cyclic** relation). The most common example is the ability to store the last post posted by the user.
 
 ```php
+use Doctrine\Common\Collections\ArrayCollection;
+
 /** @Entity */
 class User
 {
@@ -139,6 +143,8 @@ indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 A relation of type ManyToMany provides a more complex connection with the ability to use an intermediate entity for the connection. This relation must be represented using `Cycle\ORM\Relation\Pivoted\PivotedCollection`. The relation requires the  `though` option with similar rules as `target`.
 
 ```php
+use Cycle\ORM\Relation\Pivoted\PivotedCollection;
+
 /** @Entity */
 class User
 {
@@ -232,6 +238,8 @@ morphKeyLength | int | The lengths of the morphKey. Defaults to 32
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
 
 ```php
+use Doctrine\Common\Collections\ArrayCollection;
+
 /** @Entity */
 class User implements ImageHolderInterface
 {

@@ -134,6 +134,10 @@ class Entity
 We can now implement our mapper to handle creation and hydration of our entity:
 
 ```php
+use Cycle\ORM\Schema;
+use Cycle\ORM\ORMInterface;
+use Cycle\ORM\Mapper\DatabaseMapper;
+
 class CustomMapper extends DatabaseMapper
 {
     /** @var string */
@@ -220,6 +224,8 @@ A similar approach can be used to implement AR-like entities. You would have to 
 from your entity's `save()` and `delete()` methods:
 
 ```php
+use Cycle\ORM\Transaction;
+
 class Entity
 {
     // ...

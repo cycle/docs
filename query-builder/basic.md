@@ -13,7 +13,9 @@ $select = $orm->getRepository(User::class)->select();
 The recommended approach is to declare select statements within an entity's repository:
 
 ```php
-class UserRepository extends Repository
+use Cycle\ORM\Select;
+
+class UserRepository extends Select\Repository
 {
     public function findActive(): Select
     {
@@ -55,8 +57,9 @@ $select->where('balance', '<', 100)->orWhere('status', 'blocked');
 You can also specify conditions using array notation:
 
 ```php
+
 $select->where([
-    'id'     => ['in' => new Parameter([1, 2, 3])],
+    'id'     => ['in' => new \Spiral\Database\Injection\Parameter([1, 2, 3])],
     'status' => ['like' => 'active']
 ]);
 ```
@@ -64,8 +67,8 @@ $select->where([
 This declaration is identical to:
 
 ```php
-$select->where(function(QueryBuilder $select) {
-    $select->where('id', 'in', new Parameter([1, 2, 3]));
+$select->where(function(\Cycle\ORM\Select\QueryBuilder $select) {
+    $select->where('id', 'in', new \Spiral\Database\Injection\Parameter([1, 2, 3]));
     $select->where('status', 'like', 'active');
 });
 ```
@@ -82,13 +85,13 @@ $select->where([
 By default, any passed value will be converted into `Parameter` objects internally. However, you must explicitly use `Parameter` while specifying array values:
 
 ```php
-$select->where('id', 'in', new Parameter([1,2,3]));
+$select->where('id', 'in', new \Spiral\Database\Injection\Parameter([1,2,3]));
 ```
 
 Parameters can be used to specify a value after building the query:
 
 ```php
-$select->where('id', $id = new Parameter(null));
+$select->where('id', $id = new \Spiral\Database\Injection\Parameter(null));
 
 $id->setValue(10);
 

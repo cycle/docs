@@ -125,7 +125,7 @@ $address->setCity("New York");
 
 $user->setAddress($address);
 
-$t = new ORM\Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($user);
 $t->run();
 ```
@@ -140,7 +140,7 @@ INSERT INTO "addresses" ("city", "user_id") VALUES ('New York', 15);
 You can also store objects separately, the ORM will automatically link them together:
 
 ```php
-$t = new ORM\Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($address);
 $t->persist($user);
 $t->run();

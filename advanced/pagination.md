@@ -9,7 +9,7 @@ To paginate a simple User select:
 $select = $orm->getRepository(User::class)->select()->orderBy('id', 'DESC');
 
 // 10 results per page
-$paginator = new Paginator(10);
+$paginator = new \Spiral\Pagination\Paginator(10);
 $paginator->paginate($select);
 
 print_r($select->fetchAll());
@@ -38,7 +38,7 @@ $select = $orm->getRepository(User::class)->select()->orderBy('id', 'DESC');
 $select->distinct()->with('posts');
 
 // 10 results per page
-$paginator = new Paginator(10);
+$paginator = new \Spiral\Pagination\Paginator(10);
 $paginator->paginate($select);
 
 print_r($select->fetchAll());

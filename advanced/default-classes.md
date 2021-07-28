@@ -2,8 +2,10 @@
 You can set default Repository, Mapper, Source or Constrain for all entity classes
 
 ```php
+use Cycle\ORM;
+use Cycle\ORM\Schema;
 
-$orm = new ORM((new Factory())->withDefaultSchemaClasses(
+$orm = new ORM\ORM((new ORM\Factory())->withDefaultSchemaClasses(
     [
         Schema::REPOSITORY => MyRepository::class,
         Schema::SOURCE     => MySource::class,

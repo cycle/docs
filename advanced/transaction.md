@@ -45,7 +45,7 @@ interface TransactionInterface
 To persist your entity simply add it to the transaction using the `persist` method and call the method `run` after that.
 
 ```php
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($e);
 $t->run();
 ```
@@ -55,11 +55,11 @@ $t->run();
 You can handle multiple transactions within one scope. They can overlap or be responsible for separate entities:
 
 ```php
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($e);
 $t->run();
 
-$t2 = new Transaction($orm);
+$t2 = new \Cycle\ORM\Transaction($orm);
 $t2->persist($e2);
 $t2->run();
 ```
@@ -68,7 +68,7 @@ After execution the Transaction will be cleared and can be re-used for the next 
 after the transaction, you must clean it manually if needed.
 
 ```php
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 
 for ($i=0; $i<1000; $i++) {
     $t->persist($e);
@@ -83,8 +83,8 @@ By default, Transaction will create a command chain to store all entity relation
 If you would like to store only entity content without it's relations use the persist option `MODE_ENTITY_ONLY`:
 
 ```php
-$t = new Transaction($orm);
-$t->persist($e, Transaction::MODE_ENTITY_ONLY);
+$t = new \Cycle\ORM\Transaction($orm);
+$t->persist($e, \Cycle\ORM\Transaction::MODE_ENTITY_ONLY);
 $t->run();
 ```
 
@@ -93,6 +93,8 @@ In some cases, you might want to implement your own persist logic or sorting for
 Transaction implementation or provide the second argument to the transaction to handle actual command execution:
 
 ```php
+use Cycle\ORM\Command\CommandInterface;
+
 interface RunnerInterface extends \Countable
 {
     /**
@@ -115,13 +117,15 @@ interface RunnerInterface extends \Countable
 For example, we can log the order of which commands are being executed by wrapping the original transaction Runner:
 
 ```php
+use Cycle\ORM\Command\CommandInterface;
+
 class LogRunner implements RunnerInterface
 {
     private $runner;
 
     public function __construct()
     {
-        $this->runner = new Cycle\ORM\Transaction\Runner();
+        $this->runner = new \Cycle\ORM\Transaction\Runner();
     }
 
     public function run(CommandInterface $command)
@@ -146,7 +150,7 @@ class LogRunner implements RunnerInterface
 To use it:
 
 ```php
-$t = new Transaction($orm, new LogRunner());
+$t = new \Cycle\ORM\Transaction($orm, new LogRunner());
 $t->persist($e);
 $t->run();
 ```

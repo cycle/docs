@@ -270,7 +270,7 @@ You can also use short annotation declaration:
  *     indexes={@Index(columns = {"created_at"})}
  * )
  */
-class UserRepository extends Repository
+class UserRepository extends \Cycle\ORM\Select\Repository
 {
 
 }

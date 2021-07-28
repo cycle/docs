@@ -54,7 +54,7 @@ Cycle will automatically save the related entity and link to it (unless `cascade
 $u = new User();
 $u->addComment(new Comment("hello world");
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($u);
 $t->run();
 ```
@@ -65,7 +65,7 @@ Simply set the property value to null to remove the entity reference.
 $u = new User();
 $u->lastComment = null;
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($post);
 $t->run();
 ```
@@ -125,7 +125,7 @@ $category1 = new Category("A");
 $category2 = new Category("A");
 $category2->parent = $category1;
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($category1);
 $t->persist($category2);
 $t->run();

@@ -43,7 +43,7 @@ $u->address = new Address();
 The related object can be immediately saved into the database by persisting the parent entity:
 
 ```php
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($u);
 $t->run();
 ```
@@ -99,7 +99,7 @@ $u2 = new User();
 $u2->setAddress($u->getAddress());
 $u1->setAddress(null);
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($u1);
 $t->persist($u2);
 $t->run();
