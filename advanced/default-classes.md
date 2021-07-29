@@ -5,7 +5,7 @@ You can set default Repository, Mapper, Source or Constrain for all entity class
 use Cycle\ORM;
 use Cycle\ORM\Schema;
 
-$orm = new ORM\ORM((new ORM\Factory())->withDefaultSchemaClasses(
+$orm = new ORM\ORM((new ORM\Factory($dbal))->withDefaultSchemaClasses(
     [
         Schema::REPOSITORY => MyRepository::class,
         Schema::SOURCE     => MySource::class,

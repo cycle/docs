@@ -71,7 +71,7 @@ In some cases, you can also combine joining and relation (make sure you know wha
 ```php
 $selec->with('posts',[
     'as'    => 'posts',
-    'where' => ['flagged' => true'])
+    'where' => ['flagged' => true]
 ])->load('posts', ['using' => 'posts']);
 ```
 

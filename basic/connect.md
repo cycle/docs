@@ -168,12 +168,12 @@ use Spiral\Database;
 $dbal->addDatabase(new Database\Database(
   'name',
   'prefix_',
-  new Database\Driver\SQLite\SQLiteDriver(
+  new Database\Driver\SQLite\SQLiteDriver([
      'connection'  => 'sqlite::memory:',
      'username'   => 'username',
      'password'   => 'password',
      'options'    => []
-  )
+  ])
 ));
 ```
 

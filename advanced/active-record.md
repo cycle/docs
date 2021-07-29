@@ -323,7 +323,7 @@ $schema = new Schema([
         ],
         Schema::TYPECAST    => [
             'id' => 'int'
-        ]
+        ],
         Schema::RELATIONS   => []
     ]
 ]);
