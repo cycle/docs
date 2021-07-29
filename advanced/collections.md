@@ -8,6 +8,8 @@ The ORM will automatically instantiate a collection instance for your relations,
 collections in your constructor to use newly created entities:
 
 ```php
+use Doctrine\Common\Collections\ArrayCollection;
+
 /** @Entity */
 class User
 {

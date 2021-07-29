@@ -15,5 +15,5 @@ $user->created_at->setDate(...); // error, won't trigger an update
 Proper way:
 
 ```php
-$user->created_at = new DateTimeImmutable(...);
+$user->created_at = new \DateTimeImmutable(...);
 ```

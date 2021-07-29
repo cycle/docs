@@ -8,9 +8,7 @@ To create a custom repository associated with a SQL data source simply extend th
 ```php
 namespace Example\Repository;
 
-use Cycle\ORM\Select;
-
-class UserRepository extends Select\Repository
+class UserRepository extends \Cycle\ORM\Select\Repository
 {
 
 }
@@ -89,6 +87,8 @@ print_r($orm->getRepository(\Example\User::class)->findActive()->fetchAll());
 Another use-case is to automatically pre-load some of the entity relations using a custom find method:
 
 ```php
+use Cycle\ORM\Select;
+
 class UserRepository extends Select\Repository
 {
     // ...

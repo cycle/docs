@@ -74,6 +74,8 @@ print_r($dbal->database('default')->getTables());
 Initiate ORM service:
 
 ```php
+use Cycle\ORM;
+
 $orm = new ORM\ORM(new ORM\Factory($dbal));
 ```
 
@@ -103,6 +105,9 @@ $ composer dump
 You can avoid using `cycle/annotated` and ignore sections "Define Entity" and "Schema Generation". To do that we can define the ORM schema manually, right in PHP code:
 
 ```php
+use Cycle\ORM\Schema;
+use Cycle\ORM\Mapper\Mapper;
+
 $orm = $orm->withSchema(new Schema([
     'user' => [
          Schema::MAPPER      => Mapper::class, // default POPO mapper
@@ -125,6 +130,8 @@ $orm = $orm->withSchema(new Schema([
 You can use the ORM now:
 
 ```php
+use Cycle\ORM\Transaction;
+
 $user = new User();
 $user->setName("John");
 
@@ -234,7 +241,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 The resulted schema can be passed to the ORM.
 
 ```php
-$orm = $orm->withSchema(new ORM\Schema($schema));
+$orm = $orm->withSchema(new \Cycle\ORM\Schema($schema));
 ```
 
 > The generated schema is intended to be cached in your application, only re-generate schema when it's needed.
@@ -257,7 +264,7 @@ $u->setName("Hello World");
 To persist our entity we have register it in the transaction:
 
 ```php
-$t = new ORM\Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($u);
 $t->run();
 ```
@@ -286,7 +293,7 @@ print_r($u);
 
 $u->setName("New " . mt_rand(0, 1000));
 
-(new ORM\Transaction($orm))->persist($u)->run();
+(new \Cycle\ORM\Transaction($orm))->persist($u)->run();
 ```
 
 Notice how a new name will be displayed on every script iteration.
@@ -295,7 +302,7 @@ Notice how a new name will be displayed on every script iteration.
 To delete the entity simply call the method `delete` of the Transaction:
 
 ```php
-(new ORM\Transaction($orm))->delete($u)->run();
+(new \Cycle\ORM\Transaction($orm))->delete($u)->run();
 ```
 
 ## Update Entity Schema

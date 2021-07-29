@@ -6,13 +6,13 @@ The most common and recommended method to use the associated entity repository.
 To access the repository associated with a specific entity use the method `getRepository` of the orm service:
 
 ```php
-$r = $orm->getRepository(User::class);
+$repository = $orm->getRepository(User::class);
 ```
 
 You can request a repository instance using the entity's class name or its role name:
 
 ```php
-$r = $orm->getRepository("user");
+$repository = $orm->getRepository("user");
 ```
 
 The Repository provides multiple methods to select the entity.

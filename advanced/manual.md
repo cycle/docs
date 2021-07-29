@@ -5,7 +5,7 @@ You can avoid the usage of the cycle/annotation extension or any other schema re
 You can define a custom schema by passing a `Schema` object into your ORM instance:
 
 ```php
-$orm = $orm->withSchema(new Schema([
+$orm = $orm->withSchema(new \Cycle\ORM\Schema([
     // ... schema ...
 ]));
 ```
@@ -14,6 +14,9 @@ $orm = $orm->withSchema(new Schema([
 To add a simple POPO entity mapping:
 
 ```php
+use Cycle\ORM\Schema;
+use Cycle\ORM\Mapper\Mapper;
+
 $orm = $orm->withSchema(new Schema([
    'user' => [
       Schema::ENTITY      => User::class,
@@ -39,6 +42,10 @@ $orm = $orm->withSchema(new Schema([
 To define the relation you must ensure that both entities are added to the schema and then populate RELATION section:
 
 ```php
+use Cycle\ORM\Schema;
+use Cycle\ORM\Relation;
+use Cycle\ORM\Mapper\Mapper;
+
 $orm = $orm->withSchema(new Schema([
    'user'    => [
       Schema::ENTITY      => User::class,

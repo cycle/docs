@@ -6,7 +6,7 @@ To implement the ability to create a custom query scope you must implement a met
 
 
 ```php
-class UserRepository extends Repository
+class UserRepository extends \Cycle\ORM\Select\Repository
 {
     public function withActive(): self
     {
@@ -32,7 +32,7 @@ print_r($r->withActive()->findAll());
 If you use entity constraint (for example soft-deleted) you can alter your underlying select query to disable it in specific cases:
 
 ```php
-class UserRepository extends Repository
+class UserRepository extends \Cycle\ORM\Select\Repository
 {
     public function withDeleted(): self
     {

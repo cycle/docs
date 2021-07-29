@@ -26,9 +26,9 @@ Now, if we want to create a new `Post` entity we have an option to set the user 
 
 ```php
 $p = new Post();
-$p->user = new Reference('user', ['id' => 1]);
+$p->user = new \Cycle\ORM\Promise\Reference('user', ['id' => 1]);
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($p);
 $t->run();
 ```
@@ -67,7 +67,7 @@ And use it accordingly:
 $p = new Post();
 $p->user = new UserID(1);
 
-$t = new Transaction($orm);
+$t = new \Cycle\ORM\Transaction($orm);
 $t->persist($p);
 $t->run();
 ```

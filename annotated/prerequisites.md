@@ -31,7 +31,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\GenerateTypecast(),  // typecast non string columns
 ]);
 
-$orm = $orm->withSchema(new Schema($schema));
+$orm = $orm->withSchema(new \Cycle\ORM\Schema($schema));
 ```
 
 > Make sure to point the class locator to the directory with your domain entities only as the indexation operation is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.

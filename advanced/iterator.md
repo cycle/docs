@@ -25,7 +25,7 @@ $data = [
     ['id' => 2, 'name' => 'John']
 ];
 
-$iterator = new ORM\Iterator($orm, 'user', $data);
+$iterator = new \Cycle\ORM\Iterator($orm, 'user', $data);
 ```
 
 ## Pre-Filtering

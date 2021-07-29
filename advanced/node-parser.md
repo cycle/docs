@@ -14,12 +14,12 @@ $query = $db->select('id', 'balance')->from('users');
 The simple node parser will look like:
 
 ```php
-$root = new RootNode(
+$root = new \Cycle\ORM\Parser\RootNode(
     ['id', 'balance'], // property names
     'id'               // primary key
 );
 
-foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
+foreach ($query->run()->fetchAll(\Spiral\Database\StatementInterface::FETCH_NUM) as $row) {
     // start from 1st (0) column
     $root->parseRow(0, $row);
 }
@@ -58,19 +58,19 @@ The query will return results in a form: [user.id, user.balance, order.id, order
 Since both tables are merged in one query we have to create and join sub-node (array):
 
 ```php
-$root = new RootNode(
+$root = new \Cycle\ORM\Parser\RootNode(
     ['id', 'balance'],  // property names
     'id'                // primary key
 );
 
-$root->joinNode('orders', new ArrayNode(
+$root->joinNode('orders', new \Cycle\ORM\Parser\ArrayNode(
     ['id', 'user_id', 'total'], // property names
     'id',                       // primary key
     'user_id',                  // inner key
     'id'                        // outer key (user.id)
 ));
 
-foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
+foreach ($query->run()->fetchAll(\Spiral\Database\StatementInterface::FETCH_NUM) as $row) {
     // start from 1st (0) column
     $root->parseRow(0, $row);
 }
@@ -84,12 +84,12 @@ In some cases (for example for one-to-many associations) it might be useful to e
 ```php
 $query = $db->select('u.id', 'u.balance')->from('users as u');
 
-$root = new RootNode(
+$root = new \Cycle\ORM\Parser\RootNode(
     ['id', 'balance'],  // property names
     'id'                // primary key
 );
 
-$orders = new ArrayNode(
+$orders = new \Cycle\ORM\Parser\ArrayNode(
     ['id', 'user_id', 'total'], // property names
     'id',                       // primary key
     'user_id',                  // inner key
@@ -99,7 +99,7 @@ $orders = new ArrayNode(
 // notice the change
 $root->linkNode('orders', $orders);
 
-foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
+foreach ($query->run()->fetchAll(\Spiral\Database\StatementInterface::FETCH_NUM) as $row) {
     // start from 1st (0) column
     $root->parseRow(0, $row);
 }
@@ -118,9 +118,9 @@ We can use this references (user.id) to create orders query:
 $query = $db
     ->select('o.id', 'o.user_id', 'o.total')
     ->from('orders as o')
-    ->where('o.user_id', 'in', new Parameter($orders->getReferences()));
+    ->where('o.user_id', 'in', new \Spiral\Database\Injection\Parameter($orders->getReferences()));
 
-foreach ($query->run()->fetchAll(StatementInterface::FETCH_NUM) as $row) {
+foreach ($query->run()->fetchAll(\Spiral\Database\StatementInterface::FETCH_NUM) as $row) {
     // start from 1st (0) column
     $orders->parseRow(0, $row);
 }

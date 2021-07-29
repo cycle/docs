@@ -10,7 +10,7 @@ In order to create an entity simply pass its instance to the transaction object 
 $user = new User();
 $user->setName("Antony");
 
-$tr = new Transaction($orm);
+$tr = new \Cycle\ORM\Transaction($orm);
 $tr->persist($user);
 $tr->run();
 ```
@@ -29,11 +29,13 @@ One of the most important types of exception you must handle is `Spiral\Database
 into multiple types for each of the error types:
 
 ```php
+use Spiral\Database\Exception\StatementException;
+
 try {
    $tr->run();
-} catch (ConnectionException $e) {
+} catch (StatementException\ConnectionException $e) {
    print_r("database has gone away");
-} catch (ConstrainException $e) {
+} catch (StatementException\ConstrainException $e) {
    print_r("database constrain not met, nullable field?");
 }
 ```
@@ -50,7 +52,7 @@ Simply change desired entity fields and register it in the transaction using `pe
 ```php
 $user->setName("John");
 
-$tr = new Transaction($orm);
+$tr = new \Cycle\ORM\Transaction($orm);
 $tr->persist($user);
 $tr->run();
 ```
@@ -68,7 +70,7 @@ Any entity can be deleted using the transaction method `delete`:
 ```php
 $user = $orm->getRepository(User::class)->findByPK(1);
 
-$tr = new Transaction($orm);
+$tr = new \Cycle\ORM\Transaction($orm);
 $tr->delete($user);
 $tr->run();
 ```
@@ -83,7 +85,7 @@ $user = new User();
 $user->setAddress(new Address());
 $user->getAddress()->setCountry("USA");
 
-$tr = new Transaction($orm);
+$tr = new \Cycle\ORM\Transaction($orm);
 $tr->persist($user);
 $tr->run();
 
@@ -94,6 +96,8 @@ This behavior is enabled by default by persisting the entity with the `Transacti
 Code above can be equally rewritten as:
 
 ```php
+use Cycle\ORM\Transaction;
+
 $tr = new Transaction($orm);
 $tr->persist($user, Transaction::MODE_CASCADE);
 $tr->run();
@@ -102,6 +106,8 @@ $tr->run();
 Pass the `Transaction::MODE_ENTITY_ONLY` flag to disable cascade persisting of related entities:
 
 ```php
+use Cycle\ORM\Transaction;
+
 $tr = new Transaction($orm);
 $tr->persist($user, Transaction::MODE_ENTITY_ONLY);
 $tr->run();

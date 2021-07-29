@@ -10,9 +10,11 @@ In some cases, you can disable constrain usage on root query to get access to un
 A simple example can demonstrate how to only select entities which are not marked as `deleted`:
 
 ```php
-class NotDeletedConstrain implements ConstrainInterface
+use Cycle\ORM\Select;
+
+class NotDeletedConstrain implements Select\ConstrainInterface
 {
-    public function apply(QueryBuilder $query)
+    public function apply(Select\QueryBuilder $query)
     {
         $query->where('deleted_at', '=', null);
     }

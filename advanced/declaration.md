@@ -16,7 +16,7 @@ To get an instance of `AbstractTable` use a similar way as described in [Schema 
 > No need to check for table existence.
 
 ```php
-protected function indexAction(Database $database)
+protected function indexAction(\Spiral\Database\Database $database)
 {
     $schema = $database->table('new_table')->getSchema();
 
@@ -271,10 +271,10 @@ ALTER TABLE `primary_second` ADD CONSTRAINT `primary_second_foreign_first_id_55f
 You can define custom DELETE and UPDATE rules for your FK:
 
 ```php
-$foreignKey =$second->foreign('first_id')->references('first', 'id');
+$foreignKey = $second->foreign('first_id')->references('first', 'id');
 
-$foreignKey->onDelete(ReferenceInterface::CASCADE);
-$foreignKey->onUpdate(ReferenceInterface::CASCADE);
+$foreignKey->onDelete(\Cycle\ORM\Reference\ReferenceInterface::CASCADE);
+$foreignKey->onUpdate(\Cycle\ORM\Reference\ReferenceInterface::CASCADE);
 ```
 
 Now, when the record in "first" table will be removed related data from the "second" table will be wiped also. You can read more about different actions [here](https://en.wikipedia.org/wiki/Foreign_key#Referential_actions).
@@ -347,7 +347,7 @@ $schemaB->primary('id');
 $schemaB->integer('a_id');
 $schemaB->foreign('a_id')->references('table_a', 'id');
 
-$r = new Spiral\Database\Schema\Reflector();
+$r = new \Spiral\Database\Schema\Reflector();
 $r->addTable($schemaB);
 $r->addTable($schema);
 

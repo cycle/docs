@@ -86,6 +86,8 @@ abstract class Record
 We can use `__get` and `__set` to access our data, the resulting base entity will look like:
 
 ```php
+use Cycle\ORM;
+
 abstract class Record
 {
     private static $orm;
@@ -287,12 +289,12 @@ Now we have all the pieces to compile our ORM mapping schema:
 $finder = (new \Symfony\Component\Finder\Finder())->files()->in(['src-directory']);
 $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 
-$schema = (new Compiler())->compile(
-    new Registry($orm->getFactory()),
+$schema = (new \Cycle\Schema\Compiler())->compile(
+    new \Cycle\Schema\Registry($orm->getFactory()),
     [
         new ARGenerator($classLocator),
-        new ValidateEntities(),
-        new GenerateTypecast()
+        new \Cycle\Schema\Generator\ValidateEntities(),
+        new \Cycle\Schema\Generator\GenerateTypecast()
     ]
 );
 
@@ -321,7 +323,7 @@ $schema = new Schema([
         ],
         Schema::TYPECAST    => [
             'id' => 'int'
-        ]
+        ],
         Schema::RELATIONS   => []
     ]
 ]);

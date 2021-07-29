@@ -20,6 +20,7 @@ include 'vendor/autoload.php';
 use Spiral\Database;
 use Cycle\ORM;
 use Cycle\ORM\Schema;
+use Cycle\ORM\Relation;
 
 $dbal = new Database\DatabaseManager(
     new Database\Config\DatabaseConfig([
@@ -54,7 +55,7 @@ $orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
       ],
       Schema::RELATIONS   => [
           'profile' => [
-              Relation::TYPE   => ORM\Relation::HAS_ONE,
+              Relation::TYPE   => Relation::HAS_ONE,
               Relation::TARGET => 'profile',
               Relation::SCHEMA => [
                   Relation::CASCADE   => true,
