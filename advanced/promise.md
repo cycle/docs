@@ -87,7 +87,7 @@ $ composer require cycle/proxy-factory
 And configure your orm instance:
 
 ```php
-$orm = $orm->withPromiseFactory(new \Cycle\ORM\Promise\PromiseFactory());
+$orm = $orm->withPromiseFactory(new \Cycle\ORM\Promise\ProxyFactory());
 ```
 
 Now all the lazy loaded objects will be accessed via a proxy:
