@@ -6,7 +6,7 @@ schema declaration notation, or perform some calculations on the ORM schema (for
 We can define an ORM entity manually using the schema builder package. In order to do that we have to create `Registry` object first:
 
 ```php
-$r = new Schema\Registry($dbal);
+$r = new \Cycle\Schema\Registry($dbal);
 ```
 
 We can now register our first entity, add its columns and link to a specific table:
@@ -20,12 +20,12 @@ $entity->setClass(User::class);
 
 // add fields
 $entity->getFields()->set(
-    'id', (new Field())->setType('primary')->setColumn('id')->setPrimary(true)
+    'id', (new Definition\Field())->setType('primary')->setColumn('id')->setPrimary(true)
 );
 
 $entity->getFields()->set(
     'name',
-    (new Field())->setType('string(32)')->setColumn('user_name')
+    (new Definition\Field())->setType('string(32)')->setColumn('user_name')
 );
 
 // register entity
@@ -38,9 +38,9 @@ $r->linkTable($entity, 'default', 'users');
 You can generate ORM schema immediately using `Schema\Compiler`:
 
 ```php
-$schema = (new Schema\Compiler())->compile($r, []);
+$schema = (new \Cycle\Schema\Compiler())->compile($r, []);
 
-$orm = $orm->withSchema(new ORM\Schema($schema));
+$orm = $orm->withSchema(new \Cycle\ORM\Schema($schema));
 ```
 
 > You can also declare relations, indexes, and associate custom mappers. See [examples](https://github.com/cycle/schema-builder/tree/master/tests/Schema).
@@ -49,6 +49,8 @@ $orm = $orm->withSchema(new ORM\Schema($schema));
 Upon generating the final schema, you can pass a set of generators to your registry, each of them is responsible for the specific part of the schema compilation. Simple compilation pipeline will look like:
 
 ```php
+use Cycle\Schema;
+
 $schema = (new Schema\Compiler())->compile($r, [
     new Schema\Generator\GenerateRelations(), // generate entity relations
     new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct

@@ -93,7 +93,7 @@ by calling the method `buildQuery()` of `Select` object.
 For example:
 
 ```php
-use \Spiral\Database\Injection\Expression;
+use Spiral\Database\Injection\Expression;
 
 $users = $orm->getRepository(User::class)->select();
 $orders = $orm->getRepository(Order::class)->select();

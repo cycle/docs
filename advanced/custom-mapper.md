@@ -47,14 +47,14 @@ class User
 We can link another command to be executed right after `$cmd`:
 
 ```php
-use Cycle\ORM\Command\ContextCarrierInterface;
-use Cycle\ORM\Heap\Node;
+use Cycle\ORM\Command;
+use Cycle\ORM\Heap;
 
-public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
+public function queueCreate($entity, Heap\Node $node, Heap\State $state): Command\ContextCarrierInterface
 {
     $cmd = parent::queueCreate($entity, $node, $state);
 
-    $cs = new ContextSequence();
+    $cs = new Command\Branch\ContextSequence();
     $cs->addPrimary($cmd);
     $cs->addCommand(new OurCommand());
 
@@ -67,11 +67,11 @@ In case of Create, the primary key sequence won't be available at the moment of 
 This value must be forwarded to our command using `forward` method from `$cmd`:
 
 ```php
-use Cycle\ORM\Command\ContextCarrierInterface;
-use Cycle\ORM\Heap\Node;
+use Cycle\ORM\Commande;
+use Cycle\ORM\Heap;
 use Cycle\ORM\Command\Database\Insert;
 
-public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
+public function queueCreate($entity, Heap\Node $node, Heap\State $state): Commande\ContextCarrierInterface
 {
     $cmd = parent::queueCreate($entity, $node, $state);
     $our = new OurCommand();
@@ -82,7 +82,7 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
     // send lastID value as cmd_id to $our command
     $cmd->forward(Insert::INSERT_ID, $our, 'cmd_id');
 
-    $cs = new ContextSequence();
+    $cs = new Command\Branch\ContextSequence();
     $cs->addPrimary($cmd);
     $cs->addCommand($our);
 

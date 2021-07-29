@@ -26,7 +26,7 @@ Now, if we want to create a new `Post` entity we have an option to set the user 
 
 ```php
 $p = new Post();
-$p->user = new Reference('user', ['id' => 1]);
+$p->user = new \Cycle\ORM\Promise\Reference('user', ['id' => 1]);
 
 $t = new \Cycle\ORM\Transaction($orm);
 $t->persist($p);
@@ -87,7 +87,7 @@ $ composer require cycle/proxy-factory
 And configure your orm instance:
 
 ```php
-$orm = $orm->withPromiseFactory(new \Cycle\ORM\Promise\ProxyFactory());
+$orm = $orm->withPromiseFactory(new \Cycle\ORM\Promise\PromiseFactory());
 ```
 
 Now all the lazy loaded objects will be accessed via a proxy:

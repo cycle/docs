@@ -11,7 +11,7 @@ The first approach is based on the idea of creating separate ORM instances for e
 
 ```php
 // you can also use scope specific factory and other options
-$orm = $orm->withHeap(new Heap());
+$orm = $orm->withHeap(new \Cycle\ORM\Heap\Heap());
 ```
 
 ## Resetting the Heap

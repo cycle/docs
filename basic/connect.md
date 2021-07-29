@@ -165,7 +165,7 @@ In addition to config driven setup you are able to configure your database conne
 ```php
 use Spiral\Database;
 
-$dbal->addDatabase(new Database(
+$dbal->addDatabase(new Database\Database(
   'name',
   'prefix_',
   new Database\Driver\SQLite\SQLiteDriver(

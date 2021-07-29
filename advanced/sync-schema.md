@@ -5,6 +5,9 @@ Cycle ORM provides multiple ways to automatically configure your database schema
 A first approach would involve automatic schema declaration without any intermediate migration, to use it add `SyncTables` generator to your schema compiler:
 
 ```php
+use Cycle\Schema;
+use Cycle\Annotated;
+
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
     new Annotated\Embeddings($cl),            // register embeddable entities
@@ -48,6 +51,10 @@ $migrator->configure();
 You can now add a new Compiler generator to render schema changes into migration files:
 
 ```php
+use Cycle\Schema;
+use Cycle\Annotated;
+use Cycle\Migrations;
+
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),                                    // re-declared table schemas (remove columns)
     new Annotated\Embeddings($cl),                                         // register embeddable entities
@@ -58,7 +65,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\RenderTables(),                                   // declare table schemas
     new Schema\Generator\RenderRelations(),                                // declare relation keys and indexes
     new Annotated\MergeIndexes(),                                          // add @Table column declarations
-    new \Cycle\Migrations\GenerateMigrations($migrator->getRepository(), $migrator->getConfig()),  // generate migrations
+    new Migrations\GenerateMigrations($migrator->getRepository(), $migrator->getConfig()),  // generate migrations
     new Schema\Generator\GenerateTypecast(),                               // typecast non-string columns
 ]);
 ```

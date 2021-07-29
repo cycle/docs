@@ -130,7 +130,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\GenerateTypecast(),  // typecast non string columns
 ]);
 
-$orm = $orm->withSchema(new Schema($schema));
+$orm = $orm->withSchema(new \Cycle\ORM\Schema($schema));
 ```
 
 The result of the schema builder is a compiled schema. The given schema can be cached in order to avoid expensive calculations on each request.

@@ -18,7 +18,7 @@ $e->setMapper(\Cycle\ORM\Mapper\StdMapper::class);
 
 
 // Declare primary field for the entity.
-$field = (new Field())
+$field = (new \Cycle\Schema\Definition\Field())
     ->setType('primary')
     ->setColumn('id')
     ->setPrimary(true);
@@ -27,16 +27,16 @@ $entity->getFields()->set('id', $field);
 
 
 // Add entity definition into registry.
-$registry = new Registry($this->dbal);
+$registry = new \Cycle\Schema\Registry($this->dbal);
 $registry->register($e)->linkTable($e, 'default', 'user');
 
 
 // Compile the ORM schema.
-$schema = (new Compiler())->compile($r, []);
+$schema = (new \Cycle\Schema\Compiler())->compile($r, []);
 
 print_r($schema);
 
-$orm = $orm->withSchema(new Schema($schema));
+$orm = $orm->withSchema(new \Cycle\ORM\Schema($schema));
 ```
 
 > Use SyncTable [generator](/advanced/schema-builder.md) to update your database schema.
@@ -46,7 +46,7 @@ Relations can also be configured using schema builder:
 ```php
 $entity->getRelations()->set(
     'posts',
-    (new Relation())->setTarget('post')->setType('hasMany')
+    (new \Cycle\Schema\Definition\Relation())->setTarget('post')->setType('hasMany')
 );
 ```
 

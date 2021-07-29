@@ -301,7 +301,7 @@ We can force the ORM to use a single query to pull the data (useful for more com
 
 ```php
 $result = $categories->load('photos', [
-     'method' => Select::SINGLE_QUERY,
+     'method' => \Cycle\ORM\Select::SINGLE_QUERY,
      'load'   => function (\Cycle\ORM\Select\QueryBuilder $q) {
          $q->orderBy('@.@.position');  // @ current relation (photos), @.@ current relation pivot (photo_to_category)
      }

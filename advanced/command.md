@@ -76,11 +76,16 @@ Since you can only issue one command from your mapper you can use `Sequence` or 
 > CommandSequence automatically forwards link requests to the primary command.
 
 ```php
-public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
+use Cycle\ORM\Command;
+use Cycle\ORM\Heap;
+
+// ...
+
+public function queueCreate($entity, Heap\Node $node, Heap\State $state): Command\ContextCarrierInterface
 {
     $cc = parent::queueCreate($entity, $node, $state);
 
-    $cs = new ContextSequence();
+    $cs = new Command\Branch\ContextSequence();
     $cs->addPrimary($cc);
     $cs->addCommand(new CustomCommand());
 
@@ -95,14 +100,15 @@ Besides sequences, you also have multiple system commands which can be used to c
 You can use the Nil command to state that no changes must be made:
 
 ```php
-use Cycle\ORM\Command\Branch;
+use Cycle\ORM\Command;
+use Cycle\ORM\Heap;
 
 // ...
 
-public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
+public function queueCreate($entity, Heap\Node $node, Heap\State $state): Command\ContextCarrierInterface
 {
     // disable create
-    return new Branch\Nil();
+    return new Command\Branch\Nil();
 }
 ```
 
@@ -110,15 +116,16 @@ public function queueCreate($entity, Node $node, State $state): ContextCarrierIn
 In some cases you might want to execute a command or a branch of commands using some external condition. You can use the `Condition` command for this purpose:
 
 ```php
-use Cycle\ORM\Command\Branch;
+use Cycle\ORM\Command;
+use Cycle\ORM\Heap;
 
 // ...
 
-public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
+public function queueCreate($entity, Heap\Node $node, Heap\State $state): Command\ContextCarrierInterface
 {
     $cc = parent::queueCreate($entity, $node, $state);
 
-    return new Branch\Condition($cc, function() {
+    return new Command\Branch\Condition($cc, function() {
         return mt_rand(0, 1) === 1; // randomly drop some commands, don't do it.
     });
 }

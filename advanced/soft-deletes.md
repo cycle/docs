@@ -46,9 +46,13 @@ class SoftDeletedMapper extends Mapper
 You can permanently delete needed entities by using DBAL directly or by adding a switch to the mapper to fallback to the original command.
 
 ```php
-public function queueDelete($entity, Node $node, State $state): \Cycle\ORM\Command\CommandInterface
+use Cycle\ORM\Heap;
+
+// ...
+
+public function queueDelete($entity, Heap\Node $node, Heap\State $state): \Cycle\ORM\Command\CommandInterface
 {
-    if ($state->getStatus() == Node::SCHEDULED_DELETE) {
+    if ($state->getStatus() == Heap\Node::SCHEDULED_DELETE) {
         return parent::queueDelete($entity, $node, $state);
     }
 
@@ -59,7 +63,7 @@ public function queueDelete($entity, Node $node, State $state): \Cycle\ORM\Comma
 Example usage:
 
 ```php
-$orm->getHeap()->get($user)->setStatus(Node::SCHEDULED_DELETE);
+$orm->getHeap()->get($user)->setStatus(\Cycle\ORM\Heap\Node::SCHEDULED_DELETE);
 
 $tr = new \Cycle\ORM\Transaction($orm);
 $tr->delete($user);
@@ -70,9 +74,11 @@ $tr->run();
 To filter out deleted entities create the constraint:
 
 ```php
-class NotDeletedConstrain implements ConstrainInterface
+use Cycle\ORM\Select;
+
+class NotDeletedConstrain implements Select\ConstrainInterface
 {
-    public function apply(\Cycle\ORM\Select\QueryBuilder $query)
+    public function apply(Select\QueryBuilder $query)
     {
         $query->where('deleted_at', '=', null);
     }
