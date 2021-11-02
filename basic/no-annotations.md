@@ -17,7 +17,7 @@ Such setup does not require any caching as the schema is defined in code:
 <?php declare(strict_types=1);
 include 'vendor/autoload.php';
 
-use Spiral\Database;
+use Cycle\Database;
 use Cycle\ORM;
 use Cycle\ORM\Schema;
 use Cycle\ORM\Relation;

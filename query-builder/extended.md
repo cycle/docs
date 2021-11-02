@@ -77,7 +77,7 @@ SelectQuery builder can be retrieved in two very similar ways. You can either ge
 instance or from the table instance:
 
 ```php
-protected function indexAction(\Spiral\Database\Database $database)
+protected function indexAction(\Cycle\Database\Database $database)
 {
     $select = $database->table('test')->select();
     $select = $database->select()->from('test');
@@ -123,7 +123,7 @@ Add WHERE conditions to your query using the `where`, `andWhere`, `orWhere` meth
 Let's add a simple condition on the `status` column of our table:
 
 ```php
-protected function indexAction(\Spiral\Database\Database $database)
+protected function indexAction(\Cycle\Database\Database $database)
 {
     $select = $database->select()->from('test')->columns(['id', 'status', 'name']);
 
@@ -266,7 +266,7 @@ You can also specify custom comparison operators using nested arrays:
 
 ```php
 $select->where([
-    'id'     => ['in' => new \Spiral\Database\Injection\Parameter([1, 2, 3])],
+    'id'     => ['in' => new \Cycle\Database\Injection\Parameter([1, 2, 3])],
     'status' => ['like' => 'active']
 ]);
 ```
@@ -332,7 +332,7 @@ Spiral mocks all given values using `Parameter` class internally, in some cases 
 ```php
 $select = $database->select()->from('test')->columns(['id', 'status', 'name']);
 
-$select->where('id', $id = new \Spiral\Database\Injection\Parameter(null));
+$select->where('id', $id = new \Cycle\Database\Injection\Parameter(null));
 
 //Bing new parameter value
 $id->setValue(15);
@@ -348,13 +348,13 @@ foreach ($select as $row) {
 You can implement ParameterInterface if you want to declare your parameter wrappers with custom logic.
 
 ##### SQL Fragments and Expressions
-QueryBuilders allow you to replace some of where statements with custom SQL code or expression. Use `Spiral\Database\Injection\Fragment` and `Spiral\Database\Injection\Expression` for such purposes.
+QueryBuilders allow you to replace some of where statements with custom SQL code or expression. Use `Cycle\Database\Injection\Fragment` and `Cycle\Database\Injection\Expression` for such purposes.
 
 Use fragment to include SQL code into your query bypassing escaping:
 
 ```php
 //255
-$select->where('id', '=', new \Spiral\Database\Injection\Fragment("DAYOFYEAR('2015-09-12')"));
+$select->where('id', '=', new \Cycle\Database\Injection\Fragment("DAYOFYEAR('2015-09-12')"));
 ```
 
 ```sql
@@ -367,7 +367,7 @@ WHERE `id` = DAYOFYEAR('2015-09-12')
 If you wish to compare complex value to user parameter replace where column with expression:
 
 ```php
-$select->where(new \Spiral\Database\Injection\Expression("DAYOFYEAR(concat('2015-09-', id))"), 255);
+$select->where(new \Cycle\Database\Injection\Expression("DAYOFYEAR(concat('2015-09-', id))"), 255);
 ```
 
 ```sql
@@ -382,7 +382,7 @@ WHERE DAYOFYEAR(concat('2015-09-', `id`)) = 255
 Join multiple columns same way:
 
 ```php
-$select->where(new \Spiral\Database\Injection\Expression("CONCAT(id, '-', status)"), '1-active');
+$select->where(new \Cycle\Database\Injection\Expression("CONCAT(id, '-', status)"), '1-active');
 ```
 
 ```sql
@@ -395,7 +395,7 @@ WHERE CONCAT(`id`, '-', `status`) = '1-active'
 Expressions are extremely useful when you Database have non empty prefix:
 
 ```php
-$select->where(new \Spiral\Database\Injection\Expression("CONCAT(test.id, '-', test.status)"), '1-active');
+$select->where(new \Cycle\Database\Injection\Expression("CONCAT(test.id, '-', test.status)"), '1-active');
 ```
 
 ```sql
@@ -510,7 +510,7 @@ $select = $database->select()->from('test')->columns(['id', 'status', 'name']);
 
 $select->where(
     $database->select('name')->from('users')->where(
-        'id', '=', new \Spiral\Database\Injection\Expression('test.id')
+        'id', '=', new \Cycle\Database\Injection\Expression('test.id')
     )->where('id', '!=', 100),
     'Anton'
 );
@@ -620,13 +620,13 @@ User `orderBy` to specify sort direction:
 
 ```php
 //We have a join, so table name is mandratory
-$select->orderBy('test.id', \Spiral\Database\Query\SelectQuery::SORT_DESC);
+$select->orderBy('test.id', \Cycle\Database\Query\SelectQuery::SORT_DESC);
 ```
 
 Multiple `orderBy` calls are allowed:
 
 ```php
-use Spiral\Database\Query\SelectQuery;
+use Cycle\Database\Query\SelectQuery;
 
 $select->orderBy(
     'test.name', SelectQuery::SORT_DESC
@@ -638,7 +638,7 @@ $select->orderBy(
 Alternatively:
 
 ```php
-use Spiral\Database\Query\SelectQuery;
+use Cycle\Database\Query\SelectQuery;
 
 $select->orderBy([
     'test.name' => SelectQuery::SORT_DESC,
@@ -729,7 +729,7 @@ You can use `Expression` and `Fragment` instances in your update values:
 
 ```php
 $update = $database->table('test')->update([
-    'name' => new \Spiral\Database\Injection\Expression('UPPER(test.name)')
+    'name' => new \Cycle\Database\Injection\Expression('UPPER(test.name)')
 ]);
 
 $update->where('id', '<', 10)->run();

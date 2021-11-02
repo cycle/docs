@@ -29,7 +29,7 @@ include 'vendor/autoload.php';
 ```
 
 ## Connect Database
-In order to connect Cycle to the proper database instance, you must configure the instance of `Spiral\Database\DatabaseManager`.
+In order to connect Cycle to the proper database instance, you must configure the instance of `Cycle\Database\DatabaseManager`.
 The details of this configuration process described in a [following section](/basic/connect.md).
 
 ## Instantiate ORM

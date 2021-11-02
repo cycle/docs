@@ -9,7 +9,7 @@ In order to define a column wrapper, we have to implement an object with a stati
 
 ```php
 use Ramsey\Uuid\Uuid as UuidBody;
-use Spiral\Database\DatabaseInterface;
+use Cycle\Database\DatabaseInterface;
 
 class Uuid
 {
@@ -98,13 +98,13 @@ $t->run();
 ```
 
 ## Raw Values
-In some cases you might want to store values in the database in binary form, you can achieve that by implementing `Spiral\Database\Injection\ValueInterface`
+In some cases you might want to store values in the database in binary form, you can achieve that by implementing `Cycle\Database\Injection\ValueInterface`
 in order to gain access to low-level query compilation:
 
 ```php
 use Ramsey\Uuid\Uuid as UuidBody;
-use Spiral\Database\DatabaseInterface;
-use Spiral\Database\Injection\ValueInterface;
+use Cycle\Database\DatabaseInterface;
+use Cycle\Database\Injection\ValueInterface;
 
 class Uuid implements ValueInterface
 {

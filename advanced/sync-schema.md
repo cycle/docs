@@ -32,14 +32,14 @@ You can automatically generate a set of migration files during schema compilatio
 composer require cycle/migrations
 ```
 
-Migrations are based on the `Spiral/Migrations` package and require proper configuration first:
+Migrations are based on the `cycle/migrations` package and require proper configuration first:
 
 ```php
-use Spiral\Migrations;
+use Cycle\Migrations;
 
 $config = new Migrations\Config\MigrationConfig([
     'directory' => __DIR__ . '/../migrations/',  // where to store migrations
-    'table'     => 'migrations'                 // database table to store migration status
+    'table'     => 'migrations'                  // database table to store migration status
 ]);
 
 $migrator = new Migrations\Migrator($config, $dbal, new Migrations\FileRepository($config));
@@ -48,12 +48,12 @@ $migrator = new Migrations\Migrator($config, $dbal, new Migrations\FileRepositor
 $migrator->configure();
 ```
 
-You can now add a new Compiler generator to render schema changes into migration files:
+You can now add a new Compiler generator from the package `cycle/schema-migrations-generator` to render schema changes into migration files:
 
 ```php
 use Cycle\Schema;
 use Cycle\Annotated;
-use Cycle\Migrations;
+use Cycle\Schema\Generator\Migrations;
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),                                    // re-declared table schemas (remove columns)

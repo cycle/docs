@@ -74,7 +74,7 @@ For **SQLite**:
 
 ```php
 'sqlite' => [
-    'driver'  => \Spiral\Database\Driver\SQLite\SQLiteDriver::class,
+    'driver'  => \Cycle\Database\Driver\SQLite\SQLiteDriver::class,
     'options' => [
         'connection' => 'sqlite:database.db',
         'username'   => '',
@@ -89,7 +89,7 @@ For `MySQL` and `MariaDB`:
 
 ```php
 'mysql'     => [
-  'driver'  => \Spiral\Database\Driver\MySQL\MySQLDriver::class,
+  'driver'  => \Cycle\Database\Driver\MySQL\MySQLDriver::class,
   'options' => [
     'connection' => 'mysql:host=127.0.0.1;dbname=database',
     'username'   => 'mysql',
@@ -102,7 +102,7 @@ For `PostgresSQL`:
 
 ```php
 'postgres'  => [
-  'driver'   => \Spiral\Database\Driver\Postgres\PostgresDriver::class,
+  'driver'   => \Cycle\Database\Driver\Postgres\PostgresDriver::class,
   'options' => [
       'connection' => 'pgsql:host=127.0.0.1;dbname=database',
       'username'   => 'postgres',
@@ -115,7 +115,7 @@ For `SQLServer`:
 
 ```php
 'sqlServer' => [
-  'driver'  => \Spiral\Database\Driver\SQLServer\SQLServerDriver::class,
+  'driver'  => \Cycle\Database\Driver\SQLServer\SQLServerDriver::class,
   'options' => [
     'connection' => 'sqlsrv:Server=OWNER;Database=DATABASE',
     'username'   => 'sqlServer',
@@ -163,7 +163,7 @@ $driver->setLogger($myLogger);
 In addition to config driven setup you are able to configure your database connections in runtime:
 
 ```php
-use Spiral\Database;
+use Cycle\Database;
 
 $dbal->addDatabase(new Database\Database(
   'name',

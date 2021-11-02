@@ -19,7 +19,7 @@ $root = new \Cycle\ORM\Parser\RootNode(
     'id'               // primary key
 );
 
-foreach ($query->run()->fetchAll(\Spiral\Database\StatementInterface::FETCH_NUM) as $row) {
+foreach ($query->run()->fetchAll(\Cycle\Database\StatementInterface::FETCH_NUM) as $row) {
     // start from 1st (0) column
     $root->parseRow(0, $row);
 }
@@ -70,7 +70,7 @@ $root->joinNode('orders', new \Cycle\ORM\Parser\ArrayNode(
     'id'                        // outer key (user.id)
 ));
 
-foreach ($query->run()->fetchAll(\Spiral\Database\StatementInterface::FETCH_NUM) as $row) {
+foreach ($query->run()->fetchAll(\Cycle\Database\StatementInterface::FETCH_NUM) as $row) {
     // start from 1st (0) column
     $root->parseRow(0, $row);
 }
@@ -99,7 +99,7 @@ $orders = new \Cycle\ORM\Parser\ArrayNode(
 // notice the change
 $root->linkNode('orders', $orders);
 
-foreach ($query->run()->fetchAll(\Spiral\Database\StatementInterface::FETCH_NUM) as $row) {
+foreach ($query->run()->fetchAll(\Cycle\Database\StatementInterface::FETCH_NUM) as $row) {
     // start from 1st (0) column
     $root->parseRow(0, $row);
 }
@@ -118,9 +118,9 @@ We can use this references (user.id) to create orders query:
 $query = $db
     ->select('o.id', 'o.user_id', 'o.total')
     ->from('orders as o')
-    ->where('o.user_id', 'in', new \Spiral\Database\Injection\Parameter($orders->getReferences()));
+    ->where('o.user_id', 'in', new \Cycle\Database\Injection\Parameter($orders->getReferences()));
 
-foreach ($query->run()->fetchAll(\Spiral\Database\StatementInterface::FETCH_NUM) as $row) {
+foreach ($query->run()->fetchAll(\Cycle\Database\StatementInterface::FETCH_NUM) as $row) {
     // start from 1st (0) column
     $orders->parseRow(0, $row);
 }

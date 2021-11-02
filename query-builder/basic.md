@@ -59,7 +59,7 @@ You can also specify conditions using array notation:
 ```php
 
 $select->where([
-    'id'     => ['in' => new \Spiral\Database\Injection\Parameter([1, 2, 3])],
+    'id'     => ['in' => new \Cycle\Database\Injection\Parameter([1, 2, 3])],
     'status' => ['like' => 'active']
 ]);
 ```
@@ -68,7 +68,7 @@ This declaration is identical to:
 
 ```php
 $select->where(function(\Cycle\ORM\Select\QueryBuilder $select) {
-    $select->where('id', 'in', new \Spiral\Database\Injection\Parameter([1, 2, 3]));
+    $select->where('id', 'in', new \Cycle\Database\Injection\Parameter([1, 2, 3]));
     $select->where('status', 'like', 'active');
 });
 ```
@@ -85,13 +85,13 @@ $select->where([
 By default, any passed value will be converted into `Parameter` objects internally. However, you must explicitly use `Parameter` while specifying array values:
 
 ```php
-$select->where('id', 'in', new \Spiral\Database\Injection\Parameter([1,2,3]));
+$select->where('id', 'in', new \Cycle\Database\Injection\Parameter([1,2,3]));
 ```
 
 Parameters can be used to specify a value after building the query:
 
 ```php
-$select->where('id', $id = new \Spiral\Database\Injection\Parameter(null));
+$select->where('id', $id = new \Cycle\Database\Injection\Parameter(null));
 
 $id->setValue(10);
 

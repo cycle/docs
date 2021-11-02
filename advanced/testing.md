@@ -43,7 +43,7 @@ driver (for example SQLite):
 
 ```php
 use Cycle\ORM;
-use Spiral\Database;
+use Cycle\Database;
 
 $dbal = new Database\DatabaseManager(new Database\Config\DatabaseConfig([
     'default'     => 'default',
@@ -82,7 +82,7 @@ public function tearDown()
             $schema->dropForeignKey($foreign->getColumns());
         }
 
-        $schema->save(\Spiral\Database\Driver\HandlerInterface::DROP_FOREIGN_KEYS);
+        $schema->save(\Cycle\Database\Driver\HandlerInterface::DROP_FOREIGN_KEYS);
     }
 
     // delete tables

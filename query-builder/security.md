@@ -22,7 +22,7 @@ $users->orderBy($userParam, $userDirection); // possible SQL injection
 **No** user input must be used in `Fragment` and `Expression` wrappers:
 
 ```php
-$users->where($name, '=', new \Spiral\Database\Injection\Expression("CONCAT($userValue)")); // possible SQL injection
+$users->where($name, '=', new \Cycle\Database\Injection\Expression("CONCAT($userValue)")); // possible SQL injection
 ```
 
 ## Array Parameters
@@ -30,5 +30,5 @@ The ORM will not allow you to use array parameters outside of `Parameter` scope:
 
 ```php
 $users->where($id, 'IN', [1, 2, 3]); // compile exception
-$users->where($id, 'IN', new \Spiral\Database\Injection\Parameter([1, 2, 3])); // valid approach
+$users->where($id, 'IN', new \Cycle\Database\Injection\Parameter([1, 2, 3])); // valid approach
 ```

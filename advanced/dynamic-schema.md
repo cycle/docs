@@ -121,9 +121,9 @@ use Cycle\ORM\Mapper\StdMapper;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Schema;
 use Cycle\ORM\Transaction;
-use Spiral\Database\Config\DatabaseConfig;
-use Spiral\Database\DatabaseManager;
-use Spiral\Database\Driver\SQLite\SQLiteDriver;
+use Cycle\Database\Config\DatabaseConfig;
+use Cycle\Database\DatabaseManager;
+use Cycle\Database\Driver\SQLite\SQLiteDriver;
 
 $dbm = new DatabaseManager(new DatabaseConfig([
     'default'     => 'default',

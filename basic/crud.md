@@ -25,11 +25,11 @@ try {
 }
 ```
 
-One of the most important types of exception you must handle is `Spiral\Database\Exception\DatabaseException`. This exception branches
+One of the most important types of exception you must handle is `Cycle\Database\Exception\DatabaseException`. This exception branches
 into multiple types for each of the error types:
 
 ```php
-use Spiral\Database\Exception\StatementException;
+use Cycle\Database\Exception\StatementException;
 
 try {
    $tr->run();

@@ -50,7 +50,7 @@ $t->persist($e);
 $t->run();
 ```
 
-> Do not forget to handle `Spiral\Database\Exception\DatabaseException`.
+> Do not forget to handle `Cycle\Database\Exception\DatabaseException`.
 
 You can handle multiple transactions within one scope. They can overlap or be responsible for separate entities:
 
