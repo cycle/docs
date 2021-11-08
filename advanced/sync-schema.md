@@ -29,13 +29,13 @@ Such an approach is useful for development environments, but might cause issues 
 You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom to alter such migrations manually before running them. To achieve that you must install the Cycle Migrations extension:
 
 ```php
-composer require cycle/migrations
+composer require spiral/migrations
 ```
 
-Migrations are based on the `cycle/migrations` package and require proper configuration first:
+Migrations are based on the `spiral/migrations` package and require proper configuration first:
 
 ```php
-use Cycle\Migrations;
+use Spiral\Migrations;
 
 $config = new Migrations\Config\MigrationConfig([
     'directory' => __DIR__ . '/../migrations/',  // where to store migrations
@@ -48,12 +48,12 @@ $migrator = new Migrations\Migrator($config, $dbal, new Migrations\FileRepositor
 $migrator->configure();
 ```
 
-You can now add a new Compiler generator from the package `cycle/schema-migrations-generator` to render schema changes into migration files:
+You can now add a new Compiler generator from the package `cycle/migrations` to render schema changes into migration files:
 
 ```php
 use Cycle\Schema;
 use Cycle\Annotated;
-use Cycle\Schema\Generator\Migrations;
+use Cycle\Migrations;
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),                                    // re-declared table schemas (remove columns)

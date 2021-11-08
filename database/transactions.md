@@ -4,6 +4,7 @@ You can manage transactions manually or use pre-created Closure based flow.
 
 ## Examples
 To start and commit transaction manually use `begin` and `commit` methods of Database:
+
 ```php
 $db->begin();
 

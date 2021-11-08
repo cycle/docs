@@ -1,16 +1,16 @@
 # Database - Migrations
-Spiral ships with a set of embedded commands to control your database migrations, [component](https://github.com/cycle/migrations) 
+Spiral ships with a set of embedded commands to control your database migrations, [component](https://github.com/spiral/migrations) 
 is build upon DBAL and supports virtual databases and prefixes.
 
 ```php
-composer require cycle/migrations
+composer require spiral/migrations
 ```
 
 ## Configure Migrations (optional)
 You can configure what database and table to use to store information about the schema version in migrations config.
 
 ```php
-use Cycle\Migrations;
+use Spiral\Migrations;
 
 $config = new Migrations\Config\MigrationConfig([
     'directory' => __DIR__ . '/../migrations/',    // where to store migrations
@@ -24,19 +24,17 @@ $migrator = new Migrations\Migrator($config, $dbal, new Migrations\FileRepositor
 $migrator->configure();
 ```
 
-Migration state table can automatically initiate using the command `migrate:init`.
-
 ## Generate Migrations
 You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom 
 to alter such migrations manually before running them. To achieve that you must install the Cycle Migrations extension:
 
 ```php
-composer require cycle/schema-migrations-generator
+composer require cycle/migrations
 ```
 
 ```php
 use Cycle\Schema\Registry;
-use Cycle\Schema\Generator\Migrations;
+use Cycle\Migrations;
 use Cycle\Schema\Definition\Entity;
 
 $registry = new Registry($dbal);
@@ -80,15 +78,12 @@ class MyMigrationMigration extends Migration
 You can run all outstanding migrations using `migrate` command.
 
 ```php
-use Cycle\Migrations\Capsule;
+use Spiral\Migrations\Capsule;
 
-$migrator->run( new Capsule($dbal->database()));
+$migrator->run(new Capsule($dbal->database()));
 ```
 
-Use `-vv` flag to get more information about generated queries:
-
 ```bash
-$ php app.php migrate:replay -vv
 Rolling back executed migration(s)...
 [MySQLDriver] SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'sample_2' AND `table_name` = 'migrations'
 [MySQLDriver] SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'sample_2' AND `table_name` = 'migrations'
@@ -138,10 +133,6 @@ WHERE `migration` = 'my_migration'
 Migration my_migration was successfully executed.
 ```
 
-> Enable DEBUG mode first.
-
-Run command `migrate:rollback` and `migrate:replay` to rollback your migrations.
-
 ## Update existed schema
 Create migrations to alter existed table schema:
 
@@ -165,7 +156,6 @@ class NewFieldMigration extends Migration
 ```
 
 ```
-$ php app.php migrate -vv
 [MySQLDriver] SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'sample_2' AND `table_name` = 'migrations'
 [MySQLDriver] SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'sample_2' AND `table_name` = 'migrations'
 [MySQLDriver] SELECT
