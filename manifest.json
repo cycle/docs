@@ -88,10 +88,16 @@
   {
     "title": "Databases",
     "links": {
-      "advanced/full-db": "Full Documentation",
-      "advanced/introspection": "Schema Introspection",
-      "advanced/declaration": "Schema Declaration",
-      "advanced/sync-schema": "Database Migrations"
+      "database/configuration": "Installation and Configuration",
+      "database/access": "Access Database",
+      "database/isolation": "Database Isolation",
+      "database/query-builders": "Query Builders",
+      "database/transactions": "Transactions",
+      "database/introspection": "Schema Introspection",
+      "database/declaration": "Schema Declaration",
+      "database/migrations": "Migrations",
+      "advanced/sync-schema": "Synchronizing Database Schema (Migrations)",
+      "database/errata": "Errata"
     }
   },
   {
