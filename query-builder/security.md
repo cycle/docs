@@ -25,6 +25,15 @@ $users->orderBy($userParam, $userDirection); // possible SQL injection
 $users->where($name, '=', new \Spiral\Database\Injection\Expression("CONCAT($userValue)")); // possible SQL injection
 ```
 
+Parameter `$userValue` should be passed like this:
+```php
+$value = new \Spiral\Database\Injection\Parameter($userValue);
+$concat = new \Spiral\Database\Injection\Expression("CONCAT(?)", $value);
+// or $concat = new \Spiral\Database\Injection\Expression("CONCAT(?)", $userValue); // it will be wrapped in Parameter class automatically.
+
+$users->where($name, '=', $concat);
+```
+
 ## Array Parameters
 The ORM will not allow you to use array parameters outside of `Parameter` scope:
 
