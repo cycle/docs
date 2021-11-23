@@ -29,7 +29,7 @@ Such an approach is useful for development environments, but might cause issues 
 You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom to alter such migrations manually before running them. To achieve that you must install the Cycle Migrations extension:
 
 ```php
-composer require spiral/migrations
+composer require cycle/migrations
 ```
 
 Migrations are based on the `spiral/migrations` package and require proper configuration first:
