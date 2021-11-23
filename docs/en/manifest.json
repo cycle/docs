@@ -1,0 +1,127 @@
+[
+  {
+    "title": "Getting Started",
+    "links": {
+      "readme": "Table of Contents",
+      "intro/about": "About Cycle ORM",
+      "intro/quick-start": "Quick Start",
+      "intro/cli": "Very Quick Start",
+      "contributing": "Contributing",
+      "intro/semver": "Versioning",
+      "license": "LICENSE"
+    }
+  },
+  {
+    "title": "Basics",
+    "links": {
+      "basic/install": "Installation",
+      "basic/connect": "Connect to Database",
+      "basic/crud": "Create, Update, Delete",
+      "basic/direct": "Direct Database Queries",
+      "basic/select": "Select",
+      "basic/repository": "Custom Repositories",
+      "basic/relation": "Simple Relation",
+      "basic/no-annotations": "Without Annotations"
+    }
+  },
+  {
+    "title": "Annotated Entities",
+    "links": {
+      "annotated/prerequisites": "Prerequisites",
+      "annotated/entity": "Entities",
+      "annotated/embeddings": "Embeddings",
+      "annotated/relations": "Relations"
+    }
+  },
+  {
+    "title": "Relations",
+    "links": {
+      "relation/has-one": "Has One",
+      "relation/has-many": "Has Many",
+      "relation/belongs-to": "Belongs To",
+      "relation/refers-to": "Refers To",
+      "relation/many-to-many": "Many To Many",
+      "relation/embedded": "Embedding Entities",
+      "relation/morphed": "Morphed Relations"
+    }
+  },
+  {
+    "title": "Query Builder",
+    "links": {
+      "query-builder/basic": "Basics",
+      "query-builder/extended": "Extended Builder Usage",
+      "query-builder/relations": "Querying Relations",
+      "query-builder/complex": "Complex Queries",
+      "query-builder/security": "Security"
+    }
+  },
+  {
+    "title": "Internals",
+    "links": {
+      "advanced/schema": "Schema",
+      "advanced/entity": "Entity, Heap, Node, State",
+      "advanced/command": "Commands and Linked Contexts",
+      "advanced/transaction": "Transactions (Unit of Work)",
+      "advanced/mapper": "Mappers",
+      "advanced/iterator": "Entity Iterator",
+      "advanced/collections": "Collections",
+      "advanced/promise": "References and Proxies",
+      "advanced/node-parser": "Node Parser"
+    }
+  },
+  {
+    "title": "Mapping Schema",
+    "links": {
+      "advanced/schema-builder": "Configuring Schema Builder",
+      "advanced/manual": "Manually defined Mapping Schema",
+      "advanced/dynamic-schema": "Dynamic Mapping Schema"
+    }
+  },
+  {
+    "title": "Columns and Properties",
+    "links": {
+      "advanced/column-wrappers": "Column Wrappers",
+      "advanced/datetime": "DateTime properties",
+      "advanced/uuid": "UUID as Primary Key"
+    }
+  },
+  {
+    "title": "Databases",
+    "links": {
+      "database/configuration": "Installation and Configuration",
+      "database/access": "Access Database",
+      "database/isolation": "Database Isolation",
+      "database/query-builders": "Query Builders",
+      "database/transactions": "Transactions",
+      "database/introspection": "Schema Introspection",
+      "database/declaration": "Schema Declaration",
+      "database/migrations": "Migrations",
+      "advanced/sync-schema": "Synchronizing Database Schema (Migrations)",
+      "database/errata": "Errata"
+    }
+  },
+  {
+    "title": "Customization",
+    "links": {
+      "advanced/default-classes": "Customize Schema Defaults",
+      "advanced/custom-mapper": "Custom Mappers",
+      "advanced/constrain": "Constrains",
+      "advanced/single-table-inheritance": "Single Table Inheritance",
+      "advanced/caching": "Caching",
+      "advanced/pagination": "Pagination",
+      "advanced/timestamp": "Auto Timestamps",
+      "advanced/soft-deletes": "Soft Deleted Entities",
+      "advanced/chained-repository": "Chained Repository",
+      "advanced/persist-repository": "Persist Repositories",
+      "advanced/active-record": "Active Record"
+    }
+  },
+  {
+    "title": "Advanced",
+    "links": {
+      "advanced/daemonizing": "Long-Running Applications",
+      "advanced/testing": "Testing",
+      "advanced/limitations": "Limitations"
+    }
+  }
+]

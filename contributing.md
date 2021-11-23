@@ -53,4 +53,4 @@ Cycle ORM and all related components are maintained by [Spiral Scout](https://sp
 For commercial support please contact team@spiralscout.com.
 
 ## Licensing
-Cycle ORM and its components will remain under [MIT license](./license.md) indefinitely.
+Cycle ORM and its components will remain under [MIT license](license.md) indefinitely.
