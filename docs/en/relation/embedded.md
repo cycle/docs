@@ -41,7 +41,7 @@ class User
 
 > Make sure to init your relation to be able to use a newly created model.
 
-Read more about embeddings [here](/annotated/embeddings.md).
+Read more about embeddings [here](/docs/en/annotated/embeddings.md).
 
 Embedded relations support the following options:
 

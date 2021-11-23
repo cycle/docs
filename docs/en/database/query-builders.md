@@ -1,5 +1,5 @@
 # Database - Query Builders
-You can read how to work with Database using manually written queries [here](/database/access.md). 
+You can read how to work with Database using manually written queries [here](/docs/en/database/access.md). 
 
 DBAL component includes a set of query builders used to unify the way of working with different databases
 and simplify migration to different DBMS over the lifetime of the application.
@@ -21,7 +21,7 @@ $schema->double('balance');
 $schema->save();
 ```
 
-> You can read more about declaring database schemas [here](/database/declaration.md).
+> You can read more about declaring database schemas [here](/docs/en/database/declaration.md).
 
 ## Insert Builder
 To get an instance of InsertBuilder (responsible for insertions), we have to execute following code:
@@ -641,9 +641,9 @@ $select->leftJoin('users')
     ->orOn('users.id', 'test.balance');
 ```
 
-Array based where conditions is also supported:
+Array based where conditions are also supported:
 
-```sql
+```php
 $select->leftJoin('users', 'u')->on([
     '@or' => [
         ['u.id' => 'test.id'],
@@ -678,6 +678,176 @@ SELECT
 FROM `primary_test`  
 INNER JOIN `primary_users`
     ON `primary_users`.`id` = `primary_test`.`id` AND `primary_users`.`name` = 'Anton'
+```
+
+#### Advanced Join statements
+You may also specify more advanced join statements. 
+To get started, pass a closure or array as the fourth argument to the join method.
+
+**Example 1**
+```php
+$select->join('LEFT', 'photos', 'pht', ['pht.user_id', 'users.id']);
+```
+
+```sql
+SELECT * 
+FROM `users`
+LEFT JOIN `photos` AS `pht` 
+ON `pht`.`user_id` = `users`.`id`
+```
+
+**Example 2**
+
+You may use grouped statements.
+
+```php
+$select->join('LEFT', 'photos', 'pht', [
+    '@or' => [
+        ['pht.user_id' => 'users.id'],
+        ['users.is_admin' => new Parameter(true)]
+    ],
+]);
+```
+
+```sql
+SELECT * 
+FROM `users` 
+LEFT JOIN `photos` AS `pht` 
+ON (
+    `pht`.`user_id` = `users`.`id`
+    OR
+    `users`.`is_admin` = true
+)
+```
+
+**Example 3**
+
+You may use grouped statements with sub grouped statements.
+
+```php
+$select->join('LEFT', 'photos', 'pht', [
+    [
+        '@or' => [
+            [
+                'pht.user_id' => 'users.id',
+                'users.is_admin' => new Parameter(true),
+            ],
+            [
+                '@or' => [
+                    ['pht.user_id' => 'users.parent_id'],
+                    ['users.is_admin' => new Parameter(false)],
+                ],
+            ],
+        ],
+    ],
+]);
+```
+
+```sql
+SELECT * 
+FROM `users` 
+LEFT JOIN `photos` AS `pht`
+ON (
+    (`pht`.`user_id` = `users`.`id` AND `users`.`is_admin` = true)
+    OR 
+    (`pht`.`user_id` = `users`.`parent_id` OR `users`.`is_admin` = false)
+)
+```
+
+**Example 4**
+
+You may combine simple statements with grouped statements.
+
+```php
+$select->join('LEFT', 'photos', 'pht', [
+    'pht.user_id' => 'admins.id',
+    'users.is_admin' => 'pht.is_admin',
+    '@or' => [
+        [
+            'users.name' => new Parameter('Anton'),
+            'users.is_admin' => 'pht.is_admin',
+        ],
+        [
+            'users.status' => new Parameter('disabled'),
+        ],
+    ],
+]);
+```
+
+```sql
+SELECT * 
+FROM `users` 
+LEFT JOIN `photos` AS `pht`
+ON (
+   `pht`.`user_id` = `users`.`id` 
+    AND 
+   `users`.`is_admin` = true
+    AND (
+       (`users`.`name` = "Anton" AND `users`.`is_admin` = `pht`.`is_admin`)
+       OR
+       `users`.`status` = "disabled"
+    )
+)
+```
+
+**Example 5**
+
+You may use closure as a fourth argument.
+
+```php
+$select->join('LEFT', 'photos', 'pht', static function (
+    \Cycle\Database\Query\SelectQuery $select,
+    string $boolean, 
+    callable $wrapper
+): void {
+    $select
+        ->on('photos.user_id', 'users.id')
+        ->onWhere('photos.type', 'avatar');
+});
+```
+
+```sql
+SELECT * 
+FROM `users` 
+LEFT JOIN `photos` AS `pht`
+ON (
+    `photos`.`user_id` = `users`.`id`
+    AND 
+    `photos`.`type` = "avatar"
+)
+```
+
+**Example 6**
+
+You may use closure statement inside array.
+
+```php
+$select->join('LEFT', 'photos', 'pht', [
+    'pht.user_id' => 'users.id',
+    'users.is_admin' => 'pht.is_admin',
+    static function (
+        \Cycle\Database\Query\SelectQuery $select, 
+        string $boolean, 
+        callable $wrapper
+    ): void {
+        $select
+            ->on('photos.user_id', 'users.id')
+            ->onWhere('photos.type', 'avatar');
+    }
+]);
+```
+
+```sql
+SELECT * 
+FROM `users` 
+LEFT JOIN `photos` AS `pht`
+ON (
+    `pht`.`user_id` = `users`.`id`
+    AND
+    `users`.`is_admin` = `pht`.`is_admin`
+    AND 
+    (`photos`.`user_id` = `users`.`id` AND `photos`.`type` = "avatar")
+)
 ```
 
 #### Aliases

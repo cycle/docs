@@ -11,7 +11,7 @@ if ($database->hasTable('users')) {
 }
 ```
 
-> Read how to get Database instances [here](/database/access.md).
+> Read how to get Database instances [here](/docs/en/database/access.md).
 
 Receive all database tables (array of `Cycle\Database\Table`):
 
@@ -32,7 +32,7 @@ foreach ($database->getTables() as $table) {
 ```
 
 ## Reading table properties using AbstractTable
-The AbstractTable provides low-level access to table information, such as column types (internal and abstract), indexes, foreign keys, etc. You can use this information to perform a database export, or to build your own ORM or migration mechanism (see [schema declaration](/database/declaration.md)).
+The AbstractTable provides low-level access to table information, such as column types (internal and abstract), indexes, foreign keys, etc. You can use this information to perform a database export, or to build your own ORM or migration mechanism (see [schema declaration](/docs/en/database/declaration.md)).
 
 Table primary keys:
 
@@ -93,4 +93,4 @@ foreach ($schema->getColumns() as $column) {
 
 > Some types can be mapped incorrectly if the table was created outside migrations or ORM.
 
-You can find a complete list of available abstract types [here](/database/declaration.md).
+You can find a complete list of available abstract types [here](/docs/en/database/declaration.md).

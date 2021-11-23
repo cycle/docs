@@ -196,6 +196,6 @@ WHERE `migration` = 'new_field'
 
 ## Compatibility with DBAL
 All migration methods are based on DBAL functions, feel free to use same abstract types as in 
-[direct schema declarations](/database/declaration.md).
+[direct schema declarations](/docs/en/database/declaration.md).
 
 > Note that the Cycle ORM component can create migrations automatically.

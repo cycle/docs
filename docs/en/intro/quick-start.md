@@ -1,7 +1,7 @@
 # Quick Start
 This guide provides a quick overview of the ORM's installation and configuration process, and an example using an annotated entity. Other sections of the documentation will provide deeper insight into various use-cases.
 
-> Use [Bootstrap](/intro/cli.md) to automatically configure Cycle and get access to quick CLI commands.
+> Use [Bootstrap](/docs/en/intro/cli.md) to automatically configure Cycle and get access to quick CLI commands.
 
 ## Requirements
   * PHP 7.2+
@@ -59,7 +59,7 @@ $dbal = new Database\DatabaseManager(
 );
 ```
 
-> Read about how to connect to other database types in [this section](/basic/connect.md). You can also configure
+> Read about how to connect to other database types in [this section](/docs/en/basic/connect.md). You can also configure
 database connections at runtime.
 
 Check database access using following code:

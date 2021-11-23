@@ -3,7 +3,7 @@ Cycle ORM attempts to simplify the usage of the library in daemonized applicatio
 The ORM provides you multiple options to avoid memory leaks (the same approach can be used for batch operations).
 
 ## Connection Configuration
-Make sure to enable `reconnect` option in your database connection. Read more about database configuration [here](/basic/connect.md).
+Make sure to enable `reconnect` option in your database connection. Read more about database configuration [here](/docs/en/basic/connect.md).
 
 ## Cloning ORM
 The first approach is based on the idea of creating separate ORM instances for each user request, each cloned ORM will have it's own

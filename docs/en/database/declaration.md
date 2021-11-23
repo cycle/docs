@@ -4,14 +4,14 @@ Cycle/Database ships with an included mechanism to declare table structures, FKS
 > Practically, table changes can be executed using an external migration system.
 
 ## Principle of Work
-Before any operation/declaration can be applied to the table schema, DBAL will load the currently existing structure from the database and [normalize it into internal format](/database/introspection.md).
+Before any operation/declaration can be applied to the table schema, DBAL will load the currently existing structure from the database and [normalize it into internal format](/docs/en/database/introspection.md).
 
 As a result, you are allowed to apply the modification to the table schema using a declarative way instead of an imperative one. Once schema **save** is requested, DBAL will generate a set of creation and altering operations based on the difference between the declared and existing schemas.
 
 > See below how to use `Cycle\Database\Schema\Reflector` to sync multiple related tables.
 
 ## To Start
-To get an instance of `AbstractTable` use a similar way as described in [Schema Introspection (make sure your read them first)](/database/introspection.md).
+To get an instance of `AbstractTable` use a similar way as described in [Schema Introspection (make sure your read them first)](/docs/en/database/introspection.md).
 
 > No need to check for table existence.
 

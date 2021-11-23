@@ -1,5 +1,5 @@
 # Database - Access Database
-Follow the configuration instructions [here](/database/configuration.md).
+Follow the configuration instructions [here](/docs/en/database/configuration.md).
 
 ## Access the Database
 Once DBAL component configured properly, you can access your databases in controllers and services multiple ways:
@@ -56,4 +56,4 @@ var_dump(
 );
 ```
 
-> Read how to use query builders [here](/database/query-builders.md).
+> Read how to use query builders [here](/docs/en/database/query-builders.md).

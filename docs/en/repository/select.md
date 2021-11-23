@@ -65,6 +65,6 @@ to low the level method `select`, which gives you the ability to compile more co
 $result = $repository->select()->where('balance', '>', 1)->load('address')->fetchAll();
 ```
 
-> It's recommended to avoid usage of the `select` method outside of repository classes, and instead expose [custom](repository/custom.md) find methods.
+> It's recommended to avoid usage of the `select` method outside of repository classes, and instead expose [custom](/docs/en/basic/repository.md) find methods.
 
-> You can read more about methods available in select queries [here](https://spiral-framework.com/guide/database-builders).
+> You can read more about methods available in select queries [here](/docs/en/database).
