@@ -57,13 +57,16 @@ To assign a column wrapper to an entity use the column option `typecast`. You ca
 a class name which defines static method typecast:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
 class User
 {
-    /** @Column(type="primary") */
+    #[Column(type: 'primary')]
     public $id;
 
-    /** @Column(type="string", typecast=Uuid::class) */
+    #[Column(type: 'string', typecast: Uuid::class)]
     public $uuid;
 }
 ```

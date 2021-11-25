@@ -10,12 +10,15 @@ Each relation must have a proper `target` option. The target must point to eithe
 The HasOne relation is used to define the relation to one child object. This object will be automatically saved with its parent (unless `cascade` option set to `false`). The simplest form of relation definition:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\HasOne;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasOne(target = "Address") */
+    #[HasOne(target: Address::class)]
     protected $address;
 }
 ```
@@ -40,14 +43,16 @@ The HasMany relation provides the ability to link multiple child objects to one 
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\HasMany;
 
-/** @Entity */
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasMany(target = "Post") */
-    protected $posts;
+    #[HasMany(target: Post::class)]
+    protected ArrayCollection $posts;
 
     public function __construct()
     {
@@ -73,12 +78,15 @@ indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 In order to link the entity to its parent object use the relation's `belongsTo`. Please note, a relation is `nullable` by default.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
+
+#[Entity]
 class Post
 {
     // ...
 
-    /** @BelongsTo(target = "User") */
+    #[BelongsTo(target: User::class)]
     protected $author;
 }
 ```
@@ -100,24 +108,27 @@ The RefersTo relation is similar to the BelongsTo relation, but must be used to 
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\RefersTo;
+use Cycle\Annotated\Annotation\Relation\HasMany;
 
-/** @Entity */
+#[Entity]
 class User
 {
     // ...
 
-    /** @RefersTo(target = "Post") */
-    protected $lastPost;
+    #[RefersTo(target: Post::class)]
+    protected Post $lastPost;
 
-    /** @HasMany(target = "Post") */
-    protected $posts;
+    #[HasMany(target: Post::class)]
+    protected ArrayCollection $posts;
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
     }
 
-    public function addPost(Post $p)
+    public function addPost(Post $p): void
     {
         $this->posts->add($p);
         $this->lastPost = $p;
@@ -144,14 +155,16 @@ A relation of type ManyToMany provides a more complex connection with the abilit
 
 ```php
 use Cycle\ORM\Relation\Pivoted\PivotedCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
 
-/** @Entity */
+#[Entity]
 class User
 {
     // ...
 
-    /** @ManyToMany(target = "Tag", though = "UserTag") */
-    protected $tags;
+    #[ManyToMany(target: Tag::class, through: UserTag::class)]
+    protected PivotedCollection $tags;
 
     public function __construct()
     {
@@ -182,7 +195,9 @@ indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Default
 Cycle ORM provides support for polymorphic relations. Given relations can be used to link an entity to multiple entity types and select the desired object in runtime. Relations must be assigned to the entity interface rather than a specific role or class name.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class User implements ImageHolderInterface
 {
      // ...
@@ -192,12 +207,15 @@ class User implements ImageHolderInterface
 BelongsToMorphed relations allows an entity to belong to any of the parents which implement given interface:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\BelongsToMorphed;
+
+#[Entity]
 class Image
 {
     // ...
 
-    /** @BelongsToMorphed(target = "ImageHolderInterface")*/
+    #[BelongsToMorphed(target: ImageHolderInterface::class)]
     protected $parent;
 }
 ```
@@ -217,13 +235,16 @@ indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Default
 MorphedHasOne and MorphedHasMany is an inverse version of BelongsToMorphed.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasOne;
+
+#[Entity]
 class User implements ImageHolderInterface
 {
      // ...
 
-     /** @MorphedHasOne(target = "Image")*/
-     protected $image;
+    #[MorphedHasOne(target: Image::class)]
+    protected $image;
 }
 ```
 
@@ -239,19 +260,21 @@ indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Default
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasMany;
 
-/** @Entity */
+#[Entity]
 class User implements ImageHolderInterface
 {
      // ...
 
-     /** @MorphedHasMany(target = "Image")*/
-     protected $images;
+    #[MorphedHasMany(target: Image::class)]
+    protected ArrayCollection $images;
 
-     public function __construct()
-     {
-         $this->images = new ArrayCollection();
-     }
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 }
 ```
 
@@ -274,12 +297,17 @@ In some cases you might want to create an inversed relation automatically. Pleas
 To inverse a relation, you must use the option `inverse` with specified inversed relation name and type.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Relation\Inverse;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class Post
 {
+    #[BelongsTo(target: User::class)]
+    #[Inverse(as: 'posts', type: 'hasMany')]
+    private User $user;
+    
     // ...
-
-    /** @BelongsTo(target = "User", inverse = @Inverse(as = "posts", type = "hasMany")) */
-    protected $user;
 }
 ```

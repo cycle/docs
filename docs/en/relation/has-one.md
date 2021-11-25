@@ -5,12 +5,15 @@ The Has One relation defines that an entity exclusively owns another entity in a
 To define a Has One relation using the annotated entities extension, use:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Relation\HasOne;
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasOne(target = "Address") */
+    #[HasOne(target: 'Address')]
     protected $address;
 }
 ```
@@ -28,6 +31,7 @@ innerKey    | string | Inner key in parent entity. Defaults to primary key
 outerKey    | string | Outer key name. Defaults to `{parentRole}_{innerKey}`
 fkCreate    | bool   | Set to true to automatically create FK on outerKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
+fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
 indexCreate | bool   | Create index on outerKey. Defaults to `true`
 
 ## Usage

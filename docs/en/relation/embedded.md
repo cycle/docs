@@ -7,13 +7,16 @@ loading of embedded entities, or the ability to retrieve entities separately (wi
 To define embedded entity using the annotated extension, you must first declare your embedded entity:
 
 ```php
-/** @Embeddable */
+use Cycle\Annotated\Annotation\Embeddable;
+use Cycle\Annotated\Annotation\Column;
+
+#[Embeddable]
 class UserCredentials
 {
-    /** @Column(type="string(255)") */
+    #[Column(type: 'string(255)')]
     public $username;
 
-    /** @Column(type="string") */
+    #[Column(type: 'string')]
     public $password;
 }
 ```
@@ -23,13 +26,17 @@ class UserCredentials
 Now you can declare the usage of this entity if your model using the relation of type `embedd`:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column
+use Cycle\Annotated\Annotation\Relation\Embedded;
+
+#[Entity]
 class User
 {
-    /** @Column(type = "primary") */
+    #[Column(type: 'primary')]
     public $id;
 
-    /** @Embedded(target = "UserCredentials") */
+    #[Embedded(target: 'UserCredentials')]
     public $credentials;
 
     public function __construct()
@@ -75,13 +82,17 @@ $select->where('credentials.username', 'username');
 By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of the `@Embedd` relation annotation:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column
+use Cycle\Annotated\Annotation\Relation\Embedded;
+
+#[Entity]
 class User
 {
-    /** @Column(type = "primary") */
+    #[Column(type: 'primary')]
     public $id;
 
-    /** @Embedded(target = "UserCredentials", load = "lazy") */
+    #[Embedded(target: 'UserCredentials', load: 'lazy')]
     public $credentials;
 }
 ```

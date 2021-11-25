@@ -42,7 +42,8 @@
       "relation/refers-to": "Refers To",
       "relation/many-to-many": "Many To Many",
       "relation/embedded": "Embedding Entities",
-      "relation/morphed": "Morphed Relations"
+      "relation/morphed": "Morphed Relations",
+      "relation/collections": "Collections"
     }
   },
   {

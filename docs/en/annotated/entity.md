@@ -4,7 +4,7 @@ The annotated entities extension is capable of indexing any domain entity in you
 ```php
 use Cycle\Annotated\Annotation\Entity;
 
-/** @Entity */
+#[Entity]
 class User
 {
 }
@@ -21,13 +21,7 @@ You can tweak all of these values by setting `entity` options:
 ```php
 use Cycle\Annotated\Annotation\Entity;
 
-/**
- * @Entity(
- *     role     = "user",
- *     database = "database",
- *     table    = "user_table"
- * )
- */
+#[Entity(role: 'user', database: 'database', table: 'user_table')]
 class User
 {
 }
@@ -40,9 +34,7 @@ Some options can be used to overwrite default entity behaviour, for example to a
 ```php
 use Cycle\Annotated\Annotation\Entity;
 
-/**
- * @Entity(repository = "Repository\UserRepository")
- */
+ #[Entity(repository: Repository\UserRepository::class)]
 class User
 {
 }
@@ -68,13 +60,11 @@ For example, a  typical entity description might look like:
 ```php
 use Cycle\Annotated\Annotation\Entity;
 
-/**
- * @Entity(
- *    table      = "users",
- *    repository = "Repository\UserRepository",
- *    constrain  = "Constrain/SortByID"
- * )
- */
+#[Entity(
+    table: 'users', 
+    repository: Repository\UserRepository::class,
+    constrain: Constrain/SortByID::class
+ )]
 class User
 {
 }
@@ -87,10 +77,10 @@ No entity can operate without some properties mapped to table columns. To map yo
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 
-/** @Entity */
+#[Entity]
 class User
 {
-    /** @Column(type = "primary") */
+    #[Column(type: 'primary')]
     protected $id;
 }
 ```
@@ -102,10 +92,10 @@ You can use multiple annotations at the same time:
 ```php
 use Cycle\Annotated\Annotation as Cycle;
 
-/** @Cycle\Entity */
+#[Cycle\Entity]
 class User
 {
-    /** @Cycle\Column(type = "primary") */
+    #[Cycle\Column(type: 'primary')]
     protected $id;
 }
 ```
@@ -116,33 +106,39 @@ By default, the entity property will be mapped to the column with the same name 
 You can change it as follows:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
 class User
 {
-    /** @Column(type = "primary") */
-    protected $id;
+    #[Column(type: 'primary')]
+    protected int $id;
 
-    /** @Column(type = "string", name = "username") */
-    protected $login;
+    #[Column(type: 'string', name: 'username')]
+    protected string $login;
 }
 ```
 
 Some column types support additional arguments, such as length, values, etc.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
 class User
 {
-    /** @Column(type = "primary") */
-    protected $id;
+    #[Column(type: 'primary')]
+    protected int $id;
 
-    /** @Column(type = "string(32)") */
-    protected $login;
+    #[Column(type: 'string(32)')]
+    protected string $login;
 
-    /** @Column(type = "enum(active,disabled)") */
-    protected $status;
+    #[Column(type: 'enum(active,disabled)')]
+    protected string $status;
 
-    /** @Column(type = "decimal(5,5)") */
+    #[Column(type: 'decimal(5,5)')]
     protected $balance;
 }
 ```
@@ -150,28 +146,34 @@ class User
 Use the `default` option to specify the default value of the column:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
 class User
 {
-    /** @Column(type = "primary") */
-    protected $id;
+    #[Column(type: 'primary')]
+    protected int $id;
 
-    /** @Column(type = "enum(active,disabled)", default = "active") */
-    protected $status;
+    #[Column(type: 'enum(active,disabled)', default: 'active')]
+    protected string $status;
 }
 ```
 
 While adding new columns to entities associated with non-empty tables you are required to either specify a default value or mark the column as nullable:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
 class User
 {
-    /** @Column(type = "primary") */
-    protected $id;
+    #[Column(type: 'primary')]
+    protected int $id;
 
-    /** @Column(type = "string(64)", nullable = true) */
-    protected $password;
+    #[Column(type: 'string(64)', nullable: true)]
+    protected ?string $password = null;
 }
 ```
 
@@ -216,7 +218,9 @@ json        | ---                       | To store JSON structures, such type us
 The ORM supports the enum type for all available drivers. You must define enum options using comma separator:
 
 ```php
-/** @Column(type = "enum(active,disabled)", default = "active") */
+use Cycle\Annotated\Annotation\Column;
+
+#[Column(type: 'enum(active,disabled)', default: 'active')]
 protected $status;
 ```
 
@@ -224,25 +228,23 @@ protected $status;
 In some cases you might want to specify additional table columns and indexes without the link to the entity properties. This can be achieved using `@Table` annotation:
 
 ```php
-/**
- * @Entity
- * @Table(
- *      columns={"created_at": @Column(type = "datetime"), "deleted_at": @Column(type = "datetime")},
- *      indexes={
- *             @Index(columns = {"username"}, unique = true),
- *             @Index(columns = {"status"})
- *      }
- * )
- */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
+#[Column(name: 'created_at', type: 'datetime')]
+#[Column(name: 'deleted_at', type: 'datetime')]
+#[Index(columns: ['username'], unique: true)]
+#[Index(columns: ['name', 'id DESC'])]
 class User
 {
-    /** @Column(type = "primary") */
-    protected $id;
+    #[Column(type: 'primary')]
+    protected int $id;
 
-    /** @Column(type ="string(32)") */
-    protected $username;
+    #[Column(type: 'string(32)')]
+    protected string $username;
 
-    /** @Column(type = "enum(active,disabled)", default = "active") */
+    #[Column(type: 'enum(active,disabled)', default: 'active')]
     protected $status;
 }
 ```
@@ -253,9 +255,9 @@ class User
 The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source, Repository and Constrain classes. This approach can be useful in cases when you want to implement domain functionality like auto timestamps or soft deletes.
 
 ```php
-/**
- * @Entity(repository = "Repository/UserRepository")
- */
+use Cycle\Annotated\Annotation\Entity;
+
+ #[Entity(repository: Repository/UserRepository::class)]
 class User
 {
 }
@@ -264,12 +266,8 @@ class User
 You can also use short annotation declaration:
 
 ```php
-/**
- * @Table(
- *     columns={"created_at": @Column("datetime")},
- *     indexes={@Index(columns = {"created_at"})}
- * )
- */
+#[Column(name: 'created_at', type: 'datetime')]
+#[Index(columns: ['created_at'])]
 class UserRepository extends \Cycle\ORM\Select\Repository
 {
 

@@ -1,35 +1,44 @@
 # Many To Many
-Many to Many relations are, in fact, two relations combined together. This relation requires an intermediate (pivot) entity to connect the source and target entities. Example: many users have many tags, many posts have many favorites.
+
+Many to Many relations are, in fact, two relations combined together. This relation requires an intermediate (pivot)
+entity to connect the source and target entities. Example: many users have many tags, many posts have many favorites.
 
 The relation provides access to an intermediate object on all the steps, including creation, update and query building.
 
 ## Definition
-To define a Many To Many relation using the annotated entities extension, use (attention, make sure to create pivot entity):
+
+To define a Many To Many relation using the annotated entities extension, use (attention, make sure to create pivot
+entity):
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @ManyToMany(target = "Tag", though = "UserTag") */
-    protected $tags;
+    #[ManyToMany(target: Tag::class, through: UserTag::class)]
+    protected array $tags;
 }
 ```
 
-In order to use a newly created entity, you must define the collection to store related entities. The collection must be an instance of
-`Cycle\ORM\Relation\Pivoted\PivotedCollection`. Do it in your constructor:
+In order to use a newly created entity, you must define the collection to store related entities. The collection must be
+an instance of `Cycle\ORM\Relation\Pivoted\PivotedCollection`. Do it in your constructor:
 
 ```php
 use Cycle\ORM\Relation\Pivoted\PivotedCollection;
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
+use Cycle\Annotated\Annotation\Entity;
 
-/** @Entity */
+#[Entity]
 class User
 {
     // ...
 
-   /** @ManyToMany(target = "Tag", though = "UserTag") */
-    protected $tags;
+    #[ManyToMany(target: Tag::class, through: UserTag::class)]
+    protected PivotedCollection $tags;
 
     public function __construct()
     {
@@ -38,7 +47,7 @@ class User
 
     // ...
 
-    public function getTags()
+    public function getTags(): PivotedCollection
     {
         return $this->tags;
     }
@@ -46,37 +55,45 @@ class User
 ```
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class UserTag
 {
-    /** @Column(type="primary") */
-    private $id;
+    #[Column(type: 'primary')]
+    private int $id;
 }
 ```
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class Tag
 {
-    /** @Column(type="primary") */
-    private $id;
+    #[Column(type: 'primary')]
+    private int $id;
 
-    /** @Column(type="string") */
-    private $name;
+    #[Column(type: 'string')]
+    private string $name;
 
     public function __construct(string $name)
     {
         $this->name = $name;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 }
 ```
 
-By default, ORM will generate FK and indexes in `though` entity using the role and primary keys of the linked objects. Following values are available for the configuration:
+By default, ORM will generate FK and indexes in `though` entity using the role and primary keys of the linked objects.
+Following values are available for the configuration:
 
 Option      | Value  | Comment
 ---         | ---    | ----
@@ -91,13 +108,16 @@ where       | array | Where conditions applied to a related entity
 orderBy     | array  | Additional sorting rules
 fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
+fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
+collection  | string | Collection that will contain loaded entities
 
 You can keep your pivot entity empty, the only requirement is to have defined a primary key.
 
 > Note, current implementation includes a typo in the pivot table definition, `though` => `through`.
 
 ## Usage
+
 To associate two entities using Many To Many relation, use the method `add` of pivot collection:
 
 ```php
@@ -111,13 +131,15 @@ $t->persist($u);
 $t->run();
 ```
 
-To remove the association to the object, use the `remove` or `removeElement` methods. Disassociation will remove the `UserTag` entity, and not the `Tag` entity.
+To remove the association to the object, use the `remove` or `removeElement` methods. Disassociation will remove
+the `UserTag` entity, and not the `Tag` entity.
 
 ```php
 $u->getTags()->removeElement($tag);
 ```
 
 ### Loading
+
 Use the method `load` of your `Select` object to pre-load data of related and pivot entities:
 
 ```php
@@ -141,8 +163,9 @@ foreach ($users as $u) {
 ```
 
 ### Accessing Pivot Entity
-Many To Many relation provides you the ability to access the pivot entity's data using the `PivotedCollection` object. You can do that
-using the `getPivot` method:
+
+Many To Many relation provides you the ability to access the pivot entity's data using the `PivotedCollection` object.
+You can do that using the `getPivot` method:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -158,19 +181,23 @@ foreach ($users as $u) {
 }
 ```
 
-You can change the values of this entity as they will be persisted with the parent entity. This approach allows you to easier
-control the association between parent and related entities.
+You can change the values of this entity as they will be persisted with the parent entity. This approach allows you to
+easier control the association between parent and related entities.
 
 For example, we can add a new property to our `UserTag`:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
 class UserTag
 {
-    /** @Column(type="primary") */
+    #[Column(type: 'primary')]
     private $id;
 
-    /** @Column(type="datetime", default=null) */
+    #[Column(type: 'datetime', default: null)]
     private $created_at;
 
     public function __construct(\DateTimeInterface $d)
@@ -196,6 +223,7 @@ $t->run();
 ```
 
 ### Filtering
+
 Similar to Has Many the entity query can be filtered using the `with` method:
 
 ```php
@@ -219,17 +247,18 @@ $users = $orm->getRepository(User::class)
 Following SQL will be produced:
 
 ```sql
-SELECT DISTINCT
-`user`.`id` AS `c0`, `user`.`name` AS `c1`
+SELECT DISTINCT `user`.`id`   AS `c0`,
+                `user`.`name` AS `c1`
 FROM `users` AS `user`
-INNER JOIN `user_tags` AS `user_tags_pivot`
-    ON `user_tags_pivot`.`user_id` = `user`.`id`
-INNER JOIN `tags` AS `user_tags`
-    ON `user_tags`.`id` = `user_tags_pivot`.`tag_id`
+         INNER JOIN `user_tags` AS `user_tags_pivot`
+                    ON `user_tags_pivot`.`user_id` = `user`.`id`
+         INNER JOIN `tags` AS `user_tags`
+                    ON `user_tags`.`id` = `user_tags_pivot`.`tag_id`
 WHERE `user_tags`.`name` = 'tag a'
 ```
 
 ### Chain Filtering
+
 Pivot entity data is available for filtering as well, you must use the keyword `@` to access it.
 
 ```php
@@ -255,9 +284,11 @@ $users = $orm->getRepository(User::class)
 > Cross-database Many To Many relations are not supported yet.
 
 ## Complex Loading
+
 You can load related data using conditions and sorts applied to the pivot table using the option `load`.
 
 For example, we can have the following entities:
+
 - category (id, title)
 - photo (id, url)
 - photo_to_category (photo_id, category_id, position)
@@ -266,8 +297,8 @@ For example, we can have the following entities:
 $categories = $orm->getRepository('category')->select();
 ```
 
-We can now load categories with photos inside them ordered by `photo_to_category` position using a `WHERE IN` or `JOIN` query:
-
+We can now load categories with photos inside them ordered by `photo_to_category` position using a `WHERE IN` or `JOIN`
+query:
 
 ```php
 $result = $categories->load('photos', [
@@ -280,19 +311,23 @@ $result = $categories->load('photos', [
 The produced SQL:
 
 ```sql
-SELECT
-"category"."id" AS "c0", "category"."title" AS "c1"
+SELECT "category"."id"    AS "c0",
+       "category"."title" AS "c1"
 FROM "categories" AS "category"
 ```
 
 SQL #2:
 
 ```sql
-SELECT
-"l_category_photos_pivot"."id" AS "c0", "l_category_photos_pivot"."position" AS "c1", "l_category_photos_pivot"."photo_id" AS "c2", "l_category_photos_pivot"."category_id" AS "c3", "category_photos"."id" AS "c4", "category_photos"."url" AS "c5"
+SELECT "l_category_photos_pivot"."id"          AS "c0",
+       "l_category_photos_pivot"."position"    AS "c1",
+       "l_category_photos_pivot"."photo_id"    AS "c2",
+       "l_category_photos_pivot"."category_id" AS "c3",
+       "category_photos"."id"                  AS "c4",
+       "category_photos"."url"                 AS "c5"
 FROM "photos" AS "category_photos"
-INNER JOIN "photo_category_positions" AS "l_category_photos_pivot"
-     ON "l_category_photos_pivot"."photo_id" = "category_photos"."id"
+         INNER JOIN "photo_category_positions" AS "l_category_photos_pivot"
+                    ON "l_category_photos_pivot"."photo_id" = "category_photos"."id"
 WHERE "l_category_photos_pivot"."category_id" IN (1, 2, 3, 4)
 ORDER BY "l_category_photos_pivot"."position" ASC
 ```
@@ -311,14 +346,18 @@ $result = $categories->load('photos', [
 SQL:
 
 ```sql
-SELECT
-"category"."id" AS "c0", "category"."title" AS "c1", 
-"l_l_category_photos_pivot"."id" AS "c2", "l_l_category_photos_pivot"."position" AS "c3",
-"l_l_category_photos_pivot"."photo_id" AS "c4", "l_l_category_photos_pivot"."category_id" AS "c5", "l_category_photos"."id" AS "c6", "l_category_photos"."url" AS "c7"
+SELECT "category"."id"                           AS "c0",
+       "category"."title"                        AS "c1",
+       "l_l_category_photos_pivot"."id"          AS "c2",
+       "l_l_category_photos_pivot"."position"    AS "c3",
+       "l_l_category_photos_pivot"."photo_id"    AS "c4",
+       "l_l_category_photos_pivot"."category_id" AS "c5",
+       "l_category_photos"."id"                  AS "c6",
+       "l_category_photos"."url"                 AS "c7"
 FROM "categories" AS "category"
-LEFT JOIN "photo_category_positions" AS "l_l_category_photos_pivot"
-     ON "l_l_category_photos_pivot"."category_id" = "category"."id"
-INNER JOIN "photos" AS "l_category_photos"
-     ON "l_category_photos"."id" = "l_l_category_photos_pivot"."photo_id"
+         LEFT JOIN "photo_category_positions" AS "l_l_category_photos_pivot"
+                   ON "l_l_category_photos_pivot"."category_id" = "category"."id"
+         INNER JOIN "photos" AS "l_category_photos"
+                    ON "l_category_photos"."id" = "l_l_category_photos_pivot"."photo_id"
 ORDER BY "category"."id" ASC, "l_l_category_photos_pivot"."position" ASC
 ```

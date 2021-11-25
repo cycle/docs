@@ -9,14 +9,16 @@ collections in your constructor to use newly created entities:
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\HasMany;
 
-/** @Entity */
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasMany(target = "Post") */
-    public $posts;
+    #[HasMany(target: Post::class)]
+    public ArrayCollection $posts;
 
     public function __construct()
     {

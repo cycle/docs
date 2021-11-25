@@ -42,10 +42,10 @@ innerKey    | string | Inner key in parent entity. Defaults to the primary key
 outerKey    | string | Outer key name. Defaults to `{parentRole}_{innerKey}`
 fkCreate    | bool   | Set to true to automatically create FK on outerKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
+fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
 indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 
 > Please note, default `fkAction` is `SET NULL`, the relation is nullable by default.
-
 
 ## Usage
 Cycle will automatically save the related entity and link to it (unless `cascade` set to `false`).

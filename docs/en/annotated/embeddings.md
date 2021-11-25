@@ -7,17 +7,20 @@ The ORM can simplify the definition of large entities by providing the ability t
 To define an embeddable entity use the `@Embeddable` annotation. As with `@Entity`, you are able to define a custom mapper or associate additional columns/indexes using the `@Table` annotation.
 
 ```php
-/** @Embeddable */
+use Cycle\Annotated\Annotation\Embeddable;
+use Cycle\Annotated\Annotation\Column;
+
+#[Embeddable]
 class Address
 {
-    /** @Column(type = "string") */
-    public $country;
+    #[Column(type: 'string')]
+    public string $country;
 
-    /** @Column(type = "string") */
-    public $city;
+    #[Column(type: 'string(32)')]
+    public string $city;
 
-    /** @Column(type = "string") */
-    public $address;
+    #[Column(type: 'string(100)')]
+    public string $address;
 }
 ```
 
@@ -26,16 +29,18 @@ class Address
 To embed an entity to another object use the `@Embedded` annotation:
 
 ```php
-/**
- * @Entity
- */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\Embedded;
+
+#[Entity]
 class User
 {
-    /** @Column(type = "primary") */
-    public $id;
+    #[Column(type: 'primary')]
+    public int $id;
 
-    /** @Embedded(target = "Address") */
-    public $address;
+    #[Embedded(target: Address::class)]
+    public Address $address;
 }
 ```
 
@@ -60,17 +65,20 @@ By default, all embedded entity columns will be stored in the owning entity tabl
 If desired, you can define a custom prefix using the `columnPrefix` option of the `@Embeddable` annotation:
 
 ```php
-/** @Embeddable(columnPrefix = "address_") */
+use Cycle\Annotated\Annotation\Embeddable;
+use Cycle\Annotated\Annotation\Column;
+
+#[Embeddable(columnPrefix: 'address_')]
 class Address
 {
-    /** @Column(type = "string") */
-    public $country;
+    #[Column(type: 'string')]
+    public string $country;
 
-    /** @Column(type = "string") */
-    public $city;
+    #[Column(type: 'string')]
+    public string $city;
 
-    /** @Column(type = "string") */
-    public $address;
+    #[Column(type: 'string')]
+    public string $address;
 }
 ```
 
@@ -86,14 +94,18 @@ $select->where('address.country', 'USA');
 By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of `@Embedded` relation annotation:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\Embedded;
+
+#[Entity]
 class User
 {
-    /** @Column(type = "primary") */
-    public $id;
+    #[Column(type: 'primary')]
+    public int $id;
 
-    /** @Embedded(target = "Address", load = "lazy") */
-    public $address;
+    #[Embedded(target: Address:class, load: 'lazy')]
+    public Address $address;
 }
 ```
 

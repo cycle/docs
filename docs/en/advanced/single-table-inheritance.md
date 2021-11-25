@@ -5,7 +5,9 @@ and declare relations/columns specific to the child.
 ## Definition
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class Post
 {
     /** @Column(type="primary") */
