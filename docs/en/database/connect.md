@@ -1,6 +1,6 @@
 # Connect to Database
 Cycle ORM requires at least one connection to the database in order to operate. The DBAL functionality is
-provided by the package `spiral/database`.
+provided by the package `cycle/database`.
 
 > Make sure to install all required dependencies listed in the previous section.
 
@@ -9,9 +9,10 @@ In order to start, we have to initialize the `DatabaseManager` service used to a
 The list of available connections and databases can be provided in the initial configuration.
 
 ```php
-use Spiral\Database;
+use Cycle\Database;
+use Cycle\Database\Config;
 
-$dbConfig = new Database\Config\DatabaseConfig([
+$dbConfig = new Config\DatabaseConfig([
     'default'     => 'default',
     'databases'   => [
         'default' => [
@@ -19,14 +20,10 @@ $dbConfig = new Database\Config\DatabaseConfig([
         ]
     ],
     'connections' => [
-        'sqlite' => [
-            'driver'  => Database\Driver\SQLite\SQLiteDriver::class,
-            'options' => [
-                'connection' => 'sqlite:database.db',
-                'username'   => '',
-                'password'   => '',
-            ]
-        ]
+        'sqlite' =>  new Config\SQLiteDriverConfig(
+            connection: new Config\SQLite\MemoryConnectionConfig(),
+            queryCache: true,
+        ),
     ]
 ]);
 
@@ -36,7 +33,7 @@ $dbal = new Database\DatabaseManager($dbConfig);
 > You can instantiate DBAL with an empty connection list and configure it in runtime if needed.
 
 ## Configure Databases
-The Spiral/Database module provides support to manage multiple databases in one application, use read/write connections and logically
+The Cycle/Database module provides support to manage multiple databases in one application, use read/write connections and logically
 separate multiple databases within one connection using prefixes.
 
 To register a new database simply add it into `databases` section:
@@ -73,55 +70,108 @@ different database drivers. To register a new connection you have to specify the
 For **SQLite**:
 
 ```php
-'sqlite' => [
-    'driver'  => \Cycle\Database\Driver\SQLite\SQLiteDriver::class,
-    'options' => [
-        'connection' => 'sqlite:database.db',
-        'username'   => '',
-        'password'   => '',
-    ]
-]
-```
+'sqlite_memory' => new Config\SQLiteDriverConfig(
+    connection: new Config\SQLite\MemoryConnectionConfig(),
+    queryCache: true,
+),
 
-> Use `sqlite::memory:` to keep SQLite in memory.
+'sqlite_file' => new Config\SQLiteDriverConfig(
+    connection: new Config\SQLite\FileConnectionConfig(
+        database:  __DIR__.'./runtime/database.sqlite'
+    ),
+    queryCache: true,
+),
+
+'sqlite_dsn' => new Config\SQLiteDriverConfig(
+    connection: new Config\SQLite\DsnConnectionConfig(
+        dsn: 'sqlite:runtime/database.db',
+    ),
+    queryCache: true,
+),
+```
 
 For `MySQL` and `MariaDB`:
 
 ```php
-'mysql'     => [
-  'driver'  => \Cycle\Database\Driver\MySQL\MySQLDriver::class,
-  'options' => [
-    'connection' => 'mysql:host=127.0.0.1;dbname=database',
-    'username'   => 'mysql',
-    'password'   => 'mysql',
-  ]
-],
+'mysql' => new Config\MySQLDriverConfig(
+    connection: new Config\MySQL\TcpConnectionConfig(
+        database: 'spiral',
+        host: '127.0.0.1',
+        port: 3306,
+        user:'spiral',
+        password: '',
+    ),
+    queryCache: true
+),
+
+'mysql_dsn' => new Config\MySQLDriverConfig(
+    connection: new Config\MySQL\DsnConnectionConfig(
+        dsn: 'mysql:host=127.0.0.1;port=3306;dbname=spiral',
+        user:'spiral',
+        password: '',
+    ),
+    queryCache: true
+),
+
+'mysql_socket' => new Config\MySQLDriverConfig(
+    connection: new Config\MySQL\SocketConnectionConfig(
+        database: 'spiral',
+        socket: '/tmp/mysql.sock',
+        dsn: 'mysql:host=127.0.0.1;port=3306;dbname=spiral',
+        user: 'spiral',
+        password: '',
+    ),
+    queryCache: true
+),
 ```
 
 For `PostgresSQL`:
 
 ```php
-'postgres'  => [
-  'driver'   => \Cycle\Database\Driver\Postgres\PostgresDriver::class,
-  'options' => [
-      'connection' => 'pgsql:host=127.0.0.1;dbname=database',
-      'username'   => 'postgres',
-      'password'   => 'postgres',
-   ],
-],
+'postgres' => new Config\PostgresDriverConfig(
+    connection: new Config\Postgres\TcpConnectionConfig(
+        database: 'spiral',
+        host: '127.0.0.1',
+        port: 5432,
+        user: 'spiral',
+        password: '',
+    ),
+    schema: 'public',
+    queryCache: true,
+),
+
+'postgres_dsn' => new Config\PostgresDriverConfig(
+    connection: new Config\Postgres\DsnConnectionConfig(
+        dsn: 'pgsql:host=127.0.0.1;port=5432;dbname=spiral',
+        user:'spiral',
+        password: '',
+    ),
+    queryCache: true
+),
 ```
 
 For `SQLServer`:
 
 ```php
-'sqlServer' => [
-  'driver'  => \Cycle\Database\Driver\SQLServer\SQLServerDriver::class,
-  'options' => [
-    'connection' => 'sqlsrv:Server=OWNER;Database=DATABASE',
-    'username'   => 'sqlServer',
-    'password'   => 'sqlServer',
-  ],
-],
+'sqlServer' => new Config\SQLServerDriverConfig(
+    connection: new Config\SQLServer\TcpConnectionConfig(
+        database: 'spiral',
+        host: '127.0.0.1',
+        port: 5432,
+        user: 'spiral',
+        password: '',
+    ),
+    queryCache: true,
+),
+
+'sqlServer_dsn' => new Config\SQLServerDriverConfig(
+    connection: new Config\SQLServer\DsnConnectionConfig(
+        dsn: 'sqlsrv:Server=127.0.0.1,1521;Database=spiral',
+        user:'spiral',
+        password: '',
+    ),
+    queryCache: true,
+),
 ```
 > Make sure to install the proper PDO extensions!
 
@@ -151,14 +201,6 @@ Direct SQL queries are possible from this moment:
 $dbal->database('default')->table('users')->select()->fetchAll();
 ```
 
-## Profiling and Logging
-Each of the database drivers implements the `Psr\Log\LoggerAwareInterface`. You can enable SQL logging by assigning a logger:
-
-```php
-$driver = $dbal->database('default')->getDriver();
-$driver->setLogger($myLogger);
-```
-
 ## Runtime Configuration
 In addition to config driven setup you are able to configure your database connections in runtime:
 
@@ -168,12 +210,19 @@ use Cycle\Database;
 $dbal->addDatabase(new Database\Database(
   'name',
   'prefix_',
-  new Database\Driver\SQLite\SQLiteDriver([
-     'connection'  => 'sqlite::memory:',
-     'username'   => 'username',
-     'password'   => 'password',
-     'options'    => []
-  ])
+  new Database\Driver\SQLite\SQLiteDriver(
+    new \Config\PostgresDriverConfig(
+        connection: new Config\Postgres\TcpConnectionConfig(
+            database: 'spiral',
+            host: '127.0.0.1',
+            port: 5432,
+            user: 'spiral',
+            password: '',
+        ),
+        schema: 'public',
+        queryCache: true,
+    )
+  )
 ));
 ```
 

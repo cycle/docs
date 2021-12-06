@@ -8,23 +8,27 @@ Refers To relation is very similar to Belongs To but must be used in cases when 
 Using the annotated extension:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\RefersTo;
+use Cycle\Annotated\Annotation\Relation\HasMany;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @RefersTo(target="Comment") */
-    public $lastComment;
+    #[RefersTo(target: Comment::class)]
+    private $lastComment;
 
-    /** @HasMany(target="Comment") */
-    public $comments;
+    #[HasMany(target: Comment::class)]
+    public array $comments;
 
     // ...
 
     public function addComment(Comment $c)
     {
         $this->lastComment = $c;
-        $this->comments->add($c);
+        $this->comments[] = $c;
     }
 }
 ```
@@ -54,9 +58,9 @@ Cycle will automatically save the related entity and link to it (unless `cascade
 $u = new User();
 $u->addComment(new Comment("hello world");
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 Simply set the property value to null to remove the entity reference.
@@ -65,9 +69,9 @@ Simply set the property value to null to remove the entity reference.
 $u = new User();
 $u->lastComment = null;
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($post);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 ### Loading
@@ -105,13 +109,17 @@ print_r($users);
 The RefersTo relation can be used to create self-references.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\RefersTo;
+
+#[Entity]
 class Category
 {
-    /** @Column(type="primary") */
+     #[Column(type: 'primary')]
     public $id;
 
-    /** @RefersTo(target="Category") */
+     #[RefersTo(target: Category::class)]
     public $parent;
 
     // ...
@@ -125,10 +133,10 @@ $category1 = new Category("A");
 $category2 = new Category("A");
 $category2->parent = $category1;
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($category1);
-$t->persist($category2);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($category1);
+$manager->persist($category2);
+$state = $manager->run();
 ```
 
 You can load relations like that on any level (considering memory and performance limitations):

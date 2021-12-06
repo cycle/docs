@@ -10,7 +10,6 @@ Table of Contents
   * [LICENSE](license.md)
 * Basics
   * [Installation](/docs/en/basic/install.md)
-  * [Connect to Database](/docs/en/basic/connect.md)
   * [Create, Update, Delete](/docs/en/basic/crud.md)
   * [Direct Database Queries](/docs/en/basic/direct.md)
   * [Select](/docs/en/basic/select.md)
@@ -56,7 +55,9 @@ Table of Contents
   * [UUID as Primary Key](/docs/en/advanced/uuid.md)
 * Databases
   * [Installation and Configuration](/docs/en/database/configuration.md)
+  * [Connect to Database](/docs/en/database/connect.md)
   * [Access Database](/docs/en/database/access.md)
+  * [Profiling and Logging](/docs/en/database/profiling.md)
   * [Database Isolation](/docs/en/database/isolation.md)
   * [Query Builders](/docs/en/database/query-builders.md)
   * [Transactions](/docs/en/database/transactions.md)
@@ -68,7 +69,7 @@ Table of Contents
 * Customization
   * [Customize Schema Defaults](/docs/en/advanced/default-classes.md)
   * [Custom Mappers](/docs/en/advanced/custom-mapper.md)
-  * [Constrains](/docs/en/advanced/constrain.md)
+  * [Constrains](/docs/en/advanced/scope.md)
   * [Single Table Inheritance](/docs/en/advanced/single-table-inheritance.md)
   * [Caching](/docs/en/advanced/caching.md)
   * [Pagination](/docs/en/advanced/pagination.md)

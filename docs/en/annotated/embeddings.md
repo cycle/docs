@@ -4,11 +4,11 @@ The ORM can simplify the definition of large entities by providing the ability t
 > Embedded entities do not support relations at the moment.
 
 ## Definition
-To define an embeddable entity use the `@Embeddable` annotation. As with `@Entity`, you are able to define a custom mapper or associate additional columns/indexes using the `@Table` annotation.
+To define an embeddable entity use the `#[Embeddable]` attribute. As with `#[Entity]`, you are able to define a custom mapper or associate additional columns/indexes using the `#[Table]` attribute.
 
 ```php
 use Cycle\Annotated\Annotation\Embeddable;
-use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\``Annotation``\Column;
 
 #[Embeddable]
 class Address
@@ -26,7 +26,7 @@ class Address
 
 > You do not need to define the `primary` column, this column will be inherited from the parent entity. Mapper methods `queueDelete`, `queueCreate` and `queueUpdate` would never be invoked due to the delegation to the parent mapper.
 
-To embed an entity to another object use the `@Embedded` annotation:
+To embed an entity to another object use the `#[Embedded]` attribute:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -62,7 +62,7 @@ $user->address->country = 'USA';
 
 ## Column Mapping
 By default, all embedded entity columns will be stored in the owning entity table without any prefix.
-If desired, you can define a custom prefix using the `columnPrefix` option of the `@Embeddable` annotation:
+If desired, you can define a custom prefix using the `columnPrefix` option of the `#[Embeddable]` attribute:
 
 ```php
 use Cycle\Annotated\Annotation\Embeddable;
@@ -83,7 +83,7 @@ class Address
 ```
 
 ## Querying
-You can query an embedded entity as your would do for any other relations:
+You can query an embedded entity like any other relations:
 
 ```php
 $select = $orm->getRepository(User::class)->select();
@@ -91,7 +91,7 @@ $select->where('address.country', 'USA');
 ```
 
 ## Eager and Lazy Loading
-By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of `@Embedded` relation annotation:
+By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of `#[Embedded]` relation attribute:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;

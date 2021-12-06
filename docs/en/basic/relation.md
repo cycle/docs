@@ -8,22 +8,19 @@ the `cycle/annotated` package to describe the relation.
 First we have to create two entities we want to relate:
 
 ```php
-/**
- * @Entity
- */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
 class User
 {
-    /**
-     * @Column(type="primary")
-     * @var int
-     */
-    protected $id;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
-    protected $name;
+    public function __construct(
+         #[Column(type: 'int')]
+        private int $id,
+    
+         #[Column(type: 'string')]
+        private string $name,
+    ) {}
 
     public function getId(): int
     {
@@ -34,34 +31,26 @@ class User
     {
         return $this->name;
     }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
 }
 ```
 
 And the entity we want to relate to:
 
 ```php
-/**
- * @Entity
- */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
 class Address
 {
-    /**
-     * @Column(type="primary")
-     * @var int
-     */
-    protected $id;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
-    protected $city;
-
+    public function __construct(
+         #[Column(type: 'primary')]
+        private int $id,
+    
+         #[Column(type: 'string')]
+        private string $city,
+    ) {}
+    
     public function getId(): int
     {
         return $this->id;
@@ -71,38 +60,30 @@ class Address
     {
         return $this->city;
     }
-
-    public function setCity(string $city): void
-    {
-        $this->city = $city;
-    }
 }
 ```
 
 To relate our entities we have to add a new property to one of them and annotate it properly. We should also add getter and setter for this property.
 
 ```php
-/**
- * @Entity
- */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\HasOne;
+
+#[Entity]
 class User
 {
+    #[HasOne(target: Address::class)]
+    private ? Address$address;
+    
     // ...
-
-    /**
-     * @HasOne(target="Address")
-     * @var Address|null
-     */
-    protected $address;
-
-    // ...
-
+    
     public function getAddress(): ?Address
     {
         return $this->address;
     }
-
-    public function setAddress(Address $address)
+    
+    public function setAddress(Address $address): void
     {
         $this->address = $address;
     }
@@ -117,17 +98,17 @@ Once you update the schema and sync your database schema (or run migrations), yo
 To store the related entity with its parent simply `persist` the object which defines the relation:
 
 ```php
-$user = new User();
-$user->setName("Antony");
+$user = new User(
+    name: "Antony"
+);
 
-$address = new Address();
-$address->setCity("New York");
+$address = new Address(city: "New York");
 
 $user->setAddress($address);
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($user);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($user);
+$manager->run();
 ```
 
 The following SQL commands will be produced:
@@ -140,17 +121,17 @@ INSERT INTO "addresses" ("city", "user_id") VALUES ('New York', 15);
 You can also store objects separately, the ORM will automatically link them together:
 
 ```php
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($address);
-$t->persist($user);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($address);
+$manager->persist($user);
+$manager->run();
 ```
 
 The generated command chain will automatically be sorted to keep the proper order of SQL operations.
 
 ## Retrieve the related entity
-Though Cycle ORM supports lazy loading using proxies (see extension `cycle/proxy-factory`), it is recommended to pre-load needed
-relations using custom repository methods.
+
+> You don't need `cycle/proxy-factory` package anymore. Cycle ORM supports lazy loading out of the box.
 
 To load related object use the `load` method of `Cycle\ORM\Select`. The relation can be loaded using property name:
 

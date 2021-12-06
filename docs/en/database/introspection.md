@@ -17,7 +17,7 @@ Receive all database tables (array of `Cycle\Database\Table`):
 
 ```php
 foreach ($database->getTables() as $table) {
-    dump($table->getName());
+    var_dump($table->getName());
 }
 ```
 

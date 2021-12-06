@@ -110,7 +110,7 @@ fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey 
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
 fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
-collection  | string | Collection that will contain loaded entities
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 You can keep your pivot entity empty, the only requirement is to have defined a primary key.
 
@@ -126,9 +126,9 @@ $u->setName("Antony");
 
 $u->getTags()->add(new Tag("tag a"));
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 To remove the association to the object, use the `remove` or `removeElement` methods. Disassociation will remove

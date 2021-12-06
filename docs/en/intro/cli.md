@@ -125,14 +125,14 @@ namespace App;
 
 use Cycle\Annotated\Annotation as Cycle;
 
-/** @Cycle\Entity() */
+#[Cycle\Entity]
 class User
 {
-    /** @Cycle\Column(type="primary") */
-    public $id;
+    #[Cycle\Column(type: "primary")]
+    private int $id;
 
-    /** @Cycle\Column(type="string") */
-    public $name;
+    #[Cycle\Column(type: "string")]
+    private string $name;
 }
 ```
 
@@ -155,7 +155,7 @@ include 'bootstrap.php';
 $u = new \App\User();
 $u->name = "Antony";
 
-(new ORM\Transaction($orm))->persist($u)->run();
+(new ORM\EntityManager($orm))->persist($u)->run();
 
 foreach ($orm->getRepository(\App\User::class)->findAll() as $u) {
     print_r($u);

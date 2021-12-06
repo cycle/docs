@@ -47,9 +47,9 @@ $u->address = new Address();
 The related object can be immediately saved into the database by persisting the parent entity:
 
 ```php
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 To delete a previously associated object simply set the property value to `null`:
@@ -103,8 +103,8 @@ $u2 = new User();
 $u2->setAddress($u->getAddress());
 $u1->setAddress(null);
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u1);
-$t->persist($u2);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u1);
+$manager->persist($u2);
+$state = $manager->run();
 ```

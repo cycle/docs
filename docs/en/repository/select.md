@@ -47,7 +47,7 @@ $entity = $repository->findOne([
 ]);
 ```
 
-> You can read more about compound expressions [here](https://spiral-framework.com/guide/database-builders).
+> You can read more about compound expressions [here](/docs/en/database/query-builders.md#selectquery-builder).
 
 To find multiple entities use:
 

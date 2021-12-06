@@ -140,6 +140,6 @@ where       | array  | Additional where condition to be applied for the relation
 morphKey    | string | Name of key to store related entity role. Defaults to `{relationName}_role`
 morphKeyLength | int | The length of morph key. Defaults to 32
 indexCreate | bool   | Create an index on morphKey and innerKey. Defaults to `true`
-collection  | string | Collection that will contain loaded entities. Defaults to `array` 
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 > As in case with `belongsToMorphed`,  FKs are not supported. You can query or eager load this relation as any other relation types.

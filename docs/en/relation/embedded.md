@@ -64,9 +64,9 @@ $u = new User();
 $u->credentials->username = 'username';
 $u->credentials->password = 'password';
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 

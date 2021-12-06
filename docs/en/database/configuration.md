@@ -21,52 +21,26 @@ you can use `env` function to keep your passwords and usernames separately.
 
 require_once "vendor/autoload.php";
 
-use Cycle\Database\Config\DatabaseConfig;
 use Cycle\Database\DatabaseManager;
 use Cycle\Database\Driver;
+use Cycle\Database\Config;
 
-$dbal = new DatabaseManager(new DatabaseConfig([
+$dbal = new DatabaseManager(new Config\DatabaseConfig([
     'databases' => [
         'default' => ['driver' => 'runtime'],
     ],
     'connections' => [
-        'mysql'     => [
-            'driver'     => Driver\MySQL\MySQLDriver::class,
-            'options'    => [
-                'connection' => 'mysql:host=127.0.0.1;dbname=' . env('DB_NAME'),
-                'username'   => 'username',
-                'password'   => 'password',
-            ]
-        ],
-        'postgres'  => [
-            'driver'     => Driver\Postgres\PostgresDriver::class,
-            'options'    => [
-                'connection' => 'pgsql:host=127.0.0.1;dbname=' . env('DB_NAME'),
-                'username'   => 'username',
-                'password'   => 'password',
-            ]
-        ],
-        'runtime'   => [
-            'driver'     => Driver\SQLite\SQLiteDriver::class,
-            'options'    => [
-                'connection' => 'sqlite:' . directory('runtime') . 'runtime.db',
-                'username'   => 'sqlite',
-                'password'   => '',
-            ]
-        ],
-        'sqlServer' => [
-            'driver'     => Driver\SQLServer\SQLServerDriver::class,
-            'options'    => [
-                'connection' => 'sqlsrv:Server=MY-PC;Database=' . env('DB_NAME'),
-                'username'   => 'username',
-                'password'   => 'password',
-            ]
-        ]
+        'runtime'   => new Config\SQLiteDriverConfig(
+            connection: new Config\SQLite\FileConnectionConfig(
+                database:  __DIR__.'./runtime/database.sqlite'
+            ),
+            queryCache: true,
+        ),
     ],
 ]));
 ```
 
-> Use connection option `options` to set PDO specific attributes.
+> Read about how to connect to other database types in [this section](/docs/en/database/connect.md)
 
 ### Declare Database
 In order to access connected database we have to add it into `databases` section first:

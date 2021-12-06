@@ -38,8 +38,9 @@ fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. De
 indexCreate | bool   | Create index on outerKey. Defaults to `true`
 
 ## HasMany
-The HasMany relation provides the ability to link multiple child objects to one entity (parent). The related entities will be stored in a ` Doctrine\Common\Collections\Collection` object (ArrayCollection). You must initiate an empty collection in your class constructor in order to properly work with newly created entities.
+The HasMany relation provides the ability to link multiple child objects to one entity (parent).
 
+> Read more about configuration collection [here](/docs/en/advanced/collections.md).
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
@@ -52,12 +53,7 @@ class User
     // ...
 
     #[HasMany(target: Post::class)]
-    protected ArrayCollection $posts;
-
-    public function __construct()
-    {
-        $this->posts = new ArrayCollection();
-    }
+    protected array $posts = [];
 }
 ```
 
@@ -73,6 +69,8 @@ where       | array  | Additional where condition to be applied for the relation
 fkCreate    | bool   | Set to true to automatically create FK on outerKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
 indexCreate | bool   | Create an index on outerKey. Defaults to `true`
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
+
 
 ## BelongsTo
 In order to link the entity to its parent object use the relation's `belongsTo`. Please note, a relation is `nullable` by default.
@@ -121,16 +119,11 @@ class User
     protected Post $lastPost;
 
     #[HasMany(target: Post::class)]
-    protected ArrayCollection $posts;
-
-    public function __construct()
-    {
-        $this->posts = new ArrayCollection();
-    }
+    protected array $posts = [];
 
     public function addPost(Post $p): void
     {
-        $this->posts->add($p);
+        $this->posts[] = $p;
         $this->lastPost = $p;
     }
 }
@@ -151,7 +144,9 @@ indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 > You must use the `refersTo` relation for cyclic dependencies.
 
 ## ManyToMany
-A relation of type ManyToMany provides a more complex connection with the ability to use an intermediate entity for the connection. This relation must be represented using `Cycle\ORM\Relation\Pivoted\PivotedCollection`. The relation requires the  `though` option with similar rules as `target`.
+A relation of type ManyToMany provides a more complex connection with the ability to use an intermediate entity for the connection. The relation requires the `through` option with similar rules as `target`.
+
+> Read more about configuration collection [here](/docs/en/advanced/collections.md).
 
 ```php
 use Cycle\ORM\Relation\Pivoted\PivotedCollection;
@@ -164,12 +159,7 @@ class User
     // ...
 
     #[ManyToMany(target: Tag::class, through: UserTag::class)]
-    protected PivotedCollection $tags;
-
-    public function __construct()
-    {
-        $this->tags = new PivotedCollection();
-    }
+    private array $tags = [];
 }
 ```
 
@@ -188,11 +178,11 @@ where       | array | Where conditions applied to the related entity
 fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
-
-> Note, the relation option `though` is a typo of `through`, it will remain in this package until next major release of `cycle/annotated`.
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 ## Morphed Relations
-Cycle ORM provides support for polymorphic relations. Given relations can be used to link an entity to multiple entity types and select the desired object in runtime. Relations must be assigned to the entity interface rather than a specific role or class name.
+Cycle ORM provides support for polymorphic relations. Given relations can be used to link an entity to multiple entity types and select the desired object in runtime. 
+Relations must be assigned to the entity interface rather than a specific role or class name.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -216,7 +206,7 @@ class Image
     // ...
 
     #[BelongsToMorphed(target: ImageHolderInterface::class)]
-    protected $parent;
+    private $parent;
 }
 ```
 
@@ -244,7 +234,7 @@ class User implements ImageHolderInterface
      // ...
 
     #[MorphedHasOne(target: Image::class)]
-    protected $image;
+    private $image;
 }
 ```
 
@@ -269,12 +259,7 @@ class User implements ImageHolderInterface
      // ...
 
     #[MorphedHasMany(target: Image::class)]
-    protected ArrayCollection $images;
-
-    public function __construct()
-    {
-        $this->images = new ArrayCollection();
-    }
+    private array $images = [];
 }
 ```
 
@@ -288,6 +273,7 @@ morphKey | string | Contains target entity role name. Defaults to `{relation}_ro
 morphKeyLength | int | The lengths of the morphKey. Defaults to 32
 where       | array | Where conditions applied to the related entity
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 Please note, given relations would not be able to automatically create FK keys since the ORM is unable to decide which key must be used. Also, eager loading abilities are limited for such relations (join is only possible for `morphedHas*` relations).
 

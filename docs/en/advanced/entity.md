@@ -5,7 +5,7 @@ In the simplest form the entity lifecycle can be describe as following:
 <img width="826" alt="Screenshot_29" src="https://user-images.githubusercontent.com/796136/56358587-c3b0e300-61e7-11e9-87f8-c999554f201e.png">
 
 ## Entity
-The Entity object is, technically, any object used to carry data (including relation data). By default Cycle relies on separate classes for each of the entities, however, it is possible to use `stdClass` or the same class for multiple entities. This can be achieved by associating the entity with custom mappers and giving them different roles. Upon `persist` operation, the Mapper object must extract entity values and generate the desired State associated with entity Node.
+The Entity object is, technically, any object used to carry data (including relation data). By default, Cycle relies on separate classes for each of the entities, however, it is possible to use `stdClass` or the same class for multiple entities. This can be achieved by associating the entity with custom mappers and giving them different roles. Upon `persist` operation, the Mapper object must extract entity values and generate the desired State associated with entity Node.
 
 Since the extraction and hydration of an entity is controlled solely by its associated Mapper, it is possible to use custom entity implementations, such as ActiveRecord-like classes, or entities in which data is represented using an internal array structure.
 

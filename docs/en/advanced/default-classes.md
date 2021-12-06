@@ -1,5 +1,5 @@
 # Customize Schema Defaults
-You can set default Repository, Mapper, Source or Constrain for all entity classes
+You can set default [Repository](/docs/en/basic/repository.md), [Mapper](/docs/en/advanced/mapper.md), Source or [Scope](/docs/en/advanced/scope.md) for all entity classes
 
 ```php
 use Cycle\ORM\Factory;
@@ -11,22 +11,22 @@ $orm = new ORM((new Factory($dbal))->withDefaultSchemaClasses(
         Schema::REPOSITORY => MyRepository::class,
         Schema::SOURCE     => MySource::class,
         Schema::MAPPER     => MyMapper::class,
-        Schema::CONSTRAIN  => MyConstrain::class,
+        Schema::SCOPE      => MyScope::class,
     ]
 ));
 
 ```
 
-You can change any of this values, if you want.
+You can change any of these values, if you want.
 
-By default this config has this values:
+By default, this config has this values:
 
 ```php
     [
         Schema::REPOSITORY => \Cycle\ORM\Select\Repository::class,
         Schema::SOURCE     => \Cycle\ORM\Select\Source::class,
         Schema::MAPPER     => \Cycle\ORM\Mapper\Mapper::class,
-        Schema::CONSTRAIN  => null,
+        Schema::SCOPE      => null,
     ]
 
 ```

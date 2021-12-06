@@ -15,7 +15,6 @@
     "title": "Basics",
     "links": {
       "basic/install": "Installation",
-      "basic/connect": "Connect to Database",
       "basic/crud": "Create, Update, Delete",
       "basic/direct": "Direct Database Queries",
       "basic/select": "Select",
@@ -90,7 +89,9 @@
     "title": "Databases",
     "links": {
       "database/configuration": "Installation and Configuration",
+      "database/connect": "Connect to Database",
       "database/access": "Access Database",
+      "database/profiling": "Profiling and Logging",
       "database/isolation": "Database Isolation",
       "database/query-builders": "Query Builders",
       "database/transactions": "Transactions",

@@ -20,6 +20,7 @@ $cl = (new Tokenizer\Tokenizer(new Tokenizer\Config\TokenizerConfig([
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Annotated\Embeddings($cl),            // register annotated embeddings
     new Annotated\Entities($cl),              // register annotated entities
+    new Annotated\TableInheritance($cl),      // register STI/JTI
     new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
     new Annotated\MergeColumns(),             // register non field columns (table level)
     new Schema\Generator\GenerateRelations(), // generate entity relations
@@ -31,7 +32,13 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\GenerateTypecast(),  // typecast non string columns
 ]);
 
-$orm = $orm->withSchema(new \Cycle\ORM\Schema($schema));
+$orm = $orm->with(schema: new \Cycle\ORM\Schema($schema));
 ```
 
 > Make sure to point the class locator to the directory with your domain entities only as the indexation operation is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.
+
+The result of the schema builder is a compiled schema. The given schema can be cached in order to avoid expensive calculations on each request.
+
+> In the following section the terming `update schema` will be referenced to this process.
+
+Remove element `new Schema\Generator\SyncTables()` to disable database reflection. In a later section, we will describe how to automatically render database migrations instead of direct synchronization.

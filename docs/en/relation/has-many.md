@@ -62,7 +62,7 @@ fkCreate    | bool   | Set to true to automatically create FK on outerKey. Defau
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
 fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
 indexCreate | bool   | Create an index on outerKey. Defaults to `true`
-collection  | string | Collection that will contain loaded entities
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 ## Usage
 To add the child object to the collection, use the collection method `add`:
@@ -75,9 +75,9 @@ $u->getPosts()->add(new Post("test post"));
 The related object(s) can be immediately saved into the database by persisting the parent entity:
 
 ```php
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 To delete a previously associated object,  call the `remove` or `removeElement` methods of the collection:

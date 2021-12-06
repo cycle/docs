@@ -1,5 +1,5 @@
 # Annotated Entities
-The annotated entities extension is capable of indexing any domain entity in your project. To indicate that the class must be treated as a domain entity make sure to add the `@Entity` annotation to the DocComment.
+The annotated entities extension is capable of indexing any domain entity in your project. To indicate that the class must be treated as a domain entity make sure to add the `#[Entity]` attribute.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -7,13 +7,12 @@ use Cycle\Annotated\Annotation\Entity;
 #[Entity]
 class User
 {
+    // ...
 }
 ```
 
-> Annotations are based on the Doctrine/Lexer package and support syntax similar to the Doctrine one.
-
 ## Entity
-Usually, the single annotation `@Entity` is enough to describe your model. In this case, Cycle will automatically assign the generated
+Usually, the single attribute `#[Entity]` is enough to describe your model. In this case, Cycle ORN will automatically assign the generated
 table name and role based on the class name. In the case of `User` the role will be `user`, database `null` (default) and table `users`.
 
 You can tweak all of these values by setting `entity` options:
@@ -24,6 +23,7 @@ use Cycle\Annotated\Annotation\Entity;
 #[Entity(role: 'user', database: 'database', table: 'user_table')]
 class User
 {
+    // ...
 }
 ```
 
@@ -37,10 +37,11 @@ use Cycle\Annotated\Annotation\Entity;
  #[Entity(repository: Repository\UserRepository::class)]
 class User
 {
+    // ...
 }
 ```
 
-> Cycle can locate repository class names automatically, using current entity namespace as the base path.
+> Cycle ORM can locate repository class names automatically, using current entity namespace as the base path.
 
 Following entity options are available for customization:
 
@@ -53,7 +54,8 @@ table          | string | Entity source table. Defaults to plural form of entity
 database       | string | Database name. Defaults to `null` (default database)
 readonlySchema | bool   | Set to `true` to disable schema synchronization for the assigned table. Defaults to `false`
 source         | class  | Entity source class (internal). Defaults to `Cycle\ORM\Select\Source`
-constrain      | class  | Class name of constraint to be applied to every entity query. Defaults to `null`
+typecast       | class[] | Class name or array of classes of typecast handlers. Defaults to `Cycle\ORM\Parser\Typecast`
+scope          | class  | Class name of scope to be applied to every entity query. Defaults to `null`
 
 For example, a  typical entity description might look like:
 
@@ -62,16 +64,17 @@ use Cycle\Annotated\Annotation\Entity;
 
 #[Entity(
     table: 'users', 
-    repository: Repository\UserRepository::class,
-    constrain: Constrain/SortByID::class
- )]
+    repository: \App\Repository\UserRepository::class,
+    scope: \App\Scope\SortByID::class
+)]
 class User
 {
+    // ...
 }
 ```
 
 ## Columns
-No entity can operate without some properties mapped to table columns. To map your property to the column add the annotation `@Column` to it. It's mandatory to specify the column type. You must always specify **one** primary (auto incremental) column for your entity.
+No entity can operate without some properties mapped to table columns. To map your property to the column add the attribute `#[Column]` to it. It's mandatory to specify the column type. You must always specify **one** primary (auto incremental) column for your entity.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -81,11 +84,12 @@ use Cycle\Annotated\Annotation\Column;
 class User
 {
     #[Column(type: 'primary')]
-    protected $id;
+    private int $id;
 }
 ```
 
-> Read how to use non-incremental primary keys (for example UUID) in the Advanced section.
+> Read how to use non-incremental primary keys in the Advanced section.
+> -  [UUID](/docs/en/advanced/uuid.md).
 
 You can use multiple annotations at the same time:
 
@@ -96,11 +100,9 @@ use Cycle\Annotated\Annotation as Cycle;
 class User
 {
     #[Cycle\Column(type: 'primary')]
-    protected $id;
+    private int $id;
 }
 ```
-
-> Annotation import is omitted in the following sections.
 
 By default, the entity property will be mapped to the column with the same name as the property.
 You can change it as follows:
@@ -113,10 +115,10 @@ use Cycle\Annotated\Annotation\Column;
 class User
 {
     #[Column(type: 'primary')]
-    protected int $id;
+    private int $id;
 
     #[Column(type: 'string', name: 'username')]
-    protected string $login;
+    private string $login;
 }
 ```
 
@@ -130,16 +132,16 @@ use Cycle\Annotated\Annotation\Column;
 class User
 {
     #[Column(type: 'primary')]
-    protected int $id;
+    private int $id;
 
     #[Column(type: 'string(32)')]
-    protected string $login;
+    private string $login;
 
     #[Column(type: 'enum(active,disabled)')]
-    protected string $status;
+    private string $status;
 
     #[Column(type: 'decimal(5,5)')]
-    protected $balance;
+    private $balance;
 }
 ```
 
@@ -153,10 +155,10 @@ use Cycle\Annotated\Annotation\Column;
 class User
 {
     #[Column(type: 'primary')]
-    protected int $id;
+    private int $id;
 
     #[Column(type: 'enum(active,disabled)', default: 'active')]
-    protected string $status;
+    private string $status;
 }
 ```
 
@@ -181,8 +183,8 @@ Following options are available for configuration:
 
 Option | Value | Comment
 --- | --- | ---
-name | string | Column name. Defaults to the property name.
 type | string | Column type with arguments.
+name | string | Column name. Defaults to the property name.
 primary | bool | Explicitly set column as primary key. Defaults to `false`
 typecast | callable | Column typecast function. Defaults to one of (`int`\|`float`\|`bool`\|`datetime`) based on column type
 nullable | bool | Set column as nullable. Defaults to `false`
@@ -218,14 +220,20 @@ json        | ---                       | To store JSON structures, such type us
 The ORM supports the enum type for all available drivers. You must define enum options using comma separator:
 
 ```php
+use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 
-#[Column(type: 'enum(active,disabled)', default: 'active')]
-protected $status;
+#[Entity]
+class User
+    // ...
+    
+    #[Column(type: 'enum(active,disabled)', default: 'active')]
+    private string $status;
+}
 ```
 
 ## Table Extension
-In some cases you might want to specify additional table columns and indexes without the link to the entity properties. This can be achieved using `@Table` annotation:
+In some cases you might want to specify additional table columns and indexes without the link to the entity properties.:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -251,13 +259,13 @@ class User
 
 > The column definition is identical to the one used for the property.
 
-## Merging annotations
-The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source, Repository and Constrain classes. This approach can be useful in cases when you want to implement domain functionality like auto timestamps or soft deletes.
+## Merging attributes
+The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source, Repository and Scope classes. This approach can be useful in cases when you want to implement domain functionality like auto timestamps or soft deletes.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
 
- #[Entity(repository: Repository/UserRepository::class)]
+ #[Entity(repository: Repository\UserRepository::class)]
 class User
 {
 }

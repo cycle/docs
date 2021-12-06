@@ -43,9 +43,9 @@ Cycle will automatically save the related entity (unless `cascade` set to `false
 $post = new Post();
 $post->setUser(new User("Antony"));
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($post);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($post);
+$state = $manager->run();
 ```
 
 You can only de-associate the related entity if the relation is defined as `nullable`. In other scenarios you will get an integrity exception:
@@ -55,9 +55,9 @@ $post = $orm->getRepository(Post::class)->findOne();
 
 $post->setUser(null);
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($post);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($post);
+$state = $manager->run();
 ```
 
 ### Loading
