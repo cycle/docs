@@ -15,18 +15,15 @@ We can now register our first entity, add its columns and link to a specific tab
 use Cycle\Schema\Definition;
 
 $entity = new Definition\Entity();
-$entity->setRole('user');
-$entity->setClass(User::class);
+
+$entity
+    ->setRole('user')
+    ->setClass(User::class);
 
 // add fields
-$entity->getFields()->set(
-    'id', (new Definition\Field())->setType('primary')->setColumn('id')->setPrimary(true)
-);
-
-$entity->getFields()->set(
-    'name',
-    (new Definition\Field())->setType('string(32)')->setColumn('user_name')
-);
+$entity->getFields()
+    ->set('id', (new Definition\Field())->setType('primary')->setColumn('id')->setPrimary(true))
+    ->set('name', (new Definition\Field())->setType('string(32)')->setColumn('user_name'));
 
 // register entity
 $r->register($entity);
@@ -35,15 +32,15 @@ $r->register($entity);
 $r->linkTable($entity, 'default', 'users');
 ```
 
-You can generate ORM schema immediately using `Schema\Compiler`:
+You can generate ORM schema immediately using `Cycle\Schema\Compiler`:
 
 ```php
-$schema = (new \Cycle\Schema\Compiler())->compile($r, []);
+$schema = (new \Cycle\Schema\Compiler())->compile($r);
 
-$orm = $orm->withSchema(new \Cycle\ORM\Schema($schema));
+$orm = $orm->with(schema: new \Cycle\ORM\Schema($schema));
 ```
 
-> You can also declare relations, indexes, and associate custom mappers. See [examples](https://github.com/cycle/schema-builder/tree/master/tests/Schema).
+> You can also declare relations, indexes and associate custom mappers. See [examples](https://github.com/cycle/schema-builder/tree/master/tests/Schema).
 
 ## Custom Generators
 Upon generating the final schema, you can pass a set of generators to your registry, each of them is responsible for the specific part of the schema compilation. Simple compilation pipeline will look like:
@@ -70,10 +67,26 @@ interface GeneratorInterface
 {
     /**
      * Run generator over given registry.
-     *
-     * @param Registry $registry
-     * @return Registry
      */
     public function run(Registry $registry): Registry;
 }
+```
+
+## Predefined schema properties
+Upon generating the final schema, you can pass a set of default schema properties:
+
+```php
+use Cycle\Schema;
+use Cycle\ORM\SchemaInterface;
+
+$schema = (new Schema\Compiler())->compile($r, [...], [
+    SchemaInterface::MAPPER => CustomMapper::class,
+    SchemaInterface::REPOSITORY => CustomRepository::class,
+    SchemaInterface::SOURCE => CustomSource::class,
+    SchemaInterface::SCOPE => null,
+    SchemaInterface::TYPECAST_HANDLER => [
+        \Cycle\ORM\Parser\Typecast::class,
+        CustomJsonTypecastHandler::class,
+    ],
+]);
 ```

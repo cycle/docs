@@ -3,7 +3,7 @@ It is possible to use columns and values of entity relations while composing the
 using dot notation `relation.property`. Please note, you must use domain-specific property names; column names will be mapped automatically.
 
 ## Simple Condition
-To query an entity with a constraint applied to its related entity:
+To query an entity with a scope applied to its related entity:
 
 ```php
 // find all users with published posts

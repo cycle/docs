@@ -10,15 +10,11 @@ interface CommandInterface
     /**
      * Must return true when the command is ready for the execution. UnitOfWork will throw
      * an exception if any of the commands are stuck in non ready state.
-     *
-     * @return bool
      */
     public function isReady(): bool;
 
     /**
      * Indicates that the command has been executed.
-     *
-     * @return bool
      */
     public function isExecuted(): bool;
 

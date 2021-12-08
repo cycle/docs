@@ -10,12 +10,15 @@ Each relation must have a proper `target` option. The target must point to eithe
 The HasOne relation is used to define the relation to one child object. This object will be automatically saved with its parent (unless `cascade` option set to `false`). The simplest form of relation definition:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\HasOne;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasOne(target = "Address") */
+    #[HasOne(target: Address::class)]
     protected $address;
 }
 ```
@@ -35,24 +38,22 @@ fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. De
 indexCreate | bool   | Create index on outerKey. Defaults to `true`
 
 ## HasMany
-The HasMany relation provides the ability to link multiple child objects to one entity (parent). The related entities will be stored in a ` Doctrine\Common\Collections\Collection` object (ArrayCollection). You must initiate an empty collection in your class constructor in order to properly work with newly created entities.
+The HasMany relation provides the ability to link multiple child objects to one entity (parent).
 
+> Read more about configuration collection [here](/docs/en/advanced/collections.md).
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\HasMany;
 
-/** @Entity */
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasMany(target = "Post") */
-    protected $posts;
-
-    public function __construct()
-    {
-        $this->posts = new ArrayCollection();
-    }
+    #[HasMany(target: Post::class)]
+    protected array $posts = [];
 }
 ```
 
@@ -68,17 +69,22 @@ where       | array  | Additional where condition to be applied for the relation
 fkCreate    | bool   | Set to true to automatically create FK on outerKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
 indexCreate | bool   | Create an index on outerKey. Defaults to `true`
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
+
 
 ## BelongsTo
 In order to link the entity to its parent object use the relation's `belongsTo`. Please note, a relation is `nullable` by default.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
+
+#[Entity]
 class Post
 {
     // ...
 
-    /** @BelongsTo(target = "User") */
+    #[BelongsTo(target: User::class)]
     protected $author;
 }
 ```
@@ -100,26 +106,24 @@ The RefersTo relation is similar to the BelongsTo relation, but must be used to 
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\RefersTo;
+use Cycle\Annotated\Annotation\Relation\HasMany;
 
-/** @Entity */
+#[Entity]
 class User
 {
     // ...
 
-    /** @RefersTo(target = "Post") */
-    protected $lastPost;
+    #[RefersTo(target: Post::class)]
+    protected Post $lastPost;
 
-    /** @HasMany(target = "Post") */
-    protected $posts;
+    #[HasMany(target: Post::class)]
+    protected array $posts = [];
 
-    public function __construct()
+    public function addPost(Post $p): void
     {
-        $this->posts = new ArrayCollection();
-    }
-
-    public function addPost(Post $p)
-    {
-        $this->posts->add($p);
+        $this->posts[] = $p;
         $this->lastPost = $p;
     }
 }
@@ -140,23 +144,22 @@ indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 > You must use the `refersTo` relation for cyclic dependencies.
 
 ## ManyToMany
-A relation of type ManyToMany provides a more complex connection with the ability to use an intermediate entity for the connection. This relation must be represented using `Cycle\ORM\Relation\Pivoted\PivotedCollection`. The relation requires the  `though` option with similar rules as `target`.
+A relation of type ManyToMany provides a more complex connection with the ability to use an intermediate entity for the connection. The relation requires the `through` option with similar rules as `target`.
+
+> Read more about configuration collection [here](/docs/en/advanced/collections.md).
 
 ```php
 use Cycle\ORM\Relation\Pivoted\PivotedCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
 
-/** @Entity */
+#[Entity]
 class User
 {
     // ...
 
-    /** @ManyToMany(target = "Tag", though = "UserTag") */
-    protected $tags;
-
-    public function __construct()
-    {
-        $this->tags = new PivotedCollection();
-    }
+    #[ManyToMany(target: Tag::class, through: UserTag::class)]
+    private array $tags = [];
 }
 ```
 
@@ -175,14 +178,16 @@ where       | array | Where conditions applied to the related entity
 fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
-
-> Note, the relation option `though` is a typo of `through`, it will remain in this package until next major release of `cycle/annotated`.
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 ## Morphed Relations
-Cycle ORM provides support for polymorphic relations. Given relations can be used to link an entity to multiple entity types and select the desired object in runtime. Relations must be assigned to the entity interface rather than a specific role or class name.
+Cycle ORM provides support for polymorphic relations. Given relations can be used to link an entity to multiple entity types and select the desired object in runtime. 
+Relations must be assigned to the entity interface rather than a specific role or class name.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class User implements ImageHolderInterface
 {
      // ...
@@ -192,13 +197,16 @@ class User implements ImageHolderInterface
 BelongsToMorphed relations allows an entity to belong to any of the parents which implement given interface:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\BelongsToMorphed;
+
+#[Entity]
 class Image
 {
     // ...
 
-    /** @BelongsToMorphed(target = "ImageHolderInterface")*/
-    protected $parent;
+    #[BelongsToMorphed(target: ImageHolderInterface::class)]
+    private $parent;
 }
 ```
 
@@ -217,13 +225,16 @@ indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Default
 MorphedHasOne and MorphedHasMany is an inverse version of BelongsToMorphed.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasOne;
+
+#[Entity]
 class User implements ImageHolderInterface
 {
      // ...
 
-     /** @MorphedHasOne(target = "Image")*/
-     protected $image;
+    #[MorphedHasOne(target: Image::class)]
+    private $image;
 }
 ```
 
@@ -239,19 +250,16 @@ indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Default
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasMany;
 
-/** @Entity */
+#[Entity]
 class User implements ImageHolderInterface
 {
      // ...
 
-     /** @MorphedHasMany(target = "Image")*/
-     protected $images;
-
-     public function __construct()
-     {
-         $this->images = new ArrayCollection();
-     }
+    #[MorphedHasMany(target: Image::class)]
+    private array $images = [];
 }
 ```
 
@@ -265,6 +273,7 @@ morphKey | string | Contains target entity role name. Defaults to `{relation}_ro
 morphKeyLength | int | The lengths of the morphKey. Defaults to 32
 where       | array | Where conditions applied to the related entity
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 Please note, given relations would not be able to automatically create FK keys since the ORM is unable to decide which key must be used. Also, eager loading abilities are limited for such relations (join is only possible for `morphedHas*` relations).
 
@@ -274,12 +283,17 @@ In some cases you might want to create an inversed relation automatically. Pleas
 To inverse a relation, you must use the option `inverse` with specified inversed relation name and type.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Relation\Inverse;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class Post
 {
+    #[BelongsTo(target: User::class)]
+    #[Inverse(as: 'posts', type: 'hasMany')]
+    private User $user;
+    
     // ...
-
-    /** @BelongsTo(target = "User", inverse = @Inverse(as = "posts", type = "hasMany")) */
-    protected $user;
 }
 ```

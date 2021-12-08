@@ -1,19 +1,22 @@
 # Belongs To
 Belongs To relation defines that an entity is owned by a related entity on the exclusive matter. Example: a post belongs to an author, a comment belongs a post. Most `belongsTo` relations can be created using the `inverse` option of the declared `hasOne` or `hasMany` relation.
 
-> The entity will be always persisted after its related entity.
+> The entity will always be persisted after its related entity.
 
 ## Definition
 To define Belongs To relation using annotated entities extension use:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
+
+#[Entity]
 class Post
 {
     // ...
 
-    /** @BelongsTo(target = "User") */
-    protected $user;
+    #[BelongsTo(target: User::class)]
+    private User $user;
 }
 ```
 
@@ -30,6 +33,7 @@ innerKey    | string | Inner key in source entity. Defaults to `{relationName}_{
 outerKey    | string | Outer key in the related entity. Defaults to the primary key
 fkCreate    | bool   | Set to true to automatically create FK on innerKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
+fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
 indexCreate | bool   | Create an index on innerKey. Defaults to `true`
 
 ## Usage
@@ -39,9 +43,9 @@ Cycle will automatically save the related entity (unless `cascade` set to `false
 $post = new Post();
 $post->setUser(new User("Antony"));
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($post);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($post);
+$state = $manager->run();
 ```
 
 You can only de-associate the related entity if the relation is defined as `nullable`. In other scenarios you will get an integrity exception:
@@ -51,9 +55,9 @@ $post = $orm->getRepository(Post::class)->findOne();
 
 $post->setUser(null);
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($post);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($post);
+$state = $manager->run();
 ```
 
 ### Loading

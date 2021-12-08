@@ -5,12 +5,15 @@ The Has One relation defines that an entity exclusively owns another entity in a
 To define a Has One relation using the annotated entities extension, use:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Relation\HasOne;
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasOne(target = "Address") */
+    #[HasOne(target: 'Address')]
     protected $address;
 }
 ```
@@ -28,6 +31,7 @@ innerKey    | string | Inner key in parent entity. Defaults to primary key
 outerKey    | string | Outer key name. Defaults to `{parentRole}_{innerKey}`
 fkCreate    | bool   | Set to true to automatically create FK on outerKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
+fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
 indexCreate | bool   | Create index on outerKey. Defaults to `true`
 
 ## Usage
@@ -43,9 +47,9 @@ $u->address = new Address();
 The related object can be immediately saved into the database by persisting the parent entity:
 
 ```php
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 To delete a previously associated object simply set the property value to `null`:
@@ -99,8 +103,8 @@ $u2 = new User();
 $u2->setAddress($u->getAddress());
 $u1->setAddress(null);
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u1);
-$t->persist($u2);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u1);
+$manager->persist($u2);
+$state = $manager->run();
 ```

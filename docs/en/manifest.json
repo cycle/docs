@@ -15,7 +15,6 @@
     "title": "Basics",
     "links": {
       "basic/install": "Installation",
-      "basic/connect": "Connect to Database",
       "basic/crud": "Create, Update, Delete",
       "basic/direct": "Direct Database Queries",
       "basic/select": "Select",
@@ -42,7 +41,8 @@
       "relation/refers-to": "Refers To",
       "relation/many-to-many": "Many To Many",
       "relation/embedded": "Embedding Entities",
-      "relation/morphed": "Morphed Relations"
+      "relation/morphed": "Morphed Relations",
+      "relation/collections": "Collections"
     }
   },
   {
@@ -89,7 +89,9 @@
     "title": "Databases",
     "links": {
       "database/configuration": "Installation and Configuration",
+      "database/connect": "Connect to Database",
       "database/access": "Access Database",
+      "database/profiling": "Profiling and Logging",
       "database/isolation": "Database Isolation",
       "database/query-builders": "Query Builders",
       "database/transactions": "Transactions",
@@ -103,10 +105,12 @@
   {
     "title": "Customization",
     "links": {
+      "advanced/macros": "Macros",
       "advanced/default-classes": "Customize Schema Defaults",
       "advanced/custom-mapper": "Custom Mappers",
       "advanced/constrain": "Constrains",
       "advanced/single-table-inheritance": "Single Table Inheritance",
+      "advanced/joined-table-inheritance": "Joined Table Inheritance",
       "advanced/caching": "Caching",
       "advanced/pagination": "Pagination",
       "advanced/timestamp": "Auto Timestamps",

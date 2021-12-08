@@ -10,13 +10,15 @@ Relations points to the external entity using a complex key [role, outerKey].
 In order to associate an entity with one of the multiple external objects you have to define a common interface first:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class User implements ImageHolderInterface
 {
     // ...
 }
 
-/** @Entity */
+#[Entity]
 class Post implements ImageHolderInterface
 {
     // ...
@@ -26,13 +28,16 @@ class Post implements ImageHolderInterface
 Now we can declare our entity to point to one of the given entities:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\BelongsToMorphed;
+
+#[Entity]
 class Image
 {
     // ...
 
-    /** @BelongsToMorphed(target = "ImageHolderInterface") */
-    public $imageHolder;
+    #[BelongsToMorphed(taget: ImageHolderInterface::class)]
+    public ImageHolderInterface $imageHolder;
 }
 ```
 
@@ -47,13 +52,16 @@ The ORM provides three basic relations for polymorphic connections:
 Use cases: image attached to (post, user, comment). The relation is similar to `belongsTo` but does not support eager loading, FKs or select querying. The relation must point to an entity interface.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\BelongsToMorphed;
+
+#[Entity]
 class Image
 {
     // ...
 
-    /** @BelongsToMorphed(target = "ImageHolderInterface") */
-    public $imageHolder;
+    #[BelongsToMorphed(taget: ImageHolderInterface::class)]
+    public ImageHolderInterface $imageHolder;
 }
 ```
 
@@ -61,6 +69,7 @@ Relation options include:
 
 Option      | Value  | Comment
 ---         | ---    | ----
+load        | lazy/eager | Relation load approach. Defaults to `lazy`
 cascade     | bool   | Automatically save related data with source entity. Defaults to `true`
 nullable    | bool   | Defines if the relation can be nullable (child can have no parent). Defaults to `true`
 innerKey    | string | Inner key in source entity. Defaults to `{relationName}_{outerKey}`
@@ -73,12 +82,15 @@ indexCreate | bool   | Create an index on morphKey and innerKey. Defaults to `tr
 You can own the entity from multiple entity types (example user/post/comment has an image). The relation must point to an entity role or class.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasOne;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @MorphedHasOne(target = "Image") */
+    #[MorphedHasOne(target: Image::class)]
     public $image;
 }
 ```
@@ -102,12 +114,15 @@ indexCreate | bool   | Create an index on morphKey and innerKey. Defaults to `tr
 You can own the entity from multiple entity types (example post/article has comments). The relation must point to an entity role or class.
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasMany;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @MorphedHasMany(target = "Image") */
+    #[MorphedHasMany(target: Image::class)]
     public $images;
 }
 ```
@@ -125,5 +140,6 @@ where       | array  | Additional where condition to be applied for the relation
 morphKey    | string | Name of key to store related entity role. Defaults to `{relationName}_role`
 morphKeyLength | int | The length of morph key. Defaults to 32
 indexCreate | bool   | Create an index on morphKey and innerKey. Defaults to `true`
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 > As in case with `belongsToMorphed`,  FKs are not supported. You can query or eager load this relation as any other relation types.

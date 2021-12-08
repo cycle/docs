@@ -107,7 +107,7 @@ It is also required to create new entities using role specification instead of `
 $user = $orm->make('user', [/* fields* /]);
 ```
 
-> You can freely assign custom repositories and constraints to your entities.
+> You can freely assign custom repositories and scopes to your entities.
 
 ## Example
 ```php
@@ -120,7 +120,7 @@ use Cycle\ORM\Factory;
 use Cycle\ORM\Mapper\StdMapper;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Schema;
-use Cycle\ORM\Transaction;
+use Cycle\ORM\EntityManager;
 use Cycle\Database\Config\DatabaseConfig;
 use Cycle\Database\DatabaseManager;
 use Cycle\Database\Driver\SQLite\SQLiteDriver;
@@ -177,7 +177,7 @@ $u = $orm->make('user', [
     'updated_at' => new DateTimeImmutable(),
 ]);
 
-(new Transaction($orm))->persist($u)->run();
+(new EntityManager($orm))->persist($u)->run();
 
 print_r(
     $orm->getRepository('user')

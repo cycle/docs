@@ -76,4 +76,4 @@ $result = $repository->select()->where('balance', '>', 1)->load('address')->fetc
 > You can read more about the methods available in select queries [here](/docs/en/database/query-builders.md).
 
 ## The repository Scope
-Please note, in Cycle ORM the Repository object is only responsible for entity retrieval. All persist operations must be handled by transactions, entity mappers and command chains.
+Please note, in Cycle ORM the Repository object is only responsible for entity retrieval. All persist operations must be handled by entity manager, entity mappers and command chains.

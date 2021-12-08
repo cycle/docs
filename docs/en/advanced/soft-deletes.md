@@ -76,7 +76,7 @@ To filter out deleted entities create the constraint:
 ```php
 use Cycle\ORM\Select;
 
-class NotDeletedConstrain implements Select\ConstrainInterface
+class NotDeletedScope implements Select\NotDeletedScopeInterface
 {
     public function apply(Select\QueryBuilder $query)
     {

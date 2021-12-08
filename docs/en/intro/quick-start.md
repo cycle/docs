@@ -4,7 +4,7 @@ This guide provides a quick overview of the ORM's installation and configuration
 > Use [Bootstrap](/docs/en/intro/cli.md) to automatically configure Cycle and get access to quick CLI commands.
 
 ## Requirements
-  * PHP 7.2+
+  * PHP 8.0+
   * PHP-PDO
   * PDO drivers for desired databases
 
@@ -40,26 +40,25 @@ In order to operate, Cycle ORM requires a proper database connection to be set. 
 include 'vendor/autoload.php';
 
 use Cycle\Database;
+use Cycle\Database\Config;
 
 $dbal = new Database\DatabaseManager(
-    new Database\Config\DatabaseConfig([
+    new Config\DatabaseConfig([
         'default'     => 'default',
         'databases'   => [
             'default' => ['connection' => 'sqlite']
         ],
         'connections' => [
-            'sqlite' => [
-                'driver'  => Database\Driver\SQLite\SQLiteDriver::class,
-                'connection' => 'sqlite:database.db',
-                'username'   => '',
-                'password'   => '',
-            ]
+            'sqlite' =>  new Config\SQLiteDriverConfig(
+                connection: new Config\SQLite\MemoryConnectionConfig(),
+                queryCache: true,
+            ),
         ]
     ])
 );
 ```
 
-> Read about how to connect to other database types in [this section](/docs/en/basic/connect.md). You can also configure
+> Read about how to connect to other database types in [this section](/docs/en/database/connect.md). You can also configure
 database connections at runtime.
 
 Check database access using following code:
@@ -130,12 +129,12 @@ $orm = $orm->withSchema(new Schema([
 You can use the ORM now:
 
 ```php
-use Cycle\ORM\Transaction;
+use Cycle\ORM\EntityManager;
 
 $user = new User();
 $user->setName("John");
 
-(new Transaction($orm))->persist($user)->run();
+(new EntityManager($orm))->persist($user)->run();
 ```
 
 > Note, in this case, ORM can not automatically migrate your database schema.
@@ -153,22 +152,17 @@ namespace Example;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 
-/**
- * @Entity
- */
+#[Entity]
 class User
 {
-    /**
-     * @Column(type="primary")
-     * @var int
-     */
-    protected $id;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
-    protected $name;
+    public function __construct(
+        #[Column(type: "primary")]
+        private int $id,
+    
+        #[Column(type: "string")]
+        private string $name,
+    ) {
+    }
 
     public function getId(): int
     {
@@ -189,7 +183,7 @@ class User
 
 Cycle will automatically assign the role `user` and table `users` from the default database to this entity.
 
-> Attention, `@Entity` annotation is required!
+> Attention, `#[Entity]` attribute is required!
 
 ### Schema Generation
 In order to operate we need to generate an ORM Schema which will describe how our entities are configured. Though we can do it manually, we will use the pipeline generator provided by `cycle/schema-builder` package, and generators from `cycle/annotated`.
@@ -222,17 +216,18 @@ Now we can define our pipeline:
 AnnotationRegistry::registerLoader('class_exists');
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
-    new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
-    new Annotated\Embeddings($classLocator),  // register embeddable entities
-    new Annotated\Entities($classLocator),    // register annotated entities
-    new Annotated\MergeColumns(),             // add @Table column declarations
-    new Schema\Generator\GenerateRelations(), // generate entity relations
-    new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
-    new Schema\Generator\RenderTables(),      // declare table schemas
-    new Schema\Generator\RenderRelations(),   // declare relation keys and indexes
-    new Annotated\MergeIndexes(),             // add @Table column declarations
-    new Schema\Generator\SyncTables(),        // sync table changes to database
-    new Schema\Generator\GenerateTypecast(),  // typecast non string columns
+    new Schema\Generator\ResetTables(),             // re-declared table schemas (remove columns)
+    new Annotated\Embeddings($classLocator),        // register embeddable entities
+    new Annotated\Entities($classLocator),          // register annotated entities
+    new Annotated\TableInheritance($classLocator),  // register STI/JTI
+    new Annotated\MergeColumns(),                   // add @Table column declarations
+    new Schema\Generator\GenerateRelations(),       // generate entity relations
+    new Schema\Generator\ValidateEntities(),        // make sure all entity schemas are correct
+    new Schema\Generator\RenderTables(),            // declare table schemas
+    new Schema\Generator\RenderRelations(),         // declare relation keys and indexes
+    new Annotated\MergeIndexes(),                   // add @Table column declarations
+    new Schema\Generator\SyncTables(),              // sync table changes to database
+    new Schema\Generator\GenerateTypecast(),        // typecast non string columns
 ]);
 ```
 
@@ -241,7 +236,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 The resulted schema can be passed to the ORM.
 
 ```php
-$orm = $orm->withSchema(new \Cycle\ORM\Schema($schema));
+$orm = $orm->with(schema: new \Cycle\ORM\Schema($schema));
 ```
 
 > The generated schema is intended to be cached in your application, only re-generate schema when it's needed.
@@ -261,12 +256,12 @@ $u = new \Example\User();
 $u->setName("Hello World");
 ```
 
-To persist our entity we have register it in the transaction:
+To persist our entity we have to register it in the Entity manager:
 
 ```php
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$m = new \Cycle\ORM\EntityManager($orm);
+$m->persist($u);
+$m->run();
 ```
 
 You can immediately dump the object to see newly generated primary key:
@@ -285,7 +280,7 @@ $u = $orm->getRepository(\Example\User::class)->findByPK(1);
 > Remove the code from the section above to avoid fetching the entity from memory.
 
 ### Update Entity
-To update the entity data simply change its value before persisting it in the transaction:
+To update the entity data simply change its value before persisting it in the Entity manager:
 
 ```php
 $u = $orm->getRepository(\Example\User::class)->findByPK(1);
@@ -293,27 +288,24 @@ print_r($u);
 
 $u->setName("New " . mt_rand(0, 1000));
 
-(new \Cycle\ORM\Transaction($orm))->persist($u)->run();
+(new \Cycle\ORM\EntityManager($orm))->persist($u)->run();
 ```
 
 Notice how a new name will be displayed on every script iteration.
 
 ### Delete Entity
-To delete the entity simply call the method `delete` of the Transaction:
+To delete the entity simply call the method `delete` of the Entity manager:
 
 ```php
-(new \Cycle\ORM\Transaction($orm))->delete($u)->run();
+(new \Cycle\ORM\EntityManager($orm))->delete($u)->run();
 ```
 
 ## Update Entity Schema
-You can modify your entity schema to add new columns. Note that you have to either specify a default value or set the column as `nullable` in order to apply the modification to the non empty table.
+You can modify your entity schema to add new columns. Note that you have to either specify a default value or set the column as `nullable` in order to apply the modification to the non-empty table.
 
 ```php
-/**
-* @Column(type="int",nullable=true)
-* @var int|null
-*/
-protected $age;
+#[Column(type: "int",nullable: true)]
+protected ?int $age = null;
 ```
 
 The schema will be automatically updated on the next script invocation. We can find all users with undefined age using the following method:

@@ -1,6 +1,6 @@
 # Using ORM without Annotations
 You can use the ORM engine without annotations. You can either declare a mapping schema via configuration
-or use the cycle/schema-builder extension to compile it on the fly via OOP wrappers.
+or use the `cycle/schema-builder` extension to compile it on the fly via OOP wrappers.
 
 ## Examples
 There are multiple examples of using the ORM with manually defined mapping schema:
@@ -18,6 +18,7 @@ Such setup does not require any caching as the schema is defined in code:
 include 'vendor/autoload.php';
 
 use Cycle\Database;
+use Cycle\Database\Config;
 use Cycle\ORM;
 use Cycle\ORM\Schema;
 use Cycle\ORM\Relation;
@@ -29,10 +30,10 @@ $dbal = new Database\DatabaseManager(
             'default' => ['connection' => 'sqlite']
         ],
         'connections' => [
-            'sqlite' => [
-                'driver'  => Database\Driver\SQLite\SQLiteDriver::class,
-                'connection' => 'sqlite:database.db',
-            ]
+            'sqlite' =>  new Config\SQLiteDriverConfig(
+                connection: new SQLite\MemoryConnectionConfig(),
+                queryCache: true,
+            ),
         ]
     ])
 );
@@ -86,5 +87,3 @@ $orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
 
 print_r($orm->getRepository(User::class)->findOne());
 ```
-
-> You only need the `cycle/orm` dependency for this example. Note, you cannot access the `profile` relation without explicitly calling it in the Select, use `cycle/proxy-factory` to enable lazy loading. You can find more examples in [orm tests](https://github.com/cycle/orm/tree/master/tests/ORM).

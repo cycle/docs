@@ -11,19 +11,18 @@ To enable database prefix use option `prefix` of your database:
 
 declare(strict_types=1);
 
-use Cycle\Database\Config\DatabaseConfig;
 use Cycle\Database\DatabaseManager;
-use Cycle\Database\Driver\SQLite\SQLiteDriver;
+use Cycle\Database\Config;
 
-$dbal = new DatabaseManager(new DatabaseConfig([
+$dbal = new DatabaseManager(new Config\DatabaseConfig([
     'databases'   => [
         'default' => ['connection' => 'sqlite', 'prefix' => 'my_prefix_'],
     ],
     'connections' => [
-        'sqlite' => [
-            'driver'     => SQLiteDriver::class,
-            'connection' => 'sqlite:database.db',
-        ],
+        'sqlite' => new Config\SQLiteDriverConfig(
+            connection: new Config\SQLite\MemoryConnectionConfig(),
+            queryCache: true,
+        ),
     ],
 ]));
 ```

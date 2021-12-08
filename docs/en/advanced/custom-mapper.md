@@ -6,13 +6,14 @@ To add your own handler when an entity is created, updated or deleted modify the
 your entity wrapper.
 
 ```php
-use Cycle\ORM\Command\ContextCarrierInterface;
+use Cycle\ORM\Command\CommandInterface;
 use Cycle\ORM\Mapper\Mapper;
 use Cycle\ORM\Heap\Node;
+use Cycle\ORM\Heap\State;
 
 class MyMapper extends Mapper
 {
-    public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface
+    public function queueCreate(object $entity, Node $node, State $state): CommandInterface
     {
         $cmd = parent::queueCreate($entity, $node, $state);
         
@@ -21,9 +22,18 @@ class MyMapper extends Mapper
         return $cmd;
     }
 
-    public function queueUpdate($entity, Node $node, State $state): ContextCarrierInterface
+    public function queueUpdate(object $entity, Node $node, State $state): CommandInterface
     {
         $cmd = parent::queueUpdate($entity, $node, $state);
+        
+        // do something
+        
+        return $cmd;
+    }
+
+    public function queueDelete(object $entity, Node $node, State $state): CommandInterface
+    {
+        $cmd = parent::queueDelete($entity, $node, $state);
         
         // do something
         
@@ -34,9 +44,9 @@ class MyMapper extends Mapper
 And assign the entity to the specific mapper:
 
 ```php
-/**
- * @Entity(mapper="MyMapper")
- */
+use Cycle\Annotated\Annotation\Entity;
+
+ #[Entity(mapper: MyMapper::class)]
 class User
 {
    //...
@@ -50,12 +60,11 @@ We can link another command to be executed right after `$cmd`:
 use Cycle\ORM\Command;
 use Cycle\ORM\Heap;
 
-public function queueCreate($entity, Heap\Node $node, Heap\State $state): Command\ContextCarrierInterface
+public function queueCreate(object $entity, Heap\Node $node, Heap\State $state): Command\CommandInterface
 {
     $cmd = parent::queueCreate($entity, $node, $state);
 
-    $cs = new Command\Branch\ContextSequence();
-    $cs->addPrimary($cmd);
+    $cs = new Command\Special\Sequence($cmd);
     $cs->addCommand(new OurCommand());
 
     return $cs;
@@ -71,7 +80,7 @@ use Cycle\ORM\Commande;
 use Cycle\ORM\Heap;
 use Cycle\ORM\Command\Database\Insert;
 
-public function queueCreate($entity, Heap\Node $node, Heap\State $state): Commande\ContextCarrierInterface
+public function queueCreate(object $entity, Heap\Node $node, Heap\State $state): Commande\CommandInterface
 {
     $cmd = parent::queueCreate($entity, $node, $state);
     $our = new OurCommand();
@@ -82,8 +91,7 @@ public function queueCreate($entity, Heap\Node $node, Heap\State $state): Comman
     // send lastID value as cmd_id to $our command
     $cmd->forward(Insert::INSERT_ID, $our, 'cmd_id');
 
-    $cs = new Command\Branch\ContextSequence();
-    $cs->addPrimary($cmd);
+    $cs = new Command\Special\Sequence($cmd);
     $cs->addCommand($our);
 
     return $cs;

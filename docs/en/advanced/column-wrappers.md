@@ -57,13 +57,16 @@ To assign a column wrapper to an entity use the column option `typecast`. You ca
 a class name which defines static method typecast:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
 class User
 {
-    /** @Column(type="primary") */
+    #[Column(type: 'primary')]
     public $id;
 
-    /** @Column(type="string", typecast=Uuid::class) */
+    #[Column(type: 'string', typecast: Uuid::class)]
     public $uuid;
 }
 ```
@@ -74,9 +77,9 @@ We can use this column wrapper after the schema update:
 $u = new User();
 $u->uuid = Uuid::create();
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 The column will be automatically wrapped upon retrieving the entity from the database:
@@ -92,9 +95,9 @@ To change the wrapped column value you have to create new object:
 $u = $orm->getRepository(User::class)->findOne();
 $u->uuid = Uuid::create();
 
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 ## Raw Values
@@ -108,37 +111,23 @@ use Cycle\Database\Injection\ValueInterface;
 
 class Uuid implements ValueInterface
 {
-    /** @var UuidBody */
-    private $uuid;
+    private UuidBody $uuid;
 
-    /**
-     * @return string
-     */
     public function rawValue(): string
     {
         return $this->uuid->getBytes();
     }
 
-    /**
-     * @return int
-     */
     public function rawType(): int
     {
         return \PDO::PARAM_LOB;
     }
 
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return $this->uuid->toString();
     }
 
-    /**
-     * @return Uuid
-     * @throws \Exception
-     */
     public static function create(): Uuid
     {
         $uuid = new static();
@@ -146,12 +135,7 @@ class Uuid implements ValueInterface
         return $uuid;
     }
 
-    /**
-     * @param string            $value
-     * @param DatabaseInterface $db
-     * @return Uuid
-     */
-    public static function typecast($value, DatabaseInterface $db): Uuid
+    public static function typecast(string $value, DatabaseInterface $db): static
     {
         if (is_resource($value)) {
             // postgres

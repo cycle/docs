@@ -21,32 +21,14 @@ namespace Example;
 
 use Cycle\Annotated\Annotation as Cycle;
 
-/**
- * @Cycle\Entity(repository="Example\Repository\UserRepository")
- */
+#[Cycle\Entity(repository: Example\Repository\UserRepository::class)]
 class User
 {
-  // ...
+    // ...
 }
 ```
 
 > This applies to the `annotated` extension only. Other schema declaration approaches will differ in implementation.
-
-You can also specify the repository name using a relative namespace path:
-
-```php
-namespace Example;
-
-use Cycle\Annotated\Annotation as Cycle;
-
-/**
- * @Cycle\Entity(repository="Repository\UserRepository")
- */
-class User
-{
-  // ...
-}
-```
 
 Update/calculate your schema to get access to the newly assigned repository through the `getRepository` method of the orm:
 
@@ -84,7 +66,7 @@ print_r($orm->getRepository(\Example\User::class)->findActive()->fetchAll());
 ```
 
 ## Preloading relations
-Another use-case is to automatically pre-load some of the entity relations using a custom find method:
+Another use-case is to automatically pre-load some entity relations using a custom find method:
 
 ```php
 use Cycle\ORM\Select;

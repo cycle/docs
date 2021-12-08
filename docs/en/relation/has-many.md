@@ -5,13 +5,16 @@ The Has Many relations defines that an entity exclusively owns multiple other en
 To define a Has Many relation using the annotated entities extension, use:
 
 ```php
-/** @Entity */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\HasMany;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasMany(target = "Post") */
-    protected $posts;
+    #[HasMany(target: Post::class)]
+    private array $posts;
 }
 ```
 
@@ -19,14 +22,16 @@ To use a newly created entity you must define the collection to store related en
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\HasMany;
 
-/** @Entity */
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasMany(target = "Post") */
-    protected $posts;
+    #[HasMany(target: Post::class)]
+    protected ArrayCollection $posts;
 
     public function __construct()
     {
@@ -35,7 +40,7 @@ class User
 
     // ...
 
-    public function getPosts()
+    public function getPosts(): ArrayCollection
     {
         return $this->posts;
     }
@@ -55,7 +60,9 @@ where       | array  | Additional where condition to be applied for the relation
 orderBy     | array  | Additional sorting rules. Defaults to none
 fkCreate    | bool   | Set to true to automatically create FK on outerKey. Defaults to `true`
 fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
+fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
 indexCreate | bool   | Create an index on outerKey. Defaults to `true`
+collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 ## Usage
 To add the child object to the collection, use the collection method `add`:
@@ -68,9 +75,9 @@ $u->getPosts()->add(new Post("test post"));
 The related object(s) can be immediately saved into the database by persisting the parent entity:
 
 ```php
-$t = new \Cycle\ORM\Transaction($orm);
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($u);
+$state = $manager->run();
 ```
 
 To delete a previously associated object,  call the `remove` or `removeElement` methods of the collection:
@@ -174,14 +181,16 @@ You can also pre-set the conditions in the relation definition:
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
+use Cycle\Annotated\Annotation\Relation\HasMany;
+use Cycle\Annotated\Annotation\Entity;
 
-/** @Entity() */
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasMany(target = "Post", where={"published": true}) */
-    protected $posts;
+    #[HasMany(target: Post::class, where: ['published' => true])]
+    protected ArrayCollection $posts;
 
     public function __construct()
     {
@@ -190,7 +199,7 @@ class User
 
     // ...
 
-    public function getPosts()
+    public function getPosts(): ArrayCollection
     {
         return $this->posts;
     }
@@ -213,14 +222,15 @@ $users = $orm->getRepository(User::class)
 The default sort order can also be preset in the relationship definition:
 
 ```php
-/** @Entity() */
+use Cycle\Annotated\Annotation\Relation\HasMany;
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity]
 class User
 {
     // ...
 
-    /** @HasMany(target = "Post", orderBy={"published_at": "DESC"}) */
+    #[HasMany(target: Post::class, orderBy: ['published' => 'DESC'])]
     protected $posts;
-    
-    // ...
 }
 ```

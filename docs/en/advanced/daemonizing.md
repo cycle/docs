@@ -1,12 +1,13 @@
 # Usage in Long-Running Applications
-Cycle ORM attempts to simplify the usage of the library in daemonized applications such as PHP workers running under RoadRunner, Swoole and etc.
+
+Cycle ORM attempts to simplify the usage of the library in daemonized applications such as PHP workers running under [RoadRunner](https://roadrunner.dev/), Swoole and etc.
 The ORM provides you multiple options to avoid memory leaks (the same approach can be used for batch operations).
 
 ## Connection Configuration
-Make sure to enable `reconnect` option in your database connection. Read more about database configuration [here](/docs/en/basic/connect.md).
+Make sure to enable `reconnect` option in your database connection. Read more about database configuration [here](/docs/en/database/connect.md).
 
 ## Cloning ORM
-The first approach is based on the idea of creating separate ORM instances for each user request, each cloned ORM will have it's own
+The first approach is based on the idea of creating separate ORM instances for each user request, each cloned ORM will have its own
 `Heap`, which will be erased automatically by PHP GC:
 
 ```php
@@ -38,7 +39,7 @@ $users = $orm->getRepository(User::class)->select();
 for ($i = 0; $i < 100; $i++) {
     $users = $users->offset($i*1000)->limit(1000)->fetchAll();
 
-    $t = new \Cycle\ORM\Transaction($orm);
+    $t = new \Cycle\ORM\EntityManager($orm);
     foreach ($users as $u) {
         $u->status = 'disabled';
         $t->persist($u);
@@ -52,21 +53,20 @@ for ($i = 0; $i < 100; $i++) {
 > You can combine `clone` and `reset` in order to create separate ORM instance for batch operations but keep all already loaded entities intact.
 
 ## Handling Exceptions
-In some cases, you might experience the connection drop to your database. If the disconnect happens outside of the transaction, Cycle\Database will attempt to automatically reconnect. However, connection issues during the transaction will throw a `Cycle\Database\Exception\DatabaseException` (more specifically `Cycle\Database\Exception\Statement\ConnectionException`).
+In some cases, you might experience the connection drop to your database. If the disconnect happens outside the transaction, Cycle\Database will attempt to automatically reconnect. However, connection issues during the transaction will throw an `Cycle\Database\Exception\DatabaseException` (more specifically `Cycle\Database\Exception\Statement\ConnectionException`) exception.
 
 Failures in the transaction would not affect ORM Heap (EntityManager). But the transaction will be clean. You can reassemble the transaction and try again.
 
-
 ```php
-try {
-   $t->persist($entity);
-   $t->run();
-} catch (\Cycle\Database\Exception\StatementException\ConnectionException $e) {
-   sleep(1);
+$t = new \Cycle\ORM\EntityManager($orm);
+$t->persist($entity);
+$state = $t->run();
 
-   // retry
-   $t->persist($entity);
-   $t->run();
+while ($state->getLastError()) {
+    if ($state->getLastError() instanceof \Cycle\Database\Exception\StatementException\ConnectionException) {
+        sleep(1);
+    }
+    $state->retry();
 }
 ```
 
