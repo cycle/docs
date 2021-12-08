@@ -6,6 +6,7 @@
       "intro/about": "About Cycle ORM",
       "intro/quick-start": "Quick Start",
       "intro/cli": "Very Quick Start",
+      "intro/upgrade": "Upgrade Guide",
       "contributing": "Contributing",
       "intro/semver": "Versioning",
       "license": "LICENSE"
