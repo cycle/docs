@@ -1,7 +1,10 @@
 # Mappers
-Every entity in Cycle ORM must have an associated Mapper object. Mappers are responsible for entity creation and hydration, and they must issue a set of persist commands which will be processed later within the transaction.
+
+Every entity in Cycle ORM must have an associated Mapper object. Mappers are responsible for entity creation and
+hydration, and they must issue a set of persist commands which will be processed later within the transaction.
 
 ## Interface
+
 You can implement your own Mapper using `Cycle/ORM/MapperInterface`:
 
 ```php
@@ -90,17 +93,19 @@ interface MapperInterface
 }
 ```
 
-The ORM will create a mapper using `Spiral\Core\FactoryInterface` which means your Mapper is able to request dependencies available in
-the container associated with ORM Factory.
+The ORM will create a mapper using `Spiral\Core\FactoryInterface` which means your Mapper is able to request
+dependencies available in the container associated with ORM Factory.
 
 Some parameters will be provided by ORM itself, such as:
-  * **role** - entity role
-  * **schema** - entity schema
-  * **orm** - orm instance
+
+* **role** - entity role
+* **schema** - entity schema
+* **orm** - orm instance
 
 You are able to use a single Mapper implementation for multiple entities.
 
 ## Database Mapper
+
 You can implement your own mapper to implement custom entity carrying model but still rely on common SQL functionality.
 Let's define our model first:
 
@@ -112,7 +117,7 @@ class Entity
     ) {
     }
 
-    public function setData(array $data)
+    public function setData(array $data): void
     {
         $this->data = $data;
     }
@@ -205,8 +210,9 @@ Update your ORM schema to register the entity. You can use your entity freely af
 > ORM can work with different types of entities within one system.
 
 ## ActiveRecord
-A similar approach can be used to implement AR-like entities. You would have to expose a global instance of ORM in order to gain access to it
-from your entity's `save()` and `delete()` methods:
+
+A similar approach can be used to implement AR-like entities. You would have to expose a global instance of ORM in order
+to gain access to it from your entity's `save()` and `delete()` methods:
 
 ```php
 use Cycle\ORM\EntityManager;
@@ -215,16 +221,14 @@ class Entity
 {
     // ...
 
-    public function save()
+    public function save(): void
     {
-        $orm = App::getORM();
-        (new EntityManager($orm))->persist($this)->run();
+        (new EntityManager(App::getORM()))->persist($this)->run();
     }
 
-    public function delete()
+    public function delete(): void
     {
-        $orm = App::getORM();
-        (new EntityManager($orm))->delete($this)->run();
+        (new EntityManager(App::getORM()))->delete($this)->run();
     }
 }
 ```

@@ -1,9 +1,11 @@
 # Create, Update and Delete entities
+
 Any persistence operation with entity or entities has to be done using the `Cycle\ORM\EntityManager` object.
 
 > Read how to [describe your entity here](/docs/en/annotated/entity.md).
 
 ## Create Entity
+
 In order to create an entity simply pass its instance to the transaction object and invoke the method `run`:
 
 ```php
@@ -13,11 +15,11 @@ $user->setName("Antony");
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($user);
 
-$state = $manager->run();
+$manager->run();
 ```
 
-Метод `run` возвращает объект `\Cycle\ORM\Transaction\StateInterface` содержащий информацию о статусе выполнения транзакции. 
-С помощью него вы можете проверить статус выполнения транзакции и при необходимости перезапустить.
+Метод `run` возвращает объект `\Cycle\ORM\Transaction\StateInterface` содержащий информацию о статусе выполнения
+транзакции. С помощью него вы можете проверить статус выполнения транзакции и при необходимости перезапустить.
 
 ```php
 $user = new User();
@@ -29,16 +31,12 @@ $manager->persist($user);
 $totalTries = 5;
 
 $logger = new MyLogger(...);
-$state = $manager->run();
+$manager->run();
 
-try {
-    while (!$state->isSuccess() && $totalTries > 0) {
-        $logger->error($state->getError());
-        $state = $state->retry();
-        $totalTries--;
-    } 
-} catch (\Cycle\ORM\Exception\SuccessTransactionRetryException $e) {
-    // OK
+while ($error = $state->getLastError() && $totalTries > 0) {
+    $logger->error($error);
+    $state = $state->retry();
+    $totalTries--;
 }
 ```
 
@@ -46,26 +44,20 @@ In order to process persistent errors make sure to handle exceptions produced by
 
 ```php
 try {
-    $state = $manager->run();
-    if ($state->getError()) {
-        throw $state->getError()
-    }
+    $manager->run();
 } catch (\Throwable $e) {
    print_r($e);
 }
 ```
 
-One of the most important types of exception you must handle is `Cycle\Database\Exception\DatabaseException`. This exception branches
-into multiple types for each of the error types:
+One of the most important types of exception you must handle is `Cycle\Database\Exception\DatabaseException`. This
+exception branches into multiple types for each of the error types:
 
 ```php
 use Cycle\Database\Exception\StatementException;
 
 try {
-    $state = $manager->run();
-    if ($state->getError()) {
-        throw $state->getError()
-    }
+    $manager->run();
 } catch (StatementException\ConnectionException $e) {
    print_r("database has gone away");
 } catch (StatementException\ConstrainException $e) {
@@ -74,6 +66,7 @@ try {
 ```
 
 ## Update the Entity
+
 In order to update the entity you must first obtain the loaded entity object:
 
 ```php
@@ -87,17 +80,20 @@ $user->setName("John");
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($user);
-$state = $manager->run();
+$manager->run();
 ```
 
-Note, by default, ORM will update only changed entity fields (a.k.a. dirty state), given code would produce
-SQL code similar to:
+Note, by default, ORM will update only changed entity fields (a.k.a. dirty state), given code would produce SQL code
+similar to:
 
 ```sql
-UPDATE `users` SET `name` = "John" WHERE `id` = 1
+UPDATE `users`
+SET `name` = "John"
+WHERE `id` = 1
 ```
 
 ## Delete Entity
+
 Any entity can be deleted using the transaction method `delete`:
 
 ```php
@@ -105,12 +101,14 @@ $user = $orm->getRepository(User::class)->findByPK(1);
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->delete($user);
-$state = $manager->run();
+$manager->run();
 ```
 
-Please note, the ORM will not automatically trigger the delete operation for related entities and will rely on foreign key rules set in the database.
+Please note, the ORM will not automatically trigger the delete operation for related entities and will rely on foreign
+key rules set in the database.
 
 ## Persisting Related Entities
+
 Persisting an entity will also persist all related entities within it.
 
 ```php
@@ -120,20 +118,20 @@ $user->getAddress()->setCountry("USA");
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($user);
-$state = $manager->run();
+$manager->run();
 
 print_r($user->getAddress()->getID());
 ```
 
-This behavior is enabled by default by persisting the entity with the `cascade: true` flag.
-Code above can be equally rewritten as:
+This behavior is enabled by default by persisting the entity with the `cascade: true` flag. Code above can be equally
+rewritten as:
 
 ```php
 use Cycle\ORM\EntityManager;
 
 $manager = new EntityManager($orm);
 $manager->persist($user, cascade: true);
-$state = $manager->run();
+$manager->run();
 ```
 
 Pass the `cascade: false` flag to disable cascade persisting of related entities:
@@ -143,7 +141,7 @@ use Cycle\ORM\EntityManager;
 
 $manager = new EntityManager($orm);
 $manager->persist($user, cascade: false);
-$state = $manager->run();
+$manager->run();
 ```
 
 > The `cascade: false` flag can be used while creating or updating the entity.

@@ -1,9 +1,13 @@
 # Belongs To
-Belongs To relation defines that an entity is owned by a related entity on the exclusive matter. Example: a post belongs to an author, a comment belongs a post. Most `belongsTo` relations can be created using the `inverse` option of the declared `hasOne` or `hasMany` relation.
+
+Belongs To relation defines that an entity is owned by a related entity on the exclusive matter. Example: a post belongs
+to an author, a comment belongs a post. Most `belongsTo` relations can be created using the `inverse` option of the
+declared `hasOne` or `hasMany` relation.
 
 > The entity will always be persisted after its related entity.
 
 ## Definition
+
 To define Belongs To relation using annotated entities extension use:
 
 ```php
@@ -22,7 +26,8 @@ class Post
 
 > You must properly handle the cases when the relation is not initialized (`null`)!
 
-By default, the ORM will generate an outer key in the relation object using the related entity's role and outer key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
+By default, the ORM will generate an outer key in the relation object using the related entity's role and outer key (
+primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
 
 Option      | Value  | Comment
 ---         | ---    | ----
@@ -37,6 +42,7 @@ fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher p
 indexCreate | bool   | Create an index on innerKey. Defaults to `true`
 
 ## Usage
+
 Cycle will automatically save the related entity (unless `cascade` set to `false`).
 
 ```php
@@ -45,10 +51,11 @@ $post->setUser(new User("Antony"));
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($post);
-$state = $manager->run();
+$manager->run();
 ```
 
-You can only de-associate the related entity if the relation is defined as `nullable`. In other scenarios you will get an integrity exception:
+You can only de-associate the related entity if the relation is defined as `nullable`. In other scenarios you will get
+an integrity exception:
 
 ```php
 $post = $orm->getRepository(Post::class)->findOne();
@@ -57,10 +64,11 @@ $post->setUser(null);
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($post);
-$state = $manager->run();
+$manager->run();
 ```
 
 ### Loading
+
 To access related data simply call the method `load` of your `Post` `Select` object:
 
 ```php
@@ -69,7 +77,9 @@ print_r($p->getAddress());
 ```
 
 ### Filtering
-You can filter entity selection using related data, call the method `with` of your entity's `Select` to join the related entity table:
+
+You can filter entity selection using related data, call the method `with` of your entity's `Select` to join the related
+entity table:
 
 ```php
 $posts = $orm->getRepository(Post::class)

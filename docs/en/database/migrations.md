@@ -1,12 +1,15 @@
 # Database - Migrations
-Spiral ships with a set of embedded commands to control your database migrations, [component](https://github.com/cycle/migrations) 
-is build upon DBAL and supports virtual databases and prefixes.
+
+Spiral ships with a set of embedded commands to control your database 
+migrations, [component](https://github.com/cycle/migrations) is build upon DBAL and supports virtual databases and 
+prefixes.
 
 ```php
 composer require cycle/migrations
 ```
 
 ## Configure Migrations (optional)
+
 You can configure what database and table to use to store information about the schema version in migrations config.
 
 ```php
@@ -25,8 +28,9 @@ $migrator->configure();
 ```
 
 ## Generate Migrations
-You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom 
-to alter such migrations manually before running them. To achieve that you must install the Cycle Migrations extension:
+
+You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom to
+alter such migrations manually before running them. To achieve that you must install the Cycle Migrations extension:
 
 ```php
 composer require cycle/schema-migrations-generator
@@ -48,6 +52,7 @@ $generator->run($registry);
 ```
 
 ## Create a migration
+
 We can create our migrations manually:
 
 ```php
@@ -75,6 +80,7 @@ class MyMigrationMigration extends Migration
 ```
 
 ## Working with migrations
+
 You can run all outstanding migrations using `migrate` command.
 
 ```php
@@ -134,6 +140,7 @@ Migration my_migration was successfully executed.
 ```
 
 ## Update existed schema
+
 Create migrations to alter existed table schema:
 
 ```php
@@ -195,7 +202,8 @@ WHERE `migration` = 'new_field'
 ```
 
 ## Compatibility with DBAL
-All migration methods are based on DBAL functions, feel free to use same abstract types as in 
+
+All migration methods are based on DBAL functions, feel free to use same abstract types as in
 [direct schema declarations](/docs/en/database/declaration.md).
 
 > Note that the Cycle ORM component can create migrations automatically.

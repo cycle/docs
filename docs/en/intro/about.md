@@ -1,4 +1,5 @@
 # Cycle ORM
+
 [![Latest Stable Version](https://poser.pugx.org/cycle/orm/version)](https://packagist.org/packages/cycle/orm)
 [![Build Status](https://github.com/cycle/orm/workflows/build/badge.svg)](https://github.com/cycle/orm/actions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cycle/orm/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cycle/orm/?branch=master)
@@ -7,7 +8,10 @@
 
 <img src="https://cycle-orm.dev/cycle.png" height="135px" alt="Cycle ORM" align="left"/>
 
-Cycle is a PHP DataMapper ORM and Data Modelling engine designed to safely work in classic and daemonized PHP applications (like [RoadRunner](https://github.com/spiral/roadrunner)). The ORM provides flexible configuration options to model datasets, a powerful query builder, and supports dynamic mapping schemas. The engine can work with plain PHP objects, support annotation declarations, and proxies via extensions.
+Cycle is a PHP DataMapper ORM and Data Modelling engine designed to safely work in classic and daemonized PHP
+applications (like [RoadRunner](https://github.com/spiral/roadrunner)). The ORM provides flexible configuration options
+to model datasets, a powerful query builder, and supports dynamic mapping schemas. The engine can work with plain PHP
+objects, support annotation declarations, and proxies via extensions.
 
 <p align="center">
 	<a href="https://github.com/cycle/docs"><b>Documentation</b></a> | <a href="https://github.com/cycle/docs/issues/3">Comparison with Eloquent and Doctrine</a>
@@ -15,8 +19,10 @@ Cycle is a PHP DataMapper ORM and Data Modelling engine designed to safely work 
 
 Features
 ---------
+
 - ORM with has-one, has-many, many-through-many and polymorphic relations
-- Plain Old PHP objects, [AR](https://github.com/cycle/docs/blob/master/advanced/active-record.md), Custom objects or [same entity type for multiple repositories](https://github.com/cycle/orm/tree/master/tests/ORM/Classless)
+- Plain Old PHP objects, [AR](https://github.com/cycle/docs/blob/master/advanced/active-record.md), Custom objects
+  or [same entity type for multiple repositories](https://github.com/cycle/orm/tree/master/tests/ORM/Classless)
 - eager and lazy loading, query builder with multiple fetch strategies
 - embedded entities, lazy/eager loaded embedded partials
 - runtime configuration with/without code-generation
@@ -34,6 +40,7 @@ Features
 
 Extensions
 ---------
+
 | Component | Current Status
 | ---       | ---
 cycle/schema-builder | [![Latest Stable Version](https://poser.pugx.org/cycle/schema-builder/version)](https://packagist.org/packages/cycle/schema-builder) [![Build Status](https://github.com/cycle/schema-builder/workflows/build/badge.svg)](https://github.com/cycle/schema-builder/actions) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cycle/schema-builder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cycle/schema-builder/?branch=master) [![Codecov](https://codecov.io/gh/cycle/schema-builder/graph/badge.svg)](https://codecov.io/gh/cycle/schema-builder)
@@ -44,7 +51,7 @@ cycle/entity-macros | [![Latest Stable Version](https://poser.pugx.org/cycle/ent
 cycle/database | [![Latest Stable Version](https://poser.pugx.org/cycle/database/version)](https://packagist.org/packages/cycle/database) [![Build Status](https://github.com/cycle/database/workflows/build/badge.svg)](https://github.com/cycle/database/actions) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cycle/database/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cycle/database/?branch=master) [![Codecov](https://codecov.io/gh/cycle/database/graph/badge.svg)](https://codecov.io/gh/cycle/database)
 cycle/schema-migrations-generator | [![Latest Stable Version](https://poser.pugx.org/cycle/schema-migrations-generator/version)](https://packagist.org/packages/cycle/schema-migrations-generator) [![Build Status](https://github.com/cycle/schema-migrations-generator/workflows/build/badge.svg)](https://github.com/cycle/schema-migrations-generator/actions) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cycle/schema-migrations-generator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cycle/schema-migrations-generator/?branch=master) [![Codecov](https://codecov.io/gh/cycle/schema-migrations-generator/graph/badge.svg)](https://codecov.io/gh/cycle/schema-migrations-generator)
 
-
 License
 --------
-The MIT License (MIT). Please see [`LICENSE`](../license.md) for more information. Maintained by [Spiral Scout](https://spiralscout.com).
+The MIT License (MIT). Please see [`LICENSE`](../license.md) for more information. Maintained
+by [Spiral Scout](https://spiralscout.com).

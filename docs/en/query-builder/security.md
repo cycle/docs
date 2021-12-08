@@ -1,7 +1,10 @@
 # Security
-Cycle query builder will automatically pass all of the used parameters as part of the prepared statement. However, you have to remember that column and table names have to be escaped on the application level.
+
+Cycle query builder will automatically pass all of the used parameters as part of the prepared statement. However, you
+have to remember that column and table names have to be escaped on the application level.
 
 ## Identifiers
+
 Avoid using user provided identifiers without a proper whitelist:
 
 ```php
@@ -19,6 +22,7 @@ $users->orderBy($userParam, $userDirection); // possible SQL injection
 > Same goes for aggregation methods `sum`, `avg`, `min`, `max`.
 
 ## Expression and Fragments
+
 **No** user input must be used in `Fragment` and `Expression` wrappers:
 
 ```php
@@ -26,6 +30,7 @@ $users->where($name, '=', new \Cycle\Database\Injection\Expression("CONCAT($user
 ```
 
 ## Array Parameters
+
 The ORM will not allow you to use array parameters outside of `Parameter` scope:
 
 ```php

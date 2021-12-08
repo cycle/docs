@@ -1,10 +1,12 @@
 # Simple Relation
+
 An important part of any ORM engine is the ability to handle relations between objects. In order to do so, we will use
 the `cycle/annotated` package to describe the relation.
 
 > Deeper review of different relations, their options, and select methods will be given in further sections.
 
 ## Describe Entity
+
 First we have to create two entities we want to relate:
 
 ```php
@@ -63,7 +65,8 @@ class Address
 }
 ```
 
-To relate our entities we have to add a new property to one of them and annotate it properly. We should also add getter and setter for this property.
+To relate our entities we have to add a new property to one of them and annotate it properly. We should also add getter
+and setter for this property.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -74,11 +77,11 @@ use Cycle\Annotated\Annotation\Relation\HasOne;
 class User
 {
     #[HasOne(target: Address::class)]
-    private ? Address$address;
+    private $address;
     
     // ...
     
-    public function getAddress(): ?Address
+    public function getAddress()
     {
         return $this->address;
     }
@@ -95,6 +98,7 @@ Once you update the schema and sync your database schema (or run migrations), yo
 > ORM will automatically create a FK on `address.user_id`. We will describe how to alter this value later.
 
 ## Store with related entity
+
 To store the related entity with its parent simply `persist` the object which defines the relation:
 
 ```php
@@ -114,8 +118,10 @@ $manager->run();
 The following SQL commands will be produced:
 
 ```sql
-INSERT INTO "users" ("name") VALUES ('Antony');
-INSERT INTO "addresses" ("city", "user_id") VALUES ('New York', 15);
+INSERT INTO "users" ("name")
+VALUES ('Antony');
+INSERT INTO "addresses" ("city", "user_id")
+VALUES ('New York', 15);
 ```
 
 You can also store objects separately, the ORM will automatically link them together:
@@ -149,19 +155,18 @@ foreach ($result as $user) {
 This will produce the SQL similar to:
 
 ```sql
-SELECT
-    "user"."id" AS "c0",
-    "user"."name" AS "c1",
-    "l_user_address"."id" AS "c2",
-    "l_user_address"."city" AS "c3",
-    "l_user_address"."user_id" AS "c4"
+SELECT "user"."id"                AS "c0",
+       "user"."name"              AS "c1",
+       "l_user_address"."id"      AS "c2",
+       "l_user_address"."city"    AS "c3",
+       "l_user_address"."user_id" AS "c4"
 FROM "users" AS "user"
-LEFT JOIN "addresses" AS "l_user_address"
-    ON "l_user_address"."user_id" = "user"."id";
+         LEFT JOIN "addresses" AS "l_user_address"
+                   ON "l_user_address"."user_id" = "user"."id";
 ```
 
-Please note, by default ORM will try to load a `hasOne` relation using `LEFT JOIN`. You can alter this behaviour and force loading using an
-external query (post load) by modifying the `load` method:
+Please note, by default ORM will try to load a `hasOne` relation using `LEFT JOIN`. You can alter this behaviour and
+force loading using an external query (post load) by modifying the `load` method:
 
 ```php
 $result = $orm->getRepository(User::class)
@@ -177,14 +182,12 @@ foreach ($result as $user) {
 In this case, the resulted SQL will look like:
 
 ```sql
-SELECT
-    "user"."id" AS "c0",
-    "user"."name" AS "c1"
+SELECT "user"."id"   AS "c0",
+       "user"."name" AS "c1"
 FROM "users" AS "user";
-SELECT
-    "user_address"."id" AS "c0",
-    "user_address"."city" AS "c1",
-    "user_address"."user_id" AS "c2"
+SELECT "user_address"."id"      AS "c0",
+       "user_address"."city"    AS "c1",
+       "user_address"."user_id" AS "c2"
 FROM "addresses" AS "user_address"
 WHERE "user_address"."user_id" IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 ```
@@ -192,8 +195,9 @@ WHERE "user_address"."user_id" IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 1
 > You can load relation level using dot notation `$select->load('post.comments.author')`
 
 ## Filter by relation
-To filter the selection using related data use the `with` method. Once this method is invoked you can address the relation fields
-in the `where` method using the relation name as a prefix:
+
+To filter the selection using related data use the `with` method. Once this method is invoked you can address the
+relation fields in the `where` method using the relation name as a prefix:
 
 ```php
 $result = $orm->getRepository(User::class)
@@ -205,15 +209,14 @@ $result = $orm->getRepository(User::class)
 The SQL:
 
 ```sql
-SELECT
-    "user"."id" AS "c0",
-    "user"."name" AS "c1",
-    "user_address"."id" AS "c2",
-    "user_address"."city" AS "c3",
-    "user_address"."user_id" AS "c4"
+SELECT "user"."id"              AS "c0",
+       "user"."name"            AS "c1",
+       "user_address"."id"      AS "c2",
+       "user_address"."city"    AS "c3",
+       "user_address"."user_id" AS "c4"
 FROM "users" AS "user"
-INNER JOIN "addresses" AS "user_address"
-    ON "user_address"."user_id" = "user"."id"
+         INNER JOIN "addresses" AS "user_address"
+                    ON "user_address"."user_id" = "user"."id"
 WHERE "user_address"."city" = 'New York';
 ```
 
@@ -230,20 +233,19 @@ $result = $orm->getRepository(User::class)
 And the resulted SQL:
 
 ```sql
-SELECT
-    "user"."id" AS "c0",
-    "user"."name" AS "c1",
-    "l_user_address"."id" AS "c2",
-    "l_user_address"."city" AS "c3",
-    "l_user_address"."user_id" AS "c4",
-    "user_address"."id" AS "c5",
-    "user_address"."city" AS "c6",
-    "user_address"."user_id" AS "c7"
+SELECT "user"."id"                AS "c0",
+       "user"."name"              AS "c1",
+       "l_user_address"."id"      AS "c2",
+       "l_user_address"."city"    AS "c3",
+       "l_user_address"."user_id" AS "c4",
+       "user_address"."id"        AS "c5",
+       "user_address"."city"      AS "c6",
+       "user_address"."user_id"   AS "c7"
 FROM "users" AS "user"
-LEFT JOIN "addresses" AS "l_user_address"
-    ON "l_user_address"."user_id" = "user"."id"
-INNER JOIN "addresses" AS "user_address"
-    ON "user_address"."user_id" = "user"."id"
+         LEFT JOIN "addresses" AS "l_user_address"
+                   ON "l_user_address"."user_id" = "user"."id"
+         INNER JOIN "addresses" AS "user_address"
+                    ON "user_address"."user_id" = "user"."id"
 WHERE "user_address"."city" = 'New York';
 ```
 
@@ -260,23 +262,24 @@ $result = $orm->getRepository(User::class)
 In this case, only one `JOIN` will be produced:
 
 ```sql
-SELECT
-    "user"."id" AS "c0",
-    "user"."name" AS "c1",
-    "user_address"."id" AS "c2",
-    "user_address"."city" AS "c3",
-    "user_address"."user_id" AS "c4",
-    "user_address"."id" AS "c5",
-    "user_address"."city" AS "c6",
-    "user_address"."user_id" AS "c7"
+SELECT "user"."id"              AS "c0",
+       "user"."name"            AS "c1",
+       "user_address"."id"      AS "c2",
+       "user_address"."city"    AS "c3",
+       "user_address"."user_id" AS "c4",
+       "user_address"."id"      AS "c5",
+       "user_address"."city"    AS "c6",
+       "user_address"."user_id" AS "c7"
 FROM "users" AS "user"
-INNER JOIN "addresses" AS "user_address"
-    ON "user_address"."user_id" = "user"."id"
+         INNER JOIN "addresses" AS "user_address"
+                    ON "user_address"."user_id" = "user"."id"
 WHERE "user_address"."city" = 'New York';
 ```
 
 ## Combined Selections
-The strict separation between `load` and `with` methods grants you the ability to control filter and load scope separately. For example, to find a user with any published post and load all user posts with all visible comments:
+
+The strict separation between `load` and `with` methods grants you the ability to control filter and load scope
+separately. For example, to find a user with any published post and load all user posts with all visible comments:
 
 ```php
 $users = $orm->getRepository(User::class)

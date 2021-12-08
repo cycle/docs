@@ -10,7 +10,7 @@ To access the schema from an initiated ORM instance, use the method `getSchema`:
 
 ```php
 // print the table associated with the entity
-print_r($orm->getSchema()->define(User::class, \Cycle\ORM\Schema::TABLE));
+print_r($orm->getSchema()->define(User::class, \Cycle\ORM\SchemaInterface::TABLE));
 ```
 
 You can create a new ORM instance with an altered schema using `with` method:

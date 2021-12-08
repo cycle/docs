@@ -1,8 +1,11 @@
 # Query Builder Basics
+
 The ORM provides control over generated SQL statements and functionality to set custom conditions and parameters.
 
 ## Accessing Query Builder
-You can get access to the query builder manually by constructing an instance of the `Select` object, or by using the `select()` method of the default repository class.
+
+You can get access to the query builder manually by constructing an instance of the `Select` object, or by using
+the `select()` method of the default repository class.
 
 ```php
 $select = $orm->getRepository(User::class)->select();
@@ -25,13 +28,15 @@ class UserRepository extends Select\Repository
 ```
 
 ## Simple conditions
+
 You can set any condition on the obtained query builder using the method `where`:
 
 ```php
 $select->where('status', 'active');
 ```
 
-By default, such condition will generate statement like `'status' = "active"` (value will be passed as part of the prepared statement).
+By default, such condition will generate statement like `'status' = "active"` (value will be passed as part of the
+prepared statement).
 
 To specify a custom operator call the function with 3 arguments:
 
@@ -54,6 +59,7 @@ $select->where('balance', '<', 100)->orWhere('status', 'blocked');
 > Read more of complex conditions in the next article.
 
 ## Short Notation
+
 You can also specify conditions using array notation:
 
 ```php
@@ -82,7 +88,9 @@ $select->where([
 ```
 
 ## Using Parameters
-By default, any passed value will be converted into `Parameter` objects internally. However, you must explicitly use `Parameter` while specifying array values:
+
+By default, any passed value will be converted into `Parameter` objects internally. However, you must explicitly
+use `Parameter` while specifying array values:
 
 ```php
 $select->where('id', 'in', new \Cycle\Database\Injection\Parameter([1,2,3]));
@@ -99,6 +107,7 @@ print_r($select->fetchAll());
 ```
 
 ## Sorting and pagination
+
 Use the methods `offset`, `limit` and `orderBy` to paginate or sort your entities:
 
 ```php

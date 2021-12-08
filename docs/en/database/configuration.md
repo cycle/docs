@@ -1,19 +1,23 @@
 # Database - Installation and Configuration
-The `cycle/database` component is included by default in Web and GRPC builds. The DBAL focuses mainly on unifying database access rather than trying to get 100% of the specific DBMS feature set.
- 
+
+The `cycle/database` component is included by default in Web and GRPC builds. The DBAL focuses mainly on unifying
+database access rather than trying to get 100% of the specific DBMS feature set.
+
 However, you can always use direct queries to bypass the spiral abstractions.
 
 > Spiral DBAL supports MySQL, MariaDB, SQLite, PostgresSQL, and SQLServer (Windows) databases.
 
 ## Installation
-To install the component in alternative bundles or as a standalone library: 
+
+To install the component in alternative bundles or as a standalone library:
 
 ```bash
 $ composer require cycle/database
 ```
 
 ### Declare Connection
-To create new database connection add a new section or alter existed options of `drivers` section of your configuration, 
+
+To create new database connection add a new section or alter existed options of `drivers` section of your configuration,
 you can use `env` function to keep your passwords and usernames separately.
 
 ```php
@@ -43,6 +47,7 @@ $dbal = new DatabaseManager(new Config\DatabaseConfig([
 > Read about how to connect to other database types in [this section](/docs/en/database/connect.md)
 
 ### Declare Database
+
 In order to access connected database we have to add it into `databases` section first:
 
 ```php
@@ -76,6 +81,7 @@ var_dump($dbal->database('secondary'));
 ```
 
 ### Aliases
+
 Your application and modules can access the database in multiple different ways. Database aliasing allows you to use
 separate databases with relation to one physical database.
 

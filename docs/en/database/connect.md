@@ -1,26 +1,28 @@
 # Connect to Database
-Cycle ORM requires at least one connection to the database in order to operate. The DBAL functionality is
-provided by the package `cycle/database`.
+
+Cycle ORM requires at least one connection to the database in order to operate. The DBAL functionality is provided by
+the package `cycle/database`.
 
 > Make sure to install all required dependencies listed in the previous section.
 
 ## Instantiate DBAL
-In order to start, we have to initialize the `DatabaseManager` service used to automatically create and manage a set of application databases.
-The list of available connections and databases can be provided in the initial configuration.
+
+In order to start, we have to initialize the `DatabaseManager` service used to automatically create and manage a set of
+application databases. The list of available connections and databases can be provided in the initial configuration.
 
 ```php
 use Cycle\Database;
 use Cycle\Database\Config;
 
 $dbConfig = new Config\DatabaseConfig([
-    'default'     => 'default',
-    'databases'   => [
+    'default' => 'default',
+    'databases' => [
         'default' => [
             'connection' => 'sqlite'
         ]
     ],
     'connections' => [
-        'sqlite' =>  new Config\SQLiteDriverConfig(
+        'sqlite' => new Config\SQLiteDriverConfig(
             connection: new Config\SQLite\MemoryConnectionConfig(),
             queryCache: true,
         ),
@@ -33,8 +35,9 @@ $dbal = new Database\DatabaseManager($dbConfig);
 > You can instantiate DBAL with an empty connection list and configure it in runtime if needed.
 
 ## Configure Databases
-The Cycle/Database module provides support to manage multiple databases in one application, use read/write connections and logically
-separate multiple databases within one connection using prefixes.
+
+The Cycle/Database module provides support to manage multiple databases in one application, use read/write connections
+and logically separate multiple databases within one connection using prefixes.
 
 To register a new database simply add it into `databases` section:
 
@@ -64,8 +67,10 @@ To use read/write connections use sections `connection` and `readConnection` acc
 ```
 
 ## Connections
-Each database instance must have an associated connection object. Connections used to provide low-level functionality and wrap
-different database drivers. To register a new connection you have to specify the driver class and its connection options:
+
+Each database instance must have an associated connection object. Connections used to provide low-level functionality
+and wrap different database drivers. To register a new connection you have to specify the driver class and its
+connection options:
 
 For **SQLite**:
 
@@ -173,9 +178,11 @@ For `SQLServer`:
     queryCache: true,
 ),
 ```
+
 > Make sure to install the proper PDO extensions!
 
 ## Additional connection options
+
 There are multiple connection options you can use to customize the behavior.
 
 Options | Value | Description
@@ -185,6 +192,7 @@ reconnect | bool | Allow the driver to automatically reconnect. Defaults to `fal
 profiling | bool | Enable SQL profiling (logging). Defaults to `false`.
 
 ## Access Database
+
 To access the database using the `DatabaseManager`, use the method `database`:
 
 ```php
@@ -202,6 +210,7 @@ $dbal->database('default')->table('users')->select()->fetchAll();
 ```
 
 ## Runtime Configuration
+
 In addition to config driven setup you are able to configure your database connections in runtime:
 
 ```php

@@ -1,7 +1,9 @@
 # Has Many
+
 The Has Many relations defines that an entity exclusively owns multiple other entities in a form of parent-children.
 
 ## Definition
+
 To define a Has Many relation using the annotated entities extension, use:
 
 ```php
@@ -47,7 +49,8 @@ class User
 }
 ```
 
-By default, the ORM will generate an outer key in the relation object using the parent entity's role and inner key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
+By default, the ORM will generate an outer key in the relation object using the parent entity's role and inner key (
+primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
 
 Option      | Value  | Comment
 ---         | ---    | ----
@@ -65,6 +68,7 @@ indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 ## Usage
+
 To add the child object to the collection, use the collection method `add`:
 
 ```php
@@ -77,10 +81,10 @@ The related object(s) can be immediately saved into the database by persisting t
 ```php
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($u);
-$state = $manager->run();
+$manager->run();
 ```
 
-To delete a previously associated object,  call the `remove` or `removeElement` methods of the collection:
+To delete a previously associated object, call the `remove` or `removeElement` methods of the collection:
 
 ```php
 $post = $u->getPosts()->get(0);
@@ -92,6 +96,7 @@ The child object will be removed during the persist operation.
 > Set the relation option `nullable` as true to nullify the outer key instead of entity removal.
 
 ### Loading
+
 To access related data simply call the method `load` of your `User`'s `Select` object:
 
 ```php
@@ -109,7 +114,9 @@ foreach ($users as $u) {
 Please note, by default ORM will load HasMany related entities using an external query (`WHERE IN`).
 
 ### Filtering
-You can filter entity selection using related data. Call the method `with` of your entity's `Select` to join the related entity table:
+
+You can filter entity selection using related data. Call the method `with` of your entity's `Select` to join the related
+entity table:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -136,9 +143,10 @@ print_r($users);
 ```
 
 ### Load filtered
-Another option available for HasMany relation is to pre-filter related data on the database level.
-To do that, use the `where` option of the relation, or the`load` method.
-For example, we can load all users with at least one post and pre-load only published posts:
+
+Another option available for HasMany relation is to pre-filter related data on the database level. To do that, use
+the `where` option of the relation, or the`load` method. For example, we can load all users with at least one post and
+pre-load only published posts:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -149,8 +157,8 @@ $users = $orm->getRepository(User::class)
     ->fetchAll();
 ```
 
-Another option is to use the `with` selection to drive the data for the pre-loaded entities.
-You can point your `load` method to use `with` filtered relation data via `using` flag:
+Another option is to use the `with` selection to drive the data for the pre-loaded entities. You can point your `load`
+method to use `with` filtered relation data via `using` flag:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -164,16 +172,15 @@ $users = $orm->getRepository(User::class)
 The given approach will produce only one SQL query.
 
 ```sql
-SELECT DISTINCT
-  `user`.`id` AS `c0`,
-  `user`.`name` AS `c1`,
-  `published_posts`.`id` AS `c2`,
-  `published_posts`.`title` AS `c3`,
-  `published_posts`.`published` AS `c4`,
-  `published_posts`.`user_id` AS  `c5`,
+SELECT DISTINCT `user`.`id`                   AS `c0`,
+                `user`.`name`                 AS `c1`,
+                `published_posts`.`id`        AS `c2`,
+                `published_posts`.`title`     AS `c3`,
+                `published_posts`.`published` AS `c4`,
+                `published_posts`.`user_id`   AS `c5`,
 FROM `spiral_users` AS `user`
-INNER JOIN `spiral_posts` AS `published_posts`
-    ON `published_posts`.`user_id` = `user`.`id`
+         INNER JOIN `spiral_posts` AS `published_posts`
+                    ON `published_posts`.`user_id` = `user`.`id`
 WHERE `published_posts`.`published` = true
 ```
 

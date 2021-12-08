@@ -1,13 +1,21 @@
 # Relations
-The Cycle Annotated package provides multiple annotations designed to describe entity relations. Each relation must be associated with specific entity properties in order to work. In addition, most of the relation options (such as the name of inner, outer keys) will be generated automatically.
+
+The Cycle Annotated package provides multiple annotations designed to describe entity relations. Each relation must be
+associated with specific entity properties in order to work. In addition, most of the relation options (such as the name
+of inner, outer keys) will be generated automatically.
 
 > You can read more about relation configuration and usage in later sections.
 
 ## Common Statement
-Each relation must have a proper `target` option. The target must point to either the related entity `role`, or to the class name. You are able to specify class names in a fully qualified (Namespace\Class) or using current entity namespace as the base path. You can use both `/` and `\` namespace separators.
+
+Each relation must have a proper `target` option. The target must point to either the related entity `role`, or to the
+class name. You are able to specify class names in a fully qualified (Namespace\Class) or using current entity namespace
+as the base path. You can use both `/` and `\` namespace separators.
 
 ## HasOne
-The HasOne relation is used to define the relation to one child object. This object will be automatically saved with its parent (unless `cascade` option set to `false`). The simplest form of relation definition:
+
+The HasOne relation is used to define the relation to one child object. This object will be automatically saved with its
+parent (unless `cascade` option set to `false`). The simplest form of relation definition:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -25,7 +33,8 @@ class User
 
 > You must properly handle the cases when the relation not initialized (`null`)!
 
-By default, the ORM will generate the outer key in the relation object using the parent entity role and inner key (primary key by default) values. As a result the column and FK will be added to Address entity on `user_id` column.
+By default, the ORM will generate the outer key in the relation object using the parent entity role and inner key (
+primary key by default) values. As a result the column and FK will be added to Address entity on `user_id` column.
 
 Option      | Value  | Comment
 ---         | ---    | ----
@@ -38,6 +47,7 @@ fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. De
 indexCreate | bool   | Create index on outerKey. Defaults to `true`
 
 ## HasMany
+
 The HasMany relation provides the ability to link multiple child objects to one entity (parent).
 
 > Read more about configuration collection [here](/docs/en/advanced/collections.md).
@@ -71,9 +81,10 @@ fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. De
 indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
-
 ## BelongsTo
-In order to link the entity to its parent object use the relation's `belongsTo`. Please note, a relation is `nullable` by default.
+
+In order to link the entity to its parent object use the relation's `belongsTo`. Please note, a relation is `nullable`
+by default.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -102,7 +113,10 @@ fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. De
 indexCreate | bool   | Create an index on innerKey. Defaults to `true`
 
 ## RefersTo
-The RefersTo relation is similar to the BelongsTo relation, but must be used to establish **multiple relations** to the same entity (or in case of a **cyclic** relation). The most common example is the ability to store the last post posted by the user.
+
+The RefersTo relation is similar to the BelongsTo relation, but must be used to establish **multiple relations** to the
+same entity (or in case of a **cyclic** relation). The most common example is the ability to store the last post posted
+by the user.
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
@@ -144,7 +158,9 @@ indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 > You must use the `refersTo` relation for cyclic dependencies.
 
 ## ManyToMany
-A relation of type ManyToMany provides a more complex connection with the ability to use an intermediate entity for the connection. The relation requires the `through` option with similar rules as `target`.
+
+A relation of type ManyToMany provides a more complex connection with the ability to use an intermediate entity for the
+connection. The relation requires the `through` option with similar rules as `target`.
 
 > Read more about configuration collection [here](/docs/en/advanced/collections.md).
 
@@ -181,8 +197,10 @@ indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Default
 collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 ## Morphed Relations
-Cycle ORM provides support for polymorphic relations. Given relations can be used to link an entity to multiple entity types and select the desired object in runtime. 
-Relations must be assigned to the entity interface rather than a specific role or class name.
+
+Cycle ORM provides support for polymorphic relations. Given relations can be used to link an entity to multiple entity
+types and select the desired object in runtime. Relations must be assigned to the entity interface rather than a
+specific role or class name.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -275,10 +293,14 @@ where       | array | Where conditions applied to the related entity
 indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
 collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
-Please note, given relations would not be able to automatically create FK keys since the ORM is unable to decide which key must be used. Also, eager loading abilities are limited for such relations (join is only possible for `morphedHas*` relations).
+Please note, given relations would not be able to automatically create FK keys since the ORM is unable to decide which
+key must be used. Also, eager loading abilities are limited for such relations (join is only possible for `morphedHas*`
+relations).
 
 ## Inversing Relations
-In some cases you might want to create an inversed relation automatically. Please note, you still have to create a property in order to store the related data (and initialize it in case of `many` relations).
+
+In some cases you might want to create an inversed relation automatically. Please note, you still have to create a
+property in order to store the related data (and initialize it in case of `many` relations).
 
 To inverse a relation, you must use the option `inverse` with specified inversed relation name and type.
 

@@ -1,10 +1,13 @@
 # Prerequisites
-Make sure to install `cycle/annotated` and `cycle/schema-builder` extensions in order to use annotated entities. Once installed add
-annotated generators into the schema compiler (see more details [here](/docs/en/basic/install.md)).
 
-> Cycle is using the Doctrine/Annotations package, make sure that annotations are loadable (`use`) and the syntax is correct.
+Make sure to install `cycle/annotated` and `cycle/schema-builder` extensions in order to use annotated entities. Once
+installed add annotated generators into the schema compiler (see more details [here](/docs/en/basic/install.md)).
+
+> Cycle is using the Doctrine/Annotations package, make sure that annotations are loadable (`use`) and the syntax 
+> is correct.
 
 ## Compiler Pipeline
+
 The complete pipeline with annotated entities support will look like:
 
 ```php
@@ -35,10 +38,13 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 $orm = $orm->with(schema: new \Cycle\ORM\Schema($schema));
 ```
 
-> Make sure to point the class locator to the directory with your domain entities only as the indexation operation is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.
+> Make sure to point the class locator to the directory with your domain entities only as the indexation operation 
+> is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.
 
-The result of the schema builder is a compiled schema. The given schema can be cached in order to avoid expensive calculations on each request.
+The result of the schema builder is a compiled schema. The given schema can be cached in order to avoid expensive
+calculations on each request.
 
 > In the following section the terming `update schema` will be referenced to this process.
 
-Remove element `new Schema\Generator\SyncTables()` to disable database reflection. In a later section, we will describe how to automatically render database migrations instead of direct synchronization.
+Remove element `new Schema\Generator\SyncTables()` to disable database reflection. In a later section, we will describe
+how to automatically render database migrations instead of direct synchronization.

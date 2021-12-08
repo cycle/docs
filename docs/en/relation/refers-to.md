@@ -1,10 +1,12 @@
 # Refers To
-Refers To relation is very similar to Belongs To but must be used in cases when multiple relations can exist to a related entity
-(including cyclic relations). For example: a user has many comments, the user refers to the last comment
+
+Refers To relation is very similar to Belongs To but must be used in cases when multiple relations can exist to a
+related entity (including cyclic relations). For example: a user has many comments, the user refers to the last comment.
 
 > The entity will be persisted before the related entity and then updated.
 
 ## Definition
+
 Using the annotated extension:
 
 ```php
@@ -35,7 +37,8 @@ class User
 
 > You must properly handle the cases when the relation is not initialized (`null`)!
 
-By default, the ORM will generate an outer key in the relation object using the related entity's role and outer key (primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
+By default, the ORM will generate an outer key in the relation object using the related entity's role and outer key (
+primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
 
 Option      | Value  | Comment
 ---         | ---    | ----
@@ -52,6 +55,7 @@ indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 > Please note, default `fkAction` is `SET NULL`, the relation is nullable by default.
 
 ## Usage
+
 Cycle will automatically save the related entity and link to it (unless `cascade` set to `false`).
 
 ```php
@@ -60,7 +64,7 @@ $u->addComment(new Comment("hello world");
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($u);
-$state = $manager->run();
+$manager->run();
 ```
 
 Simply set the property value to null to remove the entity reference.
@@ -71,10 +75,11 @@ $u->lastComment = null;
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($u);
-$state = $manager->run();
+$manager->run();
 ```
 
 ### Loading
+
 To access related data call the method `load` of your `Post`'s `Select` object:
 
 ```php
@@ -83,7 +88,9 @@ print_r($u->getLastComment());
 ```
 
 ### Filtering
-You can filter entity selection using related data, call the method `with` of your entity's `Select` to join the related entity table:
+
+You can filter entity selection using related data, call the method `with` of your entity's `Select` to join the related
+entity table:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -106,6 +113,7 @@ print_r($users);
 ```
 
 ### Self References
+
 The RefersTo relation can be used to create self-references.
 
 ```php
@@ -136,7 +144,7 @@ $category2->parent = $category1;
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($category1);
 $manager->persist($category2);
-$state = $manager->run();
+$manager->run();
 ```
 
 You can load relations like that on any level (considering memory and performance limitations):

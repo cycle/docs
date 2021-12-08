@@ -49,11 +49,20 @@ class Customer extends Person
     #[Column(type: 'json')]
     protected array $preferences;
 }
+
+#[Entity]
+#[SingleTable]
+class Ceo extends Employee
+{
+    /** @Column(type="int") */
+    #[Column(type: 'int')]
+    public int $stocks;
+}
 ```
 
 Since the records for all entities will be in the same table, CycleORM needs a way to differentiate between them. By
-default, this is done through a discriminator column called `type` that has the name of the entity role as a value.
-The discriminator column `#[DiscriminatorColumn]` attribute is mandatory.
+default, this is done through a discriminator column called `type` that has the name of the entity role as a value. The
+discriminator column `#[DiscriminatorColumn]` attribute is mandatory.
 
 Next, we need to tell CycleORM what value each subclass entity will have for the `type` column. By default, CycleORM
 uses entity role as a discriminator value, but you can change it by passing a value via `#[SingleTable]` attribute:
@@ -82,6 +91,7 @@ $schema = [
             // discriminator value => Entity class
             'employee' => Employee::class,
             'foo_customer' => Customer::class,
+            'ceo' => Ceo::class,
         ],
         SchemaInterface::DISCRIMINATOR => 'type'
     ],
@@ -92,6 +102,10 @@ $schema = [
     'customer' => [
         ...,
         SchemaInterface::ENTITY => Customer::class,
+    ],
+    'ceo' => [
+        ...,
+        SchemaInterface::ENTITY => Ceo::class,
     ]
 ]
 ```

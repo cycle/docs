@@ -1,9 +1,12 @@
 # Embedded Entities
-You can embed one or multiple entities inside another object using the parent object table as a data source. It can be achieved using the
-`embedded` relation type and might be useful to perform de-composition of your entity. Such a relation also allows lazy and eager (default)
-loading of embedded entities, or the ability to retrieve entities separately (without loading parent model).
+
+You can embed one or multiple entities inside another object using the parent object table as a data source. It can be
+achieved using the `embedded` relation type and might be useful to perform de-composition of your entity. Such a 
+relation also allows lazy and eager (default) loading of embedded entities, or the ability to retrieve entities 
+separately (without loading parent model).
 
 ## Definition
+
 To define embedded entity using the annotated extension, you must first declare your embedded entity:
 
 ```php
@@ -57,6 +60,7 @@ Option      | Value  | Comment
 load        | lazy/eager | Relation load approach. Defaults to `eager`)
 
 ## Usage
+
 You can use the relation right after a schema update (embedded columns will be added to parent entity table):
 
 ```php
@@ -66,11 +70,11 @@ $u->credentials->password = 'password';
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($u);
-$state = $manager->run();
+$manager->run();
 ```
 
-
 ### Querying
+
 You can query embedded entities as your would do for any other relation:
 
 ```php
@@ -79,7 +83,9 @@ $select->where('credentials.username', 'username');
 ```
 
 ## Eager and Lazy Loading
-By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of the `@Embedd` relation annotation:
+
+By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of
+the `@Embedd` relation annotation:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;

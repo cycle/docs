@@ -1,8 +1,11 @@
 # Database Schema Introspection
-Cycle/Database layer provides the ability to read and analyze the basic properties of a given database or a given table. The DBAL layer includes a set of "abstract" types assigned to each column, based on DBMS specific
-mapping in order to unify different engines.
+
+Cycle/Database layer provides the ability to read and analyze the basic properties of a given database or a given table.
+The DBAL layer includes a set of "abstract" types assigned to each column, based on DBMS specific mapping in order to
+unify different engines.
 
 ## List of database tables
+
 To check if the database has a specific table use `hasTable`:
 
 ```php
@@ -32,7 +35,10 @@ foreach ($database->getTables() as $table) {
 ```
 
 ## Reading table properties using AbstractTable
-The AbstractTable provides low-level access to table information, such as column types (internal and abstract), indexes, foreign keys, etc. You can use this information to perform a database export, or to build your own ORM or migration mechanism (see [schema declaration](/docs/en/database/declaration.md)).
+
+The AbstractTable provides low-level access to table information, such as column types (internal and abstract), indexes,
+foreign keys, etc. You can use this information to perform a database export, or to build your own ORM or migration
+mechanism (see [schema declaration](/docs/en/database/declaration.md)).
 
 Table primary keys:
 

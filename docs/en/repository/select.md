@@ -1,4 +1,5 @@
 # Select Entity using Repository
+
 To access the repository associated with a specific entity, use the method `getRepository` of the orm service:
 
 ```php
@@ -58,13 +59,16 @@ foreach($repository->findAll(['status' => 'active']) as $e) {
 ```
 
 ## Working with SelectQuery
-If the repository is an instance of `Cycle\ORM\Select\Repository` (default SQL repository), you are also able to get access
-to low the level method `select`, which gives you the ability to compile more complex queries or pre-load related entities:
+
+If the repository is an instance of `Cycle\ORM\Select\Repository` (default SQL repository), you are also able to get
+access to low the level method `select`, which gives you the ability to compile more complex queries or pre-load related
+entities:
 
 ```php
 $result = $repository->select()->where('balance', '>', 1)->load('address')->fetchAll();
 ```
 
-> It's recommended to avoid usage of the `select` method outside of repository classes, and instead expose [custom](/docs/en/basic/repository.md) find methods.
+> It's recommended to avoid usage of the `select` method outside of repository classes, and instead 
+> expose [custom](/docs/en/basic/repository.md) find methods.
 
 > You can read more about methods available in select queries [here](/docs/en/database).

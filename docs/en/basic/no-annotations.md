@@ -1,17 +1,21 @@
 # Using ORM without Annotations
-You can use the ORM engine without annotations. You can either declare a mapping schema via configuration
-or use the `cycle/schema-builder` extension to compile it on the fly via OOP wrappers.
+
+You can use the ORM engine without annotations. You can either declare a mapping schema via configuration or use
+the `cycle/schema-builder` extension to compile it on the fly via OOP wrappers.
 
 ## Examples
+
 There are multiple examples of using the ORM with manually defined mapping schema:
+
 - [Manually defined Mapping Schema](/docs/en/advanced/manual.md)
 - [Dynamic Mapping Schema](/docs/en/advanced/dynamic-schema.md)
 - [Configuring Schema Builder](/docs/en/advanced/schema-builder.md)
 - [Active Record](/docs/en/advanced/active-record.md)
 
 ## Quick Sample
-We can demonstrate how to create an ORM instance which maps objects `User` and `Profile` with a `HasOne` relation between them.
-Such setup does not require any caching as the schema is defined in code:
+
+We can demonstrate how to create an ORM instance which maps objects `User` and `Profile` with a `HasOne` relation
+between them. Such setup does not require any caching as the schema is defined in code:
 
 ```php
 <?php declare(strict_types=1);
@@ -25,12 +29,12 @@ use Cycle\ORM\Relation;
 
 $dbal = new Database\DatabaseManager(
     new Database\Config\DatabaseConfig([
-        'default'     => 'default',
-        'databases'   => [
+        'default' => 'default',
+        'databases' => [
             'default' => ['connection' => 'sqlite']
         ],
         'connections' => [
-            'sqlite' =>  new Config\SQLiteDriverConfig(
+            'sqlite' => new Config\SQLiteDriverConfig(
                 connection: new SQLite\MemoryConnectionConfig(),
                 queryCache: true,
             ),

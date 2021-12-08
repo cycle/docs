@@ -1,7 +1,9 @@
 # Database - Access Database
+
 Follow the configuration instructions [here](/docs/en/database/configuration.md).
 
 ## Access the Database
+
 Once DBAL component configured properly, you can access your databases in controllers and services multiple ways:
 
 ```php
@@ -26,6 +28,7 @@ var_dump($dbal->database('slave'));
 ```
 
 ## Run Queries
+
 To run the database query use method `query`:
 
 ```php

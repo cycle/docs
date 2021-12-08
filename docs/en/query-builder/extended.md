@@ -1,7 +1,10 @@
 # Extended Query Builder Usage
-Spiral Database provides query builders for Insert, Update, Delete and Select operations, and multiple shortcuts for common functionality.
+
+Spiral Database provides query builders for Insert, Update, Delete and Select operations, and multiple shortcuts for
+common functionality.
 
 ## Before we start
+
 Make sure to get access to the desired database using the DatabaseManager or via the entity source:
 
 ```php
@@ -11,6 +14,7 @@ $db = $orm->getSource(User::class)->getDatabase();
 ```
 
 ## Insert Builder
+
 To get an instance of InsertBuilder (responsible for insertions), we have to execute following code:
 
 ```php
@@ -39,6 +43,7 @@ dump($insert->run());
 > You can also use fluent syntax: `$database->insert('table')->values(...)->run()`.
 
 ### Batch Insert
+
 You can add as many values into insert builder as your database supports:
 
 ```php
@@ -57,6 +62,7 @@ $insert->run();
 ```
 
 ### Quick Inserts
+
 You can skip InsertQuery creation by talking to your table directly:
 
 ```php
@@ -70,11 +76,13 @@ dump($table->insertOne([
 ]));
 ```
 
-> Table class will automatically run a query and return the last inserted id. You can also check the `insertMultiple` method of Table.
+> Table class will automatically run a query and return the last inserted id. You can also check the `insertMultiple` 
+> method of Table.
 
 ## SelectQuery Builder
-SelectQuery builder can be retrieved in two very similar ways. You can either get it from the database
-instance or from the table instance:
+
+SelectQuery builder can be retrieved in two very similar ways. You can either get it from the database instance or from
+the table instance:
 
 ```php
 protected function indexAction(\Cycle\Database\Database $database)
@@ -88,13 +96,16 @@ protected function indexAction(\Cycle\Database\Database $database)
 ```
 
 ### Select Columns
-By default, SelectQuery selects every column (`*`) from its related table. We can always change the set of requested columns using the `columns` method.
+
+By default, SelectQuery selects every column (`*`) from its related table. We can always change the set of requested
+columns using the `columns` method.
 
 ```php
 $database->users->select()->columns('name')->fetchAll();
 ```
 
-You can use your select query as proper iterator or use the `run` method, which will return an instance of `PDOStatement`:
+You can use your select query as proper iterator or use the `run` method, which will return an instance
+of `PDOStatement`:
 
 ```php
 foreach($select->getIterator() as $row) {
@@ -117,9 +128,11 @@ dump($database->users->select()->columns('name')->sqlStatement());
 ```
 
 ### Where Statements
+
 Add WHERE conditions to your query using the `where`, `andWhere`, `orWhere` methods.
 
 ##### Basics
+
 Let's add a simple condition on the `status` column of our table:
 
 ```php
@@ -136,8 +149,9 @@ protected function indexAction(\Cycle\Database\Database $database)
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
 WHERE `status` = 'active'
 ```
@@ -151,6 +165,7 @@ $select->where('status', 'active');
 ```
 
 ##### Where Operators
+
 Second argument can be used to declare operator:
 
 ```php
@@ -167,13 +182,15 @@ $select->where('id', 'between', 10, 20);
 Resulted SQL:
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
 WHERE `id` BETWEEN 10 AND 20
 ```
 
 ##### Multiple Where Conditions
+
 Chain multiple where conditions using fluent calls:
 
 ```php
@@ -189,10 +206,12 @@ $select->where('id', 1)->andWhere('status', 'active');
 Resulted SQL:
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
-WHERE `id` = 1 AND `status` = 'active'
+WHERE `id` = 1
+  AND `status` = 'active'
 ```
 
 SelectQuery will generate SQL based respecting your operator order and boolean operators:
@@ -202,13 +221,17 @@ $select->where('id', 1)->orWhere('id', 2)->orWhere('status', 'active');
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
-WHERE `id` = 1 OR `id` = 2 OR `status` = 'active'
+WHERE `id` = 1
+   OR `id` = 2
+   OR `status` = 'active'
 ```
 
 ##### Complex/Group Where Conditions
+
 Group multiple where conditions using Closure as your first argument:
 
 ```php
@@ -218,10 +241,12 @@ $select->where('id', 1)->where(function (\Cycle\ORM\Select\QueryBuilder $select)
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
-WHERE `id` = 1 AND (`status` = 'active' OR `id` = 10)
+WHERE `id` = 1
+  AND (`status` = 'active' OR `id` = 10)
 ```
 
 Boolean joiners are respected:
@@ -235,16 +260,20 @@ $select->where('id', 1)->orWhere(function (\Cycle\ORM\Select\QueryBuilder $selec
 Result:
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
-WHERE `id` = 1 OR (`status` = 'active' AND `id` = 10)
+WHERE `id` = 1
+   OR (`status` = 'active' AND `id` = 10)
 ```
 
 > You can nest as many conditions as you want.
 
 ##### Simplified/array Where Conditions
-Alternatively you can use [MongoDB style](https://docs.mongodb.org/manual/reference/operator/query/) to build your where conditions:
+
+Alternatively you can use [MongoDB style](https://docs.mongodb.org/manual/reference/operator/query/) to build your where
+conditions:
 
 ```php
 $select->where([
@@ -256,8 +285,9 @@ $select->where([
 Such code is identical to two where method calls and generates such sql:
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
 WHERE (`id` = 1 AND `status` = 'active')
 ```
@@ -276,8 +306,9 @@ $select->where([
 Resulted SQL:
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
 WHERE (`id` IN (1, 2, 3) AND `status` LIKE 'active')
 ```
@@ -318,8 +349,9 @@ $select->where([
 In both cases resulted SQL will look like:
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
 WHERE ((`id` BETWEEN 10 AND 100 AND `name` = 'Anton') OR `status` = 'disabled')
 ```
@@ -327,7 +359,9 @@ WHERE ((`id` BETWEEN 10 AND 100 AND `name` = 'Anton') OR `status` = 'disabled')
 You can experiment with both ways to declare where conditions and pick the one you like more.
 
 ##### Parameters
-Spiral mocks all given values using `Parameter` class internally, in some cases (array) you might need to pass `Parameter` directly. You can alter parameter value at any moment, but before query `run` method:
+
+Spiral mocks all given values using `Parameter` class internally, in some cases (array) you might need to
+pass `Parameter` directly. You can alter parameter value at any moment, but before query `run` method:
 
 ```php
 $select = $database->select()->from('test')->columns(['id', 'status', 'name']);
@@ -342,13 +376,16 @@ foreach ($select as $row) {
 }
 ```
 
-> You can also pass requested PDO parameter type as second argument: `new Parameter(1, PDO::PARAM_INT)`. Internally every value passed into where the method is going to be wrapped using Parameter class.
+> You can also pass requested PDO parameter type as second argument: `new Parameter(1, PDO::PARAM_INT)`. Internally 
+> every value passed into where the method is going to be wrapped using Parameter class.
 
 
 You can implement ParameterInterface if you want to declare your parameter wrappers with custom logic.
 
 ##### SQL Fragments and Expressions
-QueryBuilders allow you to replace some of where statements with custom SQL code or expression. Use `Cycle\Database\Injection\Fragment` and `Cycle\Database\Injection\Expression` for such purposes.
+
+QueryBuilders allow you to replace some of where statements with custom SQL code or expression.
+Use `Cycle\Database\Injection\Fragment` and `Cycle\Database\Injection\Expression` for such purposes.
 
 Use fragment to include SQL code into your query bypassing escaping:
 
@@ -358,8 +395,9 @@ $select->where('id', '=', new \Cycle\Database\Injection\Fragment("DAYOFYEAR('201
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
 WHERE `id` = DAYOFYEAR('2015-09-12')
 ```
@@ -371,8 +409,7 @@ $select->where(new \Cycle\Database\Injection\Expression("DAYOFYEAR(concat('2015-
 ```
 
 ```sql
-SELECT
-*
+SELECT *
 FROM `x_users`
 WHERE DAYOFYEAR(concat('2015-09-', `id`)) = 255
 ```
@@ -386,8 +423,9 @@ $select->where(new \Cycle\Database\Injection\Expression("CONCAT(id, '-', status)
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
 WHERE CONCAT(`id`, '-', `status`) = '1-active'
 ```
@@ -399,8 +437,9 @@ $select->where(new \Cycle\Database\Injection\Expression("CONCAT(test.id, '-', te
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
 WHERE CONCAT(`primary_test`.`id`, '-', `primary_test`.`status`) = '1-active'
 ```
@@ -410,6 +449,7 @@ You can also use expressions and fragments as column values in the insert and up
 > Please keep client data as far from Expressions and Fragments as far as it is possible.
 
 ### Table and Column aliases
+
 QueryBuilders support user defined table and column aliases:
 
 ```php
@@ -427,8 +467,9 @@ foreach ($select as $row) {
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test` as `abc`
 WHERE `abc`.`id` > 10
 ```
@@ -451,13 +492,17 @@ foreach ($select as $row) {
 SQL:
 
 ```sql
-SELECT
-`id`, `status` as `st`, `name`, CONCAT(`primary_test`.`name`, ' ',`primary_test`.`status`) as `name_and_status`
+SELECT `id`,
+       `status`                                                    as `st`,
+       `name`,
+       CONCAT(`primary_test`.`name`, ' ', `primary_test`.`status`) as `name_and_status`
 FROM `primary_test`
 ```
 
 ##### Sub/Nested Queries
-Every spiral QueryBuilder is as instance of `FragmentInterface`, this makes you able to create complex nested queries when you need them:
+
+Every spiral QueryBuilder is as instance of `FragmentInterface`, this makes you able to create complex nested queries
+when you need them:
 
 ```php
 $select = $database->select()->from('test')->columns(['id', 'status', 'name']);
@@ -474,13 +519,13 @@ foreach ($select as $row) {
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
-WHERE `id` IN  (SELECT
-`id`
-FROM `primary_test`
-WHERE `id` BETWEEN 10 AND 100)
+WHERE `id` IN (SELECT `id`
+               FROM `primary_test`
+               WHERE `id` BETWEEN 10 AND 100)
 ```
 
 You can compare nested query return value in where statements:
@@ -494,13 +539,13 @@ $select->where(
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
-WHERE (SELECT
-COUNT(*)
-FROM `primary_test`
-WHERE `id` BETWEEN 10 AND 100) > 1
+WHERE (SELECT COUNT(*)
+       FROM `primary_test`
+       WHERE `id` BETWEEN 10 AND 100) > 1
 ```
 
 You can exchange column identifiers between parent and nested query using `Expression` class:
@@ -517,23 +562,27 @@ $select->where(
 ```
 
 ```sql
-SELECT
-`id`, `status`, `name`
+SELECT `id`,
+       `status`,
+       `name`
 FROM `primary_test`
-WHERE (SELECT
-`name`
-FROM `primary_users`
-WHERE `id` = `primary_test`.`id` AND `id` != 100) = 'Anton'
+WHERE (SELECT `name`
+       FROM `primary_users`
+       WHERE `id` = `primary_test`.`id`
+         AND `id` != 100) = 'Anton'
 ```
 
 > Nested queries will only work when nested query belongs to the same database as a primary builder.
 
 ### Having
-Use methods `having`, `orHaving` and `andHaving` methods to define HAVING conditions. rSyntax is identical to WHERE statement.
+
+Use methods `having`, `orHaving` and `andHaving` methods to define HAVING conditions. rSyntax is identical to WHERE
+statement.
 
 > Yep, it was quick.
 
 ### Joins
+
 You can join any desired table to your query using `leftJoin`, `join`, `rightJoin`, `fullJoin` and `innerJoin` methods:
 
 ```php
@@ -543,14 +592,15 @@ $select->leftJoin('users', 'u')->on('users.id', 'test.id');
 ```
 
 ```sql
- SELECT
-`x_test`.*, `u`.`name` AS `u`
-FROM `x_test`
-LEFT JOIN `x_users` AS `u`
-    ON `x_users`.`id` = `x_test`.`id`
+ SELECT `x_test`.*,
+        `u`.`name` AS `u`
+ FROM `x_test`
+          LEFT JOIN `x_users` AS `u`
+                    ON `x_users`.`id` = `x_test`.`id`
 ```
 
-Method `on` works exactly as `where` except provided values treated as identifier and not as user value. Chain `on`, `andOn` and `orOn` methods to create more complex joins:
+Method `on` works exactly as `where` except provided values treated as identifier and not as user value. Chain `on`
+, `andOn` and `orOn` methods to create more complex joins:
 
 ```php
 $select->leftJoin('users')->on('users.id', 'test.id')->orOn('users.id', 'test.balance');
@@ -559,7 +609,8 @@ $select->leftJoin('users')->on('users.id', 'test.id')->orOn('users.id', 'test.ba
 Array based where conditions is also supported:
 
 ```sql
-$select->leftJoin('users', 'u')->on([
+$select
+->leftJoin('users', 'u')->on([
     '@or' => [
         ['u.id' => 'test.id'],
         ['u.id' => 'test.balance']
@@ -570,14 +621,15 @@ $select->leftJoin('users', 'u')->on([
 Generated SQL:
 
 ```sql
-SELECT
-`primary_test`.*, `primary_users`.`name` as `user_name`
+SELECT `primary_test`.*,
+       `primary_users`.`name` as `user_name`
 FROM `primary_test`
-LEFT JOIN `primary_users`
-    ON (`primary_users`.`id` = `primary_test`.`id` OR `primary_users`.`id` = `primary_test`.`balance`)
+         LEFT JOIN `primary_users`
+                   ON (`primary_users`.`id` = `primary_test`.`id` OR `primary_users`.`id` = `primary_test`.`balance`)
 ```
 
 ##### On Where statement
+
 To include user value into ON statement, use methods `onWhere`, `orOnWhere` and `andOnWhere`:
 
 ```php
@@ -585,15 +637,17 @@ $select->innerJoin('users')->on(['users.id' => 'test.id'])->onWhere('users.name'
 ```
 
 ```sql
-SELECT
-`primary_test`.*, `primary_users`.`name` as `user_name`
+SELECT `primary_test`.*,
+       `primary_users`.`name` as `user_name`
 FROM `primary_test`
-INNER JOIN `primary_users`
-    ON `primary_users`.`id` = `primary_test`.`id` AND `primary_users`.`name` = 'Anton'
+         INNER JOIN `primary_users`
+                    ON `primary_users`.`id` = `primary_test`.`id` AND `primary_users`.`name` = 'Anton'
 ```
 
 ##### Aliases
-Second parameter in join methods are dedicated to table alias, feel free to use it in `on` and `where` statements of your query:
+
+Second parameter in join methods are dedicated to table alias, feel free to use it in `on` and `where` statements of
+your query:
 
 ```php
 $select = $database->table('test')->select(['test.*', 'uu.name as user_name']);
@@ -608,14 +662,15 @@ $select->innerJoin('users as uu')->onWhere('uu.name', 'Anton');
 ```
 
 ```sql
-SELECT
-`primary_test`.*, `uu`.`name` as `user_name`
+SELECT `primary_test`.*,
+       `uu`.`name` as `user_name`
 FROM `primary_test`
-INNER JOIN `primary_users` as `uu`
-    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton'
+         INNER JOIN `primary_users` as `uu`
+                    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton'
 ```
 
 ### OrderBy
+
 User `orderBy` to specify sort direction:
 
 ```php
@@ -649,18 +704,20 @@ $select->orderBy([
 Both ways will produce such SQL:
 
 ```sql
-SELECT
-`primary_test`.*, `uu`.`name` as `user_name`
+SELECT `primary_test`.*,
+       `uu`.`name` as `user_name`
 FROM `primary_test`
-INNER JOIN `primary_users` as `uu`
-    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton'
+         INNER JOIN `primary_users` as `uu`
+                    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton'
 ORDER BY `primary_test`.`name` DESC, `primary_test`.`id` ASC
 ```
 
 > You can also use Fragments instead of sorting identifiers (by default identifiers are treated as column name or expression).
 
 ### GroupBy and Distinct
-If you wish to select unique results from your selection use method `distinct` (always use `distinct` while loading HAS_MANY/MANY_TO_MANY relations in ORM).
+
+If you wish to select unique results from your selection use method `distinct` (always use `distinct` while loading
+HAS_MANY/MANY_TO_MANY relations in ORM).
 
 ```php
 $select->distinct();
@@ -675,21 +732,23 @@ $select = $database->table('test')->select(['status', 'count(*) as count'])->gro
 As you might expect produced SQL looks like:
 
 ```sql
-SELECT
-`status`, count(*) as `count`
+SELECT `status`,
+       count(*) as `count`
 FROM `primary_test`
 GROUP BY `status`
 ```
 
 ### Aggregations and Count
-Since you can manipulate with selected columns including COUNT and other aggregation functions into your query might look like:
+
+Since you can manipulate with selected columns including COUNT and other aggregation functions into your query might
+look like:
 
 ```php
 $select = $database->table('test')->select(['COUNT(*)']);
 ```
 
-Though, in many cases you want to get query count or summarize results without column manipulations,
-use `count`, `avg`, `sum`, `max` and `min` methods to do that:
+Though, in many cases you want to get query count or summarize results without column manipulations, use `count`, `avg`
+, `sum`, `max` and `min` methods to do that:
 
 ```php
 $select = $database->table('test')->select(['id', 'name', 'status']);
@@ -699,17 +758,17 @@ dump($select->sum('balance'));
 ```
 
 ```sql
-SELECT
-COUNT(*)
+SELECT COUNT(*)
 FROM `primary_test`;
 
-SELECT
-SUM(`balance`)
+SELECT SUM(`balance`)
 FROM `primary_test`;
 ```
 
 ## UpdateQuery Builder
-Use "update" method of your table or database instance to get access to UpdateQuery builder, call `run` method of such query to execute result:
+
+Use "update" method of your table or database instance to get access to UpdateQuery builder, call `run` method of such
+query to execute result:
 
 ```php
 $update = $database->table('test')->update([
@@ -753,16 +812,16 @@ $update->where('id', '<', 10)->run();
 
 ```sql
 UPDATE `primary_test`
-SET `name` = (SELECT
-`name`
-FROM `primary_users`
-WHERE `id` = 1)
+SET `name` = (SELECT `name`
+              FROM `primary_users`
+              WHERE `id` = 1)
 WHERE `id` < 10
 ```
 
 > Where methods work identically as in SelectQuery.
 
 ## DeleteQuery Builders
+
 Delete queries are represent by DeleteQuery accessible via "delete" method:
 
 ```php

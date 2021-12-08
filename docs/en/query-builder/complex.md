@@ -1,17 +1,22 @@
 # Complex Queries
+
 You can use the the query builder to compose more complex queries and expressions.
 
 ## Expressions
+
 It is possible to inject custom SQL logic into the query using `Cycle\Database\Injection\Expression` object:
 
 ```php
 $select->where('time_created', '>', new \Cycle\Database\Injection\Expression("NOW()"));
 ```
 
-You can use expressions in place of operators or column names. Please note that, since a column name might not necessarily be identical to the actual property name, you must resolve its identity first.
+You can use expressions in place of operators or column names. Please note that, since a column name might not
+necessarily be identical to the actual property name, you must resolve its identity first.
 
 ## Name Resolver
-To resolve the name of column you must gain access to `QueryBuilder` instance available through the `getBuilder` method of the `Select` object:
+
+To resolve the name of column you must gain access to `QueryBuilder` instance available through the `getBuilder` method
+of the `Select` object:
 
 ```php
 $qb = $select->getBuilder();
@@ -37,8 +42,10 @@ Such a query will produce similar SQL:
 ```sql
 SELECT
     ...
-FROM "users" AS "user" WHERE
-  "user"."credits" > "user"."balance"
+    FROM "users" AS "user"
+WHERE
+    "user"."credits"
+    > "user"."balance"
 ```
 
 You can also resolve names of related entities by using the entity path:
@@ -53,16 +60,17 @@ Example SQL:
 
 ```sql
 SELECT DISTINCT
-   ...
-FROM "users" AS "user"
-INNER JOIN "orders" AS "user_orders"
-    ON "user_orders"."user_id" = "user"."id"
+    ...
+    FROM "users" AS "user"
+    INNER JOIN "orders" AS "user_orders"
+ON "user_orders"."user_id" = "user"."id"
 WHERE "user"."balance" > "user_orders"."total" AND "user_orders"."status" = 'pending'
 ```
 
 > You can also use the method `groupBy` on your `Select` object to create more complex conditions.
 
 ## Low level queries
+
 If you want to run complex selection or select only particular columns you can modify the underlying query directly:
 
 ```php
@@ -78,17 +86,18 @@ print_r($query->fetchAll());
 The produced query will look like:
 
 ```sql
-SELECT
-  "id", SUM("balance")
+SELECT "id",
+       SUM("balance")
 FROM "users" AS "user"
-  GROUP BY "id"
+GROUP BY "id"
 ```
 
 > Use the `resolve` method to obtain fully qualified column names.
 
 ## Injecting Queries
-It is possible to inject a query into another query. In this case, you must obtain an instance of the entity query first. It can be done
-by calling the method `buildQuery()` of `Select` object.
+
+It is possible to inject a query into another query. In this case, you must obtain an instance of the entity query
+first. It can be done by calling the method `buildQuery()` of `Select` object.
 
 For example:
 
@@ -115,13 +124,13 @@ The produced SQL will look like:
 ```sql
 SELECT
     ...
-FROM "users" AS "user"
-  WHERE (
+    FROM "users" AS "user"
+WHERE (
     SELECT
-    SUM("order"."total")
+    SUM ("order"."total")
     FROM "orders" AS "order"
     WHERE "order"."user_id" = "user"."id"
-  ) >= "user"."balance"
+    ) >= "user"."balance"
 ```
 
 > Both entities must be located within one physical database.

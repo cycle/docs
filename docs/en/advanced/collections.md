@@ -1,11 +1,12 @@
 # Collections
 
-> В CycleORM v2 была убрана жесткая привязка к определенному типу коллекции.
-> Начиная с этой версии вы можете выбирать какой тип коллекции будет использоваться для хранения данных связей для всех сущностей по умолчанию и для конкретной сущности.
+> В CycleORM v2 была убрана жесткая привязка к определенному типу коллекции. Начиная с этой версии вы можете выбирать
+> какой тип коллекции будет использоваться для хранения данных связей для всех сущностей по умолчанию и для конкретной 
+> сущности.
 
 ## Configuring collection type factories
 
-По умолчанию CycleORM использует `Cycle\ORM\Collection\ArrayCollectionFactory` для хранения данных связей.
+По умолчанию CycleORM использует `Cycle\ORM\Collection\ArrayCollectionFactory` для хранения коллекции сущностей связей.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -113,7 +114,7 @@ $schema = [
         //...
         Schema::RELATIONS   => [
             'comments' => [
-                Relation::TYPE   => Relation::HAS_MANY,
+                Relation::TYPE => Relation::HAS_MANY,
                 Relation::TARGET => Comment::class,
                 Relation::COLLECTION_TYPE => CommentsCollection::class,    // <= Совпадение по классу, который наследует базовый класс
                 Relation::SCHEMA => [ /*...*/ ],
@@ -124,6 +125,7 @@ $schema = [
 ```
 
 ### Определение через аннотации/атрибуты
+
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
 use Cycle\Annotated\Annotation\Column;
@@ -180,11 +182,11 @@ class User
 The collection property will be set automatically on the selection:
 
 ```php
-$users = $orm->getRepository(User::class)
+$user = $orm->getRepository(User::class)
     ->select()
     ->with('posts')->limit(1)->fetchOne();
 
-print_r($u->posts);
+print_r($user->posts);
 ```
 
 ## Collection API

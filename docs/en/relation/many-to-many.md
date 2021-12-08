@@ -128,7 +128,7 @@ $u->getTags()->add(new Tag("tag a"));
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($u);
-$state = $manager->run();
+$manager->run();
 ```
 
 To remove the association to the object, use the `remove` or `removeElement` methods. Disassociation will remove

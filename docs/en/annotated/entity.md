@@ -1,5 +1,7 @@
 # Annotated Entities
-The annotated entities extension is capable of indexing any domain entity in your project. To indicate that the class must be treated as a domain entity make sure to add the `#[Entity]` attribute.
+
+The annotated entities extension is capable of indexing any domain entity in your project. To indicate that the class
+must be treated as a domain entity make sure to add the `#[Entity]` attribute.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -12,8 +14,10 @@ class User
 ```
 
 ## Entity
-Usually, the single attribute `#[Entity]` is enough to describe your model. In this case, Cycle ORN will automatically assign the generated
-table name and role based on the class name. In the case of `User` the role will be `user`, database `null` (default) and table `users`.
+
+Usually, the single attribute `#[Entity]` is enough to describe your model. In this case, Cycle ORN will automatically
+assign the generated table name and role based on the class name. In the case of `User` the role will be `user`,
+database `null` (default) and table `users`.
 
 You can tweak all of these values by setting `entity` options:
 
@@ -57,7 +61,7 @@ source         | class  | Entity source class (internal). Defaults to `Cycle\ORM
 typecast       | class[] | Class name or array of classes of typecast handlers. Defaults to `Cycle\ORM\Parser\Typecast`
 scope          | class  | Class name of scope to be applied to every entity query. Defaults to `null`
 
-For example, a  typical entity description might look like:
+For example, a typical entity description might look like:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -74,7 +78,10 @@ class User
 ```
 
 ## Columns
-No entity can operate without some properties mapped to table columns. To map your property to the column add the attribute `#[Column]` to it. It's mandatory to specify the column type. You must always specify **one** primary (auto incremental) column for your entity.
+
+No entity can operate without some properties mapped to table columns. To map your property to the column add the
+attribute `#[Column]` to it. It's mandatory to specify the column type. You must always specify **one** primary (auto
+incremental) column for your entity.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -89,7 +96,7 @@ class User
 ```
 
 > Read how to use non-incremental primary keys in the Advanced section.
-> -  [UUID](/docs/en/advanced/uuid.md).
+> - [UUID](/docs/en/advanced/uuid.md).
 
 You can use multiple annotations at the same time:
 
@@ -104,8 +111,8 @@ class User
 }
 ```
 
-By default, the entity property will be mapped to the column with the same name as the property.
-You can change it as follows:
+By default, the entity property will be mapped to the column with the same name as the property. You can change it as
+follows:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -162,7 +169,8 @@ class User
 }
 ```
 
-While adding new columns to entities associated with non-empty tables you are required to either specify a default value or mark the column as nullable:
+While adding new columns to entities associated with non-empty tables you are required to either specify a default value
+or mark the column as nullable:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -194,13 +202,15 @@ Following column types are available:
 
 Type        | Parameters                | Description
 ---         | ---                       | ---
-**primary** | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table.
+**
+primary** | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table.
 bigPrimary  | ---                       | Same as primary but uses bigInteger to store its values.
 boolean     | ---                       | Boolean type, some databases will store it as integer (1/0).
 integer     | ---                       | Database specific integer (usually 32 bits).
 tinyInteger | ---                       | Small/tiny integer, check your DBMS to find size limitations.
 bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to find size limitations.
-**string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.
+**
+string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.
 text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.
 tinyText    | ---                       | Tiny text, same as "text" for most of the databases. It differs only in MySQL.
 longText    | ---                       | Long text, same as "text" for most of the databases. It differs only in MySQL.
@@ -210,13 +220,15 @@ decimal     | precision,&nbsp;[scale:0] | Number with specified precision and sc
 datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.
 date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.
 time        | ---                       | To store time only.
-*timestamp* | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column type in your objects to store time (use `datetime` instead) as timestamps will behave very specific to select DBMS.
+*
+timestamp* | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column type in your objects to store time (use `datetime` instead) as timestamps will behave very specific to select DBMS.
 binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.
 tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. It differs only in MySQL.
 longBinary  | ---                       | Long binary, same as "binary" for most of the databases. It differs only in MySQL.
 json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.
 
 ## Enums
+
 The ORM supports the enum type for all available drivers. You must define enum options using comma separator:
 
 ```php
@@ -233,6 +245,7 @@ class User
 ```
 
 ## Table Extension
+
 In some cases you might want to specify additional table columns and indexes without the link to the entity properties.:
 
 ```php
@@ -260,7 +273,10 @@ class User
 > The column definition is identical to the one used for the property.
 
 ## Merging attributes
-The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source, Repository and Scope classes. This approach can be useful in cases when you want to implement domain functionality like auto timestamps or soft deletes.
+
+The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source,
+Repository and Scope classes. This approach can be useful in cases when you want to implement domain functionality like
+auto timestamps or soft deletes.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;

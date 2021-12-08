@@ -62,7 +62,7 @@
       "advanced/schema": "Schema",
       "advanced/entity": "Entity, Heap, Node, State",
       "advanced/command": "Commands and Linked Contexts",
-      "advanced/transaction": "Transactions (Unit of Work)",
+      "advanced/entity-manager": "Entity manager (Unit of Work)",
       "advanced/mapper": "Mappers",
       "advanced/iterator": "Entity Iterator",
       "advanced/collections": "Collections",
@@ -83,7 +83,6 @@
     "links": {
       "advanced/column-wrappers": "Column Wrappers",
       "advanced/datetime": "DateTime properties",
-      "advanced/uuid": "UUID as Primary Key"
     }
   },
   {
@@ -109,13 +108,11 @@
       "advanced/macros": "Macros",
       "advanced/default-classes": "Customize Schema Defaults",
       "advanced/custom-mapper": "Custom Mappers",
-      "advanced/constrain": "Constrains",
+      "advanced/scope": "Scopes",
       "advanced/single-table-inheritance": "Single Table Inheritance",
       "advanced/joined-table-inheritance": "Joined Table Inheritance",
       "advanced/caching": "Caching",
       "advanced/pagination": "Pagination",
-      "advanced/timestamp": "Auto Timestamps",
-      "advanced/soft-deletes": "Soft Deleted Entities",
       "advanced/chained-repository": "Chained Repository",
       "advanced/persist-repository": "Persist Repositories",
       "advanced/active-record": "Active Record"

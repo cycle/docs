@@ -45,7 +45,7 @@ Since CycleORM v2.0 you don't need `cycle/proxy-factory` package anymore. ORM us
 
 CycleORM deleting and persisting features have been rewritten to support retries, deferred persists and
 states. `Cycle\ORM\Transaction` class was marked as deprecated. Use `Cycle\ORM\EntityManager`
-instead. [Read more](/docs/en/advanced/transaction.md)
+instead. [Read more](/docs/en/advanced/entity-manager.md)
 
 ## Collections
 

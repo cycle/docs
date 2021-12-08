@@ -1,45 +1,43 @@
 # Synchronizing Database Schema
+
 Cycle ORM provides multiple ways to automatically configure your database schema based on entity declarations.
 
 ## Automatic Synchronization
-A first approach would involve automatic schema declaration without any intermediate migration, to use it add `SyncTables` generator to your schema compiler:
+
+A first approach would involve automatic schema declaration without any intermediate migration, to use it
+add `SyncTables` generator to your schema compiler:
 
 ```php
 use Cycle\Schema;
 use Cycle\Annotated;
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
-    new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
-    new Annotated\Embeddings($cl),            // register embeddable entities
-    new Annotated\Entities($cl),              // register annotated entities
-    new Annotated\MergeColumns(),             // add @Table column declarations
-    new Schema\Generator\GenerateRelations(), // generate entity relations
-    new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
-    new Schema\Generator\RenderTables(),      // declare table schemas
-    new Schema\Generator\RenderRelations(),   // declare relation keys and indexes
-    new Annotated\MergeIndexes(),             // add @Table column declarations
-    new Schema\Generator\SyncTables(),        // sync table changes to database
-    new Schema\Generator\GenerateTypecast(),  // typecast non string columns
+    ...
+    new Schema\Generator\SyncTables(), // sync table changes to database
+    ...
 ]);
 ```
 
-Such an approach is useful for development environments, but might cause issues while working with the production database.
+Such an approach is useful for development environments, but might cause issues while working with the production
+database.
 
 ## Generate Migrations
-You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom to alter such migrations manually before running them. To achieve that you must install the Cycle Migrations extension:
+
+You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom to
+alter such migrations manually before running them. To achieve that you must install the Cycle Migrations extension:
 
 ```php
-composer require cycle/migrations
+composer require cycle/schema-migrations-generator
 ```
 
-Migrations are based on the `spiral/migrations` package and require proper configuration first:
+Migrations are based on the `cycle/migrations` package and require proper configuration first:
 
 ```php
-use Spiral\Migrations;
+use Cycle\Migrations;
 
 $config = new Migrations\Config\MigrationConfig([
     'directory' => __DIR__ . '/../migrations/',  // where to store migrations
-    'table'     => 'migrations'                  // database table to store migration status
+    'table' => 'migrations'                      // database table to store migration status
 ]);
 
 $migrator = new Migrations\Migrator($config, $dbal, new Migrations\FileRepository($config));
@@ -48,12 +46,13 @@ $migrator = new Migrations\Migrator($config, $dbal, new Migrations\FileRepositor
 $migrator->configure();
 ```
 
-You can now add a new Compiler generator from the package `cycle/migrations` to render schema changes into migration files:
+You can now add a new Compiler generator from the package `cycle/migrations` to render schema changes into migration
+files:
 
 ```php
 use Cycle\Schema;
 use Cycle\Annotated;
-use Cycle\Migrations;
+use Cycle\Schema\Generator\Migrations\GenerateMigrations;
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),                                    // re-declared table schemas (remove columns)
@@ -65,7 +64,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\RenderTables(),                                   // declare table schemas
     new Schema\Generator\RenderRelations(),                                // declare relation keys and indexes
     new Annotated\MergeIndexes(),                                          // add @Table column declarations
-    new Migrations\GenerateMigrations($migrator->getRepository(), $migrator->getConfig()),  // generate migrations
+    new GenerateMigrations($migrator->getRepository(), $migrator->getConfig()),  // generate migrations
     new Schema\Generator\GenerateTypecast(),                               // typecast non-string columns
 ]);
 ```
@@ -73,6 +72,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 > Make sure to remove `SyncTables`.
 
 ## Run Migrations
+
 To get a list of available migrations:
 
 ```php

@@ -1,17 +1,20 @@
 # Using Bootstrap Toolkit
-You can install Cycle using a bootstrap toolkit for quick integrations. This tutorial assumes that your entity codebase is located in the
-`src/` directory and accessible by the Composer autoloader.
+
+You can install Cycle using a bootstrap toolkit for quick integrations. This tutorial assumes that your entity codebase
+is located in the `src/` directory and accessible by the Composer autoloader.
 
 > The bundle comes with annotation and proxies support.
 
 ## Install
+
 To install Console Toolkit:
 
 ```
-$ composer require cycle/bootstrap
+composer require cycle/bootstrap
 ```
 
 ## Configure
+
 In order to enable Console Toolkit we have to define a bootstrap file which will configure your environment:
 
 ```php
@@ -49,14 +52,18 @@ $config = $config->withEntityDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src');
 
 $orm = Bootstrap\Bootstrap::fromConfig($config);
 ```
+
 Files tree will look like this:
+
 ```
 ROOT_DIRECTORY/
 ├── src/
 │   └── //app files
 └── bootstrap.php
 ```
+
 ## Console Commands
+
 To enable console commands, place the file in `config/cycle-cli.php`:
 
 ```php
@@ -65,7 +72,9 @@ To enable console commands, place the file in `config/cycle-cli.php`:
 require_once 'bootstrap.php';
 return $orm;
 ```
+
 Files tree will look like this:
+
 ```
 ROOT_DIRECTORY/
 ├── src/
@@ -74,6 +83,7 @@ ROOT_DIRECTORY/
 │   └── config-cli.php
 └── bootstrap.php
 ```
+
 To display list of found entities:
 
 ```
@@ -93,6 +103,7 @@ $ ./vendor/bin/cycle schema:update
 ```
 
 To display a list of available tables:
+
 ```
 $ ./vendor/bin/cycle db:list
 ```
@@ -106,13 +117,14 @@ $ ./vendor/bin/cycle db:table {table-name}
 > You can execute commands with the `-vvv` flag to display SQL queries if the logger is set.
 
 # Example
+
 Install the bundle and create `config/cycle-cli.php` and `bootstrap.php` files. Make sure that `composer.json` includes:
 
 ```json
 "autoload": {
-    "psr-4": {
-        "App\\": "src/"
-    }
+"psr-4": {
+"App\\": "src/"
+}
 }
 ```
 
