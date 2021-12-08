@@ -6,89 +6,91 @@ You can implement your own Mapper using `Cycle/ORM/MapperInterface`:
 
 ```php
 use Cycle\ORM\Command\CommandInterface;
-use Cycle\ORM\Command\ContextCarrierInterface;
 use Cycle\ORM\Exception\MapperException;
 use Cycle\ORM\Heap\Node;
 use Cycle\ORM\Heap\State;
+
 /**
- * Provides basic capabilities for CRUD operations with a given entity class (role).
+ * Provides basic capabilities for CRUD operations with given entity class (role).
  */
 interface MapperInterface
 {
     /**
-     * Get the role name the mapper is responsible for.
-     *
-     * @return string
+     * Get role name mapper is responsible for.
      */
     public function getRole(): string;
 
     /**
-     * Init an empty entity object an return pre-filtered data (hydration will happen on a later stage). Must
-     * return tuple [entity, entityData].
+     * Init empty entity object. Returns empty entity.
      *
-     * @param array $data
-     * @return array
+     * @param array $data Raw data. You shouldn't apply typecasting to it.
      */
-    public function init(array $data): array;
+    public function init(array $data, string $role = null): object;
 
     /**
-     * Hydrate the entity with a dataset.
+     * Cast raw data to configured types.
+     */
+    public function cast(array $data): array;
+
+    /**
+     * Hydrate entity with dataset.
      *
-     * @param object $entity
-     * @param array  $data
-     * @return object
+     * @template T
+     *
+     * @param object<T> $entity
+     * @param array $data Prepared (typecasted) data
      *
      * @throws MapperException
+     *
+     * @return T
      */
-    public function hydrate($entity, array $data);
+    public function hydrate(object $entity, array $data): object;
 
     /**
      * Extract all values from the entity.
-     *
-     * @param object $entity
-     * @return array
      */
-    public function extract($entity): array;
+    public function extract(object $entity): array;
 
     /**
-     * Initiate chain of commands required to store the object and it's data into persistent storage.
-     *
-     * @param object $entity
-     * @param Node   $node
-     * @param State  $state
-     * @return ContextCarrierInterface
+     * Get entity columns.
+     */
+    public function fetchFields(object $entity): array;
+
+    /**
+     * Get entity relation values.
+     */
+    public function fetchRelations(object $entity): array;
+
+    /**
+     * Map entity key->value to database specific column->value.
+     * Original array also will be filtered: unused fields will be removed
+     */
+    public function mapColumns(array &$values): array;
+
+    /**
+     * Initiate chain of commands require to store object and it's data into persistent storage.
      *
      * @throws MapperException
      */
-    public function queueCreate($entity, Node $node, State $state): ContextCarrierInterface;
+    public function queueCreate(object $entity, Node $node, State $state): CommandInterface;
 
     /**
-     * Initiate chain of commands required to update the object in the persistent storage.
-     *
-     * @param object $entity
-     * @param Node   $node
-     * @param State  $state
-     * @return ContextCarrierInterface
+     * Initiate chain of commands required to update object in the persistent storage.
      *
      * @throws MapperException
      */
-    public function queueUpdate($entity, Node $node, State $state): ContextCarrierInterface;
+    public function queueUpdate(object $entity, Node $node, State $state): CommandInterface;
 
     /**
-     * Initiate sequence of commands required to delete the object from the persistent storage.
-     *
-     * @param object $entity
-     * @param Node   $node
-     * @param State  $state
-     * @return CommandInterface
+     * Initiate sequence of of commands required to delete object from the persistent storage.
      *
      * @throws MapperException
      */
-    public function queueDelete($entity, Node $node, State $state): CommandInterface;
+    public function queueDelete(object $entity, Node $node, State $state): CommandInterface;
 }
 ```
 
-The ORM will create a mapper using `Spiral\Core\FactoryInterface` which means you Mapper is able to request dependencies available in
+The ORM will create a mapper using `Spiral\Core\FactoryInterface` which means your Mapper is able to request dependencies available in
 the container associated with ORM Factory.
 
 Some parameters will be provided by ORM itself, such as:
@@ -105,11 +107,9 @@ Let's define our model first:
 ```php
 class Entity
 {
-    private $data = [];
-
-    public function __construct(array $data = [])
-    {
-        $this->data = $data;
+    public function __construct(
+        private array $data = []
+    ) {
     }
 
     public function setData(array $data)
@@ -140,13 +140,8 @@ use Cycle\ORM\Mapper\DatabaseMapper;
 
 class CustomMapper extends DatabaseMapper
 {
-    /** @var string */
-    private $class;
+    private string $class;
 
-   /**
-     * @param ORMInterface $orm
-     * @param string       $role
-     */
     public function __construct(ORMInterface $orm, string $role)
     {
         parent::__construct($orm, $role);
@@ -155,39 +150,30 @@ class CustomMapper extends DatabaseMapper
         $this->class = $orm->getSchema()->define($role, Schema::ENTITY);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function init(array $data): array
+    /** @inheritdoc */
+    public function init(array $data): object
     {
         $class = $this->class;
-        return [new $class, $data];
+        return new $class($data);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function hydrate($entity, array $data)
+    /** @inheritdoc */
+    public function hydrate(object $entity, array $data): object
     {
         $entity->setData($data);
         return $entity;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function extract($entity): array
+    /** @inheritdoc */
+    public function extract(object $entity): array
     {
         return $entity->getData();
     }
 
     /**
      * Get entity columns.
-     *
-     * @param object $entity
-     * @return array
      */
-    protected function fetchFields($entity): array
+    public function fetchFields(object $entity): array
     {
         // fetch entity fields and ignore custom columns
         return array_intersect_key(
@@ -201,14 +187,13 @@ class CustomMapper extends DatabaseMapper
 You can now create your entity and associate it with the custom mapper:
 
 ```php
-/**
- * @Entity(
- *    columns = {
- *        "id": @Column(type="primary")
- *    },
- *    mapper = "CustomMapper"
- * )
- */
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity(
+    mapper: CustomMapper::class
+)]
+#[Column(type: 'string', name: 'id', property: 'id')]
 class User extends Entity
 {
 
@@ -217,14 +202,14 @@ class User extends Entity
 
 Update your ORM schema to register the entity. You can use your entity freely after this operation.
 
-> ORM can work with different types or entities within one system.
+> ORM can work with different types of entities within one system.
 
 ## ActiveRecord
 A similar approach can be used to implement AR-like entities. You would have to expose a global instance of ORM in order to gain access to it
 from your entity's `save()` and `delete()` methods:
 
 ```php
-use Cycle\ORM\Transaction;
+use Cycle\ORM\EntityManager;
 
 class Entity
 {
@@ -233,13 +218,13 @@ class Entity
     public function save()
     {
         $orm = App::getORM();
-        (new Transaction($orm))->persist($this)->run();
+        (new EntityManager($orm))->persist($this)->run();
     }
 
     public function delete()
     {
         $orm = App::getORM();
-        (new Transaction($orm))->delete($this)->run();
+        (new EntityManager($orm))->delete($this)->run();
     }
 }
 ```

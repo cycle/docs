@@ -1,8 +1,5 @@
 # Collections
 
-Cycle ORM v2 by default uses [Doctrine/Collection](https://github.com/doctrine/collections) in order to represent one to
-many relation types (such as hasMany, manyToMany).
-
 > В CycleORM v2 была убрана жесткая привязка к определенному типу коллекции.
 > Начиная с этой версии вы можете выбирать какой тип коллекции будет использоваться для хранения данных связей для всех сущностей по умолчанию и для конкретной сущности.
 

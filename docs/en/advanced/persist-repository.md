@@ -1,52 +1,41 @@
 # Persisting Repositories
-By default ORM design, the Repository object is used only for Select logic (read-only). Write operations are controlled via Transactions
-(entity -> transaction -> mapper -> command -> storage).
+By default ORM design, the Repository object is used only for Select logic (read-only). Write operations are controlled via EntityManager
+(entity -> entity manager -> mapper -> command -> storage).
 
 However, it is possible to safely add a `save` or `delete` method to your repositories to avoid usage of transactions in the application code.
 
-## Use Repositories with Transaction
+## Use Repositories with EntityManager
 We can create a simple `save` method in the Repository, which will save the entity's current state and it's loaded relations or entity only.
-In order to do that we have to create a transaction inside our object:
+In order to do that we have to create an Entity manager inside our object:
 
 ```php
 use Cycle\ORM\Select;
-use Cycle\ORM\Transaction;
+use Cycle\ORM\EntityManager;
 use Cycle\ORM\ORMInterface;
 
 class UserPersistRepository extends Select\Repository
 {
-    /** @var Transaction */
-    private $transaction;
+    private EntityManager $entityManager;
 
-    /**
-     * @param Select       $select
-     * @param ORMInterface $orm
-     */
     public function __construct(Select $select, ORMInterface $orm)
     {
         parent::__construct($select);
-        $this->transaction = new Transaction($orm);
+        $this->entityManager = new EntityManager($orm);
     }
 
-    /**
-     * @param User $user
-     * @param bool $cascade
-     *
-     * @throws \Throwable
-     */
     public function save(User $user, bool $cascade = true)
     {
-        $this->transaction->persist(
+        $this->entityManager->persist(
             $user,
-            $cascade ? Transaction::MODE_CASCADE : Transaction::MODE_ENTITY_ONLY
+            $cascade
         );
 
-        $this->transaction->run(); // transaction is clean after run
+        $this->entityManager->run(); // entity manager is clean after run
     }
 }
 ```
 
-You can associate the repository to your entity via the annotation `@Entity(repository="UserPersistRepository")`, or manually:
+You can associate the repository to your entity via the attribute `#[Entity(repository: UserPersistRepository::class)]`, or manually:
 
 ```php
 use Cycle\ORM\Schema;

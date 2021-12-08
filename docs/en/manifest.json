@@ -105,10 +105,12 @@
   {
     "title": "Customization",
     "links": {
+      "advanced/macros": "Macros",
       "advanced/default-classes": "Customize Schema Defaults",
       "advanced/custom-mapper": "Custom Mappers",
       "advanced/constrain": "Constrains",
       "advanced/single-table-inheritance": "Single Table Inheritance",
+      "advanced/joined-table-inheritance": "Joined Table Inheritance",
       "advanced/caching": "Caching",
       "advanced/pagination": "Pagination",
       "advanced/timestamp": "Auto Timestamps",

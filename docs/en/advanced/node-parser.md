@@ -15,8 +15,8 @@ The simple node parser will look like:
 
 ```php
 $root = new \Cycle\ORM\Parser\RootNode(
-    ['id', 'balance'], // property names
-    'id'               // primary key
+    ['id', 'balance'], // column names
+    ['id']             // primary keys
 );
 
 foreach ($query->run()->fetchAll(\Cycle\Database\StatementInterface::FETCH_NUM) as $row) {
@@ -59,15 +59,14 @@ Since both tables are merged in one query we have to create and join sub-node (a
 
 ```php
 $root = new \Cycle\ORM\Parser\RootNode(
-    ['id', 'balance'],  // property names
-    'id'                // primary key
+    ['id', 'balance'], ['id']
 );
 
 $root->joinNode('orders', new \Cycle\ORM\Parser\ArrayNode(
-    ['id', 'user_id', 'total'], // property names
-    'id',                       // primary key
-    'user_id',                  // inner key
-    'id'                        // outer key (user.id)
+    ['id', 'user_id', 'total'], // column names
+    ['id'],                     // primary keys
+    ['user_id'],                // inner keys
+    ['id']                      // outer keys (user.id)
 ));
 
 foreach ($query->run()->fetchAll(\Cycle\Database\StatementInterface::FETCH_NUM) as $row) {
@@ -85,15 +84,14 @@ In some cases (for example for one-to-many associations) it might be useful to e
 $query = $db->select('u.id', 'u.balance')->from('users as u');
 
 $root = new \Cycle\ORM\Parser\RootNode(
-    ['id', 'balance'],  // property names
-    'id'                // primary key
+    ['id', 'balance'], ['id']
 );
 
 $orders = new \Cycle\ORM\Parser\ArrayNode(
-    ['id', 'user_id', 'total'], // property names
-    'id',                       // primary key
-    'user_id',                  // inner key
-    'id'                        // outer key (user.id)
+    ['id', 'user_id', 'total'], // column names
+    ['id'],                     // primary keys
+    ['user_id'],                // inner keys
+    ['id']                      // outer keys (user.id)
 );
 
 // notice the change

@@ -2,7 +2,7 @@
 The Cycle ORM architecture separates entity representation (data carrying object), entity data (node) and current data changes (state).
 In the simplest form the entity lifecycle can be describe as following:
 
-<img width="826" alt="Screenshot_29" src="https://user-images.githubusercontent.com/796136/56358587-c3b0e300-61e7-11e9-87f8-c999554f201e.png">
+<img width="826" alt="Entity, Heap, Node, State" src="https://user-images.githubusercontent.com/773481/144865896-a91e9a99-4863-4263-9fc6-4258231a6822.png">
 
 ## Entity
 The Entity object is, technically, any object used to carry data (including relation data). By default, Cycle relies on separate classes for each of the entities, however, it is possible to use `stdClass` or the same class for multiple entities. This can be achieved by associating the entity with custom mappers and giving them different roles. Upon `persist` operation, the Mapper object must extract entity values and generate the desired State associated with entity Node.
@@ -20,8 +20,8 @@ If the transaction succeeds the State data will be merged with parent Node objec
 ## Heap
 The Heap is used to store all loaded entity Nodes and their current states (if any). By design, heap operates as a hash table in which the entity is the key and node is the value.
 
-## Transaction
-A transaction used to generate and run a set of operations required to persist or delete given entities. Though all of the operations are performed within a single Heap the changes are never written to Node directly and only synced once the transaction is complete.
+## Entity manager
+An Entity manager is used to generate and run a set of operations required to persist or delete given entities. Though all of the operations are performed within a single Heap the changes are never written to Node directly and only synced once the transaction is complete.
 
 ## Command
 Command is a state-changing event applied to the persistence layer. Commands can depend on values in the state which are provided by other commands (relations). The transaction sorts commands by their dependencies iteratively, executing every command which does not have any unsatisfied dependency. Command execution might or might not resolve one of the multiple dependencies.

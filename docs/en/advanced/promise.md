@@ -11,13 +11,13 @@ scope will be used.
 We can demonstrate it:
 
 ```php
-/** @Entity */
+#[Entity]
 class Post
 {
-    /** @Column(type="primary") */
+    #[Column(type: 'primary')]
     public $id;
 
-    /** @BelongsTo(target="User") */
+    #[BelongsTo(target: User::class)]
     public $user;
 }
 ```
@@ -26,9 +26,9 @@ Now, if we want to create a new `Post` entity we have an option to set the user 
 
 ```php
 $p = new Post();
-$p->user = new \Cycle\ORM\Promise\Reference('user', ['id' => 1]);
+$p->user = new \Cycle\ORM\Reference\Reference('user', ['id' => 1]);
 
-$t = new \Cycle\ORM\Transaction($orm);
+$t = new \Cycle\ORM\EntityManager($orm);
 $t->persist($p);
 $t->run();
 ```
@@ -42,19 +42,17 @@ use Cycle\ORM\Promise\ReferenceInterface;
 
 class UserID implements ReferenceInterface
 {
-    private $id;
-
-    public function __construct($id)
-    {
-        $this->id = $id;
+    public function __construct(
+        private int $id
+    ) {
     }
 
-    public function __role(): string
+    public function getRole(): string
     {
         return 'user';
     }
 
-    public function __scope(): array
+    public function getScope(): array
     {
         return ['id' => $this->id];
     }
@@ -73,24 +71,10 @@ $t->run();
 ```
 
 ## Proxies and Promises
-More complex usages of references include the ability to gain access to a related entity or collection on demand
-(without pre-loading data). By default ORM will wrap lazy loaded data using a Promise object, which does not extend the original
-entity and cannot be used with strongly typed (PHP 7.4) entities. However, you can use an extension to generate a promise of each
-desired entity.
-
-You must install the Cycle Proxy Factory extension to do that:
-
-```
-$ composer require cycle/proxy-factory
-```
-
-And configure your orm instance:
-
-```php
-$orm = $orm->withPromiseFactory(new \Cycle\ORM\Promise\ProxyFactory());
-```
-
-Now all the lazy loaded objects will be accessed via a proxy:
+More complex usages of references to include the ability to gain access to a related entity or collection on demand
+(without preloading data). By default, ORM will wrap lazy loaded data using a Promise object, which does not extend the original
+entity and cannot be used with strongly typed (PHP 7.4) entities. However, CycleORM provides the ability to generate a promise of each
+desired entity out of the box. All the lazy loaded objects will be accessed via a proxy:
 
 ```php
 $post = $orm->getRepository(Post::class)->findOne();

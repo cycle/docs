@@ -1,8 +1,11 @@
 # Schema
+
 The Cycle ORM relies on the Schema instance to define its behavior. All of the entity fields, relations, and options are
-located in such a schema and must be pre-calculated prior to runtime usage. In fact, schema operates as a nested hash table providing quick access to each of the definition.
+located in such a schema and must be pre-calculated prior to runtime usage. In fact, schema operates as a nested hash
+table providing quick access to each of the definition.
 
 ## Access Schema
+
 To access the schema from an initiated ORM instance, use the method `getSchema`:
 
 ```php
@@ -10,39 +13,48 @@ To access the schema from an initiated ORM instance, use the method `getSchema`:
 print_r($orm->getSchema()->define(User::class, \Cycle\ORM\Schema::TABLE));
 ```
 
-You can create a new ORM instance with an altered schema using `withSchema` method:
+You can create a new ORM instance with an altered schema using `with` method:
 
 ```php
-$orm2 = $orm->withSchema(new \Cycle\ORM\Schema([...]));
+$orm2 = $orm->with(schema: new \Cycle\ORM\Schema([...]));
 ```
 
 > The original ORM instance won't be affected.
 
 ## Schema Properties
-Most of the schema properties are intended for internal use. However, accessing them might give your application the ability to configure the environment (for example automatic binding to Container).
+
+Most of the schema properties are intended for internal use. However, accessing them might give your application the
+ability to configure the environment (for example automatic binding to Container).
 
 All schema properties are available as public constants on class `Cycle\ORM\SchemaInterface` or `Cycle\ORM\Schema`:
 
-Property | Type   | Description
----      | ---    | ---
-ROLE     | string | Unique entity name (can be omitted when schema supplied in [role => schema] form).
-ENTITY   | class  | Class name to represent the entity can be null if an alternative mapper implementation is used.
-MAPPER   | class  | Class to hydrate and extract data from entities and initiate command chains. Defaults to `Cycle\ORM\Mapper\Mapper`.
-SOURCE    | class | Class to represent gateway object to entity database and table. Defaults to `Cycle\ORM\Select\Source`.
-REPOSITORY | class | Class to aggregate all entity select operations. Defaults to `Cycle\ORM\Select\Repository`.
-DATABASE   | string | Database name associated with an entity. Defaults to `null` (default database).
-TABLE       | string | Table name associated with the entity.
-PRIMARY_KEY | string | Property used to represent an entity's primary key.
-FIND_BY_KEYS | array | List of fields used to reference entity by other entity relations used to speed up memory lookup. Automatically generated.
-COLUMNS      | array | Associative array of field names assigned with the table column name.
-RELATIONS    | array | List of relations assigned to the given entity, see below.
-CHILDREN     | array | List of classes which extends given entity class. Used for Single Table Inheritance.
-SCOPE    | class | Class name to represent the scope applied to all entity queries. Defaults to none.
-TYPECAST     | array | Associated array of fields with assigned typecast functions.
-SCHEMA       | array | Optional section, reserved for custom mapper implementations.
+Property | Type          | Description
+---      |---------------| ---
+ROLE     | string        | Unique entity name (can be omitted when schema supplied in [role => schema] form).
+ENTITY   | class         | Class name to represent the entity can be null if an alternative mapper implementation is used.
+MAPPER   | class         | Class to hydrate and extract data from entities and initiate command chains. Defaults to `Cycle\ORM\Mapper\Mapper`.
+SOURCE    | class         | Class to represent gateway object to entity database and table. Defaults to `Cycle\ORM\Select\Source`.
+REPOSITORY | class         | Class to aggregate all entity select operations. Defaults to `Cycle\ORM\Select\Repository`.
+DATABASE   | string        | Database name associated with an entity. Defaults to `null` (default database).
+TABLE       | string        | Table name associated with the entity.
+PRIMARY_KEY | string, array | Property used to represent an entity's primary key.
+FIND_BY_KEYS | array         | List of fields used to reference entity by other entity relations used to speed up memory lookup. Automatically generated.
+COLUMNS      | array         | Associative array of field names assigned with the table column name.
+RELATIONS    | array         | List of relations assigned to the given entity, see below.
+SCOPE    | class         | Class name to represent the scope applied to all entity queries. Defaults to none.
+TYPECAST     | array         | Associated array of fields with assigned typecast functions.
+SCHEMA       | array         | Optional section, reserved for custom mapper implementations.
+CHILDREN     | array         | List of classes which extends given entity class. Used for Single Table Inheritance.
+DISCRIMINATOR     | string        | Discriminator column name. Used for Single Table Inheritance.
+PARENT     | string        | Parent role in the inheritance hierarchy. Used for Joined Table Inheritance.
+PARENT_KEY     | string        | Parent role in the inheritance hierarchy. Used for Joined Table Inheritance.
+MACROS     | array         | List of macros classes extending entity behavior.
+TYPECAST_HANDLER     | string, array | List of typecast handler classes extending entity columns typecasting.
 
 ## Relation Schema
-Each entity might have none or multiple relations associated with it. Each relation association must follow the given schema.
+
+Each entity might have none or multiple relations associated with it. Each relation association must follow the given
+schema.
 
 Property | Type   | Description
 ---      | ---    | ---
@@ -59,12 +71,14 @@ NULLABLE  | bool | Indicates that relation can point to null. User-driven.
 OUTER_KEY | string | Outer entity field name.
 INNER_KEY | string | Inner (parent) entity field name.
 MORPH_KEY | string | Morphed relations only. Name of the morphed field. Autogenerated.
-WHERE | array | For *collection* relations only. Additional where query to filter related entities by. Supports compound queries.
+WHERE | array | For *
+collection* relations only. Additional where query to filter related entities by. Supports compound queries.
 THROUGH_INNER_KEY | string | Points to the inner key of source (parent) entity in pivot (though) entity.
 THROUGH_OUTER_KEY | string | Points to the outer key of related entity in pivot (though) entity.
 THROUGH_ENTITY   | string | Thought entity role name.
 THROUGH_WHERE   | array | Additional where conditions added for related entities.
 
 ## Serialization
-The ORM Schema can be serialized in order to cache it and avoid calculations on each request. Cycle encourages schema compilation in
-the background (see [cycle/schema-builder](https://github.com/cycle/schema-builder)).
+
+The ORM Schema can be serialized in order to cache it and avoid calculations on each request. Cycle encourages schema
+compilation in the background (see [cycle/schema-builder](https://github.com/cycle/schema-builder)).
