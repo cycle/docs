@@ -4,8 +4,7 @@
     "links": {
       "readme": "Table of Contents",
       "intro/about": "About Cycle ORM",
-      "intro/quick-start": "Quick Start",
-      "intro/cli": "Very Quick Start",
+      "intro/install": "Installation",
       "intro/upgrade": "Upgrade Guide",
       "contributing": "Contributing",
       "intro/semver": "Versioning",
@@ -15,9 +14,8 @@
   {
     "title": "Basics",
     "links": {
-      "basic/install": "Installation",
       "basic/crud": "Create, Update, Delete",
-      "basic/direct": "Direct Database Queries",
+      "basic/direct-database-queries": "Direct Database Queries",
       "basic/select": "Select",
       "basic/repository": "Custom Repositories",
       "basic/relation": "Simple Relation",

@@ -12,7 +12,7 @@ However, you can always use direct queries to bypass the spiral abstractions.
 To install the component in alternative bundles or as a standalone library:
 
 ```bash
-$ composer require cycle/database
+composer require cycle/database
 ```
 
 ### Declare Connection

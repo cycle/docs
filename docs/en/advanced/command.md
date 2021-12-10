@@ -1,6 +1,5 @@
 # Commands and Linked Contexts
 
-
 All the persist operations are performed using a set of linked commands. Commands are responsible for execution,
 rollback and change commitment. A command can depend on values provided by entity state or another command (link).
 
@@ -50,14 +49,16 @@ $update = new Database\Update($dbal->database('default'), 'table', $data, $where
 $insert = new Database\Insert($dbal->database('default'), 'table', $data);
 ```
 
-Now we have to declare for the `$update` command to wait for the context provided by `$insert`:
+Now we have to declare for the `$update` command to wait for the scope provided by `$insert`:
 
 ```php
-// command would be not ready until the context is provided
-$update->waitContext('some_id');
+// command would be not ready until the scope is provided
+$update->waitScope('some_id');
 ```
 
 And ask `$insert` command to forward context value once it's available:
+
+[//]: # (TODO нет такого метода)
 
 ```php
 $insert->forward(\Cycle\ORM\Command\Database\Insert::INSERT_ID, $update, 'some_id');

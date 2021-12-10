@@ -15,20 +15,20 @@ requirements are satisfied before submitting your pull request:
 To test ORM engine locally, download the `cycle/orm` repository and start docker containers inside the tests folder:
 
 ```bash
-$ cd tests/
-$ docker-composer up
+cd tests/
+docker-composer up
 ```
 
 To run full test suite:
 
 ```bash
-$ ./vendor/bin/phpunit
+./vendor/bin/phpunit
 ```
 
 To run quick test suite:
 
 ```bash
-$ ./vendor/bin/phpunit tests/ORM/Driver/SQLite
+./vendor/bin/phpunit tests/ORM/Functional/Driver/SQLite
 ```
 
 ## Help Needed In
@@ -49,8 +49,7 @@ Feel free to propose any ideas related to architecture, docs (___docs are never 
 ## Critical/Security Issues
 
 If you found something which shouldn't be there or a bug which opens a security hole please let me know immediately by
-email
-[wolfy-j@spiralscout.com](mailto:team@spiralscout.com)
+email [team@spiralscout.com](mailto:team@spiralscout.com)
 
 ## Official Support
 

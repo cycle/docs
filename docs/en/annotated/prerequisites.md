@@ -1,7 +1,7 @@
 # Prerequisites
 
 Make sure to install `cycle/annotated` and `cycle/schema-builder` extensions in order to use annotated entities. Once
-installed add annotated generators into the schema compiler (see more details [here](/docs/en/basic/install.md)).
+installed add annotated generators into the schema compiler (see more details [here](/docs/en/intro/install.md)).
 
 > Cycle is using the Doctrine/Annotations package, make sure that annotations are loadable (`use`) and the syntax 
 > is correct.
@@ -21,18 +21,20 @@ $cl = (new Tokenizer\Tokenizer(new Tokenizer\Config\TokenizerConfig([
 ])))->classLocator();
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
-    new Annotated\Embeddings($cl),            // register annotated embeddings
-    new Annotated\Entities($cl),              // register annotated entities
-    new Annotated\TableInheritance($cl),      // register STI/JTI
-    new Schema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
-    new Annotated\MergeColumns(),             // register non field columns (table level)
-    new Schema\Generator\GenerateRelations(), // generate entity relations
-    new Schema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
-    new Schema\Generator\RenderTables(),      // declare table schemas
-    new Schema\Generator\RenderRelations(),   // declare relation keys and indexes
-    new Annotated\MergeIndexes(),             // register non entity indexes (table level)
-    new Schema\Generator\SyncTables(),        // sync table changes to database
-    new Schema\Generator\GenerateTypecast(),  // typecast non string columns
+    new Schema\Generator\ResetTables(),             // re-declared table schemas (remove columns)
+    new Annotated\Embeddings($classLocator),        // register embeddable entities
+    new Annotated\Entities($classLocator),          // register annotated entities
+    new Annotated\TableInheritance($classLocator),  // register STI/JTI
+    new Annotated\MergeColumns(),                   // add @Table column declarations
+    new Schema\Generator\GenerateRelations(),       // generate entity relations
+    new Schema\Generator\GenerateModifiers(),       // generate changes from schema modifiers
+    new Schema\Generator\ValidateEntities(),        // make sure all entity schemas are correct
+    new Schema\Generator\RenderTables(),            // declare table schemas
+    new Schema\Generator\RenderRelations(),         // declare relation keys and indexes
+    new Schema\Generator\RenderModifiers(),         // render all schema modifiers
+    new Annotated\MergeIndexes(),                   // add @Table column declarations
+    new Schema\Generator\SyncTables(),              // sync table changes to database
+    new Schema\Generator\GenerateTypecast(),        // typecast non string columns
 ]);
 
 $orm = $orm->with(schema: new \Cycle\ORM\Schema($schema));

@@ -50,7 +50,7 @@ indexCreate | bool   | Create index on outerKey. Defaults to `true`
 
 The HasMany relation provides the ability to link multiple child objects to one entity (parent).
 
-> Read more about configuration collection [here](/docs/en/advanced/collections.md).
+> Read more about configuration collection [here](/docs/en/relation/collections.md).
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
@@ -162,7 +162,7 @@ indexCreate | bool   | Create an index on outerKey. Defaults to `true`
 A relation of type ManyToMany provides a more complex connection with the ability to use an intermediate entity for the
 connection. The relation requires the `through` option with similar rules as `target`.
 
-> Read more about configuration collection [here](/docs/en/advanced/collections.md).
+> Read more about configuration collection [here](/docs/en/relation/collections.md).
 
 ```php
 use Cycle\ORM\Relation\Pivoted\PivotedCollection;

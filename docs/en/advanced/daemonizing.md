@@ -43,7 +43,7 @@ An identical approach can be used while working with batch data sets:
 ```php
 $users = $orm->getRepository(User::class)->select();
 for ($i = 0; $i < 100; $i++) {
-    $users = $users->offset($i*1000)->limit(1000)->fetchAll();
+    $users = $users->offset($i * 1000)->limit(1000)->fetchAll();
 
     $manager = new \Cycle\ORM\EntityManager($orm);
     foreach ($users as $user) {
@@ -53,9 +53,9 @@ for ($i = 0; $i < 100; $i++) {
     }
     
     $manager->run();
-    
-    $orm->getHeap()->clean();
 }
+
+$manager->clean(cleanHeap: true);
 ```
 
 > You can combine `clone` and `reset` in order to create separate ORM instance for batch operations but keep all

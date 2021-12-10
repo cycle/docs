@@ -1,85 +1,124 @@
 # Upgrade Guide
 
-This guide will help you to upgrade CycleORM To 2.x From 1.x.
+This guide will help you to upgrade Cycle ORM to 2.x from 1.x.
 
 > We attempt to document every possible breaking change. Since some of these breaking changes are in obscure parts of
 > the ORM only a portion of these changes may actually affect your application.
 
-## PHP >= 8.0 Required
+## PHP >= 8.0 required
 
-> Likelihood Of Impact: High
+> Likelihood of impact: High
 
 The new minimum PHP version is now 8.0
 
-## Updating Dependencies
+## Updating dependencies
 
-> Likelihood Of Impact: High
+> Likelihood of impact: High
 
 Update the following dependencies in your composer.json file:
 
 - `cycle/orm` to `^2.0`
-- `spiral/database` replaced with `cycle/database`
+- `spiral/database` replace with `cycle/database`
 - `cycle/database` to `^2.0`
 - `cycle/proxy-factory` is no longer needed
-- `cycle/annotated` to `^2.0`
+- `cycle/annotated` to `^3.0`
 - `cycle/schema-builder` to `^2.0`
-- `cycle/migrations:^1.0` replaced with `cycle/schema-migrations-generator:^1.0`
-- `spiral/migrations` replaced with `cycle/migrations:^2.0`
+- `cycle/migrations:^1.0` replace with `cycle/schema-migrations-generator:^1.0`
+- `spiral/migrations` replace with `cycle/migrations:^2.0`
 
 ## Namespaces
 
-> Likelihood Of Impact: High
+> Likelihood of impact: High
 
-`spiral/database` is moved to a new repository `cycle/database` so now it is namespaced. To accommodate for these
+`spiral/database` is moved to a new repository `cycle/database` so now it has new namespace. To accommodate for these
 changes you need to replace all namespaces start from `Spiral\Database` with `Cycle\Database`
+
+## Database config
+
+> Likelihood of impact: High
+
+Since `cycle/database` v2.0 connection configuration has been changed. You don't need to configure arrays anymore. Use 
+cofing DTO's instead of. Read more on [database connection](/docs/en/database/connect.md) page.
+
+## Database logger
+
+> Likelihood of impact: Medium
+
+`Cycle\Database\DatabaseManager` doesn't use `spiral/core` package anymore. If you need to use driver specific logger, 
+you have to create your own LoggerFactory implementing `Cycle\Database\LoggerFactoryInterface`.
+Read more on [database profiling](/docs/en/database/profiling.md) page.
 
 ## Proxy factory
 
-> Likelihood Of Impact: High
+> Likelihood of impact: High
 
-Since CycleORM v2.0 you don't need `cycle/proxy-factory` package anymore. ORM uses proxy entities out of the box.
+Since Cycle ORM v2.0 you don't need `cycle/proxy-factory` package anymore. ORM uses proxy entities out of the box.
 
 ## Transaction
 
-> Likelihood Of Impact: Low
+> Likelihood of impact: Low
 
-CycleORM deleting and persisting features have been rewritten to support retries, deferred persists and
-states. `Cycle\ORM\Transaction` class was marked as deprecated. Use `Cycle\ORM\EntityManager`
+`Cycle\ORM\Transaction` class was marked as deprecated. Use `Cycle\ORM\EntityManager`
 instead. [Read more](/docs/en/advanced/entity-manager.md)
 
 ## Collections
 
-> Likelihood Of Impact: Medium
+> Likelihood of impact: Medium
 
-CycleORM doesn't use `doctrine/collections` out of the box anymore. If you want to continue using it you need to add
+Cycle ORM doesn't use `doctrine/collections` out of the box anymore. If you want to continue using it you need to add
 package `doctrine/collections` to `composer.json` and use `Cycle\ORM\Collection\DoctrineCollectionFactory`
-as `defaultCollectionFactory` in your `Cycle\ORM\Factory` object.
+as a `defaultCollectionFactory` in your `Cycle\ORM\Factory` object.
 
 ```php
 use Cycle\ORM;
 
-$schema = new ORM\Schema(...);
-
 $factory = (new ORM\Factory(
     dbal: $dbal,
     defaultCollectionFactory: new ORM\Collection\DoctrineCollectionFactory
-))
+));
 ```
-
-## Entity annotations
-
-> Likelihood Of Impact: Optional
-
-Since `cycle/annotated` v2.0 we have added better support for PHP8 attributes and you have an ability to use the instead
-of annotations.
 
 ## ORM
 
-> Likelihood Of Impact: High
+> Likelihood of impact: High
 
-`Cycle\ORM\ORMInterface ` interface has been updated. There are new methods and changes in exist methods.
+The second argument of `Cycle\ORM\ORM::__construnctor` method is now required.
 
-#### ORM with methods
+## Mapper
+
+> Likelihood of impact: Medium
+
+Default mapper `Cycle\ORM\Mapper\Mapper` is completely reworked. Now it works as a Proxy mapper and has its own hydrator
+instead of `laminas/laminas-hydrator` - `Cycle\ORM\Mapper\Proxy\Hydrator\ClosureHydrator` and it works faster and
+supports private and typed entity properties.
+
+[//]: # (TODO добавить ссылку на страницу с документацией по Mapper'ам)
+
+Pay attention that `Cycle\ORM\MapperInterface` has BC changes, and you need to rework your custom mappers. 
+`queueDelete()`, `queueUpdate()` and `queueCreate()` methods also has been changed.
+
+[//]: # (TODO Выбрать вариант )
+
+> Custom mappers like `SoftDeleteMapper`, `OptimisticLockMapper`, `UuidMapper` in the ORM v2.0 can be implemented 
+> via [macros](/docs/en/advanced/macros.md)
+
+> Some typical custom mapper use cases like `SoftDelete`, `OptimisticLock` 
+> available in the [macros](/docs/en/advanced/macros.md). 
+
+## Constraint
+
+> Likelihood of impact: High
+
+Everything associated with Constrain in the ORM is replaced with Scope:
+
+ - the `Cycle\ORM\SchemaInterface::CONSTRAIN` constant, marked deprecated in ORM v1, is removed;
+ - Loader option `'constrain'` -> `'scope'`
+ - `Cycle\ORM\Select::setConstrain()` -> `Cycle\ORM\Select::setScope()`
+ - `Cycle\ORM\Select\ConstrainInterface` -> `Cycle\ORM\Select\ScopeInterface`
+
+## ORM `with...` methods
+
+> Likelihood of impact: Medium
 
 Methods `withFactory(FactoryInterface $factory)`, `withSchema(SchemaInterface $schema)`
 and `withHeap(HeapInterface $heap)` marked as deprecated, use method `with` instead:
@@ -94,21 +133,35 @@ $orm->with(
 );
 ```
 
-## Mapper
+## Entity annotations
 
-> Likelihood Of Impact: High
+> Likelihood of impact: Optional
 
-`Cycle\ORM\MapperInterface` interface has been updated. There are new methods and changes in exist methods.
+Since `cycle/annotated` v2.0 we have added better support for PHP8 attributes, and you have an ability to use attributes
+instead of annotations.
 
-## Factory
+## Schema builder
 
-> Likelihood Of Impact: High
+> Likelihood of impact: Optional
 
-`Cycle\ORM\FactoryInterface` interface has been updated. There are new methods and changes in exist methods.
+Since `cycle/schema-builder` v2.0 we have added a new generators for STI/JTI and schema modifiers support. If you want 
+to use new features you have to add them to the schema compiler pipeline.
 
-## Entity hydrator
-
-> Likelihood Of Impact: Medium
-
-CycleORM doesn't use `laminas/laminas-hydrator` anymore. The ORM has its own
-`Cycle\ORM\Mapper\Proxy\Hydrator\ClosureHydrator` underhood, it works faster and supports private entity properties.
+```php
+[
+    new Schema\Generator\ResetTables(),
+    new Annotated\Embeddings($classLocator),
+    new Annotated\Entities($classLocator),
+    new Annotated\TableInheritance($classLocator),  // <------ register STI/JTI
+    new Annotated\MergeColumns(),
+    new Schema\Generator\GenerateRelations(), 
+    new Schema\Generator\GenerateModifiers(),       // <----- generate changes from schema modifiers
+    new Schema\Generator\ValidateEntities(),
+    new Schema\Generator\RenderTables(),
+    new Schema\Generator\RenderRelations()
+    new Schema\Generator\RenderModifiers(),         // <----- render all schema modifiers
+    new Annotated\MergeIndexes(),
+    new Schema\Generator\SyncTables(),              // Not for production
+    new Schema\Generator\GenerateTypecast(),
+]
+```

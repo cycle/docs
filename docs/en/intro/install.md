@@ -1,9 +1,7 @@
-# Quick Start
+# Cycle ORM Installation
 
 This guide provides a quick overview of the ORM's installation and configuration process, and an example using an
 annotated entity. Other sections of the documentation will provide deeper insight into various use-cases.
-
-> Use [Bootstrap](/docs/en/intro/cli.md) to automatically configure Cycle and get access to quick CLI commands.
 
 ## Requirements
 
@@ -11,27 +9,24 @@ annotated entity. Other sections of the documentation will provide deeper insigh
 * PHP-PDO
 * PDO drivers for desired databases
 
-## Installation
+## Package installation
 
 Cycle ORM is available as a composer package and can be installed using the following command in the root of your
 project:
 
 ```bash
-$ composer require cycle/orm
+composer require cycle/orm
 ```
 
-In order to enable support for annotated entities you have to request an additional package:
+In order to enable support for annotated/attributed entities you have to request an additional package:
 
 ```bash
-$ composer require cycle/annotated
+composer require cycle/annotated
 ```
 
 > You can skip this step and define the mapping schema manually, see above.
 
-This command will also download Cycle ORM dependencies such as `spiral/database`, `doctrine/collections`
-and `zendframework/zend-hydrator`.
-
-In order to access Cycle ORM classes, make sure to include `vendor/autoload.php` in your file.
+In order to access Cycle ORM classes, make sure to include `vendor/autoload.php` in your bootstrap file.
 
 ```php
 <?php declare(strict_types=1);
@@ -41,7 +36,7 @@ include 'vendor/autoload.php';
 ## Configuration
 
 In order to operate, Cycle ORM requires a proper database connection to be set. All database connections are managed
-using the `DatabaseManager` service provided by the package `spiral/database`. We can configure our first database
+using the `DatabaseManager` service provided by the package `cycle/database`. We can configure our first database
 connection to be initiated on demand using the following configuration:
 
 ```php
@@ -67,7 +62,7 @@ $dbal = new Database\DatabaseManager(
 );
 ```
 
-> Read about how to connect to other database types in [this section](/docs/en/database/connect.md). You can also 
+> Read about how to connect to other database types in [this section](/docs/en/database/connect.md). You can also
 > configure database connections at runtime.
 
 Check database access using following code:
@@ -78,18 +73,6 @@ print_r($dbal->database('default')->getTables());
 
 > Run `php {filename}.php`, the result must be empty array.
 
-### ORM
-
-Initiate ORM service:
-
-```php
-use Cycle\ORM;
-
-$orm = new ORM\ORM(new ORM\Factory($dbal));
-```
-
-> Make sure to add `use Cycle\ORM;` at top of your file.
-
 ### Register Namespace
 
 We can create our first entity in a directory `src` of our project.
@@ -97,7 +80,6 @@ We can create our first entity in a directory `src` of our project.
 Register the new namespace in your composer.json file:
 
 ```json
-
 "autoload": {
 "psr-4": {
 "Example\\": "src/"
@@ -108,7 +90,7 @@ Register the new namespace in your composer.json file:
 Execute:
 
 ```bash
-$ composer dump
+composer du
 ```
 
 ### Manually Configure Mapping
@@ -117,25 +99,26 @@ You can avoid using `cycle/annotated` and ignore sections "Define Entity" and "S
 define the ORM schema manually, right in PHP code:
 
 ```php
+use Cycle\ORM;
 use Cycle\ORM\Schema;
 use Cycle\ORM\Mapper\Mapper;
 
-$orm = $orm->with(schema: new Schema([
+$orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
     'user' => [
-         Schema::MAPPER      => Mapper::class, // default POPO mapper
-         Schema::ENTITY      => User::class,
-         Schema::DATABASE    => 'default',
-         Schema::TABLE       => 'users',
-         Schema::PRIMARY_KEY => 'id',
-         Schema::COLUMNS     => [
-            'id'   => 'id',  // property => column
-            'name' => 'name'
-         ],
-         Schema::TYPECAST    => [
-            'id' => 'int'
-         ],
-         Schema::RELATIONS   => []
-     ]
+        Schema::MAPPER => Mapper::class, // default POPO mapper
+        Schema::ENTITY => User::class,
+        Schema::DATABASE => 'default',
+        Schema::TABLE => 'users',
+        Schema::PRIMARY_KEY => 'id',
+        Schema::COLUMNS => [
+            'id' => 'id',  // property => column
+            'name' => 'name',
+        ],
+        Schema::TYPECAST => [
+            'id' => 'int',
+        ],
+        Schema::RELATIONS => [],
+    ]
 ]));
 ```
 
@@ -153,12 +136,14 @@ $user->setName("John");
 > Note, in this case, ORM can not automatically migrate your database schema.
 
 Read more about other ways to declare a mapping schema in later sections of the ORM documentation (for
-example [dynamic mapping](https://github.com/cycle/docs/blob/master/advanced/dynamic-schema.md#example)).
+example [dynamic mapping](/docs/en/advanced/dynamic-schema.md#example)).
 
 ## Define Entity
 
 To create our first entity (in the `src` folder) we will use the capabilities provided by the `cycle/annotated` package
 to describe our desired schema:
+
+> You can use both attributes and annotations for your Entities. But we recommend you use attributes.
 
 ```php
 <?php declare(strict_types=1);
@@ -204,8 +189,8 @@ Cycle will automatically assign the role `user` and table `users` from the defau
 ### Schema Generation
 
 In order to operate we need to generate an ORM Schema which will describe how our entities are configured. Though we can
-do it manually, we will use the pipeline generator provided by `cycle/schema-builder` package, and generators
-from `cycle/annotated`.
+do it manually, we will use the schema compiler and generators provided by `cycle/schema-builder` package, and also
+generators from `cycle/annotated`.
 
 First, we have to create instance of `ClassLocator` which will automatically find the required entities:
 
@@ -221,18 +206,13 @@ hood):
 print_r($classLocator->getClasses());
 ```
 
-Once the class locator is established we can create our schema generation pipeline. First, we will add the required
-namespace imports:
+Once the class locator is established we can define our schema compilation pipeline.
 
 ```php
 use Cycle\Schema;
 use Cycle\Annotated;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-```
 
-Now we can define our pipeline:
-
-```php
 // autoload annotations
 AnnotationRegistry::registerLoader('class_exists');
 
@@ -243,16 +223,18 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Annotated\TableInheritance($classLocator),  // register STI/JTI
     new Annotated\MergeColumns(),                   // add @Table column declarations
     new Schema\Generator\GenerateRelations(),       // generate entity relations
+    new Schema\Generator\GenerateModifiers(),       // generate changes from schema modifiers
     new Schema\Generator\ValidateEntities(),        // make sure all entity schemas are correct
     new Schema\Generator\RenderTables(),            // declare table schemas
     new Schema\Generator\RenderRelations(),         // declare relation keys and indexes
+    new Schema\Generator\RenderModifiers(),         // render all schema modifiers
     new Annotated\MergeIndexes(),                   // add @Table column declarations
     new Schema\Generator\SyncTables(),              // sync table changes to database
     new Schema\Generator\GenerateTypecast(),        // typecast non string columns
 ]);
 ```
 
-> We will explain what each generator is doing in later sections. Please note, while computing your schema `SyncTables` 
+> We will explain what each generator is doing in later sections. Please note, while compiling your schema `SyncTables`
 > will automatically adjust your database structure! Do not use it on a real database!
 
 The resulted schema can be passed to the ORM.
@@ -265,7 +247,8 @@ $orm = $orm->with(schema: new \Cycle\ORM\Schema($schema));
 
 Your ORM is now ready for use.
 
-> You can dump the `schema` variable to check the internal representation of your entity schema.
+> You can dump the `schema` variable to check the internal representation of your entity schema. You can use our
+> [cycle/schema-renderer](https://github.com/cycle/schema-renderer) package for it.
 
 ## Work with Entity
 
@@ -333,12 +316,12 @@ You can modify your entity schema to add new columns. Note that you have to eith
 column as `nullable` in order to apply the modification to the non-empty table.
 
 ```php
-#[Column(type: "int",nullable: true)]
+#[Column(type: "int", nullable: true)]
 protected ?int $age = null;
 ```
 
-The schema will be automatically updated on the next script invocation. We can find all users with undefined age using
-the following method:
+The schema will be automatically updated on the next script invocation by `SyncTables` generator. We can find all users
+with undefined age using the following method:
 
 ```php
 $users = $orm->getRepository(\Example\User::class)->findAll(['age' => null]);

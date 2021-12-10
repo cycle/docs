@@ -1,7 +1,6 @@
 # Versioning
 
-Spiral Framework, RoadRunner, Cycle and other described components follow https://semver.org/ with BC allowed for
-security releases.
+Cycle ORM and other described components follow https://semver.org/ with BC allowed for security releases.
 
 ## Current Version
 

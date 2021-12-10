@@ -4,22 +4,9 @@ Any persistence operation with entity or entities has to be done using the `Cycl
 
 > Read how to [describe your entity here](/docs/en/annotated/entity.md).
 
-## Create Entity
+## Create an entity
 
-In order to create an entity simply pass its instance to the transaction object and invoke the method `run`:
-
-```php
-$user = new User();
-$user->setName("Antony");
-
-$manager = new \Cycle\ORM\EntityManager($orm);
-$manager->persist($user);
-
-$manager->run();
-```
-
-Метод `run` возвращает объект `\Cycle\ORM\Transaction\StateInterface` содержащий информацию о статусе выполнения
-транзакции. С помощью него вы можете проверить статус выполнения транзакции и при необходимости перезапустить.
+In order to create an entity simply pass its instance to the entity manager object and invoke the method `run`:
 
 ```php
 $user = new User();
@@ -27,17 +14,7 @@ $user->setName("Antony");
 
 $manager = new \Cycle\ORM\EntityManager($orm);
 $manager->persist($user);
-
-$totalTries = 5;
-
-$logger = new MyLogger(...);
 $manager->run();
-
-while ($error = $state->getLastError() && $totalTries > 0) {
-    $logger->error($error);
-    $state = $state->retry();
-    $totalTries--;
-}
 ```
 
 In order to process persistent errors make sure to handle exceptions produced by the `run` method:
@@ -65,7 +42,7 @@ try {
 }
 ```
 
-## Update the Entity
+## Update an Entity
 
 In order to update the entity you must first obtain the loaded entity object:
 
@@ -73,7 +50,7 @@ In order to update the entity you must first obtain the loaded entity object:
 $user = $orm->getRepository(User::class)->findByPK(1);
 ```
 
-Simply change desired entity fields and register it in the transaction using `persist` method:
+Simply change desired entity fields and register it in the entity manager using the `persist` method:
 
 ```php
 $user->setName("John");
@@ -92,7 +69,7 @@ SET `name` = "John"
 WHERE `id` = 1
 ```
 
-## Delete Entity
+## Delete an Entity
 
 Any entity can be deleted using the transaction method `delete`:
 
@@ -147,3 +124,5 @@ $manager->run();
 > The `cascade: false` flag can be used while creating or updating the entity.
 
 You can also turn off cascading on the relation level by setting `cascade` flag to `false`.
+
+> Read more about [Entity manager](/docs/en/advanced/entity-manager.md) here.

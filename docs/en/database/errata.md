@@ -24,6 +24,24 @@ The default table engine set to `InnoDB`.
 Postgres driver includes custom implementation of `InsertQuery` to address the return value of auto-incremental PK, it
 will automatically add `RETURNING {primary key}` to the generated SQL query.
 
+#### Postgres schemas
+By default Postgres driver uses `public` schema. If you want to change default schema, you have to pass desired list 
+of schemas via connection config:
+
+```php
+'postgres' => new Config\PostgresDriverConfig(
+    connection: new Config\Postgres\TcpConnectionConfig(
+        database: 'spiral',
+        host: '127.0.0.1',
+        port: 5432,
+        user: 'spiral',
+        password: '',
+    ),
+    schema: ['private', '$user'],
+    queryCache: true,
+),
+```
+
 ### SQLServer Driver
 
 SQLServer includes a fallback mechanism to limit your selection without orderBy specified. In some cases, it might add

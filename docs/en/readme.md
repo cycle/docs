@@ -3,16 +3,14 @@ Table of Contents
 
 * Getting Started
   * [About Cycle ORM](/docs/en/intro/about.md)
-  * [**Quick Start**](/docs/en/intro/quick-start.md)
-  * [Very Quick Start](/docs/en/intro/cli.md)
+  * [**Installation**](/docs/en/intro/install.md)
   * [Upgrade Guide](/docs/en/intro/upgrade.md)
   * [Contributing](contributing.md)
   * [Versioning](/docs/en/intro/semver.md)
   * [LICENSE](license.md)
 * Basics
-  * [Installation](/docs/en/basic/install.md)
   * [Create, Update, Delete](/docs/en/basic/crud.md)
-  * [Direct Database Queries](/docs/en/basic/direct.md)
+  * [Direct Database Queries](/docs/en/basic/direct-database-queries.md)
   * [Select](/docs/en/basic/select.md)
   * [Custom Repositories](/docs/en/basic/repository.md)
   * [Simple Relation](/docs/en/basic/relation.md)
@@ -30,6 +28,7 @@ Table of Contents
   * [Many To Many](/docs/en/relation/many-to-many.md)
   * [Embedding Entities](/docs/en/relation/embedded.md)
   * [Morphed Relations](/docs/en/relation/morphed.md)
+  * [Collections](/docs/en/relation/collections.md)
 * Query Builder
   * [Basics](/docs/en/query-builder/basic.md)
   * [Extended Builder Usage](/docs/en/query-builder/extended.md)
@@ -43,7 +42,6 @@ Table of Contents
   * [Entity manager (Unit of Work)](/docs/en/advanced/entity-manager.md)
   * [Mappers](/docs/en/advanced/mapper.md)
   * [Entity Iterator](/docs/en/advanced/iterator.md)
-  * [Collections](/docs/en/advanced/collections.md)
   * [References and Proxies](/docs/en/advanced/promise.md)
   * [Node Parser](/docs/en/advanced/node-parser.md)
 * Mapping Schema
