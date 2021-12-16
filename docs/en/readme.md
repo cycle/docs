@@ -41,8 +41,10 @@ Table of Contents
   * [Auto Timestamps](/docs/en/entity-behaviors/timestamps.md)
   * [Soft delete](/docs/en/entity-behaviors/soft-delete.md)
   * [Optimistic lock](/docs/en/entity-behaviors/optimistic-lock.md)
-  * [Subsribers](/docs/en/entity-behaviors/hooks.md)
+  * [Hooks](/docs/en/entity-behaviors/hooks.md)
+  * [Event listener](/docs/en/entity-behaviors/event-listener.md)
   * [Extensions](/docs/en/entity-behaviors/extensions.md)
+  * [Events](/docs/en/entity-behaviors/events.md)
 * Mapping Schema
   * [Configuring Schema Builder](/docs/en/advanced/schema-builder.md)
   * [Manually defined Mapping Schema](/docs/en/advanced/manual.md)

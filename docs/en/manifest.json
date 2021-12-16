@@ -55,16 +55,17 @@
     }
   },
   {
-    "title": "Internals",
+    "title": "Entity behaviors",
     "links": {
-      "advanced/schema": "Schema",
-      "advanced/entity": "Entity, Heap, Node, State",
-      "advanced/entity-manager": "Entity manager (Unit of Work)",
-      "advanced/mapper": "Mappers",
-      "advanced/iterator": "Entity Iterator",
-      "advanced/collections": "Collections",
-      "advanced/promise": "References and Proxies",
-      "advanced/node-parser": "Node Parser"
+      "entity-behaviors/install": "Install",
+      "entity-behaviors/uuid": "UUID",
+      "entity-behaviors/timestamps": "Auto Timestamps",
+      "entity-behaviors/soft-delete": "Soft delete",
+      "entity-behaviors/optimistic-lock": "Optimistic lock",
+      "entity-behaviors/hooks": "Hooks",
+      "entity-behaviors/event-listener": "Event listener",
+      "entity-behaviors/extensions": "Extensions",
+      "entity-behaviors/events": "Events"
     }
   },
   {
@@ -79,7 +80,8 @@
     "title": "Columns and Properties",
     "links": {
       "advanced/column-wrappers": "Column Wrappers",
-      "advanced/datetime": "DateTime properties"
+      "advanced/datetime": "DateTime properties",
+      "advanced/composite-pk": "Composite PK"
     }
   },
   {
@@ -102,7 +104,7 @@
   {
     "title": "Customization",
     "links": {
-      "advanced/macros": "Macros",
+      "advanced/typecasting": "Typecasting",
       "advanced/default-classes": "Customize Schema Defaults",
       "advanced/custom-mapper": "Custom Mappers",
       "advanced/scope": "Scopes",
@@ -116,6 +118,18 @@
     }
   },
   {
+    "title": "Internals",
+    "links": {
+      "advanced/schema": "Schema",
+      "advanced/entity": "Entity, Heap, Node, State",
+      "advanced/entity-manager": "Entity manager (Unit of Work)",
+      "advanced/mapper": "Mappers",
+      "advanced/iterator": "Entity Iterator",
+      "advanced/promise": "References and Proxies",
+      "advanced/node-parser": "Node Parser"
+    }
+  },
+  {
     "title": "Advanced",
     "links": {
       "advanced/daemonizing": "Long-Running Applications",
@@ -124,5 +138,3 @@
     }
   }
 ]
-
-// TODO: добавить макурсоы и typecast
