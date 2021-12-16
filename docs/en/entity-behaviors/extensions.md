@@ -7,6 +7,8 @@ ability to create your own behaviors and share them with the community.
 Custom behaviors are classes that allow implementing custom logic for your entities. They extend
 `Cycle\ORM\Entity\Behavior\Schema\BaseModifier` and implement the custom logic in abstract methods.
 
+## Example
+
 In the following example we will show you how it is simple to create a custom behavior:
 
 ### Attribute
@@ -89,7 +91,7 @@ final class SluggableListener
 } 
 ```
 
-#### Available events:
+### Available events:
 
 - [OnCreate](/docs/en/entity-behaviors/events.md#oncreate)
 - [AfterCreate](/docs/en/entity-behaviors/events.md#aftercreate)

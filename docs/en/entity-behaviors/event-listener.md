@@ -11,7 +11,7 @@ If you are listening for many events on a given entity, you may use `Cycle\ORM\E
 to group all of your listeners into a single class. Event listener classes should have attributes which subscribe to the
 Entity events you wish to listen for. Each of these methods receives the event object as their only argument.
 
-#### Entity event listener
+### Entity event listener
 
 ```php
 use Cycle\Annotated\Annotation\Column;
@@ -35,7 +35,7 @@ class Comment
 }
 ```
 
-#### Listener class
+### Listener class
 
 Next, let's take a look at the listener for our example Comment entity. Event listener receive event instances in their
 methods that subscribed to the events.
@@ -89,7 +89,7 @@ In this example, the `CommentListener` needs to spam filter, repository and enti
 all dependencies will automatically be resolved and injected into the class from
 your [application container](/docs/en/entity-behaviors/install.md).
 
-#### Available events:
+## Available events:
 
 - [OnCreate](/docs/en/entity-behaviors/events.md#oncreate)
 - [AfterCreate](/docs/en/entity-behaviors/events.md#aftercreate)

@@ -7,7 +7,7 @@ entity is compared to the version in the database and if they don't match,
 an `Cycle\ORM\Entity\Behavior\Exception\OptimisticLock\RecordIsLockedException` is thrown, indicating that the entity
 has been modified by someone else already.
 
-### Available strategies
+## Available strategies
 
 - `MICROTIME` - current timestamp with microseconds as string
 - `RAND_STR` - Random generated string (random_bytes)
@@ -16,7 +16,7 @@ has been modified by someone else already.
 - `MANUAL` - Allows using custom realisation for setting and controlling version. You have to manage entity and DB
   column by yourself.
 
-#### Usage:
+## Usage:
 
 ```php
 use Cycle\Annotated\Annotation\Column;

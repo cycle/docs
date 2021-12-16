@@ -3,7 +3,7 @@
 Probably the most popular of all behaviors, adds `created_at` and `updated_at` timestamp columns to your entity,
 automatically saving datetime when a record is created or updated, respectively.
 
-### Usage:
+## Usage:
 
 ```php
 use Cycle\Annotated\Annotation\Column;

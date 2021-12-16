@@ -6,7 +6,7 @@ listeners that do not depend on each other.
 This package provides a simple observer pattern implementation, allowing you to subscribe and listen for various events
 via closure based event listeners.
 
-#### Usage:
+## Usage:
 
 To start listening to entity events, add a `Cycle\ORM\Entity\Behavior\Hook` attribute to your Entity.
 
@@ -73,7 +73,7 @@ class Comment
 }
 ```
 
-#### Available events:
+## Available events:
 
 - [OnCreate](/docs/en/entity-behaviors/events.md#oncreate)
 - [AfterCreate](/docs/en/entity-behaviors/events.md#aftercreate)
