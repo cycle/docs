@@ -84,6 +84,8 @@ $manager->run();
 Please note, the ORM will not automatically trigger the delete operation for related entities and will rely on foreign
 key rules set in the database.
 
+> Read more about deleting records by scope or other criteria 
+
 ## Persisting Related Entities
 
 Persisting an entity will also persist all related entities within it.

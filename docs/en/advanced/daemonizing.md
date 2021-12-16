@@ -26,7 +26,7 @@ The alternative is to use a single ORM instance across all user requests, but re
 ```php
 // do something with orm
 while ($action = getAction()) {
-    do{($action);}
+    $action();
 
     $orm->getHeap()->clean();
 }
@@ -70,8 +70,6 @@ specifically `Cycle\Database\Exception\Statement\ConnectionException`) exception
 
 Failures in the transaction would not affect ORM Heap (EntityManager). But the transaction will be clean. You can
 reassemble the transaction and try again.
-
-[//]: # (TODO проверить пример)
 
 ```php
 $manager = new \Cycle\ORM\EntityManager($orm);

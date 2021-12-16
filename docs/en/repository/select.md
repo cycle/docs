@@ -61,7 +61,7 @@ foreach($repository->findAll(['status' => 'active']) as $e) {
 ## Working with SelectQuery
 
 If the repository is an instance of `Cycle\ORM\Select\Repository` (default SQL repository), you are also able to get
-access to low the level method `select`, which gives you the ability to compile more complex queries or pre-load related
+access to low the level method `select`, which gives you the ability to compile more complex queries or preload related
 entities:
 
 ```php

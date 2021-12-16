@@ -43,50 +43,50 @@ $dbal = new Database\DatabaseManager(
 );
 
 $orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
-   'user'    => [
-      Schema::ENTITY      => User::class,
-      Schema::MAPPER      => ORM\Mapper\Mapper::class,
-      Schema::DATABASE    => 'default',
-      Schema::TABLE       => 'user',
-      Schema::PRIMARY_KEY => 'id',
-      Schema::COLUMNS     => [
-          'id'        => 'id',
-          'email'     => 'email',
-          'balance'   => 'balance'
-      ],
-      Schema::TYPECAST    => [
-          'id'      => 'int',
-          'balance' => 'float'
-      ],
-      Schema::RELATIONS   => [
-          'profile' => [
-              Relation::TYPE   => Relation::HAS_ONE,
-              Relation::TARGET => 'profile',
-              Relation::SCHEMA => [
-                  Relation::CASCADE   => true,
-                  Relation::INNER_KEY => 'id',
-                  Relation::OUTER_KEY => 'user_id',
-              ],
-          ]
-      ]
-  ],
-  'profile' => [
-      Schema::ENTITY      => Profile::class,
-      Schema::MAPPER      => ORM\Mapper\Mapper::class,
-      Schema::DATABASE    => 'default',
-      Schema::TABLE       => 'profile',
-      Schema::PRIMARY_KEY => 'id',
-      Schema::COLUMNS     => [
-          'id'      => 'id',
-          'user_id' => 'user_id',
-          'image'   => 'image'
-      ],
-      Schema::TYPECAST    => [
-          'id'      => 'int',
-          'user_id' => 'int'
-      ],
-      Schema::RELATIONS   => []
-  ],
+    'user' => [
+        Schema::ENTITY => User::class,
+        Schema::MAPPER => ORM\Mapper\Mapper::class,
+        Schema::DATABASE => 'default',
+        Schema::TABLE => 'user',
+        Schema::PRIMARY_KEY => 'id',
+        Schema::COLUMNS => [
+            'id' => 'id',
+            'email' => 'email',
+            'balance' => 'balance',
+        ],
+        Schema::TYPECAST => [
+            'id' => 'int',
+            'balance' => 'float',
+        ],
+        Schema::RELATIONS => [
+            'profile' => [
+                Relation::TYPE => Relation::HAS_ONE,
+                Relation::TARGET => 'profile',
+                Relation::SCHEMA => [
+                    Relation::CASCADE => true,
+                    Relation::INNER_KEY => 'id',
+                    Relation::OUTER_KEY => 'user_id',
+                ],
+            ],
+        ],
+    ],
+    'profile' => [
+        Schema::ENTITY => Profile::class,
+        Schema::MAPPER => ORM\Mapper\Mapper::class,
+        Schema::DATABASE => 'default',
+        Schema::TABLE => 'profile',
+        Schema::PRIMARY_KEY => 'id',
+        Schema::COLUMNS => [
+            'id' => 'id',
+            'user_id' => 'user_id',
+            'image' => 'image',
+        ],
+        Schema::TYPECAST => [
+            'id' => 'int',
+            'user_id' => 'int',
+        ],
+        Schema::RELATIONS => [],
+    ],
 ]));
 
 print_r($orm->getRepository(User::class)->findOne());

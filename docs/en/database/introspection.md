@@ -20,7 +20,7 @@ Receive all database tables (array of `Cycle\Database\Table`):
 
 ```php
 foreach ($database->getTables() as $table) {
-    var_dump($table->getName());
+    print_r($table->getName());
 }
 ```
 
@@ -30,7 +30,7 @@ Schema Reader/Builder (`AbstractTable`) is available using `getSchema` method:
 
 ```php
 foreach ($database->getTables() as $table) {
-    var_dump($table->getSchema());
+    print_r($table->getSchema());
 }
 ```
 
@@ -43,16 +43,16 @@ mechanism (see [schema declaration](/docs/en/database/declaration.md)).
 Table primary keys:
 
 ```php
-var_dump($schema->getPrimaryKeys());
+print_r($schema->getPrimaryKeys());
 ```
 
 Table indexes:
 
 ```php
 foreach ($schema->getIndexes() as $index) {
-    var_dump($index->getName());
-    var_dump($index->getColumns());
-    var_dump($index->isUnique());
+    print_r($index->getName());
+    print_r($index->getColumns());
+    print_r($index->isUnique());
 }
 ```
 
@@ -60,12 +60,12 @@ Table foreign keys (references):
 
 ```php
 foreach ($schema->getForeigns() as $foreign) {
-    var_dump($foreign->getColumn());       //Local column name
-    var_dump($foreign->getForeignTable()); //Global table name!
-    var_dump($foreign->getForeignKey());
+    print_r($foreign->getColumn());       //Local column name
+    print_r($foreign->getForeignTable()); //Global table name!
+    print_r($foreign->getForeignKey());
 
-    var_dump($foreign->getDeleteRule());   //NO ACTION, CASCADE
-    var_dump($foreign->getUpdateRule());   //NO ACTION, CASCADE
+    print_r($foreign->getDeleteRule());   //NO ACTION, CASCADE
+    print_r($foreign->getUpdateRule());   //NO ACTION, CASCADE
 }
 ```
 
@@ -75,25 +75,25 @@ Table columns:
 
 ```php
 foreach ($schema->getColumns() as $column) {
-    var_dump($column->getName());
+    print_r($column->getName());
 
-    var_dump($column->getType());          //Internal database type
-    var_dump($column->abstractType());     //Abstract type like string, bigInt, enum, text and etc.
-    var_dump($column->phpType());          //PHP type: int, float, string, bool
+    print_r($column->getType());          //Internal database type
+    print_r($column->abstractType());     //Abstract type like string, bigInt, enum, text and etc.
+    print_r($column->phpType());          //PHP type: int, float, string, bool
 
-    var_dump($column->getDefaultValue());  //Can be instance of SqlFragment
+    print_r($column->getDefaultValue());  //Can be instance of SqlFragment
 
-    var_dump($column->getSize());          //Only for strings and decimal values
+    print_r($column->getSize());          //Only for strings and decimal values
 
-    var_dump($column->getPrecision());     //Decimals only
-    var_dump($column->getScale());         //Decimals only
+    print_r($column->getPrecision());     //Decimals only
+    print_r($column->getScale());         //Decimals only
 
-    var_dump($column->isNullable());
-    var_dump($column->getEnumValues());    //Only for enums
+    print_r($column->isNullable());
+    print_r($column->getEnumValues());    //Only for enums
 
-    var_dump($column->getConstraints());
+    print_r($column->getConstraints());
 
-    var_dump($column->sqlStatement());     //Column creation syntax
+    print_r($column->sqlStatement());     //Column creation syntax
 }
 ```
 

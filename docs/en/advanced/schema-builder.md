@@ -44,7 +44,8 @@ $schema = (new \Cycle\Schema\Compiler())->compile($r);
 $orm = $orm->with(schema: new \Cycle\ORM\Schema($schema));
 ```
 
-> You can also declare relations, indexes and associate custom mappers. See [examples](https://github.com/cycle/schema-builder/tree/master/tests/Schema).
+> You can also declare relations, indexes and associate custom mappers.
+> See [examples](https://github.com/cycle/schema-builder/tree/master/tests/Schema).
 
 ## Custom Generators
 

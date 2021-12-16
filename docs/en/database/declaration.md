@@ -29,8 +29,8 @@ protected function indexAction(\Cycle\Database\Database $database)
     $schema = $database->table('new_table')->getSchema();
 
     // Schema is supposed to be empty
-    var_dump($schema);
-    var_dump($schema->exists());
+    print_r($schema);
+    print_r($schema->exists());
 }
 ```
 
@@ -370,7 +370,7 @@ Now you are able to redefine table schema.
 To get access to table state comparator use `getComparator` method of your schema:
 
 ```php
-dump($schema->getComparator()->addedColumns());
+print_r($schema->getComparator()->addedColumns());
 ```
 
 > You can use comparator to generate migrations instead of letting DBAL sync your schemas.

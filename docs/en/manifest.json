@@ -59,7 +59,6 @@
     "links": {
       "advanced/schema": "Schema",
       "advanced/entity": "Entity, Heap, Node, State",
-      "advanced/command": "Commands and Linked Contexts",
       "advanced/entity-manager": "Entity manager (Unit of Work)",
       "advanced/mapper": "Mappers",
       "advanced/iterator": "Entity Iterator",
@@ -125,3 +124,5 @@
     }
   }
 ]
+
+// TODO: добавить макурсоы и typecast

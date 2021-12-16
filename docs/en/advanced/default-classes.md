@@ -10,10 +10,14 @@ use Cycle\ORM\Schema;
 
 $orm = new ORM(
     (new Factory($dbal))->withDefaultSchemaClasses([
-        Schema::REPOSITORY => MyRepository::class,
-        Schema::SOURCE => MySource::class,
-        Schema::MAPPER => MyMapper::class,
-        Schema::SCOPE => MyScope::class,
+        SchemaInterface::REPOSITORY => MyRepository::class,
+        SchemaInterface::SOURCE => MySource::class,
+        SchemaInterface::MAPPER => MyMapper::class,
+        SchemaInterface::SCOPE => MyScope::class,
+        SchemaInterface::TYPECAST_HANDLER => [
+            \Cycle\ORM\Parser\Typecast::class,
+            UuidTypecast::class,
+        ],
     ])
 );
 ```
@@ -24,9 +28,10 @@ You can change any of these values, if you want.
 
 ```php
 [
-    Schema::REPOSITORY => \Cycle\ORM\Select\Repository::class,
-    Schema::SOURCE => \Cycle\ORM\Select\Source::class,
-    Schema::MAPPER => \Cycle\ORM\Mapper\Mapper::class,
-    Schema::SCOPE => null,
+    SchemaInterface::REPOSITORY => \Cycle\ORM\Select\Repository::class,
+    SchemaInterface::SOURCE => \Cycle\ORM\Select\Source::class,
+    SchemaInterface::MAPPER => \Cycle\ORM\Mapper\Mapper::class,
+    SchemaInterface::SCOPE => null,
+    SchemaInterface::TYPECAST_HANDLER => null,
 ]
 ```

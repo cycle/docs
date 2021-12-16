@@ -1,6 +1,6 @@
 # Complex Queries
 
-You can use the the query builder to compose more complex queries and expressions.
+You can use the query builder to compose more complex queries and expressions.
 
 ## Expressions
 
@@ -15,7 +15,7 @@ necessarily be identical to the actual property name, you must resolve its ident
 
 ## Name Resolver
 
-To resolve the name of column you must gain access to `QueryBuilder` instance available through the `getBuilder` method
+To resolve the name of a column you must gain access to `QueryBuilder` instance available through the `getBuilder` method
 of the `Select` object:
 
 ```php
@@ -31,9 +31,9 @@ $qb = $select->getBuilder();
 
 // to compare 2 columns
 $select->where(
-  'credits',
-  '>',
-  new \Cycle\Database\Injection\Expression($qb->resolve('balance'))
+    'credits',
+    '>',
+    new \Cycle\Database\Injection\Expression($qb->resolve('balance'))
 );
 ```
 
@@ -42,7 +42,7 @@ Such a query will produce similar SQL:
 ```sql
 SELECT
     ...
-    FROM "users" AS "user"
+FROM "users" AS "user"
 WHERE
     "user"."credits"
     > "user"."balance"
@@ -60,10 +60,10 @@ Example SQL:
 
 ```sql
 SELECT DISTINCT
-    ...
-    FROM "users" AS "user"
+...
+FROM "users" AS "user"
     INNER JOIN "orders" AS "user_orders"
-ON "user_orders"."user_id" = "user"."id"
+                ON "user_orders"."user_id" = "user"."id"
 WHERE "user"."balance" > "user_orders"."total" AND "user_orders"."status" = 'pending'
 ```
 

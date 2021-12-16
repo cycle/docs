@@ -17,13 +17,13 @@ foreach ($select as $user) {
 
 ## Manual Iteration
 
-Is it possible to provide input data to iterator manually, using any custom data source or raw SQL query? The data must
-be provided in a tree for.
+Is it possible to provide input data to iterator manually, using any custom data source or raw SQL query? The provided 
+collection must be a tree of entities data.
 
-[//]: # (TODO проверить на корректность конец предложения "in a tree for")
-
-> Since Cycle works with entity state using dirty state approach it is possible to load results partially (if default 
+> Since Cycle ORM works with entity state using dirty state approach it is possible to load results partially (if default 
 > entity values are null and does not trigger updates).
+
+[//]: # (TODO Iterator будет создаваться через static метод. Переделать этот момент)
 
 ```php
 $data = [
@@ -32,6 +32,13 @@ $data = [
 ];
 
 $iterator = new \Cycle\ORM\Iterator($orm, 'user', $data);
+```
+
+By default, iterator object requires prepared data collection (cast to proper types) and won't cast them automatically. 
+If you pass a raw data collection (without typecasting) you have to set `typecast` argument to `true`.
+
+```php
+$iterator = new \Cycle\ORM\Iterator($orm, 'user', $rawData, typecast: true);
 ```
 
 ## Pre-filtering
@@ -46,7 +53,7 @@ model instantiation. To do that using the `Cycle\ORM\Select` method `fetchData`:
 ```php
 use Cycle\ORM;
 
-function filterByExternal(ORM\Select $select, $value)
+function filterByExternal(ORM\Select $select, $value): \Generator
 {
     foreach($select->load('external')->fetchData() as $item) {
         if ($line['external']['value'] == $item) {

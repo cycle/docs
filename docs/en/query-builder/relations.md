@@ -1,7 +1,7 @@
 # Querying Relations
 
 It is possible to use columns and values of entity relations while composing the query. Relation properties (columns)
-can be accessed using dot notation `relation.property`. Please note, you must use domain-specific property names; column
+can be accessed using dot notation `relation.property`. Please note, you must use domain-specific property names, column
 names will be mapped automatically.
 
 ## Simple Condition
@@ -14,8 +14,7 @@ $select->distinct()->where('posts.published', true);
 ```
 
 Please note, all queried relations will be joined to the entity query. Do not forget to add the `distinct` option to
-your query while joining
-`hasMany`, `manyToMany` relations.
+your query while joining `hasMany`, `manyToMany` relations.
 
 ## Nested relations
 
@@ -40,13 +39,13 @@ $select->orderBy('posts.id', 'DESC');
 
 ## Loading Relations
 
-Cycle ORM can pre-load most of the relation types via the `load` method called on select:
+Cycle ORM can preload most of the relation types via the `load` method called on select:
 
 ```php
 $select->load('posts');
 ```
 
-The load method will automatically pick the appropriate way to load related data (either using JOIN or WHERE IN
+The load method will automatically pick the appropriate way to load related data (either using `JOIN` or `WHERE IN`
 approaches). You can also use this method to load any relation level via dot notation:
 
 ```php
@@ -66,10 +65,11 @@ $select->load('posts', [
 Select separates filtered and loaded entities. You can use `with` and `load` methods at the same time.
 
 ```php
-$select->load('posts', [
-    'where' => ['published' => true]
-])
-->with('posts')->where('posts.flagged', true);
+$select
+    ->load('posts', [
+        'where' => ['published' => true]
+    ])
+    ->with('posts')->where('posts.flagged', true);
 ```
 
 > Find all users with flagged posts and load all published posts.
@@ -78,20 +78,22 @@ In some cases, you can also combine joining and relation (make sure you know wha
 pointing the source table alias to the `load` method:
 
 ```php
-$selec->with('posts',[
-    'as'    => 'posts',
-    'where' => ['flagged' => true]
-])->load('posts', ['using' => 'posts']);
+$select
+    ->with('posts', [
+        'as' => 'posts',
+        'where' => ['flagged' => true]
+    ])
+    ->load('posts', ['using' => 'posts']);
 ```
 
 This query will find all entities with flagged posts and load these posts within one query (make sure to set the
-DISTINCT). Note, this is NOT an optimization technique.
+`DISTINCT`). Note, this is NOT an optimization technique.
 
-> LIMIT, ORDER BY are currently not supported as fetch scope (no BC expected).
+> `LIMIT`, `ORDER BY` are currently not supported as fetch scope (no BC expected).
 
 ## Load with filter by nested relation
 
-Not only can you load the relation chain, but you can also filter your branches by their relations. For example, we can
+You can not only load the relation chain, but you can also filter your branches by their relations. For example, we can
 load all users and all user posts which have comments.
 
 ```php

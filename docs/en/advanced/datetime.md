@@ -23,4 +23,4 @@ $user->created_at->setDate(...); // error, won't trigger an update
 $user->created_at = new \DateTimeImmutable(...);
 ```
 
-> You can use [Macros](/docs/en/advanced/macros.md) for `created_at`, `updated_at` and `deletetd_at` columns.
+> You can use [Macros](/docs/en/entity-behaviors/timestamps.md) for `created_at`, `updated_at` and `deletetd_at` columns.

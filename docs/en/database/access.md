@@ -18,13 +18,13 @@ use Cycle\Database\Driver\SQLite\SQLiteDriver;
 $dbal = new DatabaseManager(new DatabaseConfig(...));
 
 //Default database
-var_dump($dbal->database());
+print_r($dbal->database());
 
 //Using alias default which points to primary database
-var_dump($dbal->database('default'));
+print_r($dbal->database('default'));
 
 //Secondary
-var_dump($dbal->database('slave'));
+print_r($dbal->database('slave'));
 ```
 
 ## Run Queries
@@ -34,7 +34,7 @@ To run the database query use method `query`:
 ```php
 $db = $dbal->database();
 
-var_dump(
+print_r(
     $db->query(
         'SELECT * FROM users WHERE id > ?',
         [
@@ -49,7 +49,7 @@ To execute update or delete statement use the alternative method `execute`:
 ```php
 $db = $dbal->database();
 
-var_dump(
+print_r(
     $db->execute(
         'DELETE FROM users WHERE id > ?',
         [

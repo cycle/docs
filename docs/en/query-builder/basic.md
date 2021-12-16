@@ -53,19 +53,19 @@ $select->where('id', 'between', 10, 20);
 You can use `orWhere` and `andWhere` (identical to `where`) to declare more complex conditions:
 
 ```php
-$select->where('balance', '<', 100)->orWhere('status', 'blocked');
+$select->where('balance', '<', 100)
+       ->orWhere('status', 'blocked');
 ```
 
-> Read more of complex conditions in the next article.
+> Read more about complex conditions in the [next section](/docs/en/query-builder/complex.md).
 
 ## Short Notation
 
 You can also specify conditions using array notation:
 
 ```php
-
 $select->where([
-    'id'     => ['in' => new \Cycle\Database\Injection\Parameter([1, 2, 3])],
+    'id' => ['in' => new \Cycle\Database\Injection\Parameter([1, 2, 3])],
     'status' => ['like' => 'active']
 ]);
 ```

@@ -31,10 +31,12 @@ use Cycle\Database\Config;
 
 $dbal = new DatabaseManager(new Config\DatabaseConfig([
     'databases' => [
-        'default' => ['driver' => 'runtime'],
+        'default' => [
+            'driver' => 'runtime'
+        ],
     ],
     'connections' => [
-        'runtime'   => new Config\SQLiteDriverConfig(
+        'runtime' => new Config\SQLiteDriverConfig(
             connection: new Config\SQLite\FileConnectionConfig(
                 database:  __DIR__.'./runtime/database.sqlite'
             ),
@@ -51,12 +53,6 @@ $dbal = new DatabaseManager(new Config\DatabaseConfig([
 In order to access connected database we have to add it into `databases` section first:
 
 ```php
-<?php
-
-declare(strict_types=1);
-
-require_once "vendor/autoload.php";
-
 use Cycle\Database\Driver;
 
 $dbal = new DatabaseManager(new DatabaseConfig([
@@ -75,9 +71,9 @@ $dbal = new DatabaseManager(new DatabaseConfig([
     ],
 ]));
 
-var_dump($dbal->database('primary'));
+print_r($dbal->database('primary'));
 
-var_dump($dbal->database('secondary'));
+print_r($dbal->database('secondary'));
 ```
 
 ### Aliases
@@ -86,12 +82,6 @@ Your application and modules can access the database in multiple different ways.
 separate databases with relation to one physical database.
 
 ```php
-<?php
-
-declare(strict_types=1);
-
-require_once "vendor/autoload.php";
-
 use Cycle\Database\Driver;
 
 $dbal = new DatabaseManager(new DatabaseConfig([
@@ -107,29 +97,66 @@ $dbal = new DatabaseManager(new DatabaseConfig([
     ],
 ]));
 
-var_dump($dbal->database('db'));
+print_r($dbal->database('db'));
 
-var_dump($dbal->database('other'));
+print_r($dbal->database('other'));
 ```
+
+### Read / Write Connections
+
+Sometimes you may wish to use one database connection for SELECT statements, and another for INSERT, UPDATE, and DELETE
+statements.
+
+To see how read / write connections should be configured, let's look at this example:
+
+```php
+use Cycle\Database\Driver;
+
+$dbal = new DatabaseManager(new DatabaseConfig([
+    'databases' => [
+        // Will be used for read and write operations
+        'primary' => [
+           'driver' => 'mysql', 
+           // or
+           'write' => 'mysql'
+           
+           // ...
+        ],
+        'secondary' => [
+            'write' => 'mysql', // Will be used for write operations
+            'read' => 'sqlite', // Will be used for read operations
+             // ...
+        ]
+    ],
+    'connections' => [
+        // ...
+    ],
+]));
+```
+
+### Manual Database instance creation
 
 To create Database instance manually (without the DatabaseManager):
 
 ```php
 
 use Cycle\Database\Driver;
+use Cycle\Database\Config;
 
-$driver = new Driver\SQLite\SQLiteDriver(
-   [
-       'connection' => 'sqlite:db.db'
-   ]
+$writeDriver = Driver\SQLite\SQLiteDriver::create(
+    new Config\MemoryConnectionConfig()
+);
+
+$readDriver = Driver\SQLite\SQLiteDriver::create(
+    new Config\TempFileConnectionConfig()
 );
        
 $db = new Database\Database(
-   'name',
-   '',
-   $driver,
-   $driver // read only driver (optional)
+   name: 'name',
+   prefix: '',
+   driver: $writeDriver,
+   readDriver: $readDriver // read only driver (optional)
 );
 
-var_dump($db->getTables());
+print_r($db->getTables());
 ```

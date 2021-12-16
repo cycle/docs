@@ -77,7 +77,7 @@ use Cycle\Annotated\Annotation\Relation\HasOne;
 class User
 {
     #[HasOne(target: Address::class)]
-    private $address;
+    private ?Address $address;
     
     // ...
     
@@ -102,12 +102,9 @@ Once you update the schema and sync your database schema (or run migrations), yo
 To store the related entity with its parent simply `persist` the object which defines the relation:
 
 ```php
-$user = new User(
-    name: "Antony"
-);
-
 $address = new Address(city: "New York");
 
+$user = new User(name: "Antony");
 $user->setAddress($address);
 
 $manager = new \Cycle\ORM\EntityManager($orm);
@@ -120,6 +117,7 @@ The following SQL commands will be produced:
 ```sql
 INSERT INTO "users" ("name")
 VALUES ('Antony');
+
 INSERT INTO "addresses" ("city", "user_id")
 VALUES ('New York', 15);
 ```
@@ -185,6 +183,7 @@ In this case, the resulted SQL will look like:
 SELECT "user"."id"   AS "c0",
        "user"."name" AS "c1"
 FROM "users" AS "user";
+
 SELECT "user_address"."id"      AS "c0",
        "user_address"."city"    AS "c1",
        "user_address"."user_id" AS "c2"

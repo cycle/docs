@@ -34,7 +34,7 @@ You can isolate database in runtime using `withPrefix` method:
 
 ```php
 $db = $dbal->database();
-var_dump($db->withPrefix('my_db_prefix')->getTables());
+print_r($db->withPrefix('my_db_prefix')->getTables());
 ```
 
 > The schema introspection and declaration will work with the isolated database by automatically adding a prefix to 

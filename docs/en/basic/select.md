@@ -1,6 +1,6 @@
 # Select Entity
 
-Cycle ORM provides multiple options to select entity data from the database. The most common and recommended method to
+Cycle ORM provides multiple options to select entity data from the database. The most common and recommended way to
 use the associated entity repository.
 
 ## Using Repository
@@ -41,7 +41,7 @@ You can use any amount of fields in a request:
 
 ```php
 $entity = $repository->findOne([
-  'name'    => 'Antony',
+  'name' => 'Antony',
   'balance' => 100
 ]);
 ```
@@ -50,7 +50,7 @@ If your repository is an instance of `Cycle\ORM\Select\Repository` (SQL) you can
 
 ```php
 $entity = $repository->findOne([
-  'name'    => 'Antony',
+  'name' => 'Antony',
   'balance' => ['>=' => 100]
 ]);
 ```
@@ -83,4 +83,5 @@ $result = $repository->select()->where('balance', '>', 1)->load('address')->fetc
 ## The repository is read only
 
 Please note, in Cycle ORM the Repository object is only responsible for entity retrieval. All persist operations must be
-handled by entity manager, entity mappers and command chains.
+handled by [entity manager](/docs/en/advanced/entity-manager.md), [entity mappers](/docs/en/advanced/mapper.md) 
+and [command chains](/docs/en/advanced/command.md).

@@ -75,7 +75,7 @@ print_r($orm->getRepository(\Example\User::class)->findActive()->fetchAll());
 
 ## Preloading relations
 
-Another use-case is to automatically pre-load some entity relations using a custom find method:
+Another use-case is to automatically preload some entity relations using a custom find method:
 
 ```php
 use Cycle\ORM\Select;

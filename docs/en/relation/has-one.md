@@ -1,11 +1,14 @@
-# Has One
+# Has One:
 
 The Has One relation defines that an entity exclusively owns another entity in a form of parent-child. Consider this
 relation as a form of decomposition with the ability to store data in external table.
 
+The HasOne relation is used to define the relation to one child object. This object will be automatically saved with its
+parent (unless `cascade` option set to `false`). The simplest form of relation definition
+
 ## Definition
 
-To define a Has One relation using the annotated entities extension, use:
+To define a Has One relation using the annotated entities' extension, use:
 
 ```php
 use Cycle\Annotated\Annotation\Relation\HasOne;
@@ -16,8 +19,8 @@ class User
 {
     // ...
 
-    #[HasOne(target: 'Address')]
-    protected $address;
+    #[HasOne(target: Address::class)]
+    public ?Address $address;
 }
 ```
 
@@ -43,24 +46,24 @@ indexCreate | bool   | Create index on outerKey. Defaults to `true`
 To attach the child object to the parent entity simple set the value on the designated property:
 
 ```php
-$u = new User();
+$user = new User();
 
-// or setAddress() if you have a setter
-$u->address = new Address();
+// or setAddress() method if you have a setter
+$user->address = new Address();
 ```
 
 The related object can be immediately saved into the database by persisting the parent entity:
 
 ```php
 $manager = new \Cycle\ORM\EntityManager($orm);
-$manager->persist($u);
+$manager->persist($user);
 $manager->run();
 ```
 
 To delete a previously associated object simply set the property value to `null`:
 
 ```php
-$u->setAddress(null);
+$user->setAddress(null);
 ```
 
 The child object will be removed during the persist operation.
@@ -72,8 +75,13 @@ The child object will be removed during the persist operation.
 To access related data simply call the method `load` of your `User`'s `Select` object:
 
 ```php
-$u = $orm->getRepository(User::class)->select()->load('address')->wherePK(1)->fetchOne();
-print_r($u->getAddress());
+$user = $orm->getRepository(User::class)
+    ->select()
+    ->load('address')
+    ->wherePK(1)
+    ->fetchOne();
+
+print_r($user->getAddress());
 ```
 
 ### Filtering
@@ -90,7 +98,7 @@ $users = $orm->getRepository(User::class)
 print_r($users);
 ```
 
-Cycle `Select` can automatically join related tables on the first `where` condition. The previous example can be
+Cycle ORM `Select` can automatically join related tables on the first `where` condition. The previous example can be
 rewritten:
 
 ```php

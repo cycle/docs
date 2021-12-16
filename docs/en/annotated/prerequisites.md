@@ -16,7 +16,7 @@ use Cycle\Annotated;
 use Spiral\Tokenizer;
 
 // Class locator
-$cl = (new Tokenizer\Tokenizer(new Tokenizer\Config\TokenizerConfig([
+$classLocator = (new Tokenizer\Tokenizer(new Tokenizer\Config\TokenizerConfig([
     'directories' => ['src/'],
 ])))->classLocator();
 

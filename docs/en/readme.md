@@ -35,15 +35,14 @@ Table of Contents
   * [Querying Relations](/docs/en/query-builder/relations.md)
   * [Complex Queries](/docs/en/query-builder/complex.md)
   * [Security](/docs/en/query-builder/security.md)
-* Internals
-  * [Schema](/docs/en/advanced/schema.md)
-  * [Entity, Heap, Node, State](/docs/en/advanced/entity.md)
-  * [Commands and Linked Contexts](/docs/en/advanced/command.md)
-  * [Entity manager (Unit of Work)](/docs/en/advanced/entity-manager.md)
-  * [Mappers](/docs/en/advanced/mapper.md)
-  * [Entity Iterator](/docs/en/advanced/iterator.md)
-  * [References and Proxies](/docs/en/advanced/promise.md)
-  * [Node Parser](/docs/en/advanced/node-parser.md)
+* Entity behaviors
+  * [Install](/docs/en/entity-behaviors/install.md)
+  * [UUID](/docs/en/entity-behaviors/uuid.md)
+  * [Auto Timestamps](/docs/en/entity-behaviors/timestamps.md)
+  * [Soft delete](/docs/en/entity-behaviors/soft-delete.md)
+  * [Optimistic lock](/docs/en/entity-behaviors/optimistic-lock.md)
+  * [Subsribers](/docs/en/entity-behaviors/hooks.md)
+  * [Extensions](/docs/en/entity-behaviors/extensions.md)
 * Mapping Schema
   * [Configuring Schema Builder](/docs/en/advanced/schema-builder.md)
   * [Manually defined Mapping Schema](/docs/en/advanced/manual.md)
@@ -51,6 +50,7 @@ Table of Contents
 * Columns and Properties
   * [Column Wrappers](/docs/en/advanced/column-wrappers.md)
   * [DateTime properties](/docs/en/advanced/datetime.md)
+  * [Composite PK](/docs/en/advanced/composite-pk.md)
 * Databases
   * [Installation and Configuration](/docs/en/database/configuration.md)
   * [Connect to Database](/docs/en/database/connect.md)
@@ -65,7 +65,7 @@ Table of Contents
   * [Synchronizing Database Schema (Migrations)](/docs/en/advanced/sync-schema.md)
   * [Errata](/docs/en/database/errata.md)
 * Customization
-  * [Macros](/docs/en/advanced/macros.md)
+  * [Typecasting](/docs/en/advanced/typecasting.md)
   * [Customize Schema Defaults](/docs/en/advanced/default-classes.md)
   * [Custom Mappers](/docs/en/advanced/custom-mapper.md)
   * [Scopes](/docs/en/advanced/scope.md)
@@ -76,6 +76,15 @@ Table of Contents
   * [Chained Repository (Query Scopes)](/docs/en/advanced/chained-repository.md)
   * [Persist Repositories](/docs/en/advanced/persist-repository.md)
   * [Active Record](/docs/en/advanced/active-record.md)
+* Internals
+  * [Schema](/docs/en/advanced/schema.md)
+  * [Entity, Heap, Node, State](/docs/en/advanced/entity.md)
+    [//]: # (  * [Commands and Linked Contexts]&#40;/docs/en/advanced/command.md&#41;)
+  * [Entity manager (Unit of Work)](/docs/en/advanced/entity-manager.md)
+  * [Mappers](/docs/en/advanced/mapper.md)
+  * [Entity Iterator](/docs/en/advanced/iterator.md)
+  * [References and Proxies](/docs/en/advanced/promise.md)
+  * [Node Parser](/docs/en/advanced/node-parser.md)
 * Advanced
   * [Usage in Long-Running Applications](/docs/en/advanced/daemonizing.md)
   * [Testing](/docs/en/advanced/testing.md)

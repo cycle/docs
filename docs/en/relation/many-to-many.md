@@ -1,13 +1,16 @@
 # Many To Many
 
-Many to Many relations are, in fact, two relations combined together. This relation requires an intermediate (pivot)
-entity to connect the source and target entities. Example: many users have many tags, many posts have many favorites.
+A relation of type 'Many To Many' provides a more complex connection with the ability to use an intermediate entity for the
+connection. The relation requires the `through` option with similar rules as `target`.
+
+'Many To Many' relations are, in fact, two relations combined together. This relation requires an intermediate (pivot)
+entity to connect the source and target entities. **Example:** many users have many tags, many posts have many favorites.
 
 The relation provides access to an intermediate object on all the steps, including creation, update and query building.
 
 ## Definition
 
-To define a Many To Many relation using the annotated entities extension, use (attention, make sure to create pivot
+To define a 'Many To Many' relation using the annotated entities' extension, use (attention, make sure to create pivot
 entity):
 
 ```php
@@ -19,37 +22,22 @@ class User
 {
     // ...
 
-    #[ManyToMany(target: Tag::class, through: UserTag::class)]
+    #[ManyToMany(target: Tag::class, through: UserTag::class, collection: CommentsCollection::class)]
     protected array $tags;
-}
-```
-
-In order to use a newly created entity, you must define the collection to store related entities. The collection must be
-an instance of `Cycle\ORM\Relation\Pivoted\PivotedCollection`. Do it in your constructor:
-
-```php
-use Cycle\ORM\Relation\Pivoted\PivotedCollection;
-use Cycle\Annotated\Annotation\Relation\ManyToMany;
-use Cycle\Annotated\Annotation\Entity;
-
-#[Entity]
-class User
-{
-    // ...
-
-    #[ManyToMany(target: Tag::class, through: UserTag::class)]
-    protected PivotedCollection $tags;
-
-    public function __construct()
-    {
-        $this->tags = new PivotedCollection();
-    }
-
-    // ...
-
-    public function getTags(): PivotedCollection
+    
+    public function getTags(): array
     {
         return $this->tags;
+    }
+    
+    public function addTag(Tag $tag): void
+    {
+        $this->tags[] = $tag;
+    }
+    
+    public function removeTag(Tag $tag): void
+    {
+        $this->tags = array_filter($this->tags, static fn(Tag $t) => $t !== $tag);
     }
 }
 ```
@@ -95,22 +83,22 @@ class Tag
 By default, ORM will generate FK and indexes in `though` entity using the role and primary keys of the linked objects.
 Following values are available for the configuration:
 
-Option      | Value  | Comment
----         | ---    | ----
-load        | lazy/eager | Relation load approach. Defaults to `lazy`
-cascade     | bool   | Automatically save related data with parent entity. Defaults to `false`
-innerKey    | string | Inner key name in source entity. Defaults to a primary key
-outerKey    | string | Outer key name in target entity. Defaults to a primary key
-thoughInnerKey | string | Key name connected to the innerKey of source entity. Defaults to `{sourceRole}_{innerKey}`
-thoughOuterKey | string | Key name connected to the outerKey of a related entity. Defaults to `{targetRole}_{outerKey}`
-thoughWhere | array | Where conditions applied to `though` entity
-where       | array | Where conditions applied to a related entity
-orderBy     | array  | Additional sorting rules
-fkCreate    | bool   | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey. Defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
-fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
-indexCreate | bool   | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
-collection  | string | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
+Option         | Value                        | Comment
+---            |------------------------------| ----
+load           | lazy/eager                   | Relation load approach. Defaults to `lazy`
+cascade        | bool                         | Automatically save related data with parent entity. Defaults to `false`
+innerKey       | string                       | Inner key name in source entity. Defaults to a primary key
+outerKey       | string                       | Outer key name in target entity. Defaults to a primary key
+thoughInnerKey | string                       | Key name connected to the innerKey of source entity. Defaults to `{sourceRole}_{innerKey}`
+thoughOuterKey | string                       | Key name connected to the outerKey of a related entity. Defaults to `{targetRole}_{outerKey}`
+thoughWhere    | array                        | Where conditions applied to `though` entity
+where          | array                        | Where conditions applied to a related entity
+orderBy        | array                        | Additional sorting rules
+fkCreate       | bool                         | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey. Defaults to `true`
+fkAction       | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`
+fkOnDelete     | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
+indexCreate    | bool                         | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`
+collection     | string                       | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
 
 You can keep your pivot entity empty, the only requirement is to have defined a primary key.
 
@@ -118,29 +106,30 @@ You can keep your pivot entity empty, the only requirement is to have defined a 
 
 ## Usage
 
-To associate two entities using Many To Many relation, use the method `add` of pivot collection:
+To associate two entities using Many To Many relation, use proper way depended on collection type you use. In our 
+example we use default collection factory `Cycle\ORM\Collection\ArrayCollectionFactory`:
+
+> Read more about relation collections [here](/docs/en/relation/collections.md).
 
 ```php
-$u = new User();
-$u->setName("Antony");
-
-$u->getTags()->add(new Tag("tag a"));
+$user = new User();
+$user->setName("Antony");
+$user->addTag(new Tag("tag a"));
 
 $manager = new \Cycle\ORM\EntityManager($orm);
-$manager->persist($u);
+$manager->persist($user);
 $manager->run();
 ```
 
-To remove the association to the object, use the `remove` or `removeElement` methods. Disassociation will remove
-the `UserTag` entity, and not the `Tag` entity.
+Disassociation will remove the `UserTag` entity, and not the `Tag` entity.
 
 ```php
-$u->getTags()->removeElement($tag);
+$user->removeTag($tag);
 ```
 
 ### Loading
 
-Use the method `load` of your `Select` object to pre-load data of related and pivot entities:
+Use the method `load` of your `Select` object to preload data of related and pivot entities:
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -164,8 +153,29 @@ foreach ($users as $u) {
 
 ### Accessing Pivot Entity
 
-Many To Many relation provides you the ability to access the pivot entity's data using the `PivotedCollection` object.
-You can do that using the `getPivot` method:
+If you use `Cycle\ORM\Collection\DoctrineCollectionFactory` for 'Many To Many' relation, you have the ability to
+access the pivot entity's data using the `Cycle\ORM\Collection\Pivoted\PivotedCollectionInterface` object. You can do 
+that using the `getPivot` method:
+
+```php
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\ORM\Collection\Pivoted\PivotedCollection;
+
+#[Entity]
+class User
+{
+    // ...
+    
+    #[ManyToMany(target: Tag::class, through: UserTag::class, collection: 'doctrine')]
+    public PivotedCollection $tags;
+    
+    public function __construct() 
+    {
+        $this->tags = new PivotedCollection();
+    }
+}
+```
 
 ```php
 $users = $orm->getRepository(User::class)
@@ -173,10 +183,10 @@ $users = $orm->getRepository(User::class)
     ->load('tags')
     ->fetchAll();
 
-foreach ($users as $u) {
-    foreach ($u->getTags() as $t) {
-         print_r($t);
-         print_r($u->getTags()->getPivot($t));
+foreach ($users as $user) {
+    foreach ($user->tags as $tag) {
+         print_r($tag);
+         print_r($user->tags->getPivot($tag));
     }
 }
 ```
@@ -195,10 +205,10 @@ use Cycle\Annotated\Annotation\Column;
 class UserTag
 {
     #[Column(type: 'primary')]
-    private $id;
+    private int $id;
 
     #[Column(type: 'datetime', default: null)]
-    private $created_at;
+    private \DateTimeInterface $created_at;
 
     public function __construct(\DateTimeInterface $d)
     {

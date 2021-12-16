@@ -42,6 +42,7 @@ class MyMapper extends Mapper
         
         return $cmd;
     }
+}
 ```
 
 And assign the entity to the specific mapper:

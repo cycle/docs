@@ -100,10 +100,10 @@ Pay attention that `Cycle\ORM\MapperInterface` has BC changes, and you need to r
 [//]: # (TODO Выбрать вариант )
 
 > Custom mappers like `SoftDeleteMapper`, `OptimisticLockMapper`, `UuidMapper` in the ORM v2.0 can be implemented 
-> via [macros](/docs/en/advanced/macros.md)
+> via [macros](/docs/en/entity-behaviors/install.md)
 
 > Some typical custom mapper use cases like `SoftDelete`, `OptimisticLock` 
-> available in the [macros](/docs/en/advanced/macros.md). 
+> available in the [macros](/docs/en/entity-behaviors/install.md). 
 
 ## Constraint
 

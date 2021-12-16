@@ -25,8 +25,9 @@ Postgres driver includes custom implementation of `InsertQuery` to address the r
 will automatically add `RETURNING {primary key}` to the generated SQL query.
 
 #### Postgres schemas
-By default Postgres driver uses `public` schema. If you want to change default schema, you have to pass desired list 
-of schemas via connection config:
+
+By default, Postgres driver uses `public` schema and works only with tables with `public` schema. If you want to change 
+default behavior, you have to pass desired schema list via connection config:
 
 ```php
 'postgres' => new Config\PostgresDriverConfig(
@@ -37,9 +38,87 @@ of schemas via connection config:
         user: 'spiral',
         password: '',
     ),
-    schema: ['private', '$user'],
+    schema: [
+        'public', 
+        'private', 
+        '$user' // Current user namespace
+    ],
     queryCache: true,
 ),
+```
+
+Given list of schemas will be used for filtering available tables. 
+
+##### Schema declaration
+```php
+// will be used the first schema from config (public)
+$schema1 = $dbal->database()->table('users')->getSchema();
+$schema1->column('id')->primary();
+$schema1->save();
+
+// private
+$schema = $dbal->database()->table('private.users')->getSchema();
+$schema->column('id')->primary();
+$schema->save();
+
+// test
+$schema2 = $dbal->database()->table('test.users')->getSchema();
+$schema2->column('id')->primary();
+$schema2->save();
+
+// Current user schema
+$schema2 = $dbal->database()->table('$user.users')->getSchema();
+$schema2->column('id')->primary();
+$schema2->save();
+// ...
+```
+
+##### Database hasTable method
+
+```php
+$db = $dbal->database();
+
+$db->hasTable('private.users'); // true
+
+$db->hasTable('test.users'); // true
+
+// Current user schema
+$db->hasTable('$user.users'); // true
+
+// will be used the first schema from config (public)
+$db->hasTable('users'); // true
+// ...
+```
+
+##### Database getTableNames method
+
+Method will return tables with schema.
+
+```php
+$db = $dbal->database();
+$tables = $db->getTables();
+
+$tables[0]->getName(); // users
+$tables[0]->getFullName(); // private.users
+
+$tables[1]->getName(); // users
+$tables[1]->getFullName(); // private.users
+
+$tables[2]->getName(); // users
+$tables[2]->getFullName(); // spiral.users - current user namespace for user with username 'spiral'
+
+// table with schema 'test' will be ignored. It doesn't present in connection config schema list
+
+// ...
+```
+
+##### Query builder
+
+You can use table names with schema declaration in a Query builder via dot notation.
+
+```php
+$db = $dbal->database();
+$tables = $db->select()->from('private.users')->...
 ```
 
 ### SQLServer Driver

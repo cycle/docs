@@ -1,12 +1,22 @@
-# Collections
+# Relation collections
 
-> В CycleORM v2 была убрана жесткая привязка к определенному типу коллекции. Начиная с этой версии вы можете выбирать
-> какой тип коллекции будет использоваться для хранения данных связей для всех сущностей по умолчанию и для конкретной 
-> сущности.
+Collection factory is responsible for creation and filling `*Many` relation collections.
 
-## Configuring collection type factories
+> Cycle ORM used to use `doctrine/collections` as a default collection for `*Many` relations,
+> but since v2.x it doesn't use `doctrine/collections` out of the box anymore.
+> Now you have an ability to opt which collection type will be used for `*Many` relations by default and which for
+> specific entities relations.
 
-По умолчанию CycleORM использует `Cycle\ORM\Collection\ArrayCollectionFactory` для хранения коллекции сущностей связей.
+## Collection factories
+
+- `Cycle\ORM\Collection\ArrayCollectionFactory` - default collection factory, uses PHP arrays as collection.
+- `Cycle\ORM\Collection\DoctrineCollectionFactory` - uses `doctrine/collections` package (should be installed manually)
+- `Cycle\ORM\Collection\IlluminateCollectionFactory` - uses `illuminate/collection` package (should be installed
+  manually)
+
+### Configuration
+
+By default, Cycle ORM uses `Cycle\ORM\Collection\ArrayCollectionFactory`.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -22,7 +32,8 @@ class User
 }
 ```
 
-В случае если вы хотите использовать другой тип колекций, то вам снача необходмо зарегистрировать фабрику:
+In order to use alternate collection type by default, you need to pass desired collection factory as a second
+argument (`defaultCollectionFactory`) to `Cycle\ORM\Factory` object:
 
 ```php
 use Cycle\ORM;
@@ -31,16 +42,16 @@ $schema = new ORM\Schema(...);
 
 $factory = (new ORM\Factory(
     dbal: $dbal,
-    defaultCollectionFactory: new ORM\Collection\ArrayCollectionFactory    // Фабрика коллекций по умолчанию
+    defaultCollectionFactory: new ORM\Collection\ArrayCollectionFactory    // Default collection factory
 ))
-    // Требуется установка пакета doctrine/collections
+    // requires doctrine/collections package
     ->withCollectionFactory(
-        'doctrine',                                         // Алиас
+        'doctrine',                                         // Alias
          new ORM\Collection\DoctrineCollectionFactory,
-         \Doctrine\Common\Collections\Collection::class    // <= Интерфейс или базовый класс коллекции
+         \Doctrine\Common\Collections\Collection::class    // <= Base collection
     )
     
-    // Требуется установка пакета`illuminate/collections
+    // requires illuminate/collections package
     ->withCollectionFactory(
         'illuminate', 
         new ORM\Collection\IlluminateCollectionFactory, 
@@ -53,7 +64,8 @@ $orm = new ORM\ORM(
 );
 ```
 
-> Метод `Factory::withCollectionFactory` является иммутабельными и при добавлении новых фабрик необходимо
+> Method `Factory::withCollectionFactory` returns a new, immutable Factory object, and you need to rebind factory
+> for `Cycle\ORM\ORM` object after adding a new collection factory.
 
 ```php
 use Cycle\ORM;
@@ -70,15 +82,14 @@ $factory = $orm->getFactory()
           \Doctrine\Common\Collections\Collection::class
     );
 
-$container->bindSingleton(
-    ORM\ORMInterface::class, 
-    $orm->with(factory: $factory)
-);
+$orm = $orm->with(factory: $factory);
+
+$container->bindSingleton(ORM\ORMInterface::class, $orm);
 ```
 
-## Указание коллекци для связей сущности.
+### Relation collection type definition
 
-### Определение через схему
+#### Via entity schema
 
 ```php
 class CommentCollection extends \Doctrine\Common\Collections\ArrayCollection {
@@ -93,19 +104,19 @@ $schema = [
             'posts' => [
                 Relation::TYPE => Relation::HAS_MANY,
                 Relation::TARGET => Post::class,
-                Relation::COLLECTION_TYPE => null,                  // <= Будет исопльзована коллекция по умолчанию
+                Relation::COLLECTION_TYPE => null, // <= Will be used a default collection factory
                 Relation::SCHEMA => [ /*...*/ ],
             ],
             'comments' => [
                 Relation::TYPE => Relation::HAS_MANY,
                 Relation::TARGET => Comment::class,
-                Relation::COLLECTION_TYPE => 'doctrine',           // <= Будет использована коллекция с алиас `doctrine`
+                Relation::COLLECTION_TYPE => 'doctrine', // <= Will be used collection factory with alias doctrine
                 Relation::SCHEMA => [ /*...*/ ],
             ],
             'tokens' => [
                 Relation::TYPE => Relation::HAS_MANY,
                 Relation::TARGET => Token::class,
-                Relation::COLLECTION_TYPE => \Doctrine\Common\Collections\Collection::class, // <= Совпадение по базовому классу коллекции
+                Relation::COLLECTION_TYPE => \Doctrine\Common\Collections\Collection::class, // <= Will be used collection factory with matching by base class
                 Relation::SCHEMA => [ /*...*/ ],
             ]
         ]
@@ -116,7 +127,7 @@ $schema = [
             'comments' => [
                 Relation::TYPE => Relation::HAS_MANY,
                 Relation::TARGET => Comment::class,
-                Relation::COLLECTION_TYPE => CommentsCollection::class,    // <= Совпадение по классу, который наследует базовый класс
+                Relation::COLLECTION_TYPE => CommentsCollection::class, // <= Will be used collection factory with matching by base class
                 Relation::SCHEMA => [ /*...*/ ],
             ]
         ]
@@ -124,7 +135,7 @@ $schema = [
 ];
 ```
 
-### Определение через аннотации/атрибуты
+#### Via entity annotation
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection;
@@ -138,10 +149,10 @@ use Cycle\Annotated\Annotation\Relation\ManyToMany;
 class User
 {
     #[Column(type: "primary")]
-    protected $id;
+    protected int $id;
     
     #[HasOne(target: Profile::class, load: "eager")]
-    protected $profile;
+    protected Profile $profile;
     
     #[HasMany(target: Friend::class, load: "eager")]
     protected array $friends = [];
@@ -194,7 +205,6 @@ print_r($user->posts);
 You can create your onw collection factories by implementing `Cycle\ORM\Collection\CollectionFactoryInterface` interface
 
 ```php
-
 use Cycle\ORM\Collection\CollectionFactoryInterface
 
 class ArrayCollectionFactory implements CollectionFactoryInterface
@@ -214,5 +224,4 @@ class ArrayCollectionFactory implements CollectionFactoryInterface
         };
     }
 }
-
 ```

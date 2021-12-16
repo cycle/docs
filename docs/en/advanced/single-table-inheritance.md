@@ -6,7 +6,6 @@ class hierarchy.
 The ORM provides the ability to store multiple model variations inside one table. In order to achieve that you must
 extend your parent entity and declare relations/columns specific to the child.
 
-
 <img width="826" alt="Single Inheritance" src="https://user-images.githubusercontent.com/773481/144869132-f7f32a00-aa84-4e70-8ccc-3c7e26860bba.png">
 
 ## Definition via attributes

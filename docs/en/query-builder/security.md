@@ -1,6 +1,6 @@
 # Security
 
-Cycle query builder will automatically pass all of the used parameters as part of the prepared statement. However, you
+Cycle ORM query builder will automatically pass all of the used parameters as part of the prepared statement. However, you
 have to remember that column and table names have to be escaped on the application level.
 
 ## Identifiers
