@@ -1,7 +1,5 @@
 # Embeddings
 
-[//]: # (TODO возможно стоит удалить, т.к. дублирует раздел relations/embedded)
-
 The ORM can simplify the definition of large entities by providing the ability to split some of the columns into an
 embedded entity. Embedded entities by default will always be loaded with the parent object. However, partial entity
 selection is possible as well.

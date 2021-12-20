@@ -44,9 +44,8 @@ That's it. Now you can use all benefits of this package.
 ### Available behaviors
 
 - [UUID](/docs/en/entity-behaviors/uuid.md)
-- [CreatedAt и UpdatedAt](/docs/en/entity-behaviors/timestamps.md)
+- [CreatedAt and UpdatedAt](/docs/en/entity-behaviors/timestamps.md)
 - [SoftDelete](/docs/en/entity-behaviors/soft-delete.md)
 - [OptimisticLock](/docs/en/entity-behaviors/optimistic-lock.md)
 - [Hook](/docs/en/entity-behaviors/hooks.md)
 - [EventListener](/docs/en/entity-behaviors/event-listener.md)
-

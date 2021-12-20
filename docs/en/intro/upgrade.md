@@ -92,12 +92,8 @@ Default mapper `Cycle\ORM\Mapper\Mapper` is completely reworked. Now it works as
 instead of `laminas/laminas-hydrator` - `Cycle\ORM\Mapper\Proxy\Hydrator\ClosureHydrator` and it works faster and
 supports private and typed entity properties.
 
-[//]: # (TODO добавить ссылку на страницу с документацией по Mapper'ам)
-
 Pay attention that `Cycle\ORM\MapperInterface` has BC changes, and you need to rework your custom mappers. 
 `queueDelete()`, `queueUpdate()` and `queueCreate()` methods also has been changed.
-
-[//]: # (TODO Выбрать вариант )
 
 > Custom mappers like `SoftDeleteMapper`, `OptimisticLockMapper`, `UuidMapper` in the ORM v2.0 can be implemented 
 > via [macros](/docs/en/entity-behaviors/install.md)

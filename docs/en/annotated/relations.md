@@ -1,7 +1,5 @@
 # Relations
 
-[//]: # (TODO возможно стоит удалить, т.к. дублирует раздел relations/*)
-
 The Cycle Annotated package provides multiple annotations designed to describe entity relations. Each relation must be
 associated with specific entity properties in order to work. In addition, most of the relation options (such as the name
 of inner, outer keys) will be generated automatically.
