@@ -1,10 +1,12 @@
 # Database - Migrations
 
-Spiral ships with a set of embedded commands to control your database 
-migrations, [component](https://github.com/cycle/migrations) is build upon DBAL and supports virtual databases and 
-prefixes.
+Migrations are a convenient way for you to alter your database in a structured and organized manner. This package adds
+additional functionality for versioning your database schema and easily deploying changes to it. It is a very easy to
+use and a powerful tool.
 
-```php
+## Installation
+
+```bash
 composer require cycle/migrations
 ```
 
@@ -32,7 +34,7 @@ $migrator->configure();
 You can automatically generate a set of migration files during schema compilation. In this case, you have the freedom to
 alter such migrations manually before running them. To achieve that you must install the Cycle Migrations extension:
 
-```php
+```bash
 composer require cycle/schema-migrations-generator
 ```
 
