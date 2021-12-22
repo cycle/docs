@@ -2,7 +2,7 @@
 
 Though the usage of annotated entities provides a very easy way to configure your ORM and Database schema, you might
 want to use some alternative schema declaration notation, or perform some calculations on the ORM schema (for example
-default values, custom columns and etc). This functionality is available in `cycle/schema-builder` extension.
+default values, custom columns, etc.). This functionality is available in `cycle/schema-builder` extension.
 
 ## Manually Define Entity
 

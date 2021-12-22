@@ -215,12 +215,13 @@ In addition to config driven setup you are able to configure your database conne
 
 ```php
 use Cycle\Database;
+use Cycle\Database\Config;
 
 $dbal->addDatabase(new Database\Database(
   'name',
   'prefix_',
   new Database\Driver\SQLite\SQLiteDriver(
-    new \Config\PostgresDriverConfig(
+    new Config\PostgresDriverConfig(
         connection: new Config\Postgres\TcpConnectionConfig(
             database: 'spiral',
             host: '127.0.0.1',
@@ -235,4 +236,5 @@ $dbal->addDatabase(new Database\Database(
 ));
 ```
 
-> This approach can be useful to test your application using database mocks. Attention, DBAL would not allow you to overwrite already exists database, you must explicitly configure empty `DatabaseManager`.
+> This approach can be useful to test your application using database mocks. Attention, DBAL would not allow you to 
+> overwrite already exists database, you must explicitly configure empty `DatabaseManager`.

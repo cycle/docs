@@ -118,7 +118,7 @@ You can transfer a related entity between two parents:
 $u1 = $orm->getRespository(User::class)->select()->load('address')->wherePK(1)->fetchOne();
 
 $u2 = new User();
-$u2->setAddress($u->getAddress());
+$u2->setAddress($u1->getAddress());
 $u1->setAddress(null);
 
 $manager = new \Cycle\ORM\EntityManager($orm);
