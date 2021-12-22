@@ -24,11 +24,11 @@ machine.
 ```php
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\ORM\Entity\Behavior;
+use Cycle\ORM\Entity\Behavior\Uuid\Uuid1;
 use Ramsey\Uuid\UuidInterface;
 
 #[Entity]
-#[Behavior\Uuid1(field: 'uuid', node: '00000fffffff', clockSeq: 0xffff)]
+#[Uuid1(field: 'uuid', node: '00000fffffff', clockSeq: 0xffff)]
 class User
 {
     #[Column(type: 'uuid', primary: true)]
@@ -45,12 +45,12 @@ group ID of the local account that created the UUID.
 ```php
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\ORM\Entity\Behavior;
+use Cycle\ORM\Entity\Behavior\Uuid\Uuid2;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
 #[Entity]
-#[Behavior\Uuid2(
+#[Uuid2(
     field: 'uuid',
     localDomain: Uuid::DCE_DOMAIN_PERSON, 
     localIdentifier: '12345678', 
@@ -71,13 +71,12 @@ Uses a version 3 (name-based) UUID based on the MD5 hash of a namespace ID and a
 ```php
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\ORM\Entity\Behavior\Uuid\Uuid3Macro;
-use Cycle\ORM\Entity\Behavior;
+use Cycle\ORM\Entity\Behavior\Uuid\Uuid3;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
 #[Entity]
-#[Behavior\Uuid3(
+#[Uuid3(
     field: 'uuid',
     namespace: Uuid::NAMESPACE_URL,
     name: 'https://example.com/foo'
@@ -97,11 +96,11 @@ generated them.
 ```php
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\ORM\Entity\Behavior;
+use Cycle\ORM\Entity\Behavior\Uuid\Uuid4;
 use Ramsey\Uuid\UuidInterface;
 
 #[Entity]
-#[Behavior\Uuid4]
+#[Uuid4]
 class User
 {
     #[Column(field: 'uuid', type: 'uuid', primary: true)]
@@ -116,12 +115,12 @@ Uses a version 5 (name-based) UUID based on the SHA-1 hash of a namespace ID and
 ```php
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\ORM\Entity\Behavior;
+use Cycle\ORM\Entity\Behavior\Uuid\Uuid5;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
 #[Entity]
-#[Behavior\Uuid5(
+#[Uuid5(
     field: 'uuid', 
     namespace: Uuid::NAMESPACE_URL, 
     name: 'https://example.com/foo'
@@ -140,12 +139,12 @@ Ordered-Time Uses a version 6 (ordered-time) UUID from a host ID, sequence numbe
 ```php
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\ORM\Entity\Behavior;
+use Cycle\ORM\Entity\Behavior\Uuid\Uuid6;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
 #[Entity]
-#[Behavior\Uuid6(
+#[Uuid6(
     field: 'uuid', 
     node: '00000fffffff', 
     clockSeq: 0xffff
@@ -157,5 +156,5 @@ class User
 }
 ```
 
-> Note: If you have a custom `uuid` column declaration, it should be compatible ith `Behavior\Uuid*` column type, 
+> Note: If you have a custom `uuid` column declaration, it should be compatible ith `Behavior\Uuid\Uuid*` column type, 
 > otherwise an exception will be thrown.
