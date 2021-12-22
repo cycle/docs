@@ -88,7 +88,6 @@ Table of Contents
 * Internals
   * [Schema](/docs/en/advanced/schema.md)
   * [Entity, Heap, Node, State](/docs/en/advanced/entity.md)
-    [//]: # (  * [Commands and Linked Contexts]&#40;/docs/en/advanced/command.md&#41;)
   * [Entity manager (Unit of Work)](/docs/en/advanced/entity-manager.md)
   * [Mappers](/docs/en/mapper/about.md)
   * [Entity Iterator](/docs/en/advanced/iterator.md)
