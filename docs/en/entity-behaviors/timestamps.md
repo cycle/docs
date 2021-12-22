@@ -9,7 +9,6 @@ automatically saving datetime when a record is created or updated, respectively.
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\ORM\Entity\Behavior;
-use Cycle\ORM\Entity\Behavior;
 
 #[Entity]
 #[Behavior\CreatedAt(
