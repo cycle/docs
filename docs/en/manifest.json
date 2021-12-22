@@ -71,9 +71,9 @@
   {
     "title": "Mapping Schema",
     "links": {
-      "advanced/schema-builder": "Configuring Schema Builder",
-      "advanced/manual": "Manually defined Mapping Schema",
-      "advanced/dynamic-schema": "Dynamic Mapping Schema"
+      "schema/schema-builder": "Configuring Schema Builder",
+      "schema/manual": "Manually defined Mapping Schema",
+      "schema/dynamic-schema": "Dynamic Mapping Schema"
     }
   },
   {
@@ -102,11 +102,22 @@
     }
   },
   {
+    "title": "Mapper",
+    "links": {
+      "mapper/about": "About",
+      "mapper/proxy-mapper": "Proxy Mapper",
+      "mapper/classless-mapper": "Classless Mapper",
+      "mapper/std-mapper": "Std Mapper",
+      "mapper/promise-mapper": "Promise Mapper",
+      "mapper/extending": "Mapper extending",
+      "mapper/reference": "References"
+    }
+  },
+  {
     "title": "Customization",
     "links": {
       "advanced/typecasting": "Typecasting",
       "advanced/default-classes": "Customize Schema Defaults",
-      "advanced/custom-mapper": "Custom Mappers",
       "advanced/scope": "Scopes",
       "advanced/single-table-inheritance": "Single Table Inheritance",
       "advanced/joined-table-inheritance": "Joined Table Inheritance",
@@ -123,7 +134,6 @@
       "advanced/schema": "Schema",
       "advanced/entity": "Entity, Heap, Node, State",
       "advanced/entity-manager": "Entity manager (Unit of Work)",
-      "advanced/mapper": "Mappers",
       "advanced/iterator": "Entity Iterator",
       "advanced/promise": "References and Proxies",
       "advanced/node-parser": "Node Parser"

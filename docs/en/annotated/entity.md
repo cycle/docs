@@ -49,17 +49,17 @@ class User
 
 Following entity options are available for customization:
 
-Option         | Value   | Comment
----------------|---------| ---
-role           | string  | Entity role. Defaults to the lowercase class name without a namespace
-mapper         | class   | Mapper class name. Defaults to `Cycle\ORM\Mapper\Mapper`
-repository     | class   | Repository class to represent read operations for an entity. Defaults to `Cycle\ORM\Select\Repository`
-table          | string  | Entity source table. Defaults to plural form of entity role
-database       | string  | Database name. Defaults to `null` (default database)
-readonlySchema | bool    | Set to `true` to disable schema synchronization for the assigned table. Defaults to `false`
-source         | class   | Entity source class (internal). Defaults to `Cycle\ORM\Select\Source`
-typecast       | class[] | Class name or array of classes of typecast handlers. Defaults to `Cycle\ORM\Parser\Typecast`
-scope          | class   | Class name of scope to be applied to every entity query. Defaults to `null`
+| Option         | Value   | Comment                                                                                                |
+|----------------|---------|--------------------------------------------------------------------------------------------------------|
+| role           | string  | Entity role. Defaults to the lowercase class name without a namespace                                  |
+| mapper         | class   | Mapper class name. Defaults to `Cycle\ORM\Mapper\Mapper`                                               |
+| repository     | class   | Repository class to represent read operations for an entity. Defaults to `Cycle\ORM\Select\Repository` |
+| table          | string  | Entity source table. Defaults to plural form of entity role                                            |
+| database       | string  | Database name. Defaults to `null` (default database)                                                   |
+| readonlySchema | bool    | Set to `true` to disable schema synchronization for the assigned table. Defaults to `false`            |
+| source         | class   | Entity source class (internal). Defaults to `Cycle\ORM\Select\Source`                                  |
+| typecast       | class[] | Class name or array of classes of typecast handlers. Defaults to `Cycle\ORM\Parser\Typecast`           |
+| scope          | class   | Class name of scope to be applied to every entity query. Defaults to `null`                            |
 
 For example, a typical entity description might look like:
 
@@ -201,43 +201,40 @@ class User
 
 Following options are available for configuration:
 
-Option   | Value    | Comment
----------|----------| ---
-type     | string   | Column type with arguments.
-name     | string   | Column name. Defaults to the property name.
-primary  | bool     | Explicitly set column as primary key. Defaults to `false`
-typecast | callable | Column typecast function. Defaults to one of (`int`\|`float`\|`bool`\|`datetime`) based on column type
-nullable | bool     | Set column as nullable. Defaults to `false`
-default  | mixed    | Default column value. Defaults to `none`
+| Option   | Value    | Comment                                                                                                |
+|----------|----------|--------------------------------------------------------------------------------------------------------|
+| type     | string   | Column type with arguments.                                                                            |
+| name     | string   | Column name. Defaults to the property name.                                                            |
+| primary  | bool     | Explicitly set column as primary key. Defaults to `false`                                              |
+| typecast | callable | Column typecast function. Defaults to one of (`int`, `float`, `bool`, `datetime`) based on column type |
+| nullable | bool     | Set column as nullable. Defaults to `false`                                                            |
+| default  | mixed    | Default column value. Defaults to `none`                                                               |
 
 Following column types are available:
 
-Type        | Parameters                | Description
----         | ---                       | ---
-**
-primary**   | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table.
-bigPrimary  | ---                       | Same as primary but uses bigInteger to store its values.
-boolean     | ---                       | Boolean type, some databases will store it as integer (1/0).
-integer     | ---                       | Database specific integer (usually 32 bits).
-tinyInteger | ---                       | Small/tiny integer, check your DBMS to find size limitations.
-bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to find size limitations.
-**
-string**    | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.
-text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.
-tinyText    | ---                       | Tiny text, same as "text" for most of the databases. It differs only in MySQL.
-longText    | ---                       | Long text, same as "text" for most of the databases. It differs only in MySQL.
-double      | ---                       | [Double precision number.](https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
-float       | ---                       | Single precision number, usually mapped into "real" type in the database.
-decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.
-datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.
-date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.
-time        | ---                       | To store time only.
-*
-timestamp*  | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column type in your objects to store time (use `datetime` instead) as timestamps will behave very specific to select DBMS.
-binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.
-tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. It differs only in MySQL.
-longBinary  | ---                       | Long binary, same as "binary" for most of the databases. It differs only in MySQL.
-json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.
+| Type        | Parameters                | Description                                                                                                                                                                                                                                 |
+|-------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| primary**   | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table.                                                                      |
+| bigPrimary  | ---                       | Same as primary but uses bigInteger to store its values.                                                                                                                                                                                    |
+| boolean     | ---                       | Boolean type, some databases will store it as integer (1/0).                                                                                                                                                                                |
+| integer     | ---                       | Database specific integer (usually 32 bits).                                                                                                                                                                                                |
+| tinyInteger | ---                       | Small/tiny integer, check your DBMS to find size limitations.                                                                                                                                                                               |
+| bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to find size limitations.                                                                                                                                                               |
+| string**    | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.                                                                                                                                                 |
+| text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.                                                                                                                                                             |
+| tinyText    | ---                       | Tiny text, same as "text" for most of the databases. It differs only in MySQL.                                                                                                                                                              |
+| longText    | ---                       | Long text, same as "text" for most of the databases. It differs only in MySQL.                                                                                                                                                              |
+| double      | ---                       | [Double precision number.](https://en.wikipedia.org/wiki/Double-precision_floating-point_format)                                                                                                                                            |
+| float       | ---                       | Single precision number, usually mapped into "real" type in the database.                                                                                                                                                                   |
+| decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.                                                                                                                                                                                                  |
+| datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.                                                                                                                                               |
+| date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.                                                                                                                                                            |
+| time        | ---                       | To store time only.                                                                                                                                                                                                                         |
+| timestamp*  | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column type in your objects to store time (use `datetime` instead) as timestamps will behave very specific to select DBMS. |
+| binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.                                                                                                                                                                         |
+| tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. It differs only in MySQL.                                                                                                                                                          |
+| longBinary  | ---                       | Long binary, same as "binary" for most of the databases. It differs only in MySQL.                                                                                                                                                          |
+| json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.                                                                                                                                            |
 
 ## Enums
 

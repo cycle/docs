@@ -132,32 +132,29 @@ ALTER TABLE `primary_new_table`
 As you can notice, DBAL uses a set of "abstract" (common for all DBMS) types to declare table columns. Internally such
 types are mapped to appropriate internal DBMS column type.
 
-Type        | Parameters                | Description
----         | ---                       | ---
-**
-primary** | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table (you can still create a compound primary key, see below).
-bigPrimary  | ---                       | Same as primary but uses `bigInteger` to store its values.
-boolean     | ---                       | Boolean type, some databases store it as an integer (1/0).
-integer     | ---                       | Database specific integer (usually 32 bits).
-tinyInteger | ---                       | Small/tiny integer, check your DBMS to check its size.
-bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check its size.
-**
-string**  | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.
-text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.
-tinyText    | ---                       | Tiny text, same as "text" for most of the databases. Differs only in MySQL.
-longText    | ---                       | Long text, same as "text" for most of the databases. Differs only in MySQL.
-double      | ---                       | [Double precision number.] (https://en.wikipedia.org/wiki/Double-precision_floating-point_format)
-float       | ---                       | Single precision number, usually mapped into "real" type in the database.
-decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.
-datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.
-date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.
-time        | ---                       | To store time only.
-*
-timestamp* | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column in your objects to store time (use DateTime instead) as timestamps will behave very specific to select DBMS.
-binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.
-tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. Differs only in MySQL.
-longBinary  | ---                       | Long binary, same as "binary" for most of the databases. Differs only in MySQL.
-json        | ---                       | To store JSON structures, usually mapped to "text", only Postgres supports it natively.
+| Type        | Parameters                | Description                                                                                                                                                                                                                          |
+|-------------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| primary**   | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table (you can still create a compound primary key, see below).      |
+| bigPrimary  | ---                       | Same as primary but uses `bigInteger` to store its values.                                                                                                                                                                           |
+| boolean     | ---                       | Boolean type, some databases store it as an integer (1/0).                                                                                                                                                                           |
+| integer     | ---                       | Database specific integer (usually 32 bits).                                                                                                                                                                                         |
+| tinyInteger | ---                       | Small/tiny integer, check your DBMS to check its size.                                                                                                                                                                               |
+| bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check its size.                                                                                                                                                               |
+| string**    | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.                                                                                                                                          |
+| text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.                                                                                                                                                      |
+| tinyText    | ---                       | Tiny text, same as "text" for most of the databases. Differs only in MySQL.                                                                                                                                                          |
+| longText    | ---                       | Long text, same as "text" for most of the databases. Differs only in MySQL.                                                                                                                                                          |
+| double      | ---                       | [Double precision number.] (https://en.wikipedia.org/wiki/Double-precision_floating-point_format)                                                                                                                                    |
+| float       | ---                       | Single precision number, usually mapped into "real" type in the database.                                                                                                                                                            |
+| decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.                                                                                                                                                                                           |
+| datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.                                                                                                                                        |
+| date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.                                                                                                                                                     |
+| time        | ---                       | To store time only.                                                                                                                                                                                                                  |
+| timestamp*  | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column in your objects to store time (use DateTime instead) as timestamps will behave very specific to select DBMS. |
+| binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.                                                                                                                                                                  |
+| tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. Differs only in MySQL.                                                                                                                                                      |
+| longBinary  | ---                       | Long binary, same as "binary" for most of the databases. Differs only in MySQL.                                                                                                                                                      |
+| json        | ---                       | To store JSON structures, usually mapped to "text", only Postgres supports it natively.                                                                                                                                              |
 
 > Attention, in some cases the type returned by `ColumnSchema->abstractType()` might not be the same as declared one, 
 > such problem may occur in cases when DBMS uses the same internal type for multiple abstract types (for example most of the databases does not differentiate long/short/medium text and binary types).

@@ -83,5 +83,5 @@ $result = $repository->select()->where('balance', '>', 1)->load('address')->fetc
 ## The repository is read only
 
 Please note, in Cycle ORM the Repository object is only responsible for entity retrieval. All persist operations must be
-handled by [entity manager](/docs/en/advanced/entity-manager.md), [entity mappers](/docs/en/advanced/mapper.md) 
+handled by [entity manager](/docs/en/advanced/entity-manager.md), [entity mappers](/docs/en/mapper/about.md) 
 and [command chains](/docs/en/advanced/command.md).

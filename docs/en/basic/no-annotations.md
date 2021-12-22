@@ -7,9 +7,9 @@ the `cycle/schema-builder` extension to compile it on the fly via OOP wrappers.
 
 There are multiple examples of using the ORM with manually defined mapping schema:
 
-- [Manually defined Mapping Schema](/docs/en/advanced/manual.md)
-- [Dynamic Mapping Schema](/docs/en/advanced/dynamic-schema.md)
-- [Configuring Schema Builder](/docs/en/advanced/schema-builder.md)
+- [Manually defined Mapping Schema](/docs/en/schema/manual.md)
+- [Dynamic Mapping Schema](/docs/en/schema/dynamic-schema.md)
+- [Configuring Schema Builder](/docs/en/schema/schema-builder.md)
 - [Active Record](/docs/en/advanced/active-record.md)
 
 ## Quick Sample

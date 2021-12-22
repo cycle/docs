@@ -96,10 +96,10 @@ Pay attention that `Cycle\ORM\MapperInterface` has BC changes, and you need to r
 `queueDelete()`, `queueUpdate()` and `queueCreate()` methods also has been changed.
 
 > Custom mappers like `SoftDeleteMapper`, `OptimisticLockMapper`, `UuidMapper` in the ORM v2.0 can be implemented 
-> via [macros](/docs/en/entity-behaviors/install.md)
+> via [behaviors](/docs/en/entity-behaviors/install.md)
 
 > Some typical custom mapper use cases like `SoftDelete`, `OptimisticLock` 
-> available in the [macros](/docs/en/entity-behaviors/install.md). 
+> available in the [behaviors](/docs/en/entity-behaviors/install.md). 
 
 ## Constraint
 

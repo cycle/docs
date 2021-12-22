@@ -1,6 +1,6 @@
 # Customize Schema Defaults
 
-You can set default [Repository](/docs/en/basic/repository.md), [Mapper](/docs/en/advanced/mapper.md), Source
+You can set default [Repository](/docs/en/basic/repository.md), [Mapper](/docs/en/mapper/about.md), Source
 or [Scope](/docs/en/advanced/scope.md) for all entity classes
 
 ```php

@@ -81,16 +81,16 @@ class Image
 
 Relation options include:
 
-Option         | Value      | Comment
----            |------------| ----
-load           | lazy/eager | Relation load approach. Defaults to `lazy`
-cascade        | bool       | Automatically save related data with source entity. Defaults to `true`
-nullable       | bool       | Defines if the relation can be nullable (child can have no parent). Defaults to `true`
-innerKey       | string     | Inner key in source entity. Defaults to `{relationName}_{outerKey}`
-outerKey       | string     | Outer key in the related entity. Defaults to primary key
-morphKey       | string     | Name of key to store related entity role. Defaults to `{relationName}_role`
-morphKeyLength | int        | The length of morph key. Defaults to 32
-indexCreate    | bool       | Create an index on morphKey and innerKey. Defaults to `true`
+| Option         | Value      | Comment                                                                                |
+|----------------|------------|----------------------------------------------------------------------------------------|
+| load           | lazy/eager | Relation load approach. Defaults to `lazy`                                             |
+| cascade        | bool       | Automatically save related data with source entity. Defaults to `true`                 |
+| nullable       | bool       | Defines if the relation can be nullable (child can have no parent). Defaults to `true` |
+| innerKey       | string     | Inner key in source entity. Defaults to `{relationName}_{outerKey}`                    |
+| outerKey       | string     | Outer key in the related entity. Defaults to primary key                               |
+| morphKey       | string     | Name of key to store related entity role. Defaults to `{relationName}_role`            |
+| morphKeyLength | int        | The length of morph key. Defaults to 32                                                |
+| indexCreate    | bool       | Create an index on morphKey and innerKey. Defaults to `true`                           |
 
 ### MorphedHasOne
 
@@ -115,16 +115,16 @@ class User
 
 Additional options include:
 
-Option         | Value      | Comment
----            |------------| ----
-load           | lazy/eager | Relation load approach. Defaults to `lazy`
-cascade        | bool       | Automatically save related data with parent entity. Defaults to `true`
-nullable       | bool       | Defines if the relation can be nullable (child can have no parent). Defaults to `false`
-innerKey       | string     | Inner key in parent entity. Defaults to the primary key
-outerKey       | string     | Outer key name. Defaults to `{parentRole}_{innerKey}`
-morphKey       | string     | Name of key to store related entity role. Defaults to `{relationName}_role`
-morphKeyLength | int        | The length of morph key. Defaults to 32
-indexCreate    | bool       | Create an index on morphKey and innerKey. Defaults to `true`
+| Option         | Value      | Comment                                                                                 |
+|----------------|------------|-----------------------------------------------------------------------------------------|
+| load           | lazy/eager | Relation load approach. Defaults to `lazy`                                              |
+| cascade        | bool       | Automatically save related data with parent entity. Defaults to `true`                  |
+| nullable       | bool       | Defines if the relation can be nullable (child can have no parent). Defaults to `false` |
+| innerKey       | string     | Inner key in parent entity. Defaults to the primary key                                 |
+| outerKey       | string     | Outer key name. Defaults to `{parentRole}_{innerKey}`                                   |
+| morphKey       | string     | Name of key to store related entity role. Defaults to `{relationName}_role`             |
+| morphKeyLength | int        | The length of morph key. Defaults to 32                                                 |
+| indexCreate    | bool       | Create an index on morphKey and innerKey. Defaults to `true`                            |
 
 > As in the case with `belongsToMorphed`, FKs are not supported. You can query or eager load this relation as any other relation types.
 
@@ -151,18 +151,18 @@ class User
 
 Additional options include:
 
-Option         | Value      | Comment
----            |------------| ----
-load           | lazy/eager | Relation load approach. Defaults to `lazy`
-cascade        | bool       | Automatically save related data with parent entity. Defaults to `true`
-nullable       | bool       | Defines if the relation can be nullable (child can have no parent). Defaults to `false`
-innerKey       | string     | Inner key in parent entity. Defaults to the primary key
-outerKey       | string     | Outer key name. Defaults to `{parentRole}_{innerKey}`
-where          | array      | Additional where condition to be applied for the relation. Defaults to none.
-morphKey       | string     | Name of key to store related entity role. Defaults to `{relationName}_role`
-morphKeyLength | int        | The length of morph key. Defaults to 32
-indexCreate    | bool       | Create an index on morphKey and innerKey. Defaults to `true`
-collection     | string     | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
+| Option         | Value      | Comment                                                                                                           |
+|----------------|------------|-------------------------------------------------------------------------------------------------------------------|
+| load           | lazy/eager | Relation load approach. Defaults to `lazy`                                                                        |
+| cascade        | bool       | Automatically save related data with parent entity. Defaults to `true`                                            |
+| nullable       | bool       | Defines if the relation can be nullable (child can have no parent). Defaults to `false`                           |
+| innerKey       | string     | Inner key in parent entity. Defaults to the primary key                                                           |
+| outerKey       | string     | Outer key name. Defaults to `{parentRole}_{innerKey}`                                                             |
+| where          | array      | Additional where condition to be applied for the relation. Defaults to none.                                      |
+| morphKey       | string     | Name of key to store related entity role. Defaults to `{relationName}_role`                                       |
+| morphKeyLength | int        | The length of morph key. Defaults to 32                                                                           |
+| indexCreate    | bool       | Create an index on morphKey and innerKey. Defaults to `true`                                                      |
+| collection     | string     | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory` |
 
 > As in case with `belongsToMorphed`, FKs are not supported. You can query or eager load this relation as any other
 > relation types.

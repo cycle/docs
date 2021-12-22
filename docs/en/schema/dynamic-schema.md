@@ -46,7 +46,7 @@ print_r($schema);
 $orm = $orm->with(schema: new \Cycle\ORM\Schema($schema));
 ```
 
-> Use SyncTable [generator](/docs/en/advanced/schema-builder.md) to update your database schema.
+> Use SyncTable [generator](/docs/en/schema/schema-builder.md) to update your database schema.
 
 Relations can also be configured using schema builder:
 

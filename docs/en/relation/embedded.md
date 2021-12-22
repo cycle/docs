@@ -9,7 +9,7 @@ achieved using the `embedded` relation type and might be useful to perform de-co
 relation also allows lazy and eager (default) loading of embedded entities, or the ability to retrieve entities 
 separately (without loading parent model).
 
-> Embedded entities do not support relations at the moment.
+> Embedded entities do not support relations and behaviors at the moment.
 
 ## Definition
 
@@ -64,9 +64,9 @@ Read more about embeddings [here](/docs/en/annotated/embeddings.md).
 
 Embedded relations support the following options:
 
-Option      | Value  | Comment
----         | ---    | ----
-load        | lazy/eager | Relation load approach. Defaults to `eager`)
+| Option | Value      | Comment                                      |
+|--------|------------|----------------------------------------------|
+| load   | lazy/eager | Relation load approach. Defaults to `eager`) |
 
 ## Column Mapping
 

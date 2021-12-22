@@ -57,20 +57,20 @@ class User
 By default, the ORM will generate an outer key in the relation object using the parent entity's role and inner key (
 primary key by default) values. As result column and FK will be added to Post entity on `user_id` column.
 
-Option      | Value                        | Comment
----         |------------------------------| ----
-load        | lazy/eager                   | Relation load approach. Defaults to `lazy`
-cascade     | bool                         | Automatically save related data with parent entity. Defaults to `true`
-nullable    | bool                         | Defines if the relation can be nullable (child can have no parent). Defaults to `false`
-innerKey    | string                       | Inner key in parent entity. Defaults to the primary key
-outerKey    | string                       | Outer key name. Defaults to `{parentRole}_{innerKey}`
-where       | array                        | Additional where condition to be applied for the relation. Defaults to none
-orderBy     | array                        | Additional sorting rules. Defaults to none
-fkCreate    | bool                         | Set to true to automatically create FK on outerKey. Defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
-fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
-indexCreate | bool                         | Create an index on outerKey. Defaults to `true`
-collection  | string                       | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`
+| Option      | Value                        | Comment                                                                                                           |
+|-------------|------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| load        | lazy/eager                   | Relation load approach. Defaults to `lazy`                                                                        |
+| cascade     | bool                         | Automatically save related data with parent entity. Defaults to `true`                                            |
+| nullable    | bool                         | Defines if the relation can be nullable (child can have no parent). Defaults to `false`                           |
+| innerKey    | string                       | Inner key in parent entity. Defaults to the primary key                                                           |
+| outerKey    | string                       | Outer key name. Defaults to `{parentRole}_{innerKey}`                                                             |
+| where       | array                        | Additional where condition to be applied for the relation. Defaults to none                                       |
+| orderBy     | array                        | Additional sorting rules. Defaults to none                                                                        |
+| fkCreate    | bool                         | Set to true to automatically create FK on outerKey. Defaults to `true`                                            |
+| fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`                                                            |
+| fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}                         |
+| indexCreate | bool                         | Create an index on outerKey. Defaults to `true`                                                                   |
+| collection  | string                       | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory` |
 
 ## Usage
 

@@ -91,7 +91,7 @@ use Cycle\Migrations\Capsule;
 $migrator->run(new Capsule($dbal->database()));
 ```
 
-```bash
+```sql
 Rolling back executed migration(s)...
 [MySQLDriver] SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'sample_2' AND `table_name` = 'migrations'
 [MySQLDriver] SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'sample_2' AND `table_name` = 'migrations'
@@ -164,7 +164,7 @@ class NewFieldMigration extends Migration
 }
 ```
 
-```
+```sql
 [MySQLDriver] SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'sample_2' AND `table_name` = 'migrations'
 [MySQLDriver] SELECT COUNT(*) FROM `information_schema`.`tables` WHERE `table_schema` = 'sample_2' AND `table_name` = 'migrations'
 [MySQLDriver] SELECT

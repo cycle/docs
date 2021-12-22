@@ -5,93 +5,8 @@ hydration, and they must issue a set of persist commands which will be processed
 
 ## Interface
 
-You can implement your own Mapper using `Cycle/ORM/MapperInterface`:
-
-```php
-use Cycle\ORM\Command\CommandInterface;
-use Cycle\ORM\Exception\MapperException;
-use Cycle\ORM\Heap\Node;
-use Cycle\ORM\Heap\State;
-
-/**
- * Provides basic capabilities for CRUD operations with given entity class (role).
- */
-interface MapperInterface
-{
-    /**
-     * Get role name mapper is responsible for.
-     */
-    public function getRole(): string;
-
-    /**
-     * Init empty entity object. Returns empty entity.
-     *
-     * @param array $data Raw data. You shouldn't apply typecasting to it.
-     */
-    public function init(array $data, string $role = null): object;
-
-    /**
-     * Cast raw data to configured types.
-     */
-    public function cast(array $data): array;
-
-    /**
-     * Hydrate entity with dataset.
-     *
-     * @template T
-     *
-     * @param object<T> $entity
-     * @param array $data Prepared (typecasted) data
-     *
-     * @throws MapperException
-     *
-     * @return T
-     */
-    public function hydrate(object $entity, array $data): object;
-
-    /**
-     * Extract all values from the entity.
-     */
-    public function extract(object $entity): array;
-
-    /**
-     * Get entity columns.
-     */
-    public function fetchFields(object $entity): array;
-
-    /**
-     * Get entity relation values.
-     */
-    public function fetchRelations(object $entity): array;
-
-    /**
-     * Map entity key->value to database specific column->value.
-     * Original array also will be filtered: unused fields will be removed
-     */
-    public function mapColumns(array &$values): array;
-
-    /**
-     * Initiate chain of commands require to store object and it's data into persistent storage.
-     *
-     * @throws MapperException
-     */
-    public function queueCreate(object $entity, Node $node, State $state): CommandInterface;
-
-    /**
-     * Initiate chain of commands required to update object in the persistent storage.
-     *
-     * @throws MapperException
-     */
-    public function queueUpdate(object $entity, Node $node, State $state): CommandInterface;
-
-    /**
-     * Initiate sequence of of commands required to delete object from the persistent storage.
-     *
-     * @throws MapperException
-     */
-    public function queueDelete(object $entity, Node $node, State $state): CommandInterface;
-}
-```
+You can implement your own Mapper
+using [Cycle/ORM/MapperInterface](https://github.com/cycle/orm/blob/2.x/src/MapperInterface.php):
 
 The ORM will create a mapper using `Spiral\Core\FactoryInterface` which means your Mapper is able to request
 dependencies available in the container associated with ORM Factory.
@@ -104,7 +19,21 @@ Some parameters will be provided by ORM itself, such as:
 
 You are able to use a single Mapper implementation for multiple entities.
 
+## Available mappers
+
+There are different types of mappers out of the box:
+
+- [Proxy Mapper](/docs/en/mapper/proxy-mapper.md) - Provides the ability to carry data over the specific class instances
+  using proxy classes.
+- [Std Mapper](/docs/en/mapper/std-mapper.md) - Provides the ability to carry data over the StdClass objects.
+- [Classless Mapper](/docs/en/mapper/classless-mapper.md) - Provides the ability to create proxy classes on the fly.
+- [Promise Mapper](/docs/en/mapper/promise-mapper.md) - Provides the ability to carry data over the specific class
+  instances with relation promises.
+
 ## Database Mapper
+
+Database Mapper is an abstract mapper, that provides basic capabilities to work with entities persisted in SQL
+databases.
 
 You can implement your own mapper to implement custom entity carrying model but still rely on common SQL functionality.
 Let's define our model first:
@@ -143,7 +72,7 @@ use Cycle\ORM\Schema;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\Mapper\DatabaseMapper;
 
-class CustomMapper extends DatabaseMapper
+final class CustomMapper extends DatabaseMapper
 {
     private string $class;
 
@@ -183,7 +112,15 @@ class CustomMapper extends DatabaseMapper
         // fetch entity fields and ignore custom columns
         return array_intersect_key(
             $this->extract($entity),
-            array_flip($this->columns)
+            $this->columns + $this->parentColumns
+        );
+    }
+    
+    public function fetchRelations(object $entity): array
+    {
+        return array_intersect_key(
+            $this->extract($entity),
+            $this->relationMap->getRelations()
         );
     }
 }

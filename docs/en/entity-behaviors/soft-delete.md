@@ -4,7 +4,7 @@ Adds a `deleted_at` column which defines if a record has been marked as deleted 
 a highly complicated system where data consistency is important and even if some data should be invisible in the
 backend, it should still remain in the database.
 
-## Usage:
+## Usage
 
 ```php
 <?php

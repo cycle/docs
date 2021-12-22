@@ -7,6 +7,8 @@ The package provides extended command generator (`Cycle\ORM\Entity\Behavior\Even
 fire events on create, update and delete entity. The generator dispatch several events, allowing you to hook into the
 following moments in a entity's lifecycle: creating, created, updating, updated,deleting and deleted.
 
+> Note: Embedded entities do not support behaviors at the moment.
+
 ## Installation
 
 The package is available via composer and can be installed using the following command:

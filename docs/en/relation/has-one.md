@@ -29,17 +29,17 @@ class User
 By default, ORM will generate an outer key in relation object using the parent entity's role and inner key (primary key
 by default) values. As result column and FK will be added to Address entity on `user_id` column.
 
-Option      | Value  | Comment
----         | ---    | ----
-load        | lazy/eager | Relation load approach. Defaults to `lazy`
-cascade     | bool   | Automatically save related data with parent entity. Defaults to `true`
-nullable    | bool   | Defines if relation can be nullable (child can have no parent). Defaults to `false`
-innerKey    | string | Inner key in parent entity. Defaults to primary key
-outerKey    | string | Outer key name. Defaults to `{parentRole}_{innerKey}`
-fkCreate    | bool   | Set to true to automatically create FK on outerKey. Defaults to `true`
-fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`
-fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}
-indexCreate | bool   | Create index on outerKey. Defaults to `true`
+| Option      | Value                        | Comment                                                                                   |
+|-------------|------------------------------|-------------------------------------------------------------------------------------------|
+| load        | lazy/eager                   | Relation load approach. Defaults to `lazy`                                                |
+| cascade     | bool                         | Automatically save related data with parent entity. Defaults to `true`                    |
+| nullable    | bool                         | Defines if relation can be nullable (child can have no parent). Defaults to `false`       |
+| innerKey    | string                       | Inner key in parent entity. Defaults to primary key                                       |
+| outerKey    | string                       | Outer key name. Defaults to `{parentRole}_{innerKey}`                                     |
+| fkCreate    | bool                         | Set to true to automatically create FK on outerKey. Defaults to `true`                    |
+| fkAction    | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `CASCADE`                                    |
+| fkOnDelete  | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction} |
+| indexCreate | bool                         | Create index on outerKey. Defaults to `true`                                              |
 
 ## Usage
 

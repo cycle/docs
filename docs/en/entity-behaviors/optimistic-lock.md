@@ -16,7 +16,7 @@ has been modified by someone else already.
 - `MANUAL` - Allows using custom realisation for setting and controlling version. You have to manage entity and DB
   column by yourself.
 
-## Usage:
+## Usage
 
 ```php
 use Cycle\Annotated\Annotation\Column;

@@ -136,7 +136,7 @@ $user->setName("John");
 > Note, in this case, ORM can not automatically migrate your database schema.
 
 Read more about other ways to declare a mapping schema in later sections of the ORM documentation (for
-example [dynamic mapping](/docs/en/advanced/dynamic-schema.md#example)).
+example [dynamic mapping](/docs/en/schema/dynamic-schema.md#example)).
 
 ## Define Entity
 
