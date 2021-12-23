@@ -23,8 +23,8 @@ Update the following dependencies in your composer.json file:
 - `cycle/proxy-factory` is no longer needed
 - `cycle/annotated` to `^3.0`
 - `cycle/schema-builder` to `^2.0`
-- `cycle/migrations:^1.0` replace with `cycle/schema-migrations-generator:^1.0`
-- `spiral/migrations` replace with `cycle/migrations:^2.0`
+- `cycle/migrations:^1.0` replace with `cycle/schema-migrations-generator:^2.0`
+- `spiral/migrations` replace with `cycle/migrations:^3.0`
 
 ## Namespaces
 
