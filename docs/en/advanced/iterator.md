@@ -23,22 +23,26 @@ collection must be a tree of entities data.
 > Since Cycle ORM works with entity state using dirty state approach it is possible to load results partially (if default 
 > entity values are null and does not trigger updates).
 
-[//]: # (TODO Iterator будет создаваться через static метод. Переделать этот момент)
-
 ```php
 $data = [
     ['id' => 1, 'name' => 'Antony'],
     ['id' => 2, 'name' => 'John']
 ];
 
-$iterator = new \Cycle\ORM\Iterator($orm, 'user', $data);
+$iterator =  \Cycle\ORM\Iterator::createWithOrm($orm, 'user', $data);
 ```
 
 By default, iterator object requires prepared data collection (cast to proper types) and won't cast them automatically. 
 If you pass a raw data collection (without typecasting) you have to set `typecast` argument to `true`.
 
 ```php
-$iterator = new \Cycle\ORM\Iterator($orm, 'user', $rawData, typecast: true);
+$iterator = \Cycle\ORM\Iterator::createWithOrm($orm, 'user', $rawData, typecast: true);
+```
+
+Also, it is possible to create an Iterator with the required services, instead of an ORM object:
+
+```php
+$iterator = \Cycle\ORM\Iterator::createWithServices($heap, $schema, $entityProvider, $role, $data);
 ```
 
 ## Pre-filtering
