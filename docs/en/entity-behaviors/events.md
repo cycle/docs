@@ -41,31 +41,6 @@ public function onCreate(Command\OnCreate $event): void
 }
 ```
 
-[//]: # (## AfterCreate)
-
-[//]: # ()
-[//]: # (The event will dispatch after an entity is stored to the database.)
-
-[//]: # ()
-[//]: # (```php)
-
-[//]: # (use Cycle\ORM\Entity\Behavior\Event\Mapper\Command;)
-
-[//]: # ()
-[//]: # (public function afterCreate&#40;Command\AfterCreate $event&#41;: void)
-
-[//]: # ({)
-
-[//]: # (    $this->notificationService->send&#40;)
-
-[//]: # (        new UserRegisteredNotification&#40;$event->entity&#41;;)
-
-[//]: # (    &#41;;)
-
-[//]: # (})
-
-[//]: # (```)
-
 ## OnUpdate
 
 The event will dispatch before an entity is updated in the database.
@@ -81,15 +56,12 @@ public function onUpdate(Command\OnUpdate $event): void
 
 [//]: # (## AfterUpdate)
 
-[//]: # ()
 [//]: # (The event will dispatch after an entity is updated in the database.)
 
-[//]: # ()
 [//]: # (```php)
 
 [//]: # (use Cycle\ORM\Entity\Behavior\Event\Mapper\Command;)
 
-[//]: # ()
 [//]: # (public function afterUpdate&#40;Command\AfterUpdate $event&#41;: void)
 
 [//]: # ({)
@@ -136,15 +108,12 @@ public function onDelete(Command\OnDelete $event): void
 
 [//]: # (## AfterDelete)
 
-[//]: # ()
 [//]: # (The event will dispatch after an entity is deleted from the database.)
 
-[//]: # ()
 [//]: # (```php)
 
 [//]: # (use Cycle\ORM\Entity\Behavior\Event\Mapper\Command;)
 
-[//]: # ()
 [//]: # (public function afterDelete&#40;Command\AfterDelete $event&#41;: void)
 
 [//]: # ({)

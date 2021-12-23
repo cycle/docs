@@ -92,9 +92,6 @@ your [application container](/docs/en/entity-behaviors/install.md).
 ## Available events:
 
 - [OnCreate](/docs/en/entity-behaviors/events.md#oncreate)
-- [AfterCreate](/docs/en/entity-behaviors/events.md#aftercreate)
 - [OnUpdate](/docs/en/entity-behaviors/events.md#onupdate)
-- [AfterUpdate](/docs/en/entity-behaviors/events.md#afterupdate)
 - [OnDelete](/docs/en/entity-behaviors/events.md#ondelete)
-- [AfterDelete](/docs/en/entity-behaviors/events.md#afterdelete)
 
