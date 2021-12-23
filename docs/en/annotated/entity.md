@@ -61,7 +61,7 @@ table          | string | Entity source table. Defaults to plural form of entity
 database       | string | Database name. Defaults to `null` (default database)
 readonlySchema | bool   | Set to `true` to disable schema synchronization for the assigned table. Defaults to `false`
 source         | class  | Entity source class (internal). Defaults to `Cycle\ORM\Select\Source`
-constrain      | class  | Class name of constraint to be applied to every entity query. Defaults to `null`
+scope          | class  | Class name of scope to be applied to every entity query. Defaults to `null`
 
 For example, a  typical entity description might look like:
 
@@ -72,7 +72,7 @@ use Cycle\Annotated\Annotation\Entity;
  * @Entity(
  *    table      = "users",
  *    repository = "Repository\UserRepository",
- *    constrain  = "Constrain/SortByID"
+ *    scope      = "Scope/SortByID"
  * )
  */
 class User
@@ -250,7 +250,7 @@ class User
 > The column definition is identical to the one used for the property.
 
 ## Merging annotations
-The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source, Repository and Constrain classes. This approach can be useful in cases when you want to implement domain functionality like auto timestamps or soft deletes.
+The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source, Repository and Scope classes. This approach can be useful in cases when you want to implement domain functionality like auto timestamps or soft deletes.
 
 ```php
 /**

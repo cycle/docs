@@ -26,7 +26,7 @@ Features
 - designed to work in long-running applications: immutable service core, disposable UoW
 - supports MySQL, MariaDB, PostgresSQL, SQLServer, SQLite
 - schema scaffolding, introspection, and migrations
-- supports global query constraints, UUIDs as PK, soft deletes, auto timestamps
+- supports global query scopes, UUIDs as PK, soft deletes, auto timestamps
 - custom column types, FKs to non-primary columns
 - use with or without annotations, proxy classes, and auto-migrations
 - compatible with Doctrine Collections, Doctrine Annotations, and Zend Hydrator

@@ -32,4 +32,4 @@ You have to remember that fetching entities from the repository might return any
 $posts = $orm->getRepository(Post::class)->findAll();
 ```
 
-You are currently not allowed to assign custom repositories or constrains to child entities. However, you can use `_type` in your queries to pre-filter the selection.
+You are currently not allowed to assign custom repositories or scopes to child entities. However, you can use `_type` in your queries to pre-filter the selection.

@@ -1,5 +1,5 @@
 # Soft Deleted Entities
-The soft deletion functionality can be achieved by applying a custom delete strategy in the mapper, combined with a global entity constrain to limit the selection.
+The soft deletion functionality can be achieved by applying a custom delete strategy in the mapper, combined with a global entity scope to limit the selection.
 
 ## Mapper
 You can alter the `queueDelete` method of the mapper and replace it with an `Update` command instead:
@@ -70,13 +70,13 @@ $tr->delete($user);
 $tr->run();
 ```
 
-## Constrain
-To filter out deleted entities create the constraint:
+## Scope
+To filter out deleted entities create the scope:
 
 ```php
 use Cycle\ORM\Select;
 
-class NotDeletedConstrain implements Select\ConstrainInterface
+class NotDeletedScope implements Select\ScopeInterface
 {
     public function apply(Select\QueryBuilder $query)
     {
@@ -86,10 +86,10 @@ class NotDeletedConstrain implements Select\ConstrainInterface
 ```
 
 ## Usage
-To enable soft deletes for your entity associate the newly created mapper and constrain with it:
+To enable soft deletes for your entity associate the newly created mapper and scope with it:
 
 ```php
-/** @Entity(mapper="SoftDeletedMapper", constrain="NotDeletedConstrain") */
+/** @Entity(mapper="SoftDeletedMapper", scope="NotDeletedScope") */
 class User
 {
     // ...
@@ -99,9 +99,9 @@ class User
 Now all entity deletes will issue Update commands instead.
 
 ## Select Deleted
-You can select deleted entities from the database by disabling your select constrain:
+You can select deleted entities from the database by disabling your select scope:
 
 ```php
 $userSelect = $orm->getRepository(User::class)->select();
-$userSelect->constrain(null);
+$userSelect->scope(null);
 ```

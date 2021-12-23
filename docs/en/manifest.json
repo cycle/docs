@@ -105,7 +105,7 @@
     "links": {
       "advanced/default-classes": "Customize Schema Defaults",
       "advanced/custom-mapper": "Custom Mappers",
-      "advanced/constrain": "Constrains",
+      "advanced/scope": "Scopes",
       "advanced/single-table-inheritance": "Single Table Inheritance",
       "advanced/caching": "Caching",
       "advanced/pagination": "Pagination",

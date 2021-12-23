@@ -107,7 +107,7 @@ It is also required to create new entities using role specification instead of `
 $user = $orm->make('user', [/* fields* /]);
 ```
 
-> You can freely assign custom repositories and constraints to your entities.
+> You can freely assign custom repositories and scopes to your entities.
 
 ## Example
 ```php
