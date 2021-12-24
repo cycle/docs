@@ -129,6 +129,17 @@ $orm->with(
 );
 ```
 
+## Manual Iterator creation
+
+> Likelihood of impact: Medium
+
+Since Cycle ORM v2.0, need to create a `Cycle\ORM\Iterator` object using the static methods `createWithOrm` 
+or `createWithServices`:
+
+```php
+$iterator =  \Cycle\ORM\Iterator::createWithOrm($orm, 'user', $data);
+```
+
 ## Entity annotations
 
 > Likelihood of impact: Optional
