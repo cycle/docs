@@ -42,7 +42,7 @@ $iterator = \Cycle\ORM\Iterator::createWithOrm($orm, 'user', $rawData, typecast:
 Also, it is possible to create an Iterator with the required services, instead of an ORM object:
 
 ```php
-$iterator = \Cycle\ORM\Iterator::createWithServices($heap, $schema, $entityProvider, $role, $data);
+$iterator = \Cycle\ORM\Iterator::createWithServices($heap, $schema, $entityFactory, $role, $data);
 ```
 
 ## Pre-filtering
@@ -68,7 +68,7 @@ function filterByExternal(ORM\Select $select, $value): \Generator
 
 // ...
 
-foreach (new ORM\Iterator($orm, User::class, filterByExternal($select, $value)) as $user) {
+foreach (ORM\Iterator::createWithOrm($orm, User::class, filterByExternal($select, $value)) as $user) {
     print_r($user);
 }
 ```
