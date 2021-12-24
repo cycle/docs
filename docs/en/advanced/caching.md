@@ -25,7 +25,7 @@ In order to unpack cached information simply push given data into `Cycle\ORM\Ite
 ```php
 $userData = $cacheStore->get('user-data');
 
-$users = new Iterator($orm, User::class, $userData);
+$users = Iterator::createWithOrm($orm, User::class, $userData);
 ```
 
 ## Caching in Heap
