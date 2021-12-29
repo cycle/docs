@@ -6,10 +6,12 @@ Scopes are used to define global query limits or/and filter entity by one of its
 
 In some cases, you can disable scope usage on root query to get access to unfiltered entities. Use `$select->scope(null)` to do that.
 
-> Since Cycle ORM version 1.5.0, the Cycle\ORM\Select\ConstrainInterface and the constrain method of the Cycle\ORM\Select were marked as deprecated and will be removed in Cycle 2.0. Use Cycle\ORM\Select\ScopeInterface and scope method instead.
+> Since Cycle ORM version 1.5.0, the `Cycle\ORM\Select\ConstrainInterface` and
+> the `Cycle\ORM\Select::constrain()` method marked as deprecated and will be removed in Cycle 2.0.
+> Use `Cycle\ORM\Select\ScopeInterface` and scope method instead.
 
 ## Example
-A simple example can demonstrate how to only select entities which are not marked as `deleted`:
+The following example demonstrates how to select entities which aren't marked as `deleted`:
 
 ```php
 use Cycle\ORM\Select;
