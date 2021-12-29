@@ -8,7 +8,7 @@ In some cases, you can disable scope usage on root query to get access to unfilt
 
 > Since Cycle ORM version 1.5.0, the `Cycle\ORM\Select\ConstrainInterface` and
 > the `Cycle\ORM\Select::constrain()` method marked as deprecated and will be removed in Cycle 2.0.
-> Use `Cycle\ORM\Select\ScopeInterface` and scope method instead.
+> Use the `Cycle\ORM\Select\ScopeInterface` and the `Cycle\ORM\Select::scope()` method instead.
 
 ## Example
 The following example demonstrates how to select entities which aren't marked as `deleted`:
