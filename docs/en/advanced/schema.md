@@ -37,7 +37,7 @@ FIND_BY_KEYS | array | List of fields used to reference entity by other entity r
 COLUMNS      | array | Associative array of field names assigned with the table column name.
 RELATIONS    | array | List of relations assigned to the given entity, see below.
 CHILDREN     | array | List of classes which extends given entity class. Used for Single Table Inheritance.
-CONSTRAIN    | class | Class name to represent the constraint applied to all entity queries. Defaults to none.
+SCOPE        | class | Class name to represent the scope applied to all entity queries. Defaults to none.
 TYPECAST     | array | Associated array of fields with assigned typecast functions.
 SCHEMA       | array | Optional section, reserved for custom mapper implementations.
 

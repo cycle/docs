@@ -28,8 +28,8 @@ print_r($r->withActive()->findAll());
 
 > You can chain as many scope methods as you want, make sure to keep the repository state immutable.
 
-## Disable the Constrain
-If you use entity constraint (for example soft-deleted) you can alter your underlying select query to disable it in specific cases:
+## Disable the Scope
+If you use entity scope (for example soft-deleted) you can alter your underlying select query to disable it in specific cases:
 
 ```php
 class UserRepository extends \Cycle\ORM\Select\Repository
@@ -37,7 +37,7 @@ class UserRepository extends \Cycle\ORM\Select\Repository
     public function withDeleted(): self
     {
         $r = clone $this;
-        $r->select->constrain(null);
+        $r->select->scope(null);
 
         return $r;
     }

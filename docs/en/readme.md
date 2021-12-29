@@ -68,7 +68,7 @@ Table of Contents
 * Customization
   * [Customize Schema Defaults](/docs/en/advanced/default-classes.md)
   * [Custom Mappers](/docs/en/advanced/custom-mapper.md)
-  * [Constrains](/docs/en/advanced/constrain.md)
+  * [Scopes](/docs/en/advanced/scope.md)
   * [Single Table Inheritance](/docs/en/advanced/single-table-inheritance.md)
   * [Caching](/docs/en/advanced/caching.md)
   * [Pagination](/docs/en/advanced/pagination.md)
