@@ -81,6 +81,20 @@ Proxy usage applies a set of limitations on your entities:
 - Create entity classes without considering it might be a proxy object. There can be used typed and private properties
   in entities. Properties with relations won't contain `Cycle\ORM\Reference\ReferenceInterface`, they will contain real
   types.
+- Using lazy loaded relations as PHP links may not be possible because the magic method `__get()` can't return links.
+  ```php
+  $post->tags[] = new Tag(); // Indirect modification of overloaded property Post::$tags has no effect
+  $comments = &$post->comments; // Indirect modification of overloaded property Post::$comments has no effect
+  ```
+  In this case you should preload a lazy relation:
+  ```php
+  // Load tags
+  $post->tags;
+  $post->tags[] = new Tag();
+  // Load comments
+  $post->comments;
+  $comments = &$post->comments;
+  ```
 
 > Note: All proxy entities implement `\Cycle\ORM\EntityProxyInterface` interface.
 
