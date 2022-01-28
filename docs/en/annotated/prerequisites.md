@@ -24,7 +24,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),             // re-declared table schemas (remove columns)
     new Annotated\Embeddings($classLocator),        // register embeddable entities
     new Annotated\Entities($classLocator),          // register annotated entities
-    new Annotated\TableInheritance($classLocator),  // register STI/JTI
+    new Annotated\TableInheritance(),               // register STI/JTI
     new Annotated\MergeColumns(),                   // add @Table column declarations
     new Schema\Generator\GenerateRelations(),       // generate entity relations
     new Schema\Generator\GenerateModifiers(),       // generate changes from schema modifiers

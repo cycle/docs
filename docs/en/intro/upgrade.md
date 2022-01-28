@@ -159,7 +159,7 @@ to use new features you have to add them to the schema compiler pipeline.
     new Schema\Generator\ResetTables(),
     new Annotated\Embeddings($classLocator),
     new Annotated\Entities($classLocator),
-    new Annotated\TableInheritance($classLocator),  // <------ register STI/JTI
+    new Annotated\TableInheritance(),               // <------ register STI/JTI
     new Annotated\MergeColumns(),
     new Schema\Generator\GenerateRelations(), 
     new Schema\Generator\GenerateModifiers(),       // <----- generate changes from schema modifiers
