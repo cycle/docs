@@ -24,7 +24,7 @@ print_r($dbal->database());
 print_r($dbal->database('default'));
 
 //Secondary
-print_r($dbal->database('slave'));
+print_r($dbal->database('secondary'));
 ```
 
 ## Run Queries
