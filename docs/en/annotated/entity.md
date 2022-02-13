@@ -15,7 +15,7 @@ class User
 
 ## Entity
 
-Usually, the single attribute `#[Entity]` is enough to describe your model. In this case, Cycle ORN will automatically
+Usually, the single attribute `#[Entity]` is enough to describe your model. In this case, Cycle ORM will automatically
 assign the generated table name and role based on the class name. In the case of `User` the role will be `user`,
 database `null` (default) and table `users`.
 
