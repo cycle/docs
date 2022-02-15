@@ -19,7 +19,7 @@ use Cycle\Migrations;
 
 $config = new Migrations\Config\MigrationConfig([
     'directory' => __DIR__ . '/../migrations/',    // where to store migrations
-    'table'     => 'migrations'                    // database table to store migration status
+    'table'     => 'migrations',                   // database table to store migration status
     'safe'      => true                            // When set to true no confirmation will be requested on migration run. 
 ]);
 
