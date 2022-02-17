@@ -28,7 +28,7 @@ class User
 
     // ...
 
-    public function addComment(Comment $c)
+    public function addComment(Comment $c): void
     {
         $this->lastComment = $c;
         $this->comments[] = $c;
@@ -39,7 +39,7 @@ class User
         $this->lastComment = null;
     }
     
-    public function getLastComment(): void
+    public function getLastComment(): ?Comment
     {
         return $this->lastComment;
     }
