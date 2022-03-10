@@ -135,7 +135,6 @@
       "advanced/entity": "Entity, Heap, Node, State",
       "advanced/entity-manager": "Entity manager (Unit of Work)",
       "advanced/iterator": "Entity Iterator",
-      "advanced/promise": "References and Proxies",
       "advanced/node-parser": "Node Parser"
     }
   },
