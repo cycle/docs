@@ -102,6 +102,8 @@ final class UuidTypecast implements CastableInterface, UncastableInterface
 ```
 ## Annotation typecast handlers
 
+Finally, you should add `typecast` attribute to property which should processed by `UuidTypecast`.
+
 ```php
 use Cycle\Annotated\Annotation\Entity;
 
@@ -114,6 +116,7 @@ use Cycle\Annotated\Annotation\Entity;
 )]
 class User
 {
-    // ...
+    #[Cycle\Column(type: 'string', typecast: 'uuid')]
+    public string $uuid;
 }
 ```
