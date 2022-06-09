@@ -102,7 +102,6 @@ Following values are available for the configuration:
 
 You can keep your pivot entity empty, the only requirement is to have defined a primary key.
 
-> Note, current implementation includes a typo in the pivot table definition, `though` => `through`.
 
 ## Usage
 
