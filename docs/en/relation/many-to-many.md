@@ -22,7 +22,7 @@ class User
 {
     // ...
 
-    #[ManyToMany(target: Tag::class, through: UserTag::class, collection: CommentsCollection::class)]
+    #[ManyToMany(target: Tag::class, through: UserTag::class)]
     protected array $tags;
     
     public function getTags(): array
@@ -80,7 +80,7 @@ class Tag
 }
 ```
 
-By default, ORM will generate FK and indexes in `though` entity using the role and primary keys of the linked objects.
+By default, ORM will generate FK and indexes in `through` entity using the role and primary keys of the linked objects.
 Following values are available for the configuration:
 
 | Option         | Value                        | Comment                                                                                                           |
@@ -89,20 +89,19 @@ Following values are available for the configuration:
 | cascade        | bool                         | Automatically save related data with parent entity. Defaults to `false`                                           |
 | innerKey       | string                       | Inner key name in source entity. Defaults to a primary key                                                        |
 | outerKey       | string                       | Outer key name in target entity. Defaults to a primary key                                                        |
-| thoughInnerKey | string                       | Key name connected to the innerKey of source entity. Defaults to `{sourceRole}_{innerKey}`                        |
-| thoughOuterKey | string                       | Key name connected to the outerKey of a related entity. Defaults to `{targetRole}_{outerKey}`                     |
-| thoughWhere    | array                        | Where conditions applied to `though` entity                                                                       |
+| throughInnerKey | string                       | Key name connected to the innerKey of source entity. Defaults to `{sourceRole}_{innerKey}`                        |
+| throughOuterKey | string                       | Key name connected to the outerKey of a related entity. Defaults to `{targetRole}_{outerKey}`                     |
+| throughWhere    | array                        | Where conditions applied to `through` entity                                                                       |
 | where          | array                        | Where conditions applied to a related entity                                                                      |
 | orderBy        | array                        | Additional sorting rules                                                                                          |
-| fkCreate       | bool                         | Set to true to automatically create FK on thoughInnerKey and thoughOuterKey. Defaults to `true`                   |
+| fkCreate       | bool                         | Set to true to automatically create FK on throughInnerKey and throughOuterKey. Defaults to `true`                   |
 | fkAction       | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`                                                           |
 | fkOnDelete     | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}                         |
-| indexCreate    | bool                         | Create index on [thoughInnerKey, thoughOuterKey]. Defaults to `true`                                              |
-| collection     | string                       | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory` |
+| indexCreate    | bool                         | Create index on [throughInnerKey, throughOuterKey]. Defaults to `true`                                              |
+| collection     | string                       | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`. Read more about [relation collections](collections.md). |
 
 You can keep your pivot entity empty, the only requirement is to have defined a primary key.
 
-> Note, current implementation includes a typo in the pivot table definition, `though` => `through`.
 
 ## Usage
 
