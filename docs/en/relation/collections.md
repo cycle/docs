@@ -13,6 +13,8 @@ Collection factory is responsible for creation and filling `*Many` relation coll
 - `Cycle\ORM\Collection\DoctrineCollectionFactory` - uses `doctrine/collections` package (should be installed manually)
 - `Cycle\ORM\Collection\IlluminateCollectionFactory` - uses `illuminate/collection` package (should be installed
   manually)
+- `Cycle\ORM\Tests\Unit\Collection\LoophpCollectionFactoryTest` - uses `loophp\collection` package (should be installed
+  manually)
 
 ### Configuration
 
@@ -89,7 +91,7 @@ $container->bindSingleton(ORM\ORMInterface::class, $orm);
 
 ### Relation collection type definition
 
-#### Via entity schema
+#### Using entity schema
 
 ```php
 class CommentCollection extends \Doctrine\Common\Collections\ArrayCollection {
@@ -135,15 +137,16 @@ $schema = [
 ];
 ```
 
-#### Via entity annotation
+#### Using entity annotation
 
 ```php
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Relation\HasOne;
 use Cycle\Annotated\Annotation\Relation\HasMany;
 use Cycle\Annotated\Annotation\Relation\ManyToMany;
+use loophp\collection\Collection as LoophpCollection;
 
 #[Entity]
 class User
@@ -151,16 +154,16 @@ class User
     #[Column(type: "primary")]
     protected int $id;
     
-    #[HasOne(target: Profile::class, load: "eager")]
-    protected Profile $profile;
-    
-    #[HasMany(target: Friend::class, load: "eager")]
+    #[HasMany(target: Friend::class)]
     protected array $friends = [];
     
-    #[HasMany(target: Profile::class, load: "eager", collection: 'doctrine')]
-    protected ArrayCollection $posts;
+    #[HasMany(target: Post::class, collection: LoophpCollection::class)]
+    protected LoophpCollection $posts = [];
+    
+    #[HasMany(target: Profile::class, collection: 'doctrine')]
+    protected DoctrineCollection $posts;
    
-    #[ManyToMany(target: Tag::class, load: through=TagMap::class, load: "lazy", collection: CommentsCollection::class)]
+    #[ManyToMany(target: Tag::class, load: through=TagMap::class, collection: CommentsCollection::class)]
     protected CommentsCollection $tags;
 }
 ```
