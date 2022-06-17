@@ -9,12 +9,16 @@ Collection factory is responsible for creation and filling `*Many` relation coll
 
 ## Collection factories
 
-- `Cycle\ORM\Collection\ArrayCollectionFactory` - default collection factory, uses PHP arrays as collection.
-- `Cycle\ORM\Collection\DoctrineCollectionFactory` - uses `doctrine/collections` package (should be installed manually)
-- `Cycle\ORM\Collection\IlluminateCollectionFactory` - uses `illuminate/collection` package (should be installed
-  manually)
-- `Cycle\ORM\Tests\Unit\Collection\LoophpCollectionFactoryTest` - uses `loophp\collection` package (should be installed
-  manually)
+| Collection factory class                           | Description                  | Required package        | Since ORM |
+|----------------------------------------------------|------------------------------|-------------------------|-----------|
+| `Cycle\ORM\Collection\ArrayCollectionFactory`      | Uses PHP array as collection | Always available        | 2.0       |
+| `Cycle\ORM\Collection\DoctrineCollectionFactory`   | Doctrine ArrayCollection     | `doctrine/collections`  | 2.0       |
+| `Cycle\ORM\Collection\IlluminateCollectionFactory` | Laravel collection           | `illuminate/collection` | 2.0       |
+| `Cycle\ORM\Collection\LoophpCollectionFactory`     | Loophp collection            | `loophp/collection`     | 2.2       |
+
+> **Note**
+> `DoctrineCollectionFactory` can make an extended `ArrayCollection` insstance that implements the `PivotedCollectionInterface`
+> and can store pivote data for Many to Many relations.
 
 ### Configuration
 
