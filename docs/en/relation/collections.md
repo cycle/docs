@@ -17,8 +17,26 @@ Collection factory is responsible for creation and filling `*Many` relation coll
 | `Cycle\ORM\Collection\LoophpCollectionFactory`     | Loophp collection            | `loophp/collection`     | 2.2       |
 
 > **Note**
-> `DoctrineCollectionFactory` can make an extended `ArrayCollection` insstance that implements the `PivotedCollectionInterface`
+> `ArrayCollectionFactory` has some [limitations](../mapper/proxy-mapper.md#limitations) when it is using with the
+> [Proxy Mapper](../mapper/proxy-mapper.md) and lazy loading.
+> ```php
+> $post->tags[] = new Tag(); // If the relation "tags" isn't loaded then the tag won't be added
+> ```
+>
+> In this case you should be sure the relation is loaded.
+>
+> ```php
+> $post->tags; // Load relation
+> $post->tags[] = new Tag();
+> ```
+
+> **Note**
+> `DoctrineCollectionFactory` can make an extended `ArrayCollection` instance that implements the `PivotedCollectionInterface`
 > and can store pivote data for Many to Many relations.
+
+> **Note**
+> `LoophpCollectionFactory` supports only collections of `loophp\collection\Collection` class. To use a custom
+> implementation of the interface `loophp\collection\Contract\Collection` you should make a custom collection factory.
 
 ### Configuration
 
