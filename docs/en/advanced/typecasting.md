@@ -106,6 +106,7 @@ Finally, you should add `typecast` attribute to property which should processed 
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
+use Ramsey\Uuid\UuidInterface;
 
 #[Entity(
     typecast: [
@@ -117,6 +118,6 @@ use Cycle\Annotated\Annotation\Entity;
 class User
 {
     #[Cycle\Column(type: 'string', typecast: 'uuid')]
-    public string $uuid;
+    public UuidInterface $uuid;
 }
 ```
