@@ -158,3 +158,36 @@ class Uuid implements ValueInterface
 Now, the Uuid column will be stored in a blob form.
 
 > You can also implement the Expression or Parameter interfaces in your column wrapper to achieve more complex logic.
+
+## Enum typecast
+
+The default [Typecast Handlers](./typecasting.md) supports for typecast values to Enum classes since ORM v2.2.0.
+
+> **Note**
+> The ORM and the DBAL support Backed Enums only, not Pure Enums.
+
+```php
+enum UserType: string
+{
+    case Guest = 'guest';
+    case User = 'user';
+    case Admin = 'admin';
+}
+```
+
+To use the ability you should specify the enum class name in the column option `typecast`.
+
+```php
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
+class User
+{
+    #[Column(type: 'primary')]
+    private $id;
+
+    #[Column(type: 'string', typecast: UserType::class)]
+    private UserType $type;
+}
+```
