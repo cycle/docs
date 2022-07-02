@@ -1,15 +1,13 @@
-# Column Wrappers
+# Column values typecast
 
 In some cases, you might want to wrap the value using a custom value object (similarly to DateTime columns which are
-wrapped as DateTimeImmutable). It can be achieved by creating a custom column wrapper and typecasting the column value
+wrapped as `DateTimeImmutable`). It can be achieved by creating a custom column wrapper and typecasting the column value
 to it.
 
-> Note, all column wrappers must be immutable, you have to reassign property value to trigger the change.
+## Typecast using callable
 
-## Example
-
-In order to define a column wrapper, we have to implement an object with a static `typecast` method. We will use a UUID
-column as an example.
+In order to define a column wrapper, we have to implement an object with a static factory method. 
+We will use the UUID column and the `castValue()` method as an example.
 
 ```php
 use Ramsey\Uuid\Uuid as UuidBody;
@@ -35,7 +33,7 @@ final class Uuid
         );
     }
 
-    public static function typecast(string $value, DatabaseInterface $db): static
+    public static function castValue(string $value, DatabaseInterface $db): static
     {
         return new static(
             UuidBody::fromString($value)
@@ -44,14 +42,15 @@ final class Uuid
 }
 ```
 
-> Please note that the `typecast` method will receive the raw value content and the database it's associated with.
-> Make sure to implement the `__toString` method on your wrapper to store it in the database. See below how to use a
-> custom serialization strategy.
+> **Note**
+> The `castValue` method will receive the raw value content and the database it's associated with.
+> Make sure to implement the `__toString` method on your wrapper to store it in the database.
+> See below how to use a custom serialization strategy.
 
-## Assign to entity
+### Assign to entity
 
-To assign a column wrapper to an entity use the column option `typecast`. You can specify typecast as a function name, a
-method name (:: separator), or a class name which defines static method typecast:
+To assign a column wrapper to an entity use the column option `typecast`. You can specify `typecast` as any callable:
+function name, a method name (using `::` separator or declaring as array).
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -63,10 +62,14 @@ class User
     #[Column(type: 'primary')]
     private $id;
 
-    #[Column(type: 'string', typecast: Uuid::class)]
+    #[Column(type: 'string', typecast: [Uuid::class, 'castValue'])]
     private Uuid $uuid;
 }
 ```
+
+> **Note**
+> In the example we've declared a typecast rule to the `uuid` field. By default ORM will process the rule using default
+> [Typecast Handlers](./typecasting.md) that allows using for callables.
 
 We can use this column wrapper after the schema update:
 
@@ -98,7 +101,7 @@ $manager->persist($user);
 $manager->run();
 ```
 
-## Raw Values
+## Uncast Raw Values
 
 In some cases you might want to store values in the database in binary form, you can achieve that by
 implementing `Cycle\Database\Injection\ValueInterface` in order to gain access to low-level query compilation:
@@ -138,7 +141,7 @@ class Uuid implements ValueInterface
         );
     }
 
-    public static function typecast(string $value, DatabaseInterface $db): static
+    public static function castValue(string $value, DatabaseInterface $db): static
     {
         if (is_resource($value)) {
             // postgres
