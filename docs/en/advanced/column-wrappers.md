@@ -191,3 +191,6 @@ class User
     private UserType $type;
 }
 ```
+
+> **Note**
+> All incorrect enum values will be casted to `null`. 
