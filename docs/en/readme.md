@@ -50,7 +50,7 @@ Table of Contents
   * [Manually defined Mapping Schema](/docs/en/schema/manual.md)
   * [Dynamic Mapping Schema](/docs/en/schema/dynamic-schema.md)
 * Columns and Properties
-  * [Column Wrappers](/docs/en/advanced/column-wrappers.md)
+  * [Column wrappers and typecast](/docs/en/advanced/column-wrappers.md)
   * [DateTime properties](/docs/en/advanced/datetime.md)
   * [Composite PK](/docs/en/advanced/composite-pk.md)
 * Databases
