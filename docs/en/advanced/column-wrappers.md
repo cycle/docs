@@ -1,4 +1,4 @@
-# Column values typecast
+# Column wrappers and typecast
 
 In some cases, you might want to wrap the value using a custom value object (similarly to DateTime columns which are
 wrapped as `DateTimeImmutable`). It can be achieved by creating a custom column wrapper and typecasting the column value
@@ -164,6 +164,9 @@ Now, the Uuid column will be stored in a blob form.
 The default [Typecast Handlers](./typecasting.md) supports for typecast values to Enum classes since ORM v2.2.0.
 
 > **Note**
+> You should update the `cycle/annotated` package to v3.2.0 if you want to use the feature in atributes.
+
+> **Note**
 > The ORM and the DBAL support Backed Enums only, not Pure Enums.
 
 ```php
@@ -194,3 +197,47 @@ class User
 
 > **Note**
 > All incorrect enum values will be casted to `null`. 
+
+## Column wrapper
+
+Column wrapper looks like a magical. When you declared in the column option `typecast` a class name, the ORM
+will check the class contains the `typecast` method. If the method exists then ORM will use that method 
+(`DeclaredClass::typecast()`) to create casted value for entity field.
+
+> **Note**
+> Cycle ORM had the column wrapers feature since a 1.x version and by the reason the feature has migrated to v2.0.
+>
+> You should consider that magical behavior when you are declaring some `enum` in the typecast column option:
+> ORM could use `Enum::typecast` method to create casted value instead of the `BackedEnum::tryFrom`.
+
+```php
+enum UserType: string
+{
+    case Guest = 'guest';
+    case User = 'user';
+    case Admin = 'admin';
+
+    public static function typecast(string $value): self
+    {
+        return self::from($value);
+    }
+}
+```
+
+```php
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
+class User
+{
+    #[Column(type: 'primary')]
+    private $id;
+
+    #[Column(
+        type: 'string',
+        typecast: UserType::class // will be converted to [UserType::class, 'typecast']
+    )]
+    private UserType $type;
+}
+```

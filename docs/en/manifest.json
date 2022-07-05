@@ -79,7 +79,7 @@
   {
     "title": "Columns and Properties",
     "links": {
-      "advanced/column-wrappers": "Values typecast",
+      "advanced/column-wrappers": "Column wrappers and typecast",
       "advanced/datetime": "DateTime properties",
       "advanced/composite-pk": "Composite PK"
     }
