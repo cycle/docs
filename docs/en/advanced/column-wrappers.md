@@ -196,7 +196,11 @@ class User
 ```
 
 > **Note**
-> All incorrect enum values will be casted to `null`. 
+> All incorrect enum values will be casted to `null`.
+> And, of course, you can use the `enum` type to create a DB-level restriction:
+> ```php
+> #[Column(type: 'enum(guest,user,admin)', typecast: UserType::class)]
+> ```
 
 ## Column wrapper
 
