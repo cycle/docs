@@ -142,6 +142,7 @@
     "title": "Advanced",
     "links": {
       "advanced/daemonizing": "Long-Running Applications",
+      "advanced/command": "Commands",
       "advanced/testing": "Testing",
       "advanced/limitations": "Limitations"
     }
