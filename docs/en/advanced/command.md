@@ -16,7 +16,7 @@ interface CommandInterface
 {
     /**
      * Must return true when command is ready for the execution. UnitOfWork will throw
-     * an exception if any of the command will stuck in non-ready state.
+     * an exception if any of the command will stuck in non ready state.
      */
     public function isReady(): bool;
 
@@ -37,112 +37,5 @@ interface CommandInterface
 One of the most important methods in commands is `isReady`. This method is used by Transaction to properly sort the
 dependency graph in order to execute commands in the most optimal order.
 
-## Linked Commands
-
-We can review a simple command setup in which one command declares a column which depends on lastInsertID provided by
-another command:
-
-```php
-use Cycle\ORM\Command\Database;
-
-$update = new Database\Update($dbal->database('default'), 'table', $data, $where);
-$insert = new Database\Insert($dbal->database('default'), 'table', $data);
-```
-
-Now we have to declare for the `$update` command to wait for the scope provided by `$insert`:
-
-```php
-// command would be not ready until the scope is provided
-$update->waitScope('some_id');
-```
-
-And ask `$insert` command to forward context value once it's available:
-
-[//]: # (TODO нет такого метода)
-
-```php
-$insert->forward(\Cycle\ORM\Command\Database\Insert::INSERT_ID, $update, 'some_id');
-```
-
-Now, no matter what in which order commands were added to the Transaction the `$update` will always be executed after
-the `$insert` command.
-
-## Joining Commands in Mappers
-
-If you want to implement and issue custom commands you must pick a place where to create them. You can do this inside a
-custom relation `queue` method or alter one of the methods of entity mappers.
-
-Since you can only issue one command from your mapper you can use `Sequence` or `ContextSequence` to merge commands
-together:
-
-> CommandSequence automatically forwards link requests to the primary command.
-
-```php
-use Cycle\ORM\Command;
-use Cycle\ORM\Heap;
-
-// ...
-
-public function queueCreate($entity, Heap\Node $node, Heap\State $state): Command\ContextCarrierInterface
-{
-    $cc = parent::queueCreate($entity, $node, $state);
-
-    $cs = new Command\Branch\ContextSequence();
-    $cs->addPrimary($cc);
-    $cs->addCommand(new CustomCommand());
-
-    return $cs;
-}
-```
-
-## Command Topology
-
-Besides sequences, you also have multiple system commands which can be used to create more complex execution trees.
-
-#### Nil Command
-
-You can use the Nil command to state that no changes must be made:
-
-```php
-use Cycle\ORM\Command;
-use Cycle\ORM\Heap;
-
-// ...
-
-public function queueCreate($entity, Heap\Node $node, Heap\State $state): Command\ContextCarrierInterface
-{
-    // disable create
-    return new Command\Branch\Nil();
-}
-```
-
-#### Condition Command
-
-In some cases you might want to execute a command or a branch of commands using some external condition. You can use
-the `Condition` command for this purpose:
-
-```php
-use Cycle\ORM\Command;
-use Cycle\ORM\Heap;
-
-// ...
-
-public function queueCreate($entity, Heap\Node $node, Heap\State $state): Command\ContextCarrierInterface
-{
-    $cc = parent::queueCreate($entity, $node, $state);
-
-    return new Command\Branch\Condition($cc, function() {
-        return mt_rand(0, 1) === 1; // randomly drop some commands, don't do it.
-    });
-}
-```
-
-You can link these conditions to the entity state or node to implement more complex logic.
-
-> Make sure to use entity State, not Node, as a condition variable as State will change during the execution while 
-> Node will not.
-
-## Split command
-
-Another internal command which is applied by the ORM by default is `Split`. The command is used in order to resolve
-cyclic dependencies by splitting the persistence of the object into Insert and Update.
+> **Note**
+> The page is in progress
