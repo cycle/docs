@@ -4,7 +4,7 @@
 [![Build Status](https://github.com/cycle/orm/workflows/build/badge.svg)](https://github.com/cycle/orm/actions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cycle/orm/badges/quality-score.png?b=2.x)](https://scrutinizer-ci.com/g/cycle/orm/?branch=2.x)
 [![Codecov](https://codecov.io/gh/cycle/orm/graph/badge.svg)](https://codecov.io/gh/cycle/orm)
-<a href="https://discord.gg/TFeEmCs"><img src="https://img.shields.io/badge/discord-chat-magenta.svg"></a>
+<a href="https://discord.gg/TFeEmCs" target="_blank"><img src="https://img.shields.io/badge/discord-chat-magenta.svg"></a>
 
 <img src="https://cycle-orm.dev/cycle.png" height="135px" alt="Cycle ORM" align="left"/>
 
@@ -14,7 +14,7 @@ to model datasets, a powerful query builder, and supports dynamic mapping schema
 objects, support annotation declarations, and proxies via extensions.
 
 <p align="center">
-	<a href="https://github.com/cycle/docs"><b>Documentation</b></a> | <a href="https://github.com/cycle/docs/issues/3">Comparison with Eloquent and Doctrine</a>
+	<a href="https://github.com/cycle/docs" target="_blank"><b>Documentation</b></a> | <a href="https://github.com/cycle/docs/issues/3" target="_blank">Comparison with Eloquent and Doctrine</a>
 </p>
 
 ## Features

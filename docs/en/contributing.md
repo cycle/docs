@@ -8,7 +8,8 @@ requirements are satisfied before submitting your pull request:
 * `declare(strict_types=1);` is mandatory
 * Your code must include tests
 
-> Use our discord server to check for the advice or suggestion https://discord.gg/kNUhSev
+> **Note**
+> Use our discord server to check for the advice or suggestion [https://discord.gg/kNUhSev](https://discord.gg/kNUhSev)
 
 ## Testing Cycle
 
@@ -44,6 +45,7 @@ If you want to help but don't know where to start:
 
 Feel free to propose any ideas related to architecture, docs (___docs are never complete___), adaptation or community.
 
+> **Note**
 > Original guide author is not a native English speaker, feel free to create PR for any text corrections.
 
 ## Critical/Security Issues
