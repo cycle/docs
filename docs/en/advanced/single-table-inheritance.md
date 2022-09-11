@@ -10,7 +10,10 @@ extend your parent entity and declare relations/columns specific to the child.
 
 ## Definition via attributes
 
-We can define the strategy we want to use by adding the `#[SingleTable]` attribute to a subclass (make sure that the parent class properties are **not private**):
+We can define the strategy we want to use by adding the `#[SingleTable]` attribute to a subclass.
+
+ > **Note**
+ > Make sure the parent class properties are **not private**.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
