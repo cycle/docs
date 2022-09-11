@@ -10,7 +10,8 @@ your parent entity and declare relations/columns specific to the child.
 
 ## Definition via attributes
 
-Make sure that the parent class properties are **not private**.
+> **Note**
+> Make sure the parent class properties are **not private**.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
