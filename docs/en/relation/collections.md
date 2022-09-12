@@ -227,7 +227,7 @@ print_r($user->posts);
 
 ## Collection API
 
-You can create your onw collection factories by implementing `Cycle\ORM\Collection\CollectionFactoryInterface` interface
+You can create your own collection factories by implementing `Cycle\ORM\Collection\CollectionFactoryInterface` interface
 
 ```php
 use Cycle\ORM\Collection\CollectionFactoryInterface
