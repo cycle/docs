@@ -230,7 +230,7 @@ print_r($user->posts);
 You can create your onw collection factories by implementing `Cycle\ORM\Collection\CollectionFactoryInterface` interface
 
 ```php
-use Cycle\ORM\Collection\CollectionFactoryInterface
+use Cycle\ORM\Collection\CollectionFactoryInterface;
 
 class ArrayCollectionFactory implements CollectionFactoryInterface
 {
