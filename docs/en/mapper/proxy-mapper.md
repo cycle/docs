@@ -77,7 +77,7 @@ $tagName = $post->tag->name;
 Proxy usage applies a set of limitations on your entities:
 
 - You cannot declare your entity as `final`.
-- Don't use `get_class($user) === User::clas`, use `$entity instanceof User` instead.
+- Don't use `get_class($user) === User::class`, use `$entity instanceof User` instead.
 - Create entity classes without considering it might be a proxy object. There can be used typed and private properties
   in entities. Properties with relations won't contain `Cycle\ORM\Reference\ReferenceInterface`, they will contain real
   types.
