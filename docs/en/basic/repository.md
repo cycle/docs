@@ -14,7 +14,7 @@ namespace Example\Repository;
 
 class UserRepository extends \Cycle\ORM\Select\Repository
 {
-
+    // ...
 }
 ```
 
@@ -32,6 +32,7 @@ class User
 }
 ```
 
+> **Note**
 > This applies to the `annotated` extension only. Other schema declaration approaches will differ in implementation.
 
 Update/calculate your schema to get access to the newly assigned repository through the `getRepository` method of the
@@ -43,6 +44,7 @@ $repository = $orm->getRepository(\Example\User::class);
 print_r($repository::class);
 ```
 
+> **Note**
 > You can assign a single repository implementation to multiple entities.
 
 ## Custom Selects
@@ -64,14 +66,20 @@ class UserRepository extends Select\Repository
 }
 ```
 
+> **Note**
 > You can also chain your select methods `$this->findActive()->where('age', '>', $age);` as long as you return the `Select`
-object from your method.
+> object from your method.
 
 Now you can access this method:
 
 ```php
 print_r($orm->getRepository(\Example\User::class)->findActive()->fetchAll());
 ```
+
+> **Warning**
+> Don't mutate the `Repository::$select` object. Always use `Repository::select()` method to get a Select object clone.
+> You can mutate the `$select` property only in a repository clone.
+> See [chained Repository](../advanced/chained-repository.md).
 
 ## Preloading relations
 
