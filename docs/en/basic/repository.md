@@ -78,8 +78,8 @@ print_r($orm->getRepository(\Example\User::class)->findActive()->fetchAll());
 
 > **Warning**
 > Don't mutate the `Repository::$select` object. Always use `Repository::select()` method to get a Select object clone.
-> You can mutate the `$select` property only in a repository clone.
-> See [chained Repository](../advanced/chained-repository.md).
+> You can mutate the `$select` property only in a repository clone
+> (see [Chained Repository](../advanced/chained-repository.md)).
 
 ## Preloading relations
 
