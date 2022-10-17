@@ -1,11 +1,12 @@
 Table of Contents
-----------------
+-----------------
 
 * Getting Started
   * [About Cycle ORM](/docs/en/intro/about.md)
   * [**Installation**](/docs/en/intro/install.md)
   * [Upgrade Guide](/docs/en/intro/upgrade.md)
   * [Contributing](contributing.md)
+    * [Issue with Test Case](issue-test-case.md)
   * [Versioning](/docs/en/intro/semver.md)
   * [LICENSE](license.md)
 * Basics
