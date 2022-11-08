@@ -13,15 +13,12 @@ To implement custom test case you need to do few actions.
 ### Prepare a case template
 
 0. Fork and clone `cycle/orm` repository. Install `composer` dependencies.
-1. Go to the dir `tests/ORM/Functional/Driver/Common/Integration`.
-2. Make a copy of the `CaseTemplate` catalog to the same place with your case name. At can be
-   `Case№` with next case number.
-3. Replace `CaseTemplate` with your case name in namespaces of all case files.
-4. Run `php tests/generate.php` to generate child classes for all supported databases.
+1. Run `php tests/generate-case.php`. \
+   You will have the new test case in the `tests/ORM/Functional/Driver/Common/Integration` directory.
 
 ### Implement your case
 
-In the copied directory you'll find:
+In the generated Case directory you'll find:
 
 - Prepared entities in the `Entity` dir.
 - Related ORM Schema preset in the `schema.php` file.
