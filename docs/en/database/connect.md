@@ -3,6 +3,7 @@
 Cycle ORM requires at least one connection to the database in order to operate. The DBAL functionality is provided by
 the package `cycle/database`.
 
+> **Note**
 > Make sure to install all required dependencies listed in the previous section.
 
 ## Instantiate DBAL
@@ -32,6 +33,7 @@ $dbConfig = new Config\DatabaseConfig([
 $dbal = new Database\DatabaseManager($dbConfig);
 ```
 
+> **Note**
 > You can instantiate DBAL with an empty connection list and configure it in runtime if needed.
 
 ## Configure Databases
@@ -179,17 +181,18 @@ For `SQLServer`:
 ),
 ```
 
+> **Note**
 > Make sure to install the proper PDO extensions!
 
 ## Additional connection options
 
 There are multiple connection options you can use to customize the behavior.
 
-Options | Value | Description
---- | --- | ---
-timezone | string | Default driver timezone (all `DateTimeInterface` query parameters will be converted into it). Defaults to `UTC`.
-reconnect | bool | Allow the driver to automatically reconnect. Defaults to `false`.
-profiling | bool | Enable SQL profiling (logging). Defaults to `false`.
+| Options   | Value   | Description                                                                                                                                                                                                                                               |
+|-----------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| timezone  | string  | Default driver timezone (all `DateTimeInterface` query parameters will be converted into it). Defaults to `UTC`.                                                                                                                                          |
+| reconnect | bool    | Allow the driver to automatically reconnect. Defaults to `false`.                                                                                                                                                                                         |                                                                                                                                                               |
+| options   | array   | Since `cycle/database` v2.3.0.<br/> An array of additional driver options:<br/> - **withDatetimeMicroseconds** - Boolean option. Allows to change the datetime format from **Y-m-d H:i:s** to **Y-m-d H:i:s.u** and store the datetime with microseconds. |
 
 ## Access Database
 
@@ -201,6 +204,7 @@ print_r($dbal->database('default'));
 
 The database will be automatically connected on the first SQL request.
 
+> **Note**
 > DBAL will use the database specified in the `default` config option if the name is `null`.
 
 Direct SQL queries are possible from this moment:
@@ -236,5 +240,6 @@ $dbal->addDatabase(new Database\Database(
 ));
 ```
 
-> This approach can be useful to test your application using database mocks. Attention, DBAL would not allow you to 
+> **Note**
+> This approach can be useful to test your application using database mocks. Attention, DBAL would not allow you to
 > overwrite already exists database, you must explicitly configure empty `DatabaseManager`.
