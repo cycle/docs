@@ -3,6 +3,7 @@
 Cycle/Database ships with an included mechanism to declare table structures, FKS and indexes using declarative approach
 and schema comparison.
 
+> **Note**
 > Practically, table changes can be executed using an external migration system.
 
 ## Principle of Work
@@ -14,6 +15,7 @@ As a result, you are allowed to apply the modification to the table schema using
 imperative one. Once schema **save** is requested, DBAL will generate a set of creation and altering operations based on
 the difference between the declared and existing schemas.
 
+> **Note**
 > See below how to use `Cycle\Database\Schema\Reflector` to sync multiple related tables.
 
 ## To Start
@@ -21,6 +23,7 @@ the difference between the declared and existing schemas.
 To get an instance of `AbstractTable` use a similar way as described
 in [Schema Introspection (make sure your read them first)](/docs/en/database/introspection.md).
 
+> **Note**
 > No need to check for table existence.
 
 ```php
@@ -42,12 +45,13 @@ You can add columns to a specific schema by simply setting their type. Use the f
 $schema = $database->table('new_table')->getSchema();
 
 $schema->column('id')->primary();
-$schema->column('name')->string(64); //String length 64 characters
-$schema->column('email')->string();  //Default string length is 255 symbols
+$schema->column('name')->string(64); // String length 64 characters
+$schema->column('email')->string();  // Default string length is 255 symbols
 $schema->column('balance')->decimal(10, 2);
 $schema->column('description')->text();
 ```
 
+> **Note**
 > All of the listed methods are added into the table and column doc comments so your IDE/editor will highlight them.
 
 Use the shorter version if you find it easier:
@@ -56,11 +60,18 @@ Use the shorter version if you find it easier:
 $schema = $database->table('new_table')->getSchema();
 
 $schema->primary('id');
-$schema->string('name', 64); //String length 64 characters
-$schema->string('email');    //Default string length is 255 symbols
+$schema->string('name', 64); // String length 64 characters
+$schema->string('email');    // Default string length is 255 symbols
 $schema->decimal('balance', 10, 2);
 $schema->text('description');
+$schema->datetime('created_at', 6); // DateTime field with precision
 ```
+
+> **Note**
+> Datetime with precision allows saving the date and time with microseconds to the database.
+> Different db engines may have different allowable values for precision. For **Microsoft SQL Server**,
+> specifying precision greater than 0 will add a `datetime2` field with the specified precision
+> instead of `datetime`.
 
 To create the table schema in the database we have to call the method `save` of our AbstractTable:
 
@@ -82,6 +93,7 @@ CREATE TABLE `primary_new_table`
 ) ENGINE = InnoDB
 ```
 
+> **Note**
 > Note that database prefix has been addressed automatically.
 
 In Postgres the create syntax will look like:
@@ -98,6 +110,7 @@ CREATE TABLE "secondary_new_table"
 )
 ```
 
+> **Note**
 > Note, by default every column is created as nullable. Use the `nullable` method to overwrite it (see below).
 
 Once the schema is created you can add new columns into it by only declaring them in your code:
@@ -124,7 +137,8 @@ ALTER TABLE `primary_new_table`
     ADD COLUMN `count_visits` int (11) NULL;
 ```
 
-> Attention, not every type can be easily changed in some databases. Make sure you are not violating DBMS specific 
+> **Note**
+> Attention, not every type can be easily changed in some databases. Make sure you are not violating DBMS specific
 > cross-type conversion (string => integer for example).
 
 ### Abstract Types
@@ -156,10 +170,12 @@ types are mapped to appropriate internal DBMS column type.
 | longBinary  | ---                       | Long binary, same as "binary" for most of the databases. Differs only in MySQL.                                                                                                                                                      |
 | json        | ---                       | To store JSON structures, usually mapped to "text", only Postgres supports it natively.                                                                                                                                              |
 
-> Attention, in some cases the type returned by `ColumnSchema->abstractType()` might not be the same as declared one, 
+> **Note**
+> Attention, in some cases the type returned by `ColumnSchema->abstractType()` might not be the same as declared one,
 > such problem may occur in cases when DBMS uses the same internal type for multiple abstract types (for example most of the databases does not differentiate long/short/medium text and binary types).
 
-> However, this  does not break anything in schema synchronization as DBAL creates operations based on the difference 
+> **Note**
+> However, this  does not break anything in schema synchronization as DBAL creates operations based on the difference
 > in internal database types, not based on the declared abstract one.
 
 ### Enum Type
@@ -174,7 +190,8 @@ $schema->column('status')->enum(['active', 'disabled']);
 $schema->enum('statusB', ['active', 'disabled']);
 ```
 
-> As in other cases declared schema will be synced will database one, so you can add and remove enum values at 
+> **Note**
+> As in other cases declared schema will be synced will database one, so you can add and remove enum values at
 > any moment.
 
 ### Default values
@@ -208,6 +225,7 @@ non-empty default value, this will allow you to add new columns to the non-empty
 $schema->integer('new_column')->nullable(false)->defaultValue(0);
 ```
 
+> **Note**
 > ORM will automatically resolve default value for NOT NULL casted columns.
 
 ## Primary Index
@@ -223,6 +241,7 @@ $schema->string('something', 16);
 $schema->setPrimaryKeys(['id', 'something']);
 ```
 
+> **Note**
 > You are not able to change primary keys after the table being created.
 
 ## Indexes
@@ -258,8 +277,9 @@ You can make index non unique at any moment:
 $schema->index(['name', 'email'])->unique(false);
 ```
 
-> Attention, you can not add indexes to text or binary columns. You have to remember about limitations current DBMS 
-> applies to its indexes. For example, you can not create a unique index for the non-empty table with invalid (from 
+> **Note**
+> Attention, you can not add indexes to text or binary columns. You have to remember about limitations current DBMS
+> applies to its indexes. For example, you can not create a unique index for the non-empty table with invalid (from
 > the standpoint of the index) data. Some databases also have a maximum index size and etc.
 
 ## Foreign Keys
@@ -311,7 +331,8 @@ $foreignKey->onUpdate(\Cycle\ORM\Reference\ReferenceInterface::CASCADE);
 Now, when the record in "first" table will be removed related data from the "second" table will be wiped also. You can
 read more about different actions [here](https://en.wikipedia.org/wiki/Foreign_key#Referential_actions).
 
-> Please note that not every DBMS support actions outside of NO ACTION and CASCADE. In addition, some databases 
+> **Note**
+> Please note that not every DBMS support actions outside of NO ACTION and CASCADE. In addition, some databases
 > (hi, Microsoft) may forbid multiple foreign keys with CASCADE action in one table to avoid a reference loop.
 
 ## Rename Schemas
@@ -326,6 +347,7 @@ $schema->string('email')->setName('new_email');
 $schema->renameColumn('email', 'new_email');
 ```
 
+> **Note**
 > Call `save` method of `AbstactTable` to save your changes.
 
 Use similar approach to rename indexes and table name.
@@ -370,6 +392,7 @@ To get access to table state comparator use `getComparator` method of your schem
 print_r($schema->getComparator()->addedColumns());
 ```
 
+> **Note**
 > You can use comparator to generate migrations instead of letting DBAL sync your schemas.
 
 ## Sync multiple Tables
@@ -393,4 +416,5 @@ $r->addTable($schema);
 $pool->run();
 ```
 
+> **Note**
 > `Cycle\Database\Schema\Reflector` will sort your tables based on their cross dependencies.
