@@ -358,7 +358,7 @@ Multiple conditions per field are supported:
 ```php
 $select->where([
     'id' => [
-        'in' => [1, 2, 3],
+        'not in' => [10, 20, 30],
         '<'  => 100
     ]
 ]);
