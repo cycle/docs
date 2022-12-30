@@ -34,11 +34,11 @@ $orm = $orm->with(schema: new Schema([
           'email' => 'email',
           'balance' => 'balance'
       ],
-     Schema::TYPECAST => [
+      Schema::TYPECAST => [
           'id' => 'int',
           'balance' => 'float'
       ],
-      Schema::RELATIONS   => []
+      Schema::RELATIONS => []
   ]
 ]));
 ```

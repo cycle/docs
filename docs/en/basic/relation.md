@@ -17,10 +17,10 @@ use Cycle\Annotated\Annotation\Column;
 class User
 {
     public function __construct(
-         #[Column(type: 'int')]
+        #[Column(type: 'int')]
         private int $id,
-    
-         #[Column(type: 'string')]
+
+        #[Column(type: 'string')]
         private string $name,
     ) {}
 
@@ -46,13 +46,13 @@ use Cycle\Annotated\Annotation\Column;
 class Address
 {
     public function __construct(
-         #[Column(type: 'primary')]
+        #[Column(type: 'primary')]
         private int $id,
-    
-         #[Column(type: 'string')]
+
+        #[Column(type: 'string')]
         private string $city,
     ) {}
-    
+
     public function getId(): int
     {
         return $this->id;
@@ -78,14 +78,14 @@ class User
 {
     #[HasOne(target: Address::class)]
     private ?Address $address;
-    
+
     // ...
-    
+
     public function getAddress()
     {
         return $this->address;
     }
-    
+
     public function setAddress(Address $address): void
     {
         $this->address = $address;
