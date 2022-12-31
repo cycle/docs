@@ -37,14 +37,14 @@ changes you need to replace all namespaces start from `Spiral\Database` with `Cy
 
 > Likelihood of impact: High
 
-Since `cycle/database` v2.0 connection configuration has been changed. You don't need to configure arrays anymore. Use 
+Since `cycle/database` v2.0 connection configuration has been changed. You don't need to configure arrays anymore. Use
 cofing DTO's instead of. Read more on [database connection](/docs/en/database/connect.md) page.
 
 ## Database logger
 
 > Likelihood of impact: Medium
 
-`Cycle\Database\DatabaseManager` doesn't use `spiral/core` package anymore. If you need to use driver specific logger, 
+`Cycle\Database\DatabaseManager` doesn't use `spiral/core` package anymore. If you need to use driver specific logger,
 you have to create your own LoggerFactory implementing `Cycle\Database\LoggerFactoryInterface`.
 Read more on [database profiling](/docs/en/database/profiling.md) page.
 
@@ -82,7 +82,7 @@ $factory = (new ORM\Factory(
 
 > Likelihood of impact: High
 
-The second argument of `Cycle\ORM\ORM::__construnctor` method is now required.
+The second argument of the `Cycle\ORM\ORM` constructor is now required.
 
 ## Mapper
 
@@ -92,14 +92,14 @@ Default mapper `Cycle\ORM\Mapper\Mapper` is completely reworked. Now it works as
 instead of `laminas/laminas-hydrator` - `Cycle\ORM\Mapper\Proxy\Hydrator\ClosureHydrator` and it works faster and
 supports private and typed entity properties.
 
-Pay attention that `Cycle\ORM\MapperInterface` has BC changes, and you need to rework your custom mappers. 
+Pay attention that `Cycle\ORM\MapperInterface` has BC changes, and you need to rework your custom mappers.
 `queueDelete()`, `queueUpdate()` and `queueCreate()` methods also has been changed.
 
-> Custom mappers like `SoftDeleteMapper`, `OptimisticLockMapper`, `UuidMapper` in the ORM v2.0 can be implemented 
+> Custom mappers like `SoftDeleteMapper`, `OptimisticLockMapper`, `UuidMapper` in the ORM v2.0 can be implemented
 > via [behaviors](/docs/en/entity-behaviors/install.md)
 
-> Some typical custom mapper use cases like `SoftDelete`, `OptimisticLock` 
-> available in the [behaviors](/docs/en/entity-behaviors/install.md). 
+> Some typical custom mapper use cases like `SoftDelete`, `OptimisticLock`
+> available in the [behaviors](/docs/en/entity-behaviors/install.md).
 
 ## Constraint
 
@@ -133,7 +133,7 @@ $orm->with(
 
 > Likelihood of impact: Medium
 
-Since Cycle ORM v2.0, need to create a `Cycle\ORM\Iterator` object using the static methods `createWithOrm` 
+Since Cycle ORM v2.0, need to create a `Cycle\ORM\Iterator` object using the static methods `createWithOrm`
 or `createWithServices`:
 
 ```php
@@ -151,7 +151,7 @@ instead of annotations.
 
 > Likelihood of impact: Optional
 
-Since `cycle/schema-builder` v2.0 we have added a new generators for STI/JTI and schema modifiers support. If you want 
+Since `cycle/schema-builder` v2.0 we have added a new generators for STI/JTI and schema modifiers support. If you want
 to use new features you have to add them to the schema compiler pipeline.
 
 ```php
@@ -161,7 +161,7 @@ to use new features you have to add them to the schema compiler pipeline.
     new Annotated\Entities($classLocator),
     new Annotated\TableInheritance(),               // <------ register STI/JTI
     new Annotated\MergeColumns(),
-    new Schema\Generator\GenerateRelations(), 
+    new Schema\Generator\GenerateRelations(),
     new Schema\Generator\GenerateModifiers(),       // <----- generate changes from schema modifiers
     new Schema\Generator\ValidateEntities(),
     new Schema\Generator\RenderTables(),
