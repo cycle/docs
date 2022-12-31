@@ -82,7 +82,7 @@ $factory = (new ORM\Factory(
 
 > Likelihood of impact: High
 
-The second argument of `Cycle\ORM\ORM::__constructor` method is now required.
+The second argument of the `Cycle\ORM\ORM` constructor is now required.
 
 ## Mapper
 
