@@ -74,11 +74,11 @@ $factory = (new ORM\Factory(
          new ORM\Collection\DoctrineCollectionFactory,
          \Doctrine\Common\Collections\Collection::class    // <= Base collection
     )
-    
+
     // requires illuminate/collections package
     ->withCollectionFactory(
-        'illuminate', 
-        new ORM\Collection\IlluminateCollectionFactory, 
+        'illuminate',
+        new ORM\Collection\IlluminateCollectionFactory,
         \Illuminate\Support\Collection::class
     );
 
@@ -113,7 +113,9 @@ $container->bindSingleton(ORM\ORMInterface::class, $orm);
 
 ### Relation collection type definition
 
-#### Using entity schema
+:::: tabs
+
+::: tab Schema
 
 ```php
 class CommentCollection extends \Doctrine\Common\Collections\ArrayCollection {
@@ -159,7 +161,9 @@ $schema = [
 ];
 ```
 
-#### Using entity annotation
+:::
+
+::: tab Attributes
 
 ```php
 use Doctrine\Common\Collections\ArrayCollection as DoctrineCollection;
@@ -175,20 +179,24 @@ class User
 {
     #[Column(type: "primary")]
     protected int $id;
-    
+
     #[HasMany(target: Friend::class)]
     protected array $friends = [];
-    
+
     #[HasMany(target: Post::class, collection: LoophpCollection::class)]
     protected LoophpCollection $posts = [];
-    
+
     #[HasMany(target: Profile::class, collection: 'doctrine')]
     protected DoctrineCollection $posts;
-   
+
     #[ManyToMany(target: Tag::class, load: through=TagMap::class, collection: CommentsCollection::class)]
     protected CommentsCollection $tags;
 }
 ```
+
+:::
+
+::::
 
 ## Accessing Collection
 
