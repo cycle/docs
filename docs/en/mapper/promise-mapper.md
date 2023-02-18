@@ -11,28 +11,43 @@ The preferred way to install this package is through [Composer](https://getcompo
 composer require cycle/orm-promise-mapper
 ```
 
-## Define the Entity
+## Define the Schema
+
+:::: tabs
+
+::: tab User
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
 use Cycle\Annotated\Annotation\Relation\HasMany;
+use Cycle\ORM\PromiseMapper\PromiseMapper;
 use Cycle\ORM\Reference\ReferenceInterface;
 
-#[Entity]
+#[Entity(mapper: PromiseMapper::class)]
 class User
 {
     #[Column(type: 'primary')]
     public int $id;
 
-    #[HasMany(target: Post::class, load: 'eager')]
+    #[HasMany(target: Post::class, collection: 'array', load: 'eager')]
     public array $posts;
     
     #[HasMany(target: Tag::class, load: 'lazy')]
     public ReferenceInterface|array $tags;
 }
+```
 
-#[Entity]
+:::
+
+::: tab Post
+
+```php
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
+use Cycle\ORM\PromiseMapper\PromiseMapper;
+use Cycle\ORM\Reference\ReferenceInterface;
+
+#[Entity(mapper: PromiseMapper::class)]
 class Post
 {
     // ...
@@ -44,6 +59,10 @@ class Post
     public Tag $tag;
 }
 ```
+
+:::
+
+::::
 
 ## Fetching entity data
 
