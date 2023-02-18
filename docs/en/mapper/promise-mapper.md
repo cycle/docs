@@ -32,7 +32,7 @@ class User
     #[HasMany(target: Post::class, collection: 'array', load: 'eager')]
     public array $posts;
     
-    #[HasMany(target: Tag::class, load: 'lazy')]
+    #[HasMany(target: Tag::class, collection: 'array', load: 'lazy')]
     public ReferenceInterface|array $tags;
 }
 ```
