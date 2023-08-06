@@ -161,7 +161,7 @@ $manager = new \Cycle\ORM\EntityManager($orm);
 
 $user = new User();
 $user->name = 'Antony';
-$manager->persist($entity);
+$manager->persistState($entity);
 $user->name = 'John';
 
 $manager->run();
