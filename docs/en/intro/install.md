@@ -237,14 +237,14 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Annotated\Embeddings($classLocator),        // Recognize embeddable entities
     new Annotated\Entities($classLocator),          // Identify annotated entities
     new Annotated\TableInheritance(),               // Setup Single Table or Joined Table Inheritance
-    new Annotated\MergeColumns(),                   // Integrate @Table column annotations
+    new Annotated\MergeColumns(),                   // Integrate #[Table] column annotations
     new Schema\Generator\GenerateRelations(),       // Define entity relationships
     new Schema\Generator\GenerateModifiers(),       // Apply schema modifications
     new Schema\Generator\ValidateEntities(),        // Ensure entity schemas adhere to conventions
     new Schema\Generator\RenderTables(),            // Create table schemas
     new Schema\Generator\RenderRelations(),         // Establish keys and indexes for relationships
     new Schema\Generator\RenderModifiers(),         // Implement schema modifications
-    new Annotated\MergeIndexes(),                   // Merge @Table index annotations
+    new Annotated\MergeIndexes(),                   // Merge #[Table] index annotations
     new Schema\Generator\SyncTables(),              // Align table changes with the database
     new Schema\Generator\GenerateTypecast(),        // Typecast non-string columns
 ]);
