@@ -265,7 +265,7 @@ use Cycle\ORM\Schema;
 
 $schema = /** ... */;
 
-$orm = new ORM\ORM(new ORM\Factory($dbal), Schema($schema));
+$orm = new ORM\ORM(new ORM\Factory($dbal), new Schema($schema));
 ```
 
 It's best practice to cache the generated schema in production and regenerate it only when required, ensuring optimal
