@@ -244,6 +244,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\RenderTables(),            // Create table schemas
     new Schema\Generator\RenderRelations(),         // Establish keys and indexes for relationships
     new Schema\Generator\RenderModifiers(),         // Implement schema modifications
+    new Schema\Generator\ForeignKeys(),             // Define foreign key constraints
     new Annotated\MergeIndexes(),                   // Merge table index attributes
     new Schema\Generator\SyncTables(),              // Align table changes with the database
     new Schema\Generator\GenerateTypecast(),        // Typecast non-string columns
