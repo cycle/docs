@@ -67,7 +67,7 @@ For example, a typical entity description might look like:
 use Cycle\Annotated\Annotation\Entity;
 
 #[Entity(
-    table: 'users', 
+    table: 'users',
     repository: \App\Repository\UserRepository::class,
     scope: \App\Scope\SortByID::class
 )]
@@ -101,7 +101,7 @@ class Pivot
 {
     #[Column(type: 'int', primary: true)]
     private int $postId;
-    
+
     #[Column(type: 'int', primary: true)]
     private int $tagId;
 }
@@ -247,7 +247,7 @@ use Cycle\Annotated\Annotation\Column;
 #[Entity]
 class User
     // ...
-    
+
     #[Column(type: 'enum(active,disabled)', default: 'active')]
     private string $status;
 }
@@ -306,3 +306,42 @@ class UserRepository extends \Cycle\ORM\Select\Repository
 
 }
 ```
+
+## Foreign Keys
+
+In some cases, it is necessary to define a foreign key without relation definitions. This can be achieved using the
+`#[ForeignKey]` attribute.
+
+For example, let's create an entity **User** with an ID as the primary key.
+
+```php
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
+class User
+{
+    #[Column(type: 'primary')]
+    public int $id;
+}
+```
+
+Let's create a second entity, **Post**, in which we will define a foreign key referencing the **User** entity.
+
+```php
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\ForeignKey;
+
+#[Entity]
+class Post
+{
+    // ...
+    #[Column(type: 'integer')]
+    #[ForeignKey(target: User::class, action: 'CASCADE')]
+    private int $userId;
+}
+```
+
+> **Note**
+> Alternatively, you can place the **ForeignKey** attribute at the class level, specifying details like which property
+> in your class is the foreign key (innerKey), and which property in the related class it corresponds to (outerKey).

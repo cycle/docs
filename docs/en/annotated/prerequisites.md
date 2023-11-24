@@ -3,7 +3,7 @@
 Make sure to install `cycle/annotated` and `cycle/schema-builder` extensions in order to use annotated entities. Once
 installed add annotated generators into the schema compiler (see more details [here](/docs/en/intro/install.md)).
 
-> Cycle is using the Doctrine/Annotations package, make sure that annotations are loadable (`use`) and the syntax 
+> Cycle is using the Doctrine/Annotations package, make sure that annotations are loadable (`use`) and the syntax
 > is correct.
 
 ## Compiler Pipeline
@@ -32,6 +32,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\RenderTables(),            // declare table schemas
     new Schema\Generator\RenderRelations(),         // declare relation keys and indexes
     new Schema\Generator\RenderModifiers(),         // render all schema modifiers
+    new Schema\Generator\ForeignKeys(),             // Define foreign key constraints
     new Annotated\MergeIndexes(),                   // add @Table column declarations
     new Schema\Generator\SyncTables(),              // sync table changes to database
     new Schema\Generator\GenerateTypecast(),        // typecast non string columns
@@ -40,7 +41,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 $orm = $orm->with(schema: new \Cycle\ORM\Schema($schema));
 ```
 
-> Make sure to point the class locator to the directory with your domain entities only as the indexation operation 
+> Make sure to point the class locator to the directory with your domain entities only as the indexation operation
 > is fairly expensive. Make sure that all of the entities are loadable by `composer autoload`.
 
 The result of the schema builder is a compiled schema. The given schema can be cached in order to avoid expensive

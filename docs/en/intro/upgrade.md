@@ -167,6 +167,7 @@ to use new features you have to add them to the schema compiler pipeline.
     new Schema\Generator\RenderTables(),
     new Schema\Generator\RenderRelations()
     new Schema\Generator\RenderModifiers(),         // <----- render all schema modifiers
+    new Schema\Generator\ForeignKeys(),             // Since cycle/schema-builder v2.6.0. Define foreign key constraints
     new Annotated\MergeIndexes(),
     new Schema\Generator\SyncTables(),              // Not for production
     new Schema\Generator\GenerateTypecast(),
