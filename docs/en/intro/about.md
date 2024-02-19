@@ -11,7 +11,7 @@
 Cycle is a PHP DataMapper ORM and Data Modelling engine designed to safely work in classic and daemonized PHP
 applications (like [RoadRunner](https://github.com/spiral/roadrunner)). The ORM provides flexible configuration options
 to model datasets, a powerful query builder, and supports dynamic mapping schemas. The engine can work with plain PHP
-objects, support annotation declarations, and proxies via extensions.
+objects, support attribute declarations, and proxies via extensions.
 
 <p align="center">
 	<a href="https://github.com/cycle/docs" target="_blank"><b>Documentation</b></a> | <a href="https://github.com/cycle/docs/issues/3" target="_blank">Comparison with Eloquent and Doctrine</a>
@@ -33,7 +33,7 @@ objects, support annotation declarations, and proxies via extensions.
 - schema scaffolding, introspection, migrations and debugging
 - supports global query scopes, UUIDs as PK, soft deletes and auto timestamps
 - custom column types, FKs to non-primary columns
-- use with or without annotations, proxy classes, and auto-migrations
+- use with or without attributes, proxy classes, and auto-migrations
 - compatible with Doctrine Collections, Illuminate Collections and custom collections
 - compatible with Doctrine Annotations, PHP8 attributes
 

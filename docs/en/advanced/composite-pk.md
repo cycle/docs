@@ -41,7 +41,7 @@ relations `Relation::INNER_KEY`, `Relation::OUTER_KEY`.
 ];
 ```
 
-## Declaration via annotations
+## Declaration via attributes
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -53,13 +53,13 @@ class Pivot
 {
     #[Column(type: 'int', primary: true)]
     private int $postId;
-    
+
     #[Column(type: 'int', primary: true)]
     private int $tagId;
 }
 
 #[Entity]
-class Tag 
+class Tag
 {
     #[HasMany(target: Pivot::class, outerKey: ['parent_key1', 'parent_key2'])]
     private array $posts;
