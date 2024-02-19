@@ -229,9 +229,6 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 
 $dbal = /** ... */;
 
-// Initialize annotations
-AnnotationRegistry::registerLoader('class_exists');
-
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),             // Reconfigure table schemas (deletes columns if necessary)
     new Annotated\Embeddings($classLocator),        // Recognize embeddable entities
