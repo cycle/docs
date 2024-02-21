@@ -110,7 +110,7 @@ class Pivot
 > Read how to use non-incremental primary keys in the Advanced section.
 > - [Uuid](/docs/en/entity-behaviors/install.md).
 
-You can use multiple annotations at the same time:
+You can use multiple attributes at the same time:
 
 ```php
 use Cycle\Annotated\Annotation as Cycle;

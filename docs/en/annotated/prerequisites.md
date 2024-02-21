@@ -3,9 +3,6 @@
 Make sure to install `cycle/annotated` and `cycle/schema-builder` extensions in order to use annotated entities. Once
 installed add annotated generators into the schema compiler (see more details [here](/docs/en/intro/install.md)).
 
-> Cycle is using the Doctrine/Annotations package, make sure that annotations are loadable (`use`) and the syntax
-> is correct.
-
 ## Compiler Pipeline
 
 The complete pipeline with annotated entities support will look like:
@@ -25,7 +22,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Annotated\Embeddings($classLocator),        // register embeddable entities
     new Annotated\Entities($classLocator),          // register annotated entities
     new Annotated\TableInheritance(),               // register STI/JTI
-    new Annotated\MergeColumns(),                   // add @Table column declarations
+    new Annotated\MergeColumns(),                   // register columns from attributes
     new Schema\Generator\GenerateRelations(),       // generate entity relations
     new Schema\Generator\GenerateModifiers(),       // generate changes from schema modifiers
     new Schema\Generator\ValidateEntities(),        // make sure all entity schemas are correct
@@ -33,7 +30,7 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\RenderRelations(),         // declare relation keys and indexes
     new Schema\Generator\RenderModifiers(),         // render all schema modifiers
     new Schema\Generator\ForeignKeys(),             // Define foreign key constraints
-    new Annotated\MergeIndexes(),                   // add @Table column declarations
+    new Annotated\MergeIndexes(),                   // register indexes from attributes
     new Schema\Generator\SyncTables(),              // sync table changes to database
     new Schema\Generator\GenerateTypecast(),        // typecast non string columns
 ]);

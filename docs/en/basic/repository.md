@@ -18,7 +18,7 @@ class UserRepository extends \Cycle\ORM\Select\Repository
 }
 ```
 
-Use the `entity` annotation attribute to create the association:
+Use the `Entity` attribute to create the association:
 
 ```php
 namespace Example;

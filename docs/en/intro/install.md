@@ -21,7 +21,7 @@ Cycle ORM can be seamlessly integrated into your project with Composer. In your 
 composer require cycle/orm
 ```
 
-### Step 2: Annotations and Attributes
+### Step 2: Attributes
 
 For those who wish to use attributes with their entities, an additional package is available:
 

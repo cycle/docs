@@ -1,6 +1,6 @@
-# Using ORM without Annotations
+# Using ORM without attributes
 
-You can use the ORM engine without annotations. You can either declare a mapping schema via configuration or use
+You can use the ORM engine without attributes. You can either declare a mapping schema via configuration or use
 the `cycle/schema-builder` extension to compile it on the fly via OOP wrappers.
 
 ## Examples

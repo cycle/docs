@@ -31,7 +31,6 @@ class Person
     #[Column(type: 'string')]
     protected string $name;
 
-    /** @Column(type="string") */
     #[Column(type: 'string')]
     protected string $type;
 }
@@ -56,7 +55,6 @@ class Customer extends Person
 #[SingleTable]
 class Ceo extends Employee
 {
-    /** @Column(type="int") */
     #[Column(type: 'int')]
     public int $stocks;
 }

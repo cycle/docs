@@ -5,8 +5,8 @@ embedded entity. Embedded entities by default will always be loaded with the par
 selection is possible as well.
 
 You can embed one or multiple entities inside another object using the parent object table as a data source. It can be
-achieved using the `embedded` relation type and might be useful to perform de-composition of your entity. Such a 
-relation also allows lazy and eager (default) loading of embedded entities, or the ability to retrieve entities 
+achieved using the `embedded` relation type and might be useful to perform de-composition of your entity. Such a
+relation also allows lazy and eager (default) loading of embedded entities, or the ability to retrieve entities
 separately (without loading parent model).
 
 > Embedded entities do not support relations and behaviors at the moment.
@@ -115,7 +115,7 @@ $select->where('credentials.username', 'john.smith');
 ## Eager and Lazy Loading
 
 By default, all embedded entities will be loaded with the parent object. To alter this behavior use the `load` option of
-the `#[Embedded(...)]` relation annotation:
+the `#[Embedded(...)]` relation attribute:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;

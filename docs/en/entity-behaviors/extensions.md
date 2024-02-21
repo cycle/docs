@@ -13,28 +13,19 @@ In the following example we will show you how it is simple to create a custom be
 
 ### Attribute
 
-At first, you have to describe the attribute (annotation) that will be used in an entity.
+At first, you have to describe the attribute that will be used in an entity.
 
 ```php
 use Cycle\ORM\Entity\Behavior\Schema\BaseModifier;
 use Cycle\ORM\Entity\Behavior\Schema\RegistryModifier;
 use Cycle\Schema\Registry;
-use Doctrine\Common\Annotations\Annotation\Attribute;
-use Doctrine\Common\Annotations\Annotation\Attributes;
-use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
-use Doctrine\Common\Annotations\Annotation\Target;
 
-/**
- * @Annotation
- * @NamedArgumentConstructor()
- * @Target({"CLASS"})
- */
-#[\Attribute(\Attribute::TARGET_CLASS), NamedArgumentConstructor]
+#[\Attribute(\Attribute::TARGET_CLASS)]
 final class Sluggable extends BaseModifier
 {
     public function __construct(
         // Properties should present in your entity with `[#Column(type: 'string')]` attribute
-        private string $field = 'slug',     
+        private string $field = 'slug',
         private string $from = 'title'
     ) {
     }
@@ -81,14 +72,14 @@ final class SluggableListener
     {
         $slug = $this->slugify->slugify($event->state->getData()[$this->from]);
         $isExist = $this->orm->getRepository($event->role)->findOne([$this->field => $slug]) !== null;
-        
+
         if ($isExist) {
             $slug .= '-' . time();
         }
-        
+
         $event->state->register($this->field, $slug);
     }
-} 
+}
 ```
 
 ### Available events:
@@ -109,7 +100,7 @@ use Cycle\Annotated\Annotation\Entity;
 
 #[Entity]
 #[Sluggable(
-    field: 'slug', 
+    field: 'slug',
     from: 'title'
 )]
 class Comment
