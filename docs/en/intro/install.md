@@ -23,7 +23,11 @@ composer require cycle/orm
 
 ### Step 2: Annotations and Attributes
 
-For those who wish to use attributes with their entities, an additional package is available:
+To define a schema for Cycle ORM using PHP attributes, you can use the package [cycle/annotated](https://github.com/cycle/annotated).
+Its current version requires **PHP 8.1**. If you are using PHP 8.0, then version **3.x** of the package will be installed.
+In this case, you will need to refer to the configuration for this version below.
+
+To install the package - execute:
 
 ```terminal
 composer require cycle/annotated
@@ -102,12 +106,10 @@ Start by defining your first entity within the `src` directory of your project. 
 namespace:
 
 ```json composer.json
-//...
-
 "autoload": {
-"psr-4": {
-"Example\\": "src/"
-}
+  "psr-4": {
+    "Example\\": "src/"
+  }
 }
 ```
 
@@ -147,12 +149,6 @@ schema.
 
 > **Note:**
 > Attributes won't degrade your application's performance. They are only used during the schema compilation process.
-
-To use attributes, you'll need to install the `cycle/annotated` package:
-
-```terminal
-composer require cycle/annotated
-```
 
 Let's add attributes to our `User` entity:
 
@@ -222,15 +218,47 @@ print_r($classLocator->getClasses());
 With the class locator set, you can piece together your schema compilation pipeline. This is the sequence through which
 your entities pass, undergoing transformations, validations, and finally, integration into the ORM schema.
 
+:::: tabs
+
+::: tab The current version
+
 ```php index.php
 use Cycle\Schema;
 use Cycle\Annotated;
-use Doctrine\Common\Annotations\AnnotationRegistry;
+use Cycle\Annotated\Locator\TokenizerEmbeddingLocator;
+use Cycle\Annotated\Locator\TokenizerEntityLocator;
+
+$embeddingLocator = new TokenizerEmbeddingLocator($classLocator);
+$entityLocator = new TokenizerEntityLocator($classLocator);
+
+$schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
+    new Schema\Generator\ResetTables(),             // Reconfigure table schemas (deletes columns if necessary)
+    new Annotated\Embeddings($embeddingLocator),    // Recognize embeddable entities
+    new Annotated\Entities($entityLocator),         // Identify attributed entities
+    new Annotated\TableInheritance(),               // Setup Single Table or Joined Table Inheritance
+    new Annotated\MergeColumns(),                   // Integrate table #[Column] attributes
+    new Schema\Generator\GenerateRelations(),       // Define entity relationships
+    new Schema\Generator\GenerateModifiers(),       // Apply schema modifications
+    new Schema\Generator\ValidateEntities(),        // Ensure entity schemas adhere to conventions
+    new Schema\Generator\RenderTables(),            // Create table schemas
+    new Schema\Generator\RenderRelations(),         // Establish keys and indexes for relationships
+    new Schema\Generator\RenderModifiers(),         // Implement schema modifications
+    new Schema\Generator\ForeignKeys(),             // Define foreign key constraints
+    new Annotated\MergeIndexes(),                   // Merge table index attributes
+    new Schema\Generator\SyncTables(),              // Align table changes with the database
+    new Schema\Generator\GenerateTypecast(),        // Typecast non-string columns
+]);
+```
+
+:::
+
+::: tab 3.x
+
+```php index.php
+use Cycle\Schema;
+use Cycle\Annotated;
 
 $dbal = /** ... */;
-
-// Initialize annotations
-AnnotationRegistry::registerLoader('class_exists');
 
 $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
     new Schema\Generator\ResetTables(),             // Reconfigure table schemas (deletes columns if necessary)
@@ -251,6 +279,10 @@ $schema = (new Schema\Compiler())->compile(new Schema\Registry($dbal), [
 ]);
 ```
 
+:::
+
+::::
+
 In our example, we use `SyncTables` generator to automatically update the database schema. Read more about schema
 synchronization in the [Synchronizing Database Schema](../advanced/sync-schema.md) section.
 
@@ -262,11 +294,10 @@ With the schema compiled, it can be integrated into the ORM:
 
 ```php index.php
 use Cycle\ORM;
-use Cycle\ORM\Schema;
 
 $schema = /** ... */;
 
-$orm = new ORM\ORM(new ORM\Factory($dbal), new Schema($schema));
+$orm = new ORM\ORM(new ORM\Factory($dbal), new ORM\Schema($schema));
 ```
 
 It's best practice to cache the generated schema in production and regenerate it only when required, ensuring optimal
@@ -300,30 +331,29 @@ The mapping for `User` entity can be explicitly defined as:
 
 ```php index.php
 use Cycle\ORM;
-use Cycle\ORM\Schema;
 use Cycle\ORM\Mapper\Mapper;
 
 $dbal = /** ... */;
 
-$orm = new ORM\ORM(new ORM\Factory($dbal), new Schema([
+$orm = new ORM\ORM(new ORM\Factory($dbal), new ORM\Schema([
     'user' => [
-        Schema::MAPPER => Mapper::class, // default POPO mapper
-        Schema::ENTITY => User::class,
-        Schema::DATABASE => 'default',
-        Schema::TABLE => 'users',
-        Schema::PRIMARY_KEY => 'id',
+        ORM\Schema::MAPPER => Mapper::class, // default POPO mapper
+        ORM\Schema::ENTITY => User::class,
+        ORM\Schema::DATABASE => 'default',
+        ORM\Schema::TABLE => 'users',
+        ORM\Schema::PRIMARY_KEY => 'id',
 
         // property => column
-        Schema::COLUMNS => [
+        ORM\Schema::COLUMNS => [
             'id' => 'id',
             'name' => 'name',
         ],
 
-        Schema::TYPECAST => [
+        ORM\Schema::TYPECAST => [
             'id' => 'int',
         ],
 
-        Schema::RELATIONS => [],
+        ORM\Schema::RELATIONS => [],
     ]
 ]));
 ```
