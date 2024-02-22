@@ -18,9 +18,9 @@ You can configure what database and table to use to store information about the 
 use Cycle\Migrations;
 
 $config = new Migrations\Config\MigrationConfig([
-    'directory' => __DIR__ . '/../migrations/',    // where to store migrations
-    'table'     => 'migrations',                   // database table to store migration status
-    'safe'      => true                            // When set to true no confirmation will be requested on migration run. 
+    'directory' => __DIR__ . '/../migrations/', // where to store migrations
+    'table'     => 'migrations',                // database table to store migration status
+    'safe'      => true                         // When set to true no confirmation will be requested on migration run.
 ]);
 
 $migrator = new Migrations\Migrator($config, $dbal, new Migrations\FileRepository($config));
@@ -42,16 +42,47 @@ composer require cycle/schema-migrations-generator
 use Cycle\Schema\Registry;
 use Cycle\Schema\Generator\Migrations;
 use Cycle\Schema\Definition\Entity;
+use Cycle\Schema\Generator\Migrations\GenerateMigrations;
 
 $registry = new Registry($dbal);
 $registry->register(....);
 
-$generator = new Migrations\GenerateMigrations($migrator->getRepository(), $migrator->getConfig());
+$generator = new GenerateMigrations($migrator->getRepository(), $migrator->getConfig());
 
 // Migration generator creates set of migrations needed to sync database schema with desired state.
 // Each database will receive it's own migration.
 $generator->run($registry);
 ```
+
+### Migration strategies
+
+The migration generator can use different strategies to generate migrations. The default strategy is to generate a
+migration for each database. You can change this behavior by passing a different strategy to the generator. The package
+provides the following strategies:
+
+- `Cycle\Schema\Generator\Migrations\Strategy\SingleFileStrategy` - generates a migration file for each database.
+   This is the default strategy.
+- `Cycle\Schema\Generator\Migrations\Strategy\MultipleFilesStrategy` - generates separate migration files for each table,
+   offering improved organization and readability.
+
+The preferred strategy can be passed as a parameter when creating the `GenerateMigrations` object. For example,
+let's change the default `SingleFileStrategy` to `MultipleFilesStrategy`:
+
+```php
+use Cycle\Schema\Generator\Migrations\GenerateMigrations;
+use Cycle\Schema\Generator\Migrations\Strategy\MultipleFilesStrategy;
+use Cycle\Schema\Generator\Migrations\NameBasedOnChangesGenerator;
+
+$generator = new GenerateMigrations(
+    $migrator->getRepository(),
+    $migrator->getConfig(),
+    new MultipleFilesStrategy($migrator->getConfig(), new NameBasedOnChangesGenerator())
+);
+```
+
+The second parameter in the migration strategy is `Cycle\Schema\Generator\Migrations\NameGeneratorInterface`,
+which is the migration name generator. The package provides one implementation of this interface -
+`Cycle\Schema\Generator\Migrations\NameBasedOnChangesGenerator`.
 
 ## Create a migration
 
@@ -154,7 +185,7 @@ class NewFieldMigration extends Migration
             ->addColumn('field', 'float')
             ->update();
     }
-    
+
     public function down()
     {
         $this->table('sample_table')
@@ -208,4 +239,5 @@ WHERE `migration` = 'new_field'
 All migration methods are based on DBAL functions, feel free to use same abstract types as in
 [direct schema declarations](/docs/en/database/declaration.md).
 
+> **Note**
 > Note that the Cycle ORM component can create migrations automatically.
