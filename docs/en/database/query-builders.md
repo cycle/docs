@@ -20,9 +20,11 @@ $schema->enum('status', ['active', 'disabled'])->defaultValue('active');
 $schema->string('name', 64);
 $schema->string('email');
 $schema->double('balance');
+$schema->json('settings')->nullable();
 $schema->save();
 ```
 
+> **Note**
 > You can read more about declaring database schemas [here](/docs/en/database/declaration.md).
 
 ## Insert Builder
@@ -52,6 +54,7 @@ To run InsertQuery we should only execute method `run()` which will return last 
 print_r($db->run());
 ```
 
+> **Note**
 > You can also use fluent syntax: `$database->insert('table')->values(...)->run()`.
 
 ### Batch Insert
@@ -60,9 +63,9 @@ You add as many values into insert builder as your database can support:
 
 ```php
 $insert->columns([
-    'time_created', 
-    'name', 
-    'email', 
+    'time_created',
+    'name',
+    'email',
     'balance'
 ]);
 
@@ -94,7 +97,8 @@ print_r($table->insertOne([
 ]));
 ```
 
-> Table class will automatically run a query and return the last inserted id. You can also check the `insertMultiple` 
+> **Note**
+> Table class will automatically run a query and return the last inserted id. You can also check the `insertMultiple`
 > method of Table.
 
 ## SelectQuery Builder
@@ -174,9 +178,10 @@ SELECT `id`,
        `status`,
        `name`
 FROM `primary_test`
-WHERE `status` = 'active'        
+WHERE `status` = 'active'
 ```
 
+> **Note**
 > Note that prepared statements used behind the scenes.
 
 You can skip '=' in your conditions:
@@ -207,7 +212,7 @@ SELECT `id`,
        `status`,
        `name`
 FROM `primary_test`
-WHERE `id` BETWEEN 10 AND 20  
+WHERE `id` BETWEEN 10 AND 20
 ```
 
 #### Multiple Where Conditions
@@ -305,9 +310,10 @@ SELECT `id`,
        `name`
 FROM `primary_test`
 WHERE `id` = 1
-   OR (`status` = 'active' AND `id` = 10)     
+   OR (`status` = 'active' AND `id` = 10)
 ```
 
+> **Note**
 > You can nest as many conditions as you want.
 
 #### Simplified/array Where Conditions
@@ -341,6 +347,7 @@ $select->where([
 ]);
 ```
 
+> **Warning**
 > Attention, you have to wrap all array arguments using Parameter class. Scalar arguments will be wrapped automatically.
 
 Resulted SQL:
@@ -428,6 +435,7 @@ foreach ($select as $row) {
 }
 ```
 
+> **Note**
 > You can also pass requested PDO parameter type as second argument: `new Parameter(1, PDO::PARAM_INT)`.
 > Internally, every value passed into the `where` method is going to be wrapped using the Parameter class.
 
@@ -462,7 +470,7 @@ If you wish to compare complex value to user parameter, replace where the column
 use Cycle\Database\Injection\Expression;
 
 $select->where(
-    new Expression("DAYOFYEAR(concat('2015-09-', id))"), 
+    new Expression("DAYOFYEAR(concat('2015-09-', id))"),
     '=',
     255
 );
@@ -474,6 +482,7 @@ FROM `x_users`
 WHERE DAYOFYEAR(concat('2015-09-', `id`)) = 255
 ```
 
+> **Note**
 > Note that all column identifiers in Expressions will be quoted.
 
 Join multiple columns same way:
@@ -494,7 +503,7 @@ Expressions are handy when your Database has a non-empty prefix:
 
 ```php
 $select->where(
-    new \Cycle\Database\Injection\Expression("CONCAT(test.id, '-', test.status)"), 
+    new \Cycle\Database\Injection\Expression("CONCAT(test.id, '-', test.status)"),
     '1-active'
 );
 ```
@@ -509,7 +518,176 @@ WHERE CONCAT(`primary_test`.`id`, '-', `primary_test`.`status`) = '1-active'
 
 You can also use expressions and fragments as column values in the insert and update statements.
 
+> **Warning**
 > Please keep client data as far from Expressions and Fragments as possible.
+
+### JSON Statements
+
+The DBAL component introduces additional methods for querying **JSON** column types on databases that support JSON column types.
+
+#### WhereJson
+
+The `whereJson` method allows you to select records where the JSON value at the specified path is equal
+to the passed value:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJson('settings->notifications->type', 'sms')
+    ->fetchAll();
+```
+
+You can combine this method with other query conditions:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->where('status', 'active')
+    ->whereJson('settings->notifications->type', 'sms')
+    ->fetchAll();
+```
+
+If you need to combine query conditions using the **OR** operator, you can use the `orWhereJson` method:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJson('settings->notifications->type', 'email')
+    ->orWhereJson('settings->notifications->type', 'sms')
+    ->fetchAll();
+```
+
+#### WhereJsonContains and WhereJsonDoesntContain
+
+The `whereJsonContains` method allows you to select records where the **JSON** at the specified path contains
+the passed value. Conversely, the `whereJsonDoesntContain` method allows you to select records where the **JSON**
+at the specified path does not contain the passed value.
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJsonContains('settings->languages', 'en')
+    ->fetchAll();
+
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJsonDoesntContain('settings->languages', 'de')
+    ->fetchAll();
+```
+
+You can combine this method with other query conditions:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->where('status', 'active')
+    ->whereJsonContains('settings->languages', 'en') // or whereJsonDoesntContain
+    ->fetchAll();
+```
+
+If you need to combine selection conditions using the **OR** operator, you can use the `orWhereJsonContains` and
+`orWhereJsonDoesntContain` methods:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJsonContains('settings->languages', 'en')
+    ->orWhereJsonContains('settings->languages', 'de') // or orWhereJsonDoesntContain
+    ->fetchAll();
+```
+
+#### WhereJsonContainsKey and WhereJsonDoesntContainKey
+
+The `whereJsonContainsKey` method allows you to select records where the **JSON** at the specified path contains
+the desired key. On the other hand, the `whereJsonDoesntContainKey` method enables you to select records where
+the **JSON** does not contain the desired key.
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJsonContainsKey('settings->preferred_language')
+    ->fetchAll();
+
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJsonDoesntContainKey('settings->preferred_language')
+    ->fetchAll();
+```
+
+You can combine this method with other query conditions:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->where('status', 'active')
+    ->whereJsonContainsKey('settings->preferred_language') // or whereJsonDoesntContainKey
+    ->fetchAll();
+```
+
+If you need to combine selection conditions using the **OR** operator, you can use the `orWhereJsonContainsKey` and
+`orWhereJsonDoesntContainKey` methods:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJsonContains('settings->languages', 'en')
+    ->orWhereJsonContainsKey('settings->preferred_language') // or orWhereJsonDoesntContainKey
+    ->fetchAll();
+```
+
+#### WhereJsonLength
+
+The `whereJsonLength` method allows you to select records where the **JSON** at the specified path has the specified length:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJsonLength('settings->languages', 0)
+    ->fetchAll();
+
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJsonLength('settings->languages', 1, '>=')
+    ->fetchAll();
+```
+
+You can combine this method with other query conditions:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->where('status', 'active')
+    ->whereJsonLength('settings->languages', 1, '>=')
+    ->fetchAll();
+```
+
+If you need to combine query conditions using the **OR** operator, you can use the `orWhereJsonLength` method:
+
+```php
+$users = $db
+    ->select()
+    ->from('test')
+    ->whereJsonContainsKey('settings->preferred_language')
+    ->orWhereJsonLength('settings->languages', 1, '>=')
+    ->fetchAll();
+```
+
+> **Note**
+> All of these methods can also be used in delete and update queries.
 
 ### Table and Column aliases
 
@@ -596,7 +774,7 @@ SELECT `id`,
 FROM `primary_test`
 WHERE `id` IN (SELECT `id`
                FROM `primary_test`
-               WHERE `id` BETWEEN 10 AND 100)  
+               WHERE `id` BETWEEN 10 AND 100)
 ```
 
 You can compare nested query return value in where statements:
@@ -605,7 +783,7 @@ You can compare nested query return value in where statements:
 $select->where(
     $db->select('COUNT(*)')
         ->from('test')
-        ->where('id', 'BETWEEN', 10, 100), 
+        ->where('id', 'BETWEEN', 10, 100),
     '>',
     1
 );
@@ -618,7 +796,7 @@ SELECT `id`,
 FROM `primary_test`
 WHERE (SELECT COUNT(*)
        FROM `primary_test`
-       WHERE `id` BETWEEN 10 AND 100) > 1   
+       WHERE `id` BETWEEN 10 AND 100) > 1
 ```
 
 You can exchange column identifiers between parent and nested query using `Expression` class:
@@ -648,6 +826,7 @@ WHERE (SELECT `name`
          AND `id` != 100) = 'Anton'
 ```
 
+> **Warning**
 > Nested queries will only work when the nested query belongs to the same database as a primary builder.
 
 ### Having
@@ -655,6 +834,7 @@ WHERE (SELECT `name`
 Use methods `having`, `orHaving`, and `andHaving` methods to define HAVING conditions. The syntax is identical to the
 WHERE statement.
 
+> **Note**
 > Yep, it was quick.
 
 ### Joins
@@ -704,7 +884,7 @@ SELECT `primary_test`.*,
        `primary_users`.`name` as `user_name`
 FROM `primary_test`
          LEFT JOIN `primary_users`
-                   ON (`primary_users`.`id` = `primary_test`.`id` OR `primary_users`.`id` = `primary_test`.`balance`)    
+                   ON (`primary_users`.`id` = `primary_test`.`id` OR `primary_users`.`id` = `primary_test`.`balance`)
 ```
 
 #### On Where statement
@@ -845,7 +1025,7 @@ You may use closure as a fourth argument.
 ```php
 $select->join('LEFT', 'photos', 'pht', static function (
     \Cycle\Database\Query\SelectQuery $select,
-    string $boolean, 
+    string $boolean,
     callable $wrapper
 ): void {
     $select
@@ -874,8 +1054,8 @@ $select->join('LEFT', 'photos', 'pht', [
     'pht.user_id' => 'users.id',
     'users.is_admin' => 'pht.is_admin',
     static function (
-        \Cycle\Database\Query\SelectQuery $select, 
-        string $boolean, 
+        \Cycle\Database\Query\SelectQuery $select,
+        string $boolean,
         callable $wrapper
     ): void {
         $select
@@ -924,7 +1104,7 @@ SELECT `primary_test`.*,
        `uu`.`name` as `user_name`
 FROM `primary_test`
          INNER JOIN `primary_users` as `uu`
-                    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton'       
+                    ON `uu`.`id` = `primary_test`.`id` AND `uu`.`name` = 'Anton'
 ```
 
 ### OrderBy
@@ -955,7 +1135,7 @@ $select
     ->orderBy([
         'test.name' => SelectQuery::SORT_DESC,
         'test.id'   => SelectQuery::SORT_ASC
-    ]); 
+    ]);
 ```
 
 Both ways will produce such SQL:
@@ -969,6 +1149,7 @@ FROM `primary_test`
 ORDER BY `primary_test`.`name` DESC, `primary_test`.`id` ASC
 ```
 
+> **Note**
 > You can also use Fragments instead of sorting identifiers (by default identifiers are treated as column name or expression).
 
 ### GroupBy and Distinct
@@ -1093,9 +1274,10 @@ UPDATE `primary_test`
 SET `name` = (SELECT `name`
               FROM `primary_users`
               WHERE `id` = 1)
-WHERE `id` < 10 
+WHERE `id` < 10
 ```
 
+> **Note**
 > Where methods work identically as in SelectQuery.
 
 ## DeleteQuery Builders
