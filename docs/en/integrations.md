@@ -1,8 +1,16 @@
 # Integrations
 
-Cycle ORM is designed to be flexible and extensible, allowing it to integrate seamlessly with various PHP frameworks. This capability ensures developers can leverage Cycle ORM's powerful features across different environments, enhancing productivity and maintaining consistency in data management practices. Below are the currently available official and community-supported integration packages that facilitate the use of Cycle ORM within other PHP frameworks.
+Cycle ORM is designed to be flexible and extensible, allowing it to integrate seamlessly with various PHP frameworks. This capability ensures developers can leverage Cycle ORM's powerful features across different environments, enhancing productivity and maintaining consistency in data management practices. Below are the currently available official and community-supported integration packages that facilitate the use of Cycle ORM within other PHP frameworks, including its official integration with the Spiral framework.
 
 ## Available Integrations
+
+### Spiral Framework
+
+Cycle ORM serves as the official ORM for the Spiral framework, supported by the `spiral/cycle-bridge` package. This integration is optimized for Spiral applications, ensuring compatibility and performance, especially with the [Roadrunner](https://roadrunner.dev) server for long-running applications.
+
+- **GitHub Repository**: [spiral/cycle-bridge](https://github.com/spiral/cycle-bridge)
+- **Documentation**: [Spiral Framework Integration](https://spiral.dev/docs/basics-orm)
+- **Maintained By**: [SpiralScout](https://spiralscout.com)
 
 ### Yii Framework
 
@@ -13,7 +21,7 @@ The Yii Framework integration is officially supported through a package maintain
 
 ### Laravel Framework
 
-For Laravel developers, the Laravel Cycle ORM Adapter offers a convenient way to integrate Cycle ORM into Laravel projects. This package is managed by the [WayOfDev organization](https://github.com/wayofdev) and aims to bridge the gap between Cycle ORM and Laravel's ecosystem, providing a cohesive and efficient database management experience.
+For Laravel developers seeking a DataMapper ORM solution, the Laravel Cycle ORM Adapter provides an essential bridge. Managed by the [WayOfDev Organization](https://github.com/wayofdev), this package seamlessly integrates Cycle ORM into Laravel projects. It addresses the framework's absence of a native DataMapper type ORM, offering a comprehensive and efficient database management experience that complements Laravel's ecosystem.
 
 - **GitHub Repository**: [wayofdev/laravel-cycle-orm-adapter](https://github.com/wayofdev/laravel-cycle-orm-adapter)
 - **Documentation**: [Setup and Configuration](https://laravel-cycle-orm-adapter.wayof.dev)
