@@ -28,7 +28,7 @@ use Cycle\ORM\Entity\Behavior\Uuid\Uuid1;
 use Ramsey\Uuid\UuidInterface;
 
 #[Entity]
-#[Uuid1(field: 'uuid', node: '00000fffffff', clockSeq: 0xffff)]
+#[Uuid1(field: 'uuid', node: '00000fffffff', clockSeq: 0xffff, nullable: false)]
 class User
 {
     #[Column(type: 'uuid', primary: true)]
@@ -52,10 +52,11 @@ use Ramsey\Uuid\Uuid;
 #[Entity]
 #[Uuid2(
     field: 'uuid',
-    localDomain: Uuid::DCE_DOMAIN_PERSON, 
-    localIdentifier: '12345678', 
-    node: '00000fffffff', 
-    clockSeq: 0xffff
+    localDomain: Uuid::DCE_DOMAIN_PERSON,
+    localIdentifier: '12345678',
+    node: '00000fffffff',
+    clockSeq: 0xffff,
+    nullable: false
 )]
 class User
 {
@@ -76,11 +77,7 @@ use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
 #[Entity]
-#[Uuid3(
-    field: 'uuid',
-    namespace: Uuid::NAMESPACE_URL,
-    name: 'https://example.com/foo'
-)]
+#[Uuid3(field: 'uuid', namespace: Uuid::NAMESPACE_URL, name: 'https://example.com/foo', nullable: false)]
 class User
 {
     #[Column(type: 'uuid', primary: true)]
@@ -100,7 +97,7 @@ use Cycle\ORM\Entity\Behavior\Uuid\Uuid4;
 use Ramsey\Uuid\UuidInterface;
 
 #[Entity]
-#[Uuid4]
+#[Uuid4(nullable: false)]
 class User
 {
     #[Column(field: 'uuid', type: 'uuid', primary: true)]
@@ -120,11 +117,7 @@ use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
 #[Entity]
-#[Uuid5(
-    field: 'uuid', 
-    namespace: Uuid::NAMESPACE_URL, 
-    name: 'https://example.com/foo'
-)]
+#[Uuid5(field: 'uuid', namespace: Uuid::NAMESPACE_URL, name: 'https://example.com/foo', nullable: false)]
 class User
 {
     #[Column(type: 'uuid', primary: true)]
@@ -144,11 +137,7 @@ use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
 #[Entity]
-#[Uuid6(
-    field: 'uuid', 
-    node: '00000fffffff', 
-    clockSeq: 0xffff
-)]
+#[Uuid6(field: 'uuid', node: '00000fffffff', clockSeq: 0xffff, nullable: false)]
 class User
 {
     #[Column(type: 'uuid', primary: true)]
@@ -156,5 +145,57 @@ class User
 }
 ```
 
-> Note: If you have a custom `uuid` column declaration, it should be compatible ith `Behavior\Uuid\Uuid*` column type, 
+#### Version 7: Unix Epoch Time
+
+Version 7 UUIDs solve two problems that have long existed with the use of version 1 UUIDs:
+ - Scattered database records
+ - Inability to sort by an identifier in a meaningful way (i.e., insert order)
+To overcome these issues, we need the ability to generate UUIDs that are monotonically increasing.
+Version 6 UUIDs provide an excellent solution for those who need monotonically increasing, sortable UUIDs with
+the features of version 1 UUIDs (MAC address and clock sequence), but if those features aren’t necessary for your
+application, using a version 6 UUID might be overkill. Version 7 UUIDs combine random data (like version 4 UUIDs) with
+a timestamp (in milliseconds since the Unix Epoch, i.e., 1970-01-01 00:00:00 UTC) to create a monotonically increasing,
+sortable UUID that doesn’t have any privacy concerns, since it doesn’t include a MAC address.
+
+```php
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\ORM\Entity\Behavior\Uuid\Uuid7;
+use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
+
+#[Entity]
+#[Uuid7(field: 'uuid', nullable: false)]
+class User
+{
+    #[Column(type: 'uuid', primary: true)]
+    private UuidInterface $uuid;
+}
+```
+
+#### Disabling UUID autogeneration
+
+In all UUID attributes, there is a `nullable` parameter. If you set this parameter to **true**, it will disable automatic
+UUID generation. In this case, your database field must be nullable, or you must generate a value for the field yourself.
+
+```php
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\ORM\Entity\Behavior\Uuid\Uuid4;
+use Ramsey\Uuid\UuidInterface;
+
+#[Entity]
+#[Uuid4(field: 'token', nullable: true)]
+class User
+{
+    #[Column(type: 'primary')]
+    private int $id;
+
+    #[Column(type: 'uuid', nullable: true)]
+    private ?UuidInterface $token = null
+}
+```
+
+> **Warning**
+> If you have a custom `uuid` column declaration, it should be compatible with `Behavior\Uuid\Uuid*` column type,
 > otherwise an exception will be thrown.
