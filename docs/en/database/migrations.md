@@ -56,7 +56,7 @@ $generator->run($registry);
 
 ### Migration strategies
 
-The migration generator can use different strategies to generate migrations. The default strategy is to generate a
+The migration generator can use different strategies to generate migrations. The default strategy generates a
 migration for each database. You can change this behavior by passing a different strategy to the generator. The package
 provides the following strategies:
 
