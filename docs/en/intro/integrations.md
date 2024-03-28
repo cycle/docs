@@ -2,8 +2,6 @@
 
 Cycle ORM is designed to be flexible and extensible, allowing it to integrate seamlessly with various PHP frameworks. This capability ensures developers can leverage Cycle ORM's powerful features across different environments, enhancing productivity and maintaining consistency in data management practices. Below are the currently available official and community-supported integration packages that facilitate the use of Cycle ORM within other PHP frameworks, including its official integration with the Spiral framework.
 
-## Available Integrations
-
 ## Spiral
 
 Cycle ORM serves as the official ORM for the Spiral framework, supported by the `spiral/cycle-bridge` package. This integration is optimized for Spiral applications, ensuring compatibility and performance, especially with the [RoadRunner](https://roadrunner.dev) server for long-running applications.
