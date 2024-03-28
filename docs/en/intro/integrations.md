@@ -4,7 +4,7 @@ Cycle ORM is designed to be flexible and extensible, allowing it to integrate se
 
 ## Available Integrations
 
-### Spiral Framework
+## Spiral
 
 Cycle ORM serves as the official ORM for the Spiral framework, supported by the `spiral/cycle-bridge` package. This integration is optimized for Spiral applications, ensuring compatibility and performance, especially with the [RoadRunner](https://roadrunner.dev) server for long-running applications.
 
