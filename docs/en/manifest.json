@@ -5,6 +5,7 @@
       "readme": "Table of Contents",
       "intro/about": "About Cycle ORM",
       "intro/install": "Installation",
+      "intro/integrations": "Integrations",
       "intro/upgrade": "Upgrade Guide",
       "contributing": "Contributing",
       "issue-test-case": "Issue with Test Case",
