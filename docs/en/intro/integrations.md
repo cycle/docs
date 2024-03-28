@@ -12,7 +12,7 @@ Cycle ORM serves as the official ORM for the Spiral framework, supported by the 
 - **Documentation**: [Spiral Framework Integration](https://spiral.dev/docs/basics-orm)
 - **Maintained By**: [SpiralScout](https://spiralscout.com)
 
-### Yii Framework
+## Yii 3
 
 The Yii Framework integration is officially supported through a package maintained by the [YiiSoft](https://www.yiiframework.com). This package ensures that Cycle ORM works seamlessly with Yii, providing a robust solution for managing database operations within Yii applications.
 
