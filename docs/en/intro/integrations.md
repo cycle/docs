@@ -19,7 +19,7 @@ The Yii Framework integration is officially supported through a package maintain
 - **GitHub Repository**: [yiisoft/yii-cycle](https://github.com/yiisoft/yii-cycle)
 - **Documentation**: [Guide and Usage](https://github.com/yiisoft/yii-cycle/tree/master/docs/guide/en)
 
-### Laravel Framework
+## Laravel
 
 For Laravel developers seeking a DataMapper ORM solution, the Laravel Cycle ORM Adapter provides an essential bridge. Managed by the [WayOfDev Organization](https://github.com/wayofdev), this package seamlessly integrates Cycle ORM into Laravel projects. It addresses the framework's absence of a native DataMapper type ORM, offering a comprehensive and efficient database management experience that complements Laravel's ecosystem.
 
