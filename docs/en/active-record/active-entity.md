@@ -322,33 +322,51 @@ Post::findByPK($id)->deleteOrFail();
 Each call to the `save()`, `delete()`, `deleteOrFail()`, or `saveOrFail()` method
 runs at least one transaction to the database.
 However, you may need to save multiple distinct entities in a single transaction.
-To achieve this, you can use the `transact()` method:
+To achieve this, you can use two methods: `::transact()` and `::groupActions()`.
+
+### ActiveRecord::transact()
+
+The `::transact()` method will immediately open a transaction and complete it along with the callback.
+The transaction will be rolled back if an exception is thrown from the function; otherwise, it will be committed.
+
+Note that this does not currently affect the execution of ActiveRecord write operations.
+Single saves or deletions of entities will still be executed in their own transactions.
+This behavior may change in the future.
 
 ```php
-ActiveRecord::transct(
-    function () use ($users, $user, $account, $post) {
-        array_walk($users, fn ($user) => $user->save());
+ActiveRecord::transact(
+    function () use ($user, $account, $post) {
+        $dbal->query('DELETE FROM users');
+
+        // Will be executed in a nested transaction
         $user->save();
+        // Will be executed in a nested transaction
         $account->save();
+        // Will be executed in a nested transaction
         $post->delete();
     }
 );
 ```
 
-All the ActiveRecord write operations within the callback will be registered
-using the common Entity Manager without being executed until the end of the callback.
+### ActiveRecord::groupActions()
 
-It is different from the [database transaction](/docs/en/database/transactions.md) because it doesn't start
-a new DB transaction outside the Entity Manager.
+The `::groupActions()` method differs from `::transact()` in that:
+- Only ActiveRecord write operations (saving and deleting entities) are captured and grouped into the transaction.
+- DBAL and QueryBuilder calls are executed immediately, as if `::groupActions()` was not called.
+- The transaction is opened after the callback is executed.
+
+In other words, all operations on entities within the function are placed into a single Unit of Work of the EntityManager and executed upon exiting the function.
+
+You can get the EntityManager as the first parameter of the passed function to perform actions with other ORM entities that are not converted to ActiveRecord.  
 To configure the transaction behavior of the Entity Manager, you can use the second parameter of the `transact()` method:
 
 ```php
-ActiveRecord::transact(
-    function () use ($users, $user, $account, $post) {
+ActiveRecord::groupActions(
+    function (EntityManagerInterface $em) use ($users, $user, $account, $post) {
         array_walk($users, fn ($user) => $user->save());
         $user->save();
-        $account->save();
         $post->delete();
+        $em->persist($account);
     },
     TransactionMode::Ignore,
 );
@@ -360,3 +378,18 @@ The `TransactionMode` enum provides the following options:
 - `TransactionMode::Current` uses the current transaction and throws an exception if there is no active transaction.
 - `TransactionMode::Ignore` does nothing about transactions. If there is an active transaction,
   it won't be committed or rolled back.
+
+You can nest the call to `::groupActions()` inside the call to `::transact()` to avoid creating unnecessary nested transactions.
+However, nesting `::groupActions()` inside another `::groupActions()` is not currently allowed.
+
+```php
+User::transact(function (DatabaseInterface $dbal) use ($user, $account, $post): void {
+    $dbal->query('DELETE FROM users');
+
+    User::groupActions(function () use ($user, $account, $post) {
+        $user->save();
+        $account->save();
+        $post->delete();
+    }, TransactionMode::Current);
+});
+```
