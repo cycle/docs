@@ -43,7 +43,7 @@ class Image
 {
     // ...
 
-    #[BelongsToMorphed(taget: ImageHolderInterface::class)]
+    #[BelongsToMorphed(target: ImageHolderInterface::class)]
     public ImageHolderInterface $imageHolder;
 }
 ```
@@ -71,7 +71,7 @@ class Image
 {
     // ...
 
-    #[BelongsToMorphed(taget: ImageHolderInterface::class)]
+    #[BelongsToMorphed(target: ImageHolderInterface::class)]
     public ImageHolderInterface $imageHolder;
 }
 ```
