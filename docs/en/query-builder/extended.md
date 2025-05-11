@@ -242,7 +242,7 @@ WHERE `id` = 1
 Group multiple where conditions using Closure as your first argument:
 
 ```php
-$select->where('id', 1)->where(function (\Cycle\ORM\Select\QueryBuilder $select) {
+$select->where('id', 1)->where(function (\Cycle\Database\Query\SelectQuery $select) {
     $select->where('status', 'active')->orWhere('id', 10);
 });
 ```
@@ -259,7 +259,7 @@ WHERE `id` = 1
 Boolean joiners are respected:
 
 ```php
-$select->where('id', 1)->orWhere(function (\Cycle\ORM\Select\QueryBuilder $select) {
+$select->where('id', 1)->orWhere(function (\Cycle\Database\Query\SelectQuery $select) {
     $select->where('status', 'active')->andWhere('id', 10);
 });
 ```
@@ -334,7 +334,7 @@ $select->where([
 Use `@or` and `@and` groups to create where groups:
 
 ```php
-$select->where(function (\Cycle\ORM\Select\QueryBuilder $select) {
+$select->where(function (\Cycle\Database\Query\SelectQuery $select) {
     $select->where('id', 'between', 10, 100)->andWhere('name', 'Anton');
 })->orWhere('status', 'disabled');
 ```
