@@ -329,23 +329,30 @@ To achieve this, you can use two methods: `::transact()` and `::groupActions()`.
 The `::transact()` method will immediately open a transaction and complete it along with the callback.
 The transaction will be rolled back if an exception is thrown from the function; otherwise, it will be committed.
 
-Note that this does not currently affect the execution of ActiveRecord write operations.
-Single saves or deletions of entities will still be executed in their own transactions.
-This behavior may change in the future.
+All the ORM operations within the callback will be executed in the opened transaction without collecting.
+If you need to collect ORM operations and execute them in a separated inner transaction,
+use `::groupActions()` within the callback.
+
+If you call this method from a child class, the child database connection will be used for the transaction.
+If you call this method from the `ActiveRecord` class, the default database connection will be used.
 
 ```php
-ActiveRecord::transact(
-    function () use ($user, $account, $post) {
-        $dbal->query('DELETE FROM users');
+$result = ActiveRecord::transact(
+    static function (DatabaseInterface $db, EntityManagerInterface $em) use ($user, $account, $post): int {
+        $db->query('DELETE FROM users');
 
-        // Will be executed in a nested transaction
+        // All the ORM actions will be executed right away in the opened transaction using isolated UoW
         $user->save();
-        // Will be executed in a nested transaction
-        $account->save();
-        // Will be executed in a nested transaction
+        $account->saveOrFail();
         $post->delete();
+
+        // EM executes action right away, you don't need to call $em->run()
+        $em->persist(new Post('Title', 'Content'));
+
+        return 42;
     }
 );
+echo $result; // 42
 ```
 
 ### ActiveRecord::groupActions()
@@ -357,8 +364,8 @@ The `::groupActions()` method differs from `::transact()` in that:
 
 In other words, all operations on entities within the function are placed into a single Unit of Work of the EntityManager and executed upon exiting the function.
 
-You can get the EntityManager as the first parameter of the passed function to perform actions with other ORM entities that are not converted to ActiveRecord.  
-To configure the transaction behavior of the Entity Manager, you can use the second parameter of the `transact()` method:
+You can get the EntityManager as the first parameter of the passed function to perform actions with other ORM entities that are not converted to ActiveRecord.
+To configure the transaction behavior of the Entity Manager, you can use the second parameter:
 
 ```php
 ActiveRecord::groupActions(
@@ -380,10 +387,10 @@ The `TransactionMode` enum provides the following options:
   it won't be committed or rolled back.
 
 You can nest the call to `::groupActions()` inside the call to `::transact()` to avoid creating unnecessary nested transactions.
-However, nesting `::groupActions()` inside another `::groupActions()` is not currently allowed.
+Nested calls to `::groupActions()` will use separated Unit of Works, but transactions will be reused according to the given mode.
 
 ```php
-User::transact(function (DatabaseInterface $dbal) use ($user, $account, $post): void {
+User::transact(function (DatabaseInterface $dbal, EntityManagerInterface $em) use ($user, $account, $post): void {
     $dbal->query('DELETE FROM users');
 
     User::groupActions(function () use ($user, $account, $post) {
