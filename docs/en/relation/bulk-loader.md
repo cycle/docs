@@ -35,6 +35,9 @@ Then inject it into your services as shown above.
 
 ## Basic Usage
 
+The `BulkLoaderInterface::collect()` method is immutable and returns a new instance
+of `Cycle\ORM\Relation\RelationLoaderInterface` that you can use to chain `load()` calls and finally execute `run()`.
+
 ```php
 $users = $userRepository->findAll();
 
@@ -80,18 +83,6 @@ $bulkLoader
 $bulkLoader
     ->collect(...$users)
     ->load('tags', ['orderBy' => ['@.@.created_at' => 'DESC']])
-    ->run();
-```
-
-## Collecting Entities
-
-The `collect()` method is immutable and returns a new instance. You can chain calls to gather entities from different sources:
-
-```php
-$bulkLoader
-    ->collect(...$activeUsers)
-    ->collect(...$inactiveUsers)
-    ->load('profile')
     ->run();
 ```
 
