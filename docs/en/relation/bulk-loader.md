@@ -97,77 +97,36 @@ $bulkLoader
 
 ## Important Behavior
 
-**All entities must be of the same type:**
-```php
-$bulkLoader
-    ->collect($user, $post) // InvalidArgumentException
-    ->run();
-```
+- All entities must be of the same role.
+- Entities must be loaded from the database (not new).
 
-**Entities must exist in heap:**
-```php
-$user = new User(); // not persisted or fetched
+    ```php
+    $user = new User(); // not persisted or fetched
 
-$bulkLoader
-    ->collect($user)
-    ->load('profile')
-    ->run(); // LogicException
-```
+    $bulkLoader
+        ->collect($user)
+        ->load('profile')
+        ->run(); // LogicException
+    ```
 
-**Relations use database state, not runtime changes:**
-```php
-$profile = $profileRepository->findByPK(1); // user_id = 5 in DB
-$profile->user_id = 10; // changed at runtime
+- Relations use database state, not runtime changes. It's required because to ensure consistency.
 
-$bulkLoader->collect($profile)->load('user')->run();
+    ```php
+    $profile = $profileRepository->findByPK(1); // user_id = 5 in DB
+    $profile->user_id = 10; // changed at runtime
 
-// $profile->user still points to User(5), not User(10)
-```
+    $bulkLoader->collect($profile)->load('user')->run();
 
-BulkLoader reads relation keys from heap node data (as fetched from database) to avoid inconsistencies.
+    // $profile->user still points to User(5), not User(10)
+    ```
 
-**Already loaded relations are not overwritten:**
-```php
-$user = $userRepository->findByPK(1);
-$user->profile; // lazy loading triggered
+- Already loaded relations are not overwritten:
 
-$bulkLoader->collect($user)->load('profile')->run();
+    ```php
+    $user = $userRepository->findByPK(1);
+    $user->profile; // lazy loading triggered
 
-// $user->profile is the same instance, not reloaded
-```
+    $bulkLoader->collect($user)->load('profile')->run();
 
-## Examples
-
-API responses:
-```php
-$posts = $postRepository->findRecent(50);
-
-$bulkLoader
-    ->collect(...$posts)
-    ->load('author.profile')
-    ->load('comments', ['orderBy' => ['created_at' => 'DESC']])
-    ->run();
-
-return $this->json($posts);
-```
-
-Reports:
-```php
-$orders = $orderRepository->findByMonth($month);
-
-$bulkLoader
-    ->collect(...$orders)
-    ->load('items.product')
-    ->load('customer.address')
-    ->run();
-```
-
-Polymorphic relations:
-```php
-$images = $imageRepository->findAll();
-
-$bulkLoader
-    ->collect(...$images)
-    ->load('parent') // User or Post
-    ->run();
-```
+    // $user->profile is the same instance, not reloaded
+    ```
