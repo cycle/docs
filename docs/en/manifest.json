@@ -43,7 +43,8 @@
       "relation/many-to-many": "Many To Many",
       "relation/embedded": "Embedding Entities",
       "relation/morphed": "Morphed Relations",
-      "relation/collections": "Collections"
+      "relation/collections": "Collections",
+      "relation/bulk-loader": "Bulk Loading"
     }
   },
   {
