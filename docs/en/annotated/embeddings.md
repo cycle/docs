@@ -19,7 +19,7 @@ selection is possible as well.
 ## Definition
 
 To define an embeddable entity use the `#[Embeddable]` attribute. As with `#[Entity]`, you are able to define a custom
-mapper or associate additional columns/indexes using class-level `#[Column]` and `#[Index]` attributes.
+mapper or associate additional columns/indexes using class-level `#[Column]`, `#[Index]`, and `#[Table]` attributes.
 
 ```php
 use Cycle\Annotated\Annotation\Embeddable;
