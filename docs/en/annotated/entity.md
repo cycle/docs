@@ -16,24 +16,6 @@ class User
 > Read more about [Prerequisites and Setup](/docs/en/annotated/prerequisites.md) for configuring the annotation compiler
 > pipeline.
 
-## Table of Contents
-
-- [Entity Attribute](#entity-attribute)
-    - [Attribute Specification](#entity-attribute-specification)
-    - [Basic Examples](#entity-basic-examples)
-- [Column Attributes](#column-attributes)
-    - [Column Specification](#column-attribute-specification)
-    - [Column Types Reference](#column-types-reference)
-    - [Enum Types](#enum-types)
-    - [Database-Specific Types](#database-specific-types)
-- [Generated Values](#generated-values)
-- [Table Extension](#table-extension)
-    - [Class-Level Columns](#class-level-columns)
-    - [Indexes](#indexes)
-    - [Primary Keys](#primary-keys)
-- [Foreign Keys](#foreign-keys)
-- [Merging Attributes](#merging-attributes)
-
 ## Entity Attribute
 
 Usually, the single attribute `#[Entity]` is enough to describe your model. In this case, Cycle ORM will automatically

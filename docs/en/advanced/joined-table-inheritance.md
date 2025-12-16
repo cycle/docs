@@ -70,22 +70,6 @@ Use Joined Table Inheritance when your entities are **more different than simila
 - You frequently query across all entity types together
 - Query performance is more critical than storage efficiency
 
-## Table of Contents
-
-- [Understanding Joined Table Inheritance](#understanding-joined-table-inheritance)
-    - [What is a Foreign Key Join?](#what-is-a-foreign-key-join)
-    - [How JTI Works](#how-jti-works)
-    - [When to Use JTI](#when-to-use-jti)
-- [Definition via Attributes](#definition-via-attributes)
-    - [Attribute Specification](#attribute-specification)
-    - [Basic Example](#basic-example)
-    - [Custom Parent Keys](#custom-parent-keys)
-    - [Multi-Level Inheritance](#multi-level-inheritance)
-    - [Foreign Key Configuration](#foreign-key-configuration)
-- [Schema Definition](#schema-definition)
-- [Querying Entities](#querying-entities)
-- [Important Considerations](#important-considerations)
-
 ## Definition via Attributes
 
 ### Attribute Specification

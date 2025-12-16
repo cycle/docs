@@ -5,23 +5,6 @@ relationship. This is the most common one-to-many relationship pattern.
 
 > The parent entity is persisted first, then all child entities with references to the parent.
 
-## Table of Contents
-
-- [Definition](#definition)
-    - [Attribute Specification](#attribute-specification)
-    - [Key Behavior](#key-behavior)
-- [Usage Examples](#usage-examples)
-    - [Creating Relations](#creating-relations)
-    - [Managing Collections](#managing-collections)
-    - [Removing Children](#removing-children)
-- [Loading](#loading)
-    - [Filtered Loading](#filtered-loading)
-    - [Sorted Loading](#sorted-loading)
-- [Filtering](#filtering)
-- [Collections](#collections)
-- [Inverse Relations](#inverse-relations)
-- [Foreign Key Options](#foreign-key-options)
-
 ## Definition
 
 To define a HasMany relation using the annotated entities extension:

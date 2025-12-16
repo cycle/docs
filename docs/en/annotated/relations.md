@@ -6,21 +6,6 @@ of inner, outer keys) will be generated automatically.
 
 > You can read more about relation configuration and usage in the dedicated relation documentation pages linked below.
 
-## Table of Contents
-
-- [Common Configuration](#common-configuration)
-- [Relation Types](#relation-types)
-    - [Embedded](#embedded)
-    - [BelongsTo](#belongsto)
-    - [RefersTo](#refersto)
-    - [HasOne](#hasone)
-    - [HasMany](#hasmany)
-    - [ManyToMany](#manytomany)
-    - [Morphed Relations](#morphed-relations)
-- [Inverse Relations](#inverse-relations)
-- [Foreign Key Configuration](#foreign-key-configuration)
-- [Loading Strategies](#loading-strategies)
-
 ## Common Configuration
 
 Each relation must have a proper `target` option. The target must point to either the related entity `role`, or to the

@@ -6,16 +6,6 @@ selection is possible as well.
 
 > Embedded entities do not support relations at the moment.
 
-## Table of Contents
-
-- [Definition](#definition)
-    - [Embeddable Attribute](#embeddable-attribute)
-    - [Embedded Relation](#embedded-relation)
-- [Column Mapping](#column-mapping)
-- [Querying](#querying)
-- [Loading Strategies](#eager-and-lazy-loading)
-- [Advanced Usage](#query-embedded-entity-separately)
-
 ## Definition
 
 To define an embeddable entity use the `#[Embeddable]` attribute. As with `#[Entity]`, you are able to define a custom

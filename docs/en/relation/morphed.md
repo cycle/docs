@@ -6,26 +6,6 @@ relation. These relations use interfaces to define the contract that multiple en
 > **Use with caution:** Polymorphic associations can make queries more complex and prevent proper foreign key
 > constraints. Consider alternative designs when possible.
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Definition](#definition)
-- [BelongsToMorphed](#belongstomorphed)
-    - [Attribute Specification](#belongstomorphed-attribute-specification)
-    - [Usage Examples](#belongstomorphed-usage-examples)
-- [MorphedHasOne](#morphedhasone)
-    - [Attribute Specification](#morphedhasone-attribute-specification)
-    - [Usage Examples](#morphedhasone-usage-examples)
-- [MorphedHasMany](#morphedhasmany)
-    - [Attribute Specification](#morphedhasmany-attribute-specification)
-    - [Usage Examples](#morphedhasmany-usage-examples)
-- [Loading](#loading)
-- [Filtering](#filtering)
-- [Collections](#collections)
-- [Inverse Relations](#inverse-relations)
-- [Best Practices](#best-practices)
-- [Limitations](#limitations)
-
 ## Overview
 
 Morphed relations solve the problem of entities that can relate to multiple entity types:

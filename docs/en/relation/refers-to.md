@@ -8,20 +8,6 @@ The **RefersTo** relation is similar to BelongsTo but designed for specific use 
 > The entity is persisted first, then the related entity is saved, and finally the entity is updated with the relation
 > reference.
 
-## Table of Contents
-
-- [Definition](#definition)
-    - [Attribute Specification](#attribute-specification)
-    - [Key Behavior](#key-behavior)
-- [Use Cases](#use-cases)
-    - [Multiple Relations to Same Entity](#multiple-relations-to-same-entity)
-    - [Self-Referencing Relations](#self-referencing-relations)
-- [Usage Examples](#usage-examples)
-- [Loading](#loading)
-- [Filtering](#filtering)
-- [Inverse Relations](#inverse-relations)
-- [Foreign Key Options](#foreign-key-options)
-
 ## Definition
 
 To define a RefersTo relation using the annotated entities extension:
