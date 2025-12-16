@@ -13,7 +13,28 @@ class User
 }
 ```
 
-## Entity
+> Read more about [Prerequisites and Setup](/docs/en/annotated/prerequisites.md) for configuring the annotation compiler
+> pipeline.
+
+## Table of Contents
+
+- [Entity Attribute](#entity-attribute)
+    - [Attribute Specification](#entity-attribute-specification)
+    - [Basic Examples](#entity-basic-examples)
+- [Column Attributes](#column-attributes)
+    - [Column Specification](#column-attribute-specification)
+    - [Column Types Reference](#column-types-reference)
+    - [Enum Types](#enum-types)
+    - [Database-Specific Types](#database-specific-types)
+- [Generated Values](#generated-values)
+- [Table Extension](#table-extension)
+    - [Class-Level Columns](#class-level-columns)
+    - [Indexes](#indexes)
+    - [Primary Keys](#primary-keys)
+- [Foreign Keys](#foreign-keys)
+- [Merging Attributes](#merging-attributes)
+
+## Entity Attribute
 
 Usually, the single attribute `#[Entity]` is enough to describe your model. In this case, Cycle ORM will automatically
 assign the generated table name and role based on the class name. In the case of `User` the role will be `user`,
@@ -47,21 +68,25 @@ class User
 
 > Cycle ORM can locate repository class names automatically, using current entity namespace as the base path.
 
-Following entity options are available for customization:
+### Entity Attribute Specification
 
-| Option         | Value   | Comment                                                                                                |
-|----------------|---------|--------------------------------------------------------------------------------------------------------|
-| role           | string  | Entity role. Defaults to the lowercase class name without a namespace                                  |
-| mapper         | class   | Mapper class name. Defaults to `Cycle\ORM\Mapper\Mapper`                                               |
-| repository     | class   | Repository class to represent read operations for an entity. Defaults to `Cycle\ORM\Select\Repository` |
-| table          | string  | Entity source table. Defaults to plural form of entity role                                            |
-| database       | string  | Database name. Defaults to `null` (default database)                                                   |
-| readonlySchema | bool    | Set to `true` to disable schema synchronization for the assigned table. Defaults to `false`            |
-| source         | class   | Entity source class (internal). Defaults to `Cycle\ORM\Select\Source`                                  |
-| typecast       | class[] | Class name or array of classes of typecast handlers. Defaults to `Cycle\ORM\Parser\Typecast`           |
-| scope          | class   | Class name of scope to be applied to every entity query. Defaults to `null`                            |
+| Parameter      | Type                   | Default | Description                                                                                                                                                           |
+|----------------|------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| role           | ?string                | null    | Entity role. Defaults to the lowercase class name without a namespace                                                                                                 |
+| mapper         | ?class-string          | null    | Mapper class name. Defaults to `Cycle\ORM\Mapper\Mapper`                                                                                                              |
+| repository     | ?class-string          | null    | Repository class to represent read operations for an entity. Defaults to `Cycle\ORM\Select\Repository`                                                                |
+| table          | ?string                | null    | Entity source table. Defaults to plural form of entity role                                                                                                           |
+| readonlySchema | bool                   | false   | Set to `true` to disable schema synchronization for the assigned table                                                                                                |
+| database       | ?string                | null    | Database name. Defaults to default database                                                                                                                           |
+| source         | ?class-string          | null    | Entity source class (internal). Defaults to `Cycle\ORM\Select\Source`                                                                                                 |
+| typecast       | string\|string[]\|null | null    | Typecast handler class name or array of handler class names. Defaults to `Cycle\ORM\Parser\Typecast`. Read more about [typecasting](/docs/en/advanced/typecasting.md) |
+| scope          | ?class-string          | null    | Class name of constraint to be applied to every entity query. Read more about [scopes](/docs/en/advanced/scope.md)                                                    |
+| columns        | Column[]               | []      | Additional entity columns for unmapped properties. See [Class-Level Columns](#class-level-columns)                                                                    |
+| foreignKeys    | ForeignKey[]           | []      | Foreign key definitions without relations. See [Foreign Keys](#foreign-keys)                                                                                          |
 
-For example, a typical entity description might look like:
+### Entity Basic Examples
+
+A typical entity description with multiple options:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -69,7 +94,8 @@ use Cycle\Annotated\Annotation\Entity;
 #[Entity(
     table: 'users',
     repository: \App\Repository\UserRepository::class,
-    scope: \App\Scope\SortByID::class
+    scope: \App\Scope\SortByID::class,
+    typecast: [\App\Typecast\JsonTypecast::class, \Cycle\ORM\Parser\Typecast::class]
 )]
 class User
 {
@@ -77,7 +103,7 @@ class User
 }
 ```
 
-## Columns
+## Column Attributes
 
 No entity can operate without some properties mapped to table columns. To map your property to the column add the
 attribute `#[Column]` to it. It's mandatory to specify the column type. You must always specify only **one auto
@@ -107,10 +133,11 @@ class Pivot
 }
 ```
 
-> Read how to use non-incremental primary keys in the Advanced section.
-> - [Uuid](/docs/en/entity-behaviors/install.md).
+> Read how to use non-incremental primary keys in the Advanced section:
+> - [UUID](/docs/en/entity-behaviors/uuid.md)
+> - [Snowflake IDs](/docs/en/entity-behaviors/uuid.md#snowflake-ids)
 
-You can use multiple attributes at the same time:
+You can use multiple attributes at the same time with shorter syntax:
 
 ```php
 use Cycle\Annotated\Annotation as Cycle;
@@ -199,46 +226,58 @@ class User
 }
 ```
 
-Following options are available for configuration:
+### Column Attribute Specification
 
-| Option   | Value    | Comment                                                                                                |
-|----------|----------|--------------------------------------------------------------------------------------------------------|
-| type     | string   | Column type with arguments.                                                                            |
-| name     | string   | Column name. Defaults to the property name.                                                            |
-| primary  | bool     | Explicitly set column as primary key. Defaults to `false`                                              |
-| typecast | callable | Column typecast function. Defaults to one of (`int`, `float`, `bool`, `datetime`) based on column type |
-| nullable | bool     | Set column as nullable. Defaults to `false`                                                            |
-| default  | mixed    | Default column value. Defaults to `none`                                                               |
+| Parameter      | Type                   | Default | Description                                                                                                                                                       |
+|----------------|------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| type           | string                 | -       | **Required**. Column type with optional arguments. See [Column Types Reference](#column-types-reference)                                                          |
+| name           | ?string                | null    | Column name in database. Defaults to the property name                                                                                                            |
+| property       | ?string                | null    | Entity property name. Used for virtual columns that don't map to entity properties                                                                                |
+| primary        | bool                   | false   | Explicitly mark column as part of primary key                                                                                                                     |
+| nullable       | bool                   | false   | Allow NULL values in column                                                                                                                                       |
+| default        | mixed                  | null    | Default column value                                                                                                                                              |
+| castDefault    | bool                   | false   | Apply typecast to default value                                                                                                                                   |
+| typecast       | callable\|string\|null | null    | Typecast rule. Can be callable or string for default handler: "int", "float", "bool", "datetime". Read more about [typecasting](/docs/en/advanced/typecasting.md) |
+| readonlySchema | bool                   | false   | Set to `true` to disable schema synchronization for this column                                                                                                   |
+| ...$attributes | mixed                  | -       | Database-specific attributes using named parameters. Example: `#[Column('smallInt', unsigned: true, zerofill: true)]`                                             |
 
-Following column types are available:
+### Column Types Reference
 
-| Type        | Parameters                | Description                                                                                                                                                                                                                                 |
-|-------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| primary**   | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table.                                                                      |
-| bigPrimary  | ---                       | Same as primary but uses bigInteger to store its values.                                                                                                                                                                                    |
-| boolean     | ---                       | Boolean type, some databases will store it as integer (1/0).                                                                                                                                                                                |
-| integer     | ---                       | Database specific integer (usually 32 bits).                                                                                                                                                                                                |
-| tinyInteger | ---                       | Small/tiny integer, check your DBMS to find size limitations.                                                                                                                                                                               |
-| bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to find size limitations.                                                                                                                                                               |
-| string**    | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.                                                                                                                                                 |
-| text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.                                                                                                                                                             |
-| tinyText    | ---                       | Tiny text, same as "text" for most of the databases. It differs only in MySQL.                                                                                                                                                              |
-| longText    | ---                       | Long text, same as "text" for most of the databases. It differs only in MySQL.                                                                                                                                                              |
-| double      | ---                       | [Double precision number.](https://en.wikipedia.org/wiki/Double-precision_floating-point_format)                                                                                                                                            |
-| float       | ---                       | Single precision number, usually mapped into "real" type in the database.                                                                                                                                                                   |
-| decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.                                                                                                                                                                                                  |
-| datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.                                                                                                                                               |
-| date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.                                                                                                                                                            |
-| time        | ---                       | To store time only.                                                                                                                                                                                                                         |
-| timestamp*  | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column type in your objects to store time (use `datetime` instead) as timestamps will behave very specific to select DBMS. |
-| binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.                                                                                                                                                                         |
-| tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. It differs only in MySQL.                                                                                                                                                          |
-| longBinary  | ---                       | Long binary, same as "binary" for most of the databases. It differs only in MySQL.                                                                                                                                                          |
-| json        | ---                       | To store JSON structures, such type usually mapped to "text", only Postgres support it natively.                                                                                                                                            |
+#### Standard Column Types
 
-## Enums
+| Type          | Parameters           | Description                                                                                                            |
+|---------------|----------------------|------------------------------------------------------------------------------------------------------------------------|
+| **primary**   | -                    | Auto-incrementing integer primary key (typically 32-bit). Only one primary column allowed per entity                   |
+| bigPrimary    | -                    | Auto-incrementing big integer primary key (typically 64-bit)                                                           |
+| boolean       | -                    | Boolean type (stored as tinyint 0/1 in most databases)                                                                 |
+| integer       | -                    | Standard integer (typically 32-bit)                                                                                    |
+| tinyInteger   | -                    | Small integer (typically 8-bit). Check DBMS for size limits                                                            |
+| smallInteger  | -                    | Small integer (typically 16-bit). Check DBMS for size limits                                                           |
+| bigInteger    | -                    | Large integer (typically 64-bit)                                                                                       |
+| **string**    | [length:255]         | Variable-length string. Ideal for indexed fields like emails and usernames                                             |
+| text          | -                    | Large text field. Check DBMS for size limitations                                                                      |
+| tinyText      | -                    | Small text field (MySQL specific, same as text in other databases)                                                     |
+| longText      | -                    | Very large text field (MySQL specific, same as text in other databases)                                                |
+| double        | -                    | Double precision floating-point number                                                                                 |
+| float         | -                    | Single precision floating-point number                                                                                 |
+| decimal       | precision, [scale:0] | Fixed-precision decimal number. Example: `decimal(10,2)` for currency                                                  |
+| datetime      | -                    | Date and time (automatically uses UTC timezone)                                                                        |
+| date          | -                    | Date only (automatically uses UTC timezone)                                                                            |
+| time          | -                    | Time only                                                                                                              |
+| **timestamp** | -                    | Unix timestamp (stored as integer). Automatically converts to UTC. **Prefer `datetime` for general date/time storage** |
+| binary        | -                    | Binary data. Check DBMS for size limitations                                                                           |
+| tinyBinary    | -                    | Small binary field (MySQL specific)                                                                                    |
+| longBinary    | -                    | Large binary field (MySQL specific)                                                                                    |
+| json          | -                    | JSON data. Native support in PostgreSQL and MySQL 5.7+, stored as text in other databases                              |
+| uuid          | -                    | UUID/GUID field                                                                                                        |
+| ulid          | -                    | ULID (Universally Unique Lexicographically Sortable Identifier)                                                        |
+| snowflake     | -                    | Snowflake ID (Twitter's distributed unique ID)                                                                         |
 
-The ORM supports the enum type for all available drivers. You must define enum options using comma separator:
+### Enum Types
+
+The ORM supports enum columns with explicit value lists. You can define enums in three ways:
+
+#### 1. Inline Enum Values
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -246,24 +285,281 @@ use Cycle\Annotated\Annotation\Column;
 
 #[Entity]
 class User
-    // ...
+{
+    #[Column(type: 'primary')]
+    private int $id;
 
-    #[Column(type: 'enum(active,disabled)', default: 'active')]
+    #[Column(type: 'enum(active,disabled,banned)', default: 'active')]
     private string $status;
 }
 ```
 
-## Table Extension
+#### 2. PHP 8.1+ Backed Enums
 
-In some cases you might want to specify additional table columns and indexes without the link to the entity properties:
+You can use PHP's native backed enums with the `values` parameter:
+
+```php
+enum UserStatus: string
+{
+    case Active = 'active';
+    case Disabled = 'disabled';
+    case Banned = 'banned';
+}
+
+#[Entity]
+class User
+{
+    #[Column(type: 'primary')]
+    private int $id;
+
+    #[Column(type: 'enum', values: UserStatus::class, default: 'active')]
+    private string $status;
+    
+    // Or pass a specific enum instance
+    #[Column(type: 'enum', values: UserStatus::Active)]
+    private string $defaultActive;
+}
+```
+
+#### 3. Array of Values
+
+```php
+#[Entity]
+class User
+{
+    #[Column(type: 'enum', values: ['active', 'disabled', 'banned'])]
+    private string $status;
+    
+    // Mix of strings and enum values
+    #[Column(type: 'enum', values: [UserStatus::Active, 'custom'])]
+    private string $mixedStatus;
+}
+```
+
+### Database-Specific Types
+
+Beyond the standard column types, you can use any database-specific types supported by your DBMS. Cycle ORM passes these
+types directly to the database driver, allowing you to leverage advanced features unique to PostgreSQL, MySQL, SQL
+Server, and other databases.
+
+#### Using
+
+Simply specify the native type name in the `type` parameter:
+
+```php
+use Cycle\Annotated\Annotation\Column;
+
+#[Entity]
+class PostgresEntity
+{
+    // PostgreSQL JSONB with indexing support
+    #[Column(type: 'jsonb')]
+    private array $metadata;
+    
+    // PostgreSQL timestamp with timezone
+    #[Column(type: 'timestamptz')]
+    private \DateTimeInterface $scheduledAt;
+    
+    // PostgreSQL geometric types
+    #[Column(type: 'point')]
+    private string $location;
+    
+    // PostgreSQL network address types
+    #[Column(type: 'inet')]
+    private string $ipAddress;
+}
+
+#[Entity]
+class SQLServerEntity
+{
+    // SQL Server high-precision datetime
+    #[Column(type: 'datetime2')]
+    private \DateTimeInterface $timestamp;
+}
+```
+
+#### Database-Specific Attributes
+
+Use named parameters to pass vendor-specific column attributes:
+
+```php
+// MySQL: unsigned integers and zerofill
+#[Column(type: 'integer', unsigned: true, zerofill: true)]
+private int $count;
+
+// MySQL: string with specific character set and collation
+#[Column(type: 'string', length: 100, charset: 'utf8mb4', collation: 'utf8mb4_unicode_ci')]
+private string $name;
+
+// PostgreSQL: array column
+#[Column(type: 'text', array: true)]
+private array $tags;
+
+// Any database: decimal with precision and scale
+#[Column(type: 'decimal', precision: 10, scale: 2)]
+private string $price;
+```
+
+> **Portability Tip:** When building applications that might run on different databases, prefer standard column types.
+> Use database-specific types only when you need features unavailable in the standard set.
+
+## Generated Values
+
+The `#[GeneratedValue]` attribute marks entity fields whose values are automatically generated either by the database or
+by the ORM during persistence operations. This is essential for fields like auto-increment IDs, timestamps, UUIDs, and
+other automatically managed values.
+
+### When to use it
+
+- The field value is automatically assigned by the database (auto-increment IDs)
+- The value is generated in PHP before database operations (UUIDs, timestamps)
+- The value should be regenerated on every update (updated_at timestamps)
+
+**Important:** Without `#[GeneratedValue]`, Cycle ORM treats `null` field values as actual NULL values to persist, which
+can cause constraint violations on NOT NULL columns. This attribute tells the ORM to skip sending these fields to the
+database when they're unset.
+
+### Generation Timing
+
+The attribute supports three generation modes that can be combined:
+
+#### 1. Database-Generated on Insert (`onInsert: true`)
+
+The database generates the value when the row is inserted. The ORM retrieves the generated value after insertion.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\GeneratedValue;
+
+#[Entity]
+class User
+{
+    // Auto-increment primary key
+    #[Column(type: 'primary')]
+    #[GeneratedValue(onInsert: true)]
+    private int $id;
+    
+    // Database default timestamp (PostgreSQL: DEFAULT NOW())
+    #[Column(type: 'datetime', default: 'CURRENT_TIMESTAMP')]
+    #[GeneratedValue(onInsert: true)]
+    private \DateTimeInterface $registeredAt;
+}
+```
+
+**Use cases:**
+
+- Auto-increment primary keys (`primary`, `bigPrimary`)
+- Database-side DEFAULT expressions
+- Database triggers that populate columns
+
+#### 2. PHP-Generated Before Insert (`beforeInsert: true`)
+
+The ORM generates the value in PHP before sending the INSERT query to the database.
+
+```php
+#[Entity]
+class Document
+{
+    #[Column(type: 'uuid', primary: true)]
+    #[GeneratedValue(beforeInsert: true)]
+    private string $id;
+    
+    #[Column(type: 'datetime')]
+    #[GeneratedValue(beforeInsert: true)]
+    private \DateTimeInterface $createdAt;
+}
+```
+
+**Use cases:**
+
+- UUIDs and ULIDs generated in PHP
+- Snowflake IDs calculated in application
+- Creation timestamps set by ORM
+- Custom business logic for initial values
+
+> Read more about UUID generation in [Entity Behaviors: UUID](/docs/en/entity-behaviors/uuid.md).
+
+#### 3. PHP-Generated Before Update (`beforeUpdate: true`)
+
+The ORM regenerates the value in PHP before each UPDATE query.
+
+```php
+#[Entity]
+class Article
+{
+    #[Column(type: 'primary')]
+    #[GeneratedValue(onInsert: true)]
+    private int $id;
+    
+    #[Column(type: 'datetime')]
+    #[GeneratedValue(beforeInsert: true)]
+    private \DateTimeInterface $createdAt;
+    
+    // Automatically updated on every save
+    #[Column(type: 'datetime')]
+    #[GeneratedValue(beforeInsert: true, beforeUpdate: true)]
+    private \DateTimeInterface $updatedAt;
+}
+```
+
+**Use cases:**
+
+- Update timestamps (`updatedAt`, `modifiedAt`)
+- Version numbers incremented on each change
+- Computed fields recalculated on save
+
+### Combining Generation Modes
+
+You can combine `beforeInsert` and `beforeUpdate` for fields that need generation on both operations:
+
+```php
+#[Entity]
+class Post
+{
+    #[Column(type: 'datetime')]
+    #[GeneratedValue(beforeInsert: true, beforeUpdate: true)]
+    private \DateTimeInterface $lastModified; // Set on create AND update
+    
+    #[Column(type: 'datetime')]
+    #[GeneratedValue(beforeInsert: true)]
+    private \DateTimeInterface $createdAt; // Set only on create
+}
+```
+
+### GeneratedValue Attribute Specification
+
+| Parameter    | Type | Default | Description                                                                                                                 |
+|--------------|------|---------|-----------------------------------------------------------------------------------------------------------------------------|
+| beforeInsert | bool | false   | Generate value in PHP before INSERT. The ORM calls value generators before sending the query to database                    |
+| onInsert     | bool | false   | Value is generated by database on INSERT (auto-increment, DEFAULT expressions). The ORM retrieves the value after insertion |
+| beforeUpdate | bool | false   | Regenerate value in PHP before UPDATE. The ORM calls value generators before sending the query. Ignored during INSERT       |
+
+> **Integration with Entity Behaviors:** The `#[GeneratedValue]` attribute works seamlessly with Cycle's Entity
+> Behaviors system. Behaviors like `CreatedAt`, `UpdatedAt`, and `Uuid` automatically set up proper generation logic.
+> Read
+> more in [Entity Behaviors](/docs/en/entity-behaviors/timestamps.md).
+
+> **See also:** For implementing custom value generation logic, explore
+> the [Advanced: Custom Generators](/docs/en/advanced/custom-generators.md) section.
+
+## Table Extension
+
+In some cases you might want to specify additional table columns and indexes without linking them to entity properties.
+Use class-level attributes to define table schema extensions.
+
+### Class-Level Columns
+
+Define columns that don't map to entity properties:
+
+```php
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Table\Index;
 
 #[Entity]
 #[Column(name: 'created_at', type: 'datetime')]
-#[Column(name: 'deleted_at', type: 'datetime')]
+#[Column(name: 'deleted_at', type: 'datetime', nullable: true)]
 #[Index(columns: ['username'], unique: true)]
 #[Index(columns: ['name', 'id DESC'])]
 class User
@@ -274,49 +570,117 @@ class User
     #[Column(type: 'string(32)')]
     protected string $username;
 
-    #[Column(type: 'enum(active,disabled)', default: 'active')]
-    protected $status;
+    #[Column(type: 'string')]
+    protected string $name;
 }
 ```
 
-> The column definition is identical to the one used for the property.
+> The column definition is identical to property-level `#[Column]` attributes. Use the `property` parameter to map
+> class-level columns to entity properties.
 
-## Merging attributes
+### Indexes
 
-The Annotated Entities extension supports the ability to merge table definitions provided by linked Mapper, Source,
-Repository and Scope classes. This approach can be useful in cases when you want to implement domain functionality like
-auto timestamps or soft deletes.
+Create indexes using the `#[Index]` attribute at class level:
+
+```php
+use Cycle\Annotated\Annotation\Table\Index;
+
+// Simple index
+#[Index(columns: ['email'])]
+
+// Unique index
+#[Index(columns: ['username'], unique: true)]
+
+// Named index
+#[Index(columns: ['user_id', 'created_at'], name: 'user_created_idx')]
+
+// Composite index with sort order
+#[Index(columns: ['name ASC', 'id DESC'])]
+```
+
+#### Index Attribute Specification
+
+| Parameter | Type     | Default | Description                                 |
+|-----------|----------|---------|---------------------------------------------|
+| columns   | string[] | -       | **Required**. Array of column names         |
+| unique    | bool     | false   | Create unique index                         |
+| name      | ?string  | null    | Index name. Auto-generated if not specified |
+
+### Primary Keys
+
+For composite primary keys, use the `#[Table\PrimaryKey]` attribute:
+
+```php
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Table\PrimaryKey;
+
+#[Entity]
+#[PrimaryKey(columns: ['user_id', 'post_id'])]
+class UserPost
+{
+    #[Column(type: 'integer')]
+    private int $user_id;
+    
+    #[Column(type: 'integer')]
+    private int $post_id;
+}
+```
+
+> Read more about [composite primary keys](/docs/en/advanced/composite-pk.md).
+
+## Merging Attributes
+
+The Annotated Entities extension supports merging table definitions from linked Mapper, Source, Repository, and Scope
+classes. This approach is useful for implementing reusable domain functionality like timestamps or soft deletes.
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
 
- #[Entity(repository: Repository\UserRepository::class)]
+#[Entity(repository: Repository\UserRepository::class)]
 class User
 {
+    // ...
 }
 ```
 
-You can also use short annotation declaration:
+Define schema extensions in your repository:
 
 ```php
-#[Column(name: 'created_at', type: 'datetime')]
-#[Index(columns: ['created_at'])]
-class UserRepository extends \Cycle\ORM\Select\Repository
-{
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Table\Index;
+use Cycle\ORM\Select\Repository;
 
+#[Column(name: 'created_at', type: 'datetime')]
+#[Column(name: 'updated_at', type: 'datetime')]
+#[Index(columns: ['created_at'])]
+class UserRepository extends Repository
+{
+    // Custom repository methods
 }
 ```
+
+This pattern allows you to:
+
+- Share common columns across multiple entities
+- Implement cross-cutting concerns (auditing, soft deletes)
+- Keep entity classes focused on business logic
+- Reuse schema definitions through inheritance
+
+> Read more about [custom repositories](/docs/en/basic/repository.md)
+> and [entity behaviors](/docs/en/entity-behaviors/timestamps.md).
 
 ## Foreign Keys
 
 In some cases, it is necessary to define a foreign key without relation definitions. This can be achieved using the
 `#[ForeignKey]` attribute.
 
-For example, let's create an entity **User** with an ID as the primary key.
+### Foreign Key at Property Level
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\ForeignKey;
 
 #[Entity]
 class User
@@ -324,24 +688,53 @@ class User
     #[Column(type: 'primary')]
     public int $id;
 }
-```
-
-Let's create a second entity, **Post**, in which we will define a foreign key referencing the **User** entity.
-
-```php
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\ForeignKey;
 
 #[Entity]
 class Post
 {
-    // ...
+    #[Column(type: 'primary')]
+    public int $id;
+    
     #[Column(type: 'integer')]
     #[ForeignKey(target: User::class, action: 'CASCADE')]
     private int $userId;
 }
 ```
 
-> **Note**
-> Alternatively, you can place the **ForeignKey** attribute at the class level, specifying details like which property
-> in your class is the foreign key (innerKey), and which property in the related class it corresponds to (outerKey).
+### Foreign Key at Class Level
+
+Alternatively, specify all foreign key details at the class level:
+
+```php
+#[Entity]
+#[ForeignKey(
+    target: User::class,
+    innerKey: 'user_id',      // Column in this table
+    outerKey: 'id',           // Column in target table
+    action: 'CASCADE'
+)]
+class Post
+{
+    #[Column(type: 'primary')]
+    public int $id;
+    
+    #[Column(type: 'integer')]
+    private int $user_id;
+}
+```
+
+### ForeignKey Attribute Specification
+
+| Parameter   | Type          | Default   | Description                                                                                        |
+|-------------|---------------|-----------|----------------------------------------------------------------------------------------------------|
+| target      | string        | -         | **Required**. Target entity role or class name                                                     |
+| innerKey    | string\|array | null      | Column(s) in source entity. Required for class-level FK, inferred from property for property-level |
+| outerKey    | string\|array | null      | Column(s) in target entity. Defaults to primary key of target                                      |
+| action      | string        | 'CASCADE' | Foreign key action for both DELETE and UPDATE: 'CASCADE', 'NO ACTION', 'SET NULL'                  |
+| indexCreate | bool          | true      | Automatically create index on innerKey                                                             |
+
+> **Note:** MySQL and SQL Server may automatically create indexes for foreign keys. The `indexCreate` option ensures
+> cross-database compatibility.
+
+> Read more about foreign keys in
+> relations: [BelongsTo Foreign Keys](/docs/en/relation/belongs-to.md#foreign-key-options)

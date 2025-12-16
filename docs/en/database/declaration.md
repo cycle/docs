@@ -1,420 +1,1241 @@
 # Database Schema Declaration
 
-Cycle/Database ships with an included mechanism to declare table structures, FKS and indexes using declarative approach
-and schema comparison.
+Cycle/Database provides a powerful declarative approach to define and manage database table structures, foreign keys,
+and indexes. The schema declaration system compares your desired schema with the current database state and
+automatically generates the necessary SQL operations.
 
-> **Note**
-> Practically, table changes can be executed using an external migration system.
+## Table of Contents
+
+- [Principle of Work](#principle-of-work)
+- [Getting Started](#getting-started)
+- [Column Declaration](#column-declaration)
+    - [Abstract Types](#abstract-types)
+    - [Column Type Reference](#column-type-reference)
+    - [Enum Types](#enum-types)
+    - [Column Attributes](#column-attributes)
+- [Primary Keys](#primary-keys)
+- [Indexes](#indexes)
+- [Foreign Keys](#foreign-keys)
+- [Schema Modification](#schema-modification)
+    - [Renaming Elements](#renaming-elements)
+    - [Dropping Elements](#dropping-elements)
+- [Advanced Operations](#advanced-operations)
+    - [Clean Table Schema](#clean-table-schema)
+    - [Working with Comparator](#working-with-comparator)
+    - [Syncing Multiple Tables](#syncing-multiple-tables)
+- [Best Practices](#best-practices)
 
 ## Principle of Work
 
-Before any operation/declaration can be applied to the table schema, DBAL will load the currently existing structure
-from the database and [normalize it into internal format](/docs/en/database/introspection.md).
+The schema declaration system operates through a comparison-based approach:
 
-As a result, you are allowed to apply the modification to the table schema using a declarative way instead of an
-imperative one. Once schema **save** is requested, DBAL will generate a set of creation and altering operations based on
-the difference between the declared and existing schemas.
+1. **Load Current State**: DBAL reads the existing table structure from the database
+2. **Normalize Format**: The structure is normalized into an internal representation
+3. **Compare Schemas**: Your declared schema is compared with the existing one
+4. **Generate Operations**: SQL commands are generated based on the differences
+5. **Execute Changes**: The operations are executed when `save()` is called
 
-> **Note**
-> See below how to use `Cycle\Database\Schema\Reflector` to sync multiple related tables.
+This declarative approach means you define *what* you want the schema to look like, not *how* to change it. DBAL handles
+the transformation automatically.
 
-## To Start
+> **Note**  
+> The schema system can work alongside external migration systems. See the [Migrations](/docs/en/database/migrations.md)
+> documentation for integration details.
 
-To get an instance of `AbstractTable` use a similar way as described
-in [Schema Introspection (make sure your read them first)](/docs/en/database/introspection.md).
+## Getting Started
 
-> **Note**
-> No need to check for table existence.
+To work with table schemas, obtain an `AbstractTable` instance from your database:
 
 ```php
-protected function indexAction(\Cycle\Database\Database $database)
-{
-    $schema = $database->table('new_table')->getSchema();
+use Cycle\Database\Database;
 
-    // Schema is supposed to be empty
-    print_r($schema);
-    print_r($schema->exists());
+$database = new Database(/* ... */);
+
+// Get schema for new or existing table
+$schema = $database->table('users')->getSchema();
+
+// Check if table exists in database
+if ($schema->exists()) {
+    echo "Table exists";
+} else {
+    echo "Table will be created";
 }
 ```
 
-## Columns and Abstract Types
+> **Note**  
+> You don't need to check for table existence before working with the schema. The system handles both creation and
+> modification transparently.
 
-You can add columns to a specific schema by simply setting their type. Use the following example to start:
+## Column Declaration
+
+### Basic Column Definition
+
+Add columns to your schema using fluent method calls:
 
 ```php
-$schema = $database->table('new_table')->getSchema();
+$schema = $database->table('users')->getSchema();
 
+// Method 1: Explicit column() call
 $schema->column('id')->primary();
-$schema->column('name')->string(64); // String length 64 characters
-$schema->column('email')->string();  // Default string length is 255 symbols
+$schema->column('email')->string(255);
 $schema->column('balance')->decimal(10, 2);
-$schema->column('description')->text();
-```
 
-> **Note**
-> All of the listed methods are added into the table and column doc comments so your IDE/editor will highlight them.
-
-Use the shorter version if you find it easier:
-
-```php
-$schema = $database->table('new_table')->getSchema();
-
+// Method 2: Direct shortcut (recommended)
 $schema->primary('id');
-$schema->string('name', 64); // String length 64 characters
-$schema->string('email');    // Default string length is 255 symbols
+$schema->string('email', 255);
 $schema->decimal('balance', 10, 2);
-$schema->text('description');
-$schema->datetime('created_at', 6); // DateTime field with precision
-```
 
-> **Note**
-> Datetime with precision allows saving the date and time with microseconds to the database.
-> Different db engines may have different allowable values for precision. For **Microsoft SQL Server**,
-> specifying precision greater than 0 will add a `datetime2` field with the specified precision
-> instead of `datetime`.
-
-To create the table schema in the database we have to call the method `save` of our AbstractTable:
-
-```php
+// Save changes to database
 $schema->save();
 ```
 
-Depending on which database driver you are using, DBAL will generate different SQL statements to create a table:
-
-```sql
-CREATE TABLE `primary_new_table`
-(
-    `id`          int (11) NOT NULL AUTO_INCREMENT,
-    `name`        varchar(64) NULL,
-    `email`       varchar(255) NULL,
-    `balance`     decimal(10, 2) NULL,
-    `description` text NULL,
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-```
-
-> **Note**
-> Note that database prefix has been addressed automatically.
-
-In Postgres the create syntax will look like:
-
-```sql
-CREATE TABLE "secondary_new_table"
-(
-    "id"          serial NOT NULL,
-    "name"        character varying(64) NULL,
-    "email"       character varying(255) NULL,
-    "balance"     numeric(10, 2) NULL,
-    "description" text NULL,
-    PRIMARY KEY ("id")
-)
-```
-
-> **Note**
-> Note, by default every column is created as nullable. Use the `nullable` method to overwrite it (see below).
-
-Once the schema is created you can add new columns into it by only declaring them in your code:
-
-```php
-$schema = $database->table('new_table')->getSchema();
-
-$schema->primary('id');
-$schema->string('name', 64); //String length 64 characters
-$schema->string('email');    //Default string length is 255 symbols
-$schema->decimal('balance', 10, 2);
-
-$schema->longText('description'); //New type
-$schema->integer('count_visits'); //New column
-
-$schema->save();
-```
-
-DBAL will detect 2 new declarations being added and generate appropriate code:
-
-```sql
-ALTER TABLE `primary_new_table` CHANGE `description` `description` longtext NULL;
-ALTER TABLE `primary_new_table`
-    ADD COLUMN `count_visits` int (11) NULL;
-```
-
-> **Note**
-> Attention, not every type can be easily changed in some databases. Make sure you are not violating DBMS specific
-> cross-type conversion (string => integer for example).
+Both approaches are equivalent, but shortcuts are more concise for simple declarations.
 
 ### Abstract Types
 
-As you can notice, DBAL uses a set of "abstract" (common for all DBMS) types to declare table columns. Internally such
-types are mapped to appropriate internal DBMS column type.
+Cycle DBAL uses abstract types that map to appropriate database-specific column types. This ensures your schema works
+across different database systems.
 
-| Type        | Parameters                | Description                                                                                                                                                                                                                          |
-|-------------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| primary**   | ---                       | Special column type, usually mapped as integer + auto-incrementing flag and added as table primary index column. You can define only one primary column in your table (you can still create a compound primary key, see below).      |
-| bigPrimary  | ---                       | Same as primary but uses `bigInteger` to store its values.                                                                                                                                                                           |
-| boolean     | ---                       | Boolean type, some databases store it as an integer (1/0).                                                                                                                                                                           |
-| integer     | ---                       | Database specific integer (usually 32 bits).                                                                                                                                                                                         |
-| tinyInteger | ---                       | Small/tiny integer, check your DBMS to check its size.                                                                                                                                                                               |
-| bigInteger  | ---                       | Big/long integer (usually 64 bits), check your DBMS to check its size.                                                                                                                                                               |
-| string**    | [length:255]              | String with specified length, a perfect type for emails and usernames as it can be indexed.                                                                                                                                          |
-| text        | ---                       | Database specific type to store text data. Check DBMS to find size limitations.                                                                                                                                                      |
-| tinyText    | ---                       | Tiny text, same as "text" for most of the databases. Differs only in MySQL.                                                                                                                                                          |
-| longText    | ---                       | Long text, same as "text" for most of the databases. Differs only in MySQL.                                                                                                                                                          |
-| double      | ---                       | [Double precision number.] (https://en.wikipedia.org/wiki/Double-precision_floating-point_format)                                                                                                                                    |
-| float       | ---                       | Single precision number, usually mapped into "real" type in the database.                                                                                                                                                            |
-| decimal     | precision,&nbsp;[scale:0] | Number with specified precision and scale.                                                                                                                                                                                           |
-| datetime    | ---                       | To store specific date and time, DBAL will automatically force UTC timezone for such columns.                                                                                                                                        |
-| date        | ---                       | To store date only, DBAL will automatically force UTC timezone for such columns.                                                                                                                                                     |
-| time        | ---                       | To store time only.                                                                                                                                                                                                                  |
-| timestamp*  | ---                       | Timestamp without a timezone, DBAL will automatically convert incoming values into UTC timezone. Do not use such column in your objects to store time (use DateTime instead) as timestamps will behave very specific to select DBMS. |
-| binary      | ---                       | To store binary data. Check specific DBMS to find size limitations.                                                                                                                                                                  |
-| tinyBinary  | ---                       | Tiny binary, same as "binary" for most of the databases. Differs only in MySQL.                                                                                                                                                      |
-| longBinary  | ---                       | Long binary, same as "binary" for most of the databases. Differs only in MySQL.                                                                                                                                                      |
-| json        | ---                       | To store JSON structures, usually mapped to "text", only Postgres supports it natively.                                                                                                                                              |
-
-> **Note**
-> Attention, in some cases the type returned by `ColumnSchema->abstractType()` might not be the same as declared one,
-> such problem may occur in cases when DBMS uses the same internal type for multiple abstract types (for example most of the databases does not differentiate long/short/medium text and binary types).
-
-> **Note**
-> However, this  does not break anything in schema synchronization as DBAL creates operations based on the difference
-> in internal database types, not based on the declared abstract one.
-
-### Enum Type
-
-The Enum type only exists natively in the MySQL database, in other DBMS it will be emulated using string type with
-associated constrain. To define enum type you have to list it's values:
+**Type Mapping Example:**
 
 ```php
-$schema->column('status')->enum(['active', 'disabled']);
+// This declaration:
+$schema->string('username', 64);
 
-//Alternative definition
-$schema->enum('statusB', ['active', 'disabled']);
+// Generates in MySQL:
+// `username` VARCHAR(64) NULL
+
+// Generates in PostgreSQL:
+// "username" CHARACTER VARYING(64) NULL
+
+// Generates in SQLite:
+// "username" TEXT NULL
 ```
 
-> **Note**
-> As in other cases declared schema will be synced will database one, so you can add and remove enum values at
-> any moment.
+### Column Type Reference
 
-### Default values
+#### Primary Keys
 
-It's recommended to set a default value for enum and some other columns. This can be performed using `defaultValue()`:
+| Type             | Method                  | Description                                          | Example                       |
+|------------------|-------------------------|------------------------------------------------------|-------------------------------|
+| **primary**      | `primary($column)`      | Auto-incrementing integer primary key (32-bit)       | `$schema->primary('id')`      |
+| **bigPrimary**   | `bigPrimary($column)`   | Auto-incrementing big integer primary key (64-bit)   | `$schema->bigPrimary('id')`   |
+| **smallPrimary** | `smallPrimary($column)` | Auto-incrementing small integer primary key (16-bit) | `$schema->smallPrimary('id')` |
+
+**Usage Notes:**
+
+- Only one auto-increment column per table
+- Automatically added to table's primary key index
+- Use `bigPrimary` for tables expecting billions of records
+
+#### Integer Types
+
+| Type             | Method                  | Description               | Typical Range                                           | Example                               |
+|------------------|-------------------------|---------------------------|---------------------------------------------------------|---------------------------------------|
+| **integer**      | `integer($column)`      | Standard integer (32-bit) | -2,147,483,648 to 2,147,483,647                         | `$schema->integer('age')`             |
+| **tinyInteger**  | `tinyInteger($column)`  | Small integer (8-bit)     | -128 to 127 (or 0 to 255 unsigned)                      | `$schema->tinyInteger('status_code')` |
+| **smallInteger** | `smallInteger($column)` | Small integer (16-bit)    | -32,768 to 32,767                                       | `$schema->smallInteger('port')`       |
+| **bigInteger**   | `bigInteger($column)`   | Large integer (64-bit)    | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 | `$schema->bigInteger('file_size')`    |
+
+**Practical Examples:**
 
 ```php
-$schema->column('status')->enum(['active', 'disabled'])->defaultValue('disabled');
-$schema->enum('status_b', ['active', 'disabled'])->defaultValue('active');
+// User age (0-150)
+$schema->tinyInteger('age')->nullable(false);
+
+// Order quantity (thousands)
+$schema->integer('quantity')->defaultValue(1);
+
+// File size in bytes (gigabytes)
+$schema->bigInteger('file_size_bytes')->nullable(false);
 ```
 
-And again, you can change the default value at any moment. If you wish to drop the default value simple set the method
-argument as `null`.
+#### String Types
+
+| Type           | Method                     | Parameters              | Max Size            | Description            | Example                          |
+|----------------|----------------------------|-------------------------|---------------------|------------------------|----------------------------------|
+| **string**     | `string($column, $length)` | `length` (default: 255) | 255-65,535*         | Variable-length string | `$schema->string('email', 255)`  |
+| **text**       | `text($column)`            | None                    | 65,535 bytes        | Standard text field    | `$schema->text('description')`   |
+| **tinyText**   | `tinyText($column)`        | None                    | 255 bytes           | Very short text        | `$schema->tinyText('code')`      |
+| **mediumText** | `mediumText($column)`      | None                    | 16,777,215 bytes    | Medium text field      | `$schema->mediumText('article')` |
+| **longText**   | `longText($column)`        | None                    | 4,294,967,295 bytes | Very large text        | `$schema->longText('content')`   |
+
+*Maximum string length varies by database system.
+
+**Best Practices:**
 
 ```php
-$schema->enum('statusB', ['active', 'disabled'])->defaultValue(null);
+// Use string for indexable fields (emails, usernames)
+$schema->string('email', 255)->unique();
+$schema->string('username', 64)->nullable(false);
+
+// Use text types for non-indexable content
+$schema->text('bio');
+$schema->longText('blog_post_content');
+
+// Short codes or identifiers
+$schema->string('country_code', 2); // 'US', 'UK', etc.
+$schema->string('currency', 3);      // 'USD', 'EUR', etc.
 ```
 
-### Nullable columns
+> **Note**  
+> You cannot add indexes to `text`, `mediumText`, or `longText` columns in most databases. Use `string` for fields that
+> need indexing.
 
-To set column as NOT NULL use `nullable` method with `false` as parameter:
+#### Numeric Types
+
+| Type        | Method                                 | Parameters                                         | Description                     | Example                            |
+|-------------|----------------------------------------|----------------------------------------------------|---------------------------------|------------------------------------|
+| **decimal** | `decimal($column, $precision, $scale)` | `precision`: total digits, `scale`: decimal places | Exact fixed-point number        | `$schema->decimal('price', 10, 2)` |
+| **float**   | `float($column)`                       | None                                               | Single-precision floating-point | `$schema->float('rating')`         |
+| **double**  | `double($column)`                      | None                                               | Double-precision floating-point | `$schema->double('coordinates')`   |
+
+**Choosing the Right Type:**
 
 ```php
-$schema->string('name', 64)->nullable(false);
+// Money/currency - use DECIMAL for exact values
+$schema->decimal('price', 10, 2);        // Up to 99,999,999.99
+$schema->decimal('tax_rate', 5, 4);      // Up to 9.9999 (e.g., 0.0825 = 8.25%)
+
+// Scientific calculations - use FLOAT/DOUBLE
+$schema->double('latitude');
+$schema->double('longitude');
+$schema->float('temperature_celsius');
+
+// Avoid FLOAT/DOUBLE for money
+// ❌ BAD: $schema->float('price');
+// ✅ GOOD: $schema->decimal('price', 10, 2);
 ```
 
-You can change NULL/NOT NULL flag at any moment you want. Additionally, you can try to combine NOT NULL column with the
-non-empty default value, this will allow you to add new columns to the non-empty table.
+#### Date and Time Types
+
+| Type          | Method                          | Parameters                            | Description                          | Example                              |
+|---------------|---------------------------------|---------------------------------------|--------------------------------------|--------------------------------------|
+| **datetime**  | `datetime($column, $precision)` | `precision`: fractional seconds (0-6) | Date and time with timezone handling | `$schema->datetime('created_at', 6)` |
+| **date**      | `date($column)`                 | None                                  | Date only (no time component)        | `$schema->date('birth_date')`        |
+| **time**      | `time($column)`                 | None                                  | Time only (no date component)        | `$schema->time('opening_time')`      |
+| **timestamp** | `timestamp($column)`            | None                                  | Unix timestamp                       | `$schema->timestamp('updated_at')`   |
+
+**DateTime Precision:**
 
 ```php
-$schema->integer('new_column')->nullable(false)->defaultValue(0);
+// No fractional seconds (most common)
+$schema->datetime('created_at');
+
+// With microseconds (for high-precision timestamps)
+$schema->datetime('event_occurred_at', 6); // Stores up to microseconds
+
+// Different databases handle precision differently:
+// - MySQL: datetime(6) stores up to 6 decimal places
+// - PostgreSQL: timestamp(6) with time zone
+// - SQL Server: datetime2(6) instead of datetime
 ```
 
-> **Note**
-> ORM will automatically resolve default value for NOT NULL casted columns.
-
-## Primary Index
-
-Table primary index can be set only while creation. DBAL will set PK automatically based on the column with type "
-primary" or "bigPrimary" declared in your schema.
-
-To declare compound or custom primary keys, use table method `setPrimaryKeys()`.
+**Timezone Behavior:**
 
 ```php
+// DBAL automatically handles UTC conversion for datetime columns
+$schema->datetime('created_at')->defaultValue(AbstractColumn::DATETIME_NOW);
+
+// Current timestamp as default
+use Cycle\Database\Schema\AbstractColumn;
+$schema->datetime('updated_at')->defaultValue(AbstractColumn::DATETIME_NOW);
+```
+
+> **Important**  
+> DBAL automatically forces UTC timezone for `datetime` and `date` columns to ensure consistency across different server
+> configurations.
+
+#### Binary Types
+
+| Type           | Method                | Max Size            | Description          | Example                        |
+|----------------|-----------------------|---------------------|----------------------|--------------------------------|
+| **binary**     | `binary($column)`     | 65,535 bytes        | Standard binary data | `$schema->binary('file_data')` |
+| **tinyBinary** | `tinyBinary($column)` | 255 bytes           | Small binary field   | `$schema->tinyBinary('icon')`  |
+| **longBinary** | `longBinary($column)` | 4,294,967,295 bytes | Large binary data    | `$schema->longBinary('video')` |
+
+**Practical Use Cases:**
+
+```php
+// Small images or icons
+$schema->binary('avatar');
+
+// File uploads
+$schema->longBinary('document')->nullable(true);
+
+// Hash values
+$schema->binary('password_hash');
+
+// Consider storing files externally for very large data
+```
+
+#### Special Types
+
+| Type          | Method               | Description                                              | Database Support                                 | Example                                |
+|---------------|----------------------|----------------------------------------------------------|--------------------------------------------------|----------------------------------------|
+| **boolean**   | `boolean($column)`   | True/false values (stored as 1/0 in most databases)      | All databases                                    | `$schema->boolean('is_active')`        |
+| **json**      | `json($column)`      | JSON data structure                                      | Native in PostgreSQL, emulated as text in others | `$schema->json('metadata')`            |
+| **uuid**      | `uuid($column)`      | UUID/GUID identifier                                     | Database-specific                                | `$schema->uuid('external_id')`         |
+| **snowflake** | `snowflake($column)` | Twitter Snowflake ID                                     | Database-specific                                | `$schema->snowflake('distributed_id')` |
+| **ulid**      | `ulid($column)`      | Universally Unique Lexicographically Sortable Identifier | Database-specific                                | `$schema->ulid('sortable_id')`         |
+
+**Boolean Usage:**
+
+```php
+// Feature flags
+$schema->boolean('is_active')->defaultValue(true);
+$schema->boolean('email_verified')->defaultValue(false);
+
+// Permissions
+$schema->boolean('can_edit')->nullable(false);
+```
+
+**JSON Usage:**
+
+```php
+// Structured metadata
+$schema->json('user_preferences');
+$schema->json('api_response');
+
+// Default JSON value
+$schema->json('settings')->defaultValue([
+    'theme' => 'light',
+    'notifications' => true
+]);
+```
+
+### Enum Types
+
+Enums provide a way to restrict column values to a predefined set. MySQL supports enums natively; other databases
+emulate them using string columns with CHECK constraints.
+
+**Basic Enum Declaration:**
+
+```php
+// Define allowed values
+$schema->column('status')->enum(['active', 'pending', 'disabled']);
+
+// Using shortcut
+$schema->enum('priority', ['low', 'medium', 'high', 'urgent']);
+```
+
+**With Default Values:**
+
+```php
+$schema->enum('status', ['active', 'pending', 'disabled'])
+    ->defaultValue('pending');
+
+$schema->enum('role', ['user', 'admin', 'moderator'])
+    ->defaultValue('user')
+    ->nullable(false);
+```
+
+**Modifying Enum Values:**
+
+```php
+// You can add or remove values by redefining the enum
+$schema = $database->table('users')->getSchema();
+
+// Add new status value
+$schema->enum('status', ['active', 'pending', 'disabled', 'archived'])
+    ->defaultValue('pending');
+
+$schema->save(); // DBAL handles the modification
+```
+
+**Best Practices:**
+
+```php
+// ✅ GOOD: Use enums for fixed, small sets of values
+$schema->enum('status', ['draft', 'published', 'archived']);
+$schema->enum('gender', ['male', 'female', 'other']);
+
+// ❌ AVOID: Large or frequently changing value sets
+// Instead, use a lookup table with foreign key
+```
+
+### Column Attributes
+
+#### Nullable Columns
+
+By default, all columns are nullable. Use `nullable()` to change this:
+
+```php
+// Allow NULL values (default)
+$schema->string('middle_name')->nullable(true);
+
+// Require non-NULL values
+$schema->string('email')->nullable(false);
+$schema->integer('user_id')->nullable(false);
+
+// When adding NOT NULL columns to existing tables with data
+$schema->string('phone')
+    ->nullable(false)
+    ->defaultValue(''); // Provides value for existing rows
+```
+
+#### Default Values
+
+Set default values for columns:
+
+```php
+// Scalar defaults
+$schema->integer('views')->defaultValue(0);
+$schema->boolean('is_active')->defaultValue(true);
+$schema->string('status')->defaultValue('pending');
+
+// NULL as default
+$schema->string('optional_field')->defaultValue(null);
+
+// Database functions (datetime)
+use Cycle\Database\Schema\AbstractColumn;
+$schema->datetime('created_at')->defaultValue(AbstractColumn::DATETIME_NOW);
+
+// JSON defaults
+$schema->json('settings')->defaultValue([
+    'notifications' => true,
+    'theme' => 'light'
+]);
+```
+
+**Remove Default Value:**
+
+```php
+$schema->string('status')->defaultValue(null); // Remove default
+```
+
+#### Column Modification Chain
+
+Combine multiple attributes:
+
+```php
+$schema->string('username', 64)
+    ->nullable(false)
+    ->unique();
+
+$schema->decimal('balance', 10, 2)
+    ->nullable(false)
+    ->defaultValue(0.00);
+
+$schema->datetime('created_at', 6)
+    ->nullable(false)
+    ->defaultValue(AbstractColumn::DATETIME_NOW);
+
+$schema->enum('status', ['active', 'inactive'])
+    ->nullable(false)
+    ->defaultValue('active')
+    ->index(); // Add simple index
+```
+
+## Primary Keys
+
+### Auto-increment Primary Keys
+
+The simplest approach uses `primary()` or `bigPrimary()`:
+
+```php
+$schema = $database->table('users')->getSchema();
+
+// Standard auto-increment (32-bit)
 $schema->primary('id');
-$schema->string('something', 16);
-$schema->setPrimaryKeys(['id', 'something']);
+
+// Or 64-bit for very large tables
+$schema->bigPrimary('id');
+
+$schema->save();
 ```
 
-> **Note**
-> You are not able to change primary keys after the table being created.
+**Generated SQL (MySQL):**
+
+```sql
+CREATE TABLE users
+(
+    id INT (11) NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+```
+
+### Composite Primary Keys
+
+Create primary keys from multiple columns:
+
+```php
+$schema = $database->table('user_roles')->getSchema();
+
+$schema->integer('user_id')->nullable(false);
+$schema->integer('role_id')->nullable(false);
+
+// Define composite primary key
+$schema->setPrimaryKeys(['user_id', 'role_id']);
+
+$schema->save();
+```
+
+**Generated SQL (MySQL):**
+
+```sql
+CREATE TABLE ` user_roles `
+(
+    `
+    user_id
+    `
+    INT
+(
+    11
+) NOT NULL,
+    ` role_id ` INT
+(
+    11
+) NOT NULL,
+    PRIMARY KEY
+(
+    `
+    user_id
+    `,
+    `
+    role_id
+    `
+)
+    ) ENGINE=InnoDB;
+```
+
+### Custom Primary Key (Non-Auto-Increment)
+
+```php
+$schema = $database->table('countries')->getSchema();
+
+// String primary key
+$schema->string('code', 2)->nullable(false);
+$schema->string('name', 255);
+
+$schema->setPrimaryKeys(['code']);
+
+$schema->save();
+```
+
+> **Important**  
+> Primary keys can only be set during table creation. You cannot change them after the table exists.
 
 ## Indexes
 
-Use methods `index` to declare indexes, array of column names is required:
+### Simple Indexes
+
+Create indexes for query performance:
 
 ```php
-$schema = $database->table('other_table')->schema();
+$schema = $database->table('users')->getSchema();
 
 $schema->primary('id');
-$schema->string('name', 64)->nullable(false);
+$schema->string('email', 255);
+$schema->string('username', 64);
+$schema->datetime('created_at');
 
-$schema->string('email');
+// Method 1: Using index() method
+$schema->index(['email']);
 
-$schema->index(['email']); //Simple index
-$schema->column('email')->index(); //You can also use alternative declaration for simple indexes
-
-$schema->index(['name', 'email']); //Compound index
+// Method 2: Inline with column definition
+$schema->column('username')->index();
 
 $schema->save();
 ```
 
-If you wish to add unique index you can change your code a little bit:
+### Unique Indexes
+
+Enforce uniqueness constraints:
 
 ```php
-$schema->column('email')->unique(); //Simple unique index
-$schema->index(['name', 'email'])->unique(true);  //Compound unique index
+// Unique constraint on single column
+$schema->string('email', 255)->unique();
+
+// Or using index() method
+$schema->string('username', 64);
+$schema->index(['username'])->unique(true);
+
+$schema->save();
 ```
 
-You can make index non unique at any moment:
+### Composite Indexes
+
+Index multiple columns together:
 
 ```php
-$schema->index(['name', 'email'])->unique(false);
+$schema = $database->table('posts')->getSchema();
+
+$schema->primary('id');
+$schema->integer('user_id');
+$schema->datetime('created_at');
+$schema->string('status', 20);
+
+// Composite index for common queries
+$schema->index(['user_id', 'created_at']);
+$schema->index(['status', 'created_at']);
+
+// Composite unique index
+$schema->string('slug', 255);
+$schema->integer('category_id');
+$schema->index(['slug', 'category_id'])->unique(true);
+
+$schema->save();
 ```
 
-> **Note**
-> Attention, you can not add indexes to text or binary columns. You have to remember about limitations current DBMS
-> applies to its indexes. For example, you can not create a unique index for the non-empty table with invalid (from
-> the standpoint of the index) data. Some databases also have a maximum index size and etc.
+### Index Column Sorting
+
+Some databases support specifying sort order in indexes:
+
+```php
+// Ascending order (default)
+$schema->index(['created_at ASC']);
+
+// Descending order
+$schema->index(['created_at DESC']);
+
+// Mixed sorting in composite index
+$schema->index(['status ASC', 'created_at DESC']);
+```
+
+> **Note**  
+> Not all databases support column sorting in indexes. DBAL will throw a `DriverException` if the feature is not
+> supported.
+
+### Modifying Indexes
+
+Change index properties:
+
+```php
+$schema = $database->table('users')->getSchema();
+
+// Make existing index unique
+$schema->index(['email'])->unique(true);
+
+// Remove unique constraint
+$schema->index(['email'])->unique(false);
+
+$schema->save();
+```
+
+### Index Limitations
+
+**Important Restrictions:**
+
+```php
+// ❌ CANNOT index text/binary columns
+// $schema->text('description')->index(); // Will fail
+
+// ✅ Use string for indexable text
+$schema->string('title', 255)->index();
+
+// ❌ CANNOT create unique index on table with duplicate data
+// Must clean data first
+
+// ✅ Consider index size limits (database-specific)
+// MySQL: ~767 bytes for InnoDB
+$schema->string('long_field', 1000)->index(); // May fail on some engines
+```
 
 ## Foreign Keys
 
-You can link tables together by using FKs:
+### Basic Foreign Key
+
+Link tables together with referential integrity:
 
 ```php
-$first = $database->table('first')->getSchema();
+// Parent table
+$users = $database->table('users')->getSchema();
+$users->primary('id');
+$users->string('name', 64);
+$users->save();
 
-$first->primary('id');
-$first->string('name', 64);
-$first->string('email');
+// Child table with foreign key
+$posts = $database->table('posts')->getSchema();
+$posts->primary('id');
+$posts->string('title', 255);
+$posts->integer('user_id');
 
-$first->save();
+// Create foreign key
+$posts->foreign('user_id')->references('users', 'id');
 
-$second = $database->table('second')->getSchema();
-
-$second->bigPrimary('id');
-$second->string('title');
-
-$second->save();
+$posts->save();
 ```
 
-In order to create FK we have to define local column and call `foreign` method on it:
-
-```php
-$second->integer('first_id');
-$second->foreign('first_id')->references('first', 'id');
-```
-
-If we using MySQL connection DBAL will generate following SQL:
+**Generated SQL (MySQL):**
 
 ```sql
-ALTER TABLE `primary_second`
-    ADD COLUMN `first_id` int (11) NULL;
-ALTER TABLE `primary_second`
-    ADD CONSTRAINT `primary_second_foreign_first_id_55f205f594a3a` FOREIGN KEY (`first_id`) REFERENCES `primary_first` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE posts
+    ADD CONSTRAINT posts_foreign_user_id_5f2a8b9c
+        FOREIGN KEY (user_id)
+            REFERENCES users (id)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
 ```
 
-You can define custom DELETE and UPDATE rules for your FK:
+### Foreign Key Actions
+
+Control behavior when referenced records change:
 
 ```php
-$foreignKey = $second->foreign('first_id')->references('first', 'id');
+$posts = $database->table('posts')->getSchema();
+$posts->integer('user_id');
 
-$foreignKey->onDelete(\Cycle\ORM\Reference\ReferenceInterface::CASCADE);
-$foreignKey->onUpdate(\Cycle\ORM\Reference\ReferenceInterface::CASCADE);
+$foreignKey = $posts->foreign('user_id')->references('users', 'id');
+
+// Delete posts when user is deleted
+$foreignKey->onDelete(ForeignKeyInterface::CASCADE);
+
+// Update foreign key when parent key changes
+$foreignKey->onUpdate(ForeignKeyInterface::CASCADE);
+
+$posts->save();
 ```
 
-Now, when the record in "first" table will be removed related data from the "second" table will be wiped also. You can
-read more about different actions [here](https://en.wikipedia.org/wiki/Foreign_key#Referential_actions).
+**Available Actions:**
 
-> **Note**
-> Please note that not every DBMS support actions outside of NO ACTION and CASCADE. In addition, some databases
-> (hi, Microsoft) may forbid multiple foreign keys with CASCADE action in one table to avoid a reference loop.
+| Action        | Constant                         | Description                                              |
+|---------------|----------------------------------|----------------------------------------------------------|
+| **NO ACTION** | `ForeignKeyInterface::NO_ACTION` | Prevent deletion/update if child records exist (default) |
+| **CASCADE**   | `ForeignKeyInterface::CASCADE`   | Delete/update child records automatically                |
+| **SET NULL**  | `ForeignKeyInterface::SET_NULL`  | Set foreign key to NULL (requires nullable column)       |
+| **RESTRICT**  | `ForeignKeyInterface::RESTRICT`  | Similar to NO ACTION, checked immediately                |
 
-## Rename Schemas
-
-You can rename column in existed table by simply giving it new name or via shortcut method:
+**Complete Example:**
 
 ```php
-$schema->string('email')->setName('new_email');
+use Cycle\Database\ForeignKeyInterface;
+
+// Posts are deleted when user is deleted
+$posts->integer('author_id')->nullable(false);
+$posts->foreign('author_id')
+    ->references('users', 'id')
+    ->onDelete(ForeignKeyInterface::CASCADE)
+    ->onUpdate(ForeignKeyInterface::CASCADE);
+
+// Comments orphaned when post is deleted
+$comments->integer('post_id')->nullable(true);
+$comments->foreign('post_id')
+    ->references('posts', 'id')
+    ->onDelete(ForeignKeyInterface::SET_NULL)
+    ->onUpdate(ForeignKeyInterface::CASCADE);
+
+// Orders cannot be deleted if they have items
+$orderItems->integer('order_id')->nullable(false);
+$orderItems->foreign('order_id')
+    ->references('orders', 'id')
+    ->onDelete(ForeignKeyInterface::RESTRICT)
+    ->onUpdate(ForeignKeyInterface::CASCADE);
 ```
 
+### Composite Foreign Keys
+
+Reference multiple columns:
+
 ```php
-$schema->renameColumn('email', 'new_email');
+// Parent table with composite primary key
+$userProducts = $database->table('user_products')->getSchema();
+$userProducts->integer('user_id')->nullable(false);
+$userProducts->integer('product_id')->nullable(false);
+$userProducts->setPrimaryKeys(['user_id', 'product_id']);
+$userProducts->save();
+
+// Child table referencing composite key
+$favorites = $database->table('favorites')->getSchema();
+$favorites->primary('id');
+$favorites->integer('user_id');
+$favorites->integer('product_id');
+
+$favorites->foreign(['user_id', 'product_id'])
+    ->references('user_products', ['user_id', 'product_id'])
+    ->onDelete(ForeignKeyInterface::CASCADE);
+
+$favorites->save();
 ```
 
-> **Note**
-> Call `save` method of `AbstactTable` to save your changes.
+### Disabling Automatic Index Creation
 
-Use similar approach to rename indexes and table name.
+By default, foreign keys create an index. Disable if needed:
 
 ```php
-$schema->setName('new_table_2');
+$posts->integer('user_id');
+$posts->foreign('user_id', false) // false = don't create index
+    ->references('users', 'id');
+```
+
+### Database-Specific Considerations
+
+```php
+// Some databases (SQL Server) restrict CASCADE actions
+// to avoid circular references. Plan your schema accordingly.
+
+// Example: Cannot have mutual CASCADE relationships
+// Table A -> CASCADE -> Table B
+// Table B -> CASCADE -> Table A  // May be rejected
+```
+
+## Schema Modification
+
+### Renaming Elements
+
+#### Rename Columns
+
+```php
+$schema = $database->table('users')->getSchema();
+
+// Method 1: Using setName()
+$schema->column('email')->setName('email_address');
+
+// Method 2: Using renameColumn()
+$schema->renameColumn('old_name', 'new_name');
+
 $schema->save();
 ```
 
-## Drop columns and indexes
+**Generated SQL (MySQL):**
 
-Use methods `dropColumn`, `dropIndex` and `dropForeign` to remove elements:
+```sql
+ALTER TABLE users
+    CHANGE email email_address VARCHAR (255) NULL;
+```
+
+#### Rename Table
 
 ```php
-$schema->dropColumn('new_email');
+$schema = $database->table('old_users')->getSchema();
+$schema->setName('users');
 $schema->save();
 ```
 
-To drop table call `declareDropped` method of your schema prior to save:
+**Generated SQL:**
+
+```sql
+ALTER TABLE old_users
+    RENAME TO users;
+```
+
+#### Rename Indexes
 
 ```php
+$schema = $database->table('users')->getSchema();
+
+$schema->renameIndex(
+    ['email'],        // Column(s) that form the index
+    'idx_user_email'  // New index name
+);
+
+$schema->save();
+```
+
+### Dropping Elements
+
+#### Drop Columns
+
+```php
+$schema = $database->table('users')->getSchema();
+
+$schema->dropColumn('middle_name');
+$schema->dropColumn('legacy_field');
+
+$schema->save();
+```
+
+**Generated SQL:**
+
+```sql
+ALTER TABLE users
+    DROP COLUMN middle_name;
+ALTER TABLE users
+    DROP COLUMN legacy_field;
+```
+
+#### Drop Indexes
+
+```php
+$schema = $database->table('posts')->getSchema();
+
+// Drop index by column(s)
+$schema->dropIndex(['title']);
+$schema->dropIndex(['user_id', 'created_at']); // Composite index
+
+$schema->save();
+```
+
+#### Drop Foreign Keys
+
+```php
+$schema = $database->table('posts')->getSchema();
+
+// Drop by column(s)
+$schema->dropForeignKey(['user_id']);
+
+$schema->save();
+```
+
+**Important Order:**
+
+```php
+// Always drop foreign keys before dropping referenced columns
+$schema = $database->table('posts')->getSchema();
+
+// 1. Drop foreign key first
+$schema->dropForeignKey(['user_id']);
+
+// 2. Then drop the column
+$schema->dropColumn('user_id');
+
+$schema->save();
+```
+
+#### Drop Table
+
+```php
+$schema = $database->table('old_table')->getSchema();
+
 $schema->declareDropped();
 $schema->save();
 ```
 
-## Clean Table schema
+## Advanced Operations
 
-In some cases you might want table schema strictly follow declared elements and automatically delete all non-declared
-columns:
+### Clean Table Schema
+
+Reset table schema to only contain declared elements:
 
 ```php
+$schema = $database->table('users')->getSchema();
+
+// Clear current schema state
 $schema->setState(null);
-```
 
-Now you are able to redefine table schema.
-
-## Work with Comparator
-
-To get access to table state comparator use `getComparator` method of your schema:
-
-```php
-print_r($schema->getComparator()->addedColumns());
-```
-
-> **Note**
-> You can use comparator to generate migrations instead of letting DBAL sync your schemas.
-
-## Sync multiple Tables
-
-In some cases you might want to create multiple linked tables. In order to handle such operation feed your table schemas
-into `Cycle\Database\Schema\Reflector`:
-
-```php
-$schema = $database->table('table_a')->getSchema();
+// Now redefine only the columns you want
 $schema->primary('id');
+$schema->string('email', 255);
+$schema->string('username', 64);
 
-$schemaB = $database->table('table_b')->getSchema();
-$schemaB->primary('id');
-$schemaB->integer('a_id');
-$schemaB->foreign('a_id')->references('table_a', 'id');
-
-$r = new \Cycle\Database\Schema\Reflector();
-$r->addTable($schemaB);
-$r->addTable($schema);
-
-$pool->run();
+// All other columns will be dropped
+$schema->save();
 ```
 
-> **Note**
-> `Cycle\Database\Schema\Reflector` will sort your tables based on their cross dependencies.
+**Use Cases:**
+
+- Removing legacy columns not in your application model
+- Cleaning up after major schema refactoring
+- Enforcing strict schema definitions
+
+> **Warning**  
+> This will drop any columns not declared in your schema. Use with caution on production databases.
+
+### Working with Comparator
+
+Inspect schema changes before applying them:
+
+```php
+$schema = $database->table('users')->getSchema();
+
+// Make some changes
+$schema->string('new_field');
+$schema->dropColumn('old_field');
+$schema->index(['email'])->unique(true);
+
+// Get comparator to inspect changes
+$comparator = $schema->getComparator();
+
+// Check what will be added
+$addedColumns = $comparator->addedColumns();
+foreach ($addedColumns as $column) {
+    echo "Will add column: " . $column->getName() . "\n";
+}
+
+// Check what will be dropped
+$droppedColumns = $comparator->droppedColumns();
+foreach ($droppedColumns as $column) {
+    echo "Will drop column: " . $column->getName() . "\n";
+}
+
+// Check what will be modified
+$alteredColumns = $comparator->alteredColumns();
+foreach ($alteredColumns as [$new, $old]) {
+    echo "Will modify column: " . $new->getName() . "\n";
+}
+
+// Check if there are any changes
+if ($comparator->hasChanges()) {
+    echo "Schema has pending changes\n";
+    
+    // Optionally save
+    $schema->save();
+} else {
+    echo "Schema is up to date\n";
+}
+```
+
+**Comparator Methods:**
+
+| Method                 | Returns                | Description                                    |
+|------------------------|------------------------|------------------------------------------------|
+| `hasChanges()`         | `bool`                 | Whether any changes exist                      |
+| `isRenamed()`          | `bool`                 | Whether table is renamed                       |
+| `isPrimaryChanged()`   | `bool`                 | Whether primary key changed                    |
+| `addedColumns()`       | `AbstractColumn[]`     | New columns to create                          |
+| `droppedColumns()`     | `AbstractColumn[]`     | Columns to remove                              |
+| `alteredColumns()`     | `array`                | Modified columns (returns pairs of [new, old]) |
+| `addedIndexes()`       | `AbstractIndex[]`      | New indexes to create                          |
+| `droppedIndexes()`     | `AbstractIndex[]`      | Indexes to remove                              |
+| `alteredIndexes()`     | `array`                | Modified indexes                               |
+| `addedForeignKeys()`   | `AbstractForeignKey[]` | New foreign keys to create                     |
+| `droppedForeignKeys()` | `AbstractForeignKey[]` | Foreign keys to remove                         |
+| `alteredForeignKeys()` | `array`                | Modified foreign keys                          |
+
+**Generate Migration Code:**
+
+```php
+$comparator = $schema->getComparator();
+
+// Use comparator data to generate migration files
+foreach ($comparator->addedColumns() as $column) {
+    $migrationCode = sprintf(
+        '$schema->%s(\'%s\');',
+        $column->getAbstractType(),
+        $column->getName()
+    );
+    // Write to migration file...
+}
+```
+
+### Syncing Multiple Tables
+
+When creating multiple related tables, use `Reflector` to handle dependencies automatically:
+
+```php
+use Cycle\Database\Schema\Reflector;
+
+// Define first table
+$users = $database->table('users')->getSchema();
+$users->primary('id');
+$users->string('username', 64);
+
+// Define related table
+$posts = $database->table('posts')->getSchema();
+$posts->primary('id');
+$posts->string('title', 255);
+$posts->integer('user_id');
+$posts->foreign('user_id')->references('users', 'id');
+
+// Define another related table
+$comments = $database->table('comments')->getSchema();
+$comments->primary('id');
+$comments->text('content');
+$comments->integer('post_id');
+$comments->foreign('post_id')->references('posts', 'id');
+
+// Create reflector and add tables
+$reflector = new Reflector();
+$reflector->addTable($users);
+$reflector->addTable($posts);
+$reflector->addTable($comments);
+
+// Reflector automatically orders tables by dependencies
+// and syncs them in the correct order
+$reflector->run();
+```
+
+**How It Works:**
+
+1. **Dependency Analysis**: Reflector analyzes foreign key relationships
+2. **Topological Sort**: Tables are sorted to respect dependencies
+3. **Transactional Execution**: All changes execute in a transaction
+4. **Proper Order**: Parent tables are created before child tables
+
+**Manual Ordering (if needed):**
+
+```php
+$reflector = new Reflector();
+$reflector->addTable($users);
+$reflector->addTable($posts);
+$reflector->addTable($comments);
+
+// Get tables in dependency order
+$sortedTables = $reflector->sortedTables();
+
+foreach ($sortedTables as $table) {
+    echo "Processing: " . $table->getName() . "\n";
+}
+```
+
+**Benefits of Using Reflector:**
+
+- Handles circular dependencies
+- Manages foreign key constraints properly
+- Executes all operations transactionally
+- Prevents constraint violation errors
+- Works across multiple databases
+
+**Example with Multiple Databases:**
+
+```php
+$dbPrimary = $dbal->database('primary');
+$dbSecondary = $dbal->database('secondary');
+
+$reflector = new Reflector();
+
+// Add tables from different databases
+$reflector->addTable($dbPrimary->table('users')->getSchema());
+$reflector->addTable($dbPrimary->table('posts')->getSchema());
+$reflector->addTable($dbSecondary->table('logs')->getSchema());
+
+// Reflector handles multiple database transactions
+$reflector->run();
+```
+
+## Best Practices
+
+### 1. Use Appropriate Column Types
+
+Choose the smallest type that fits your data:
+
+```php
+// ✅ GOOD: Right-sized types
+$schema->tinyInteger('age');           // 0-255
+$schema->string('country_code', 2);    // 'US', 'UK'
+$schema->decimal('price', 10, 2);      // Exact money values
+
+// ❌ AVOID: Oversized types
+$schema->bigInteger('age');            // Wastes space
+$schema->string('country_code', 255);  // Wastes space
+$schema->float('price');               // Imprecise for money
+```
+
+### 2. Index Strategic Columns
+
+```php
+// ✅ GOOD: Index frequently queried columns
+$schema->string('email', 255)->unique();
+$schema->index(['user_id', 'created_at']); // For sorting
+$schema->index(['status', 'priority']);    // For filtering
+
+// ❌ AVOID: Over-indexing
+// Don't index columns rarely used in queries
+// Don't index large text fields
+```
+
+### 3. Set Appropriate Defaults and Nullability
+
+```php
+// ✅ GOOD: Clear defaults and null handling
+$schema->boolean('is_active')->defaultValue(true)->nullable(false);
+$schema->integer('view_count')->defaultValue(0)->nullable(false);
+$schema->datetime('created_at')->defaultValue(AbstractColumn::DATETIME_NOW);
+
+// ❌ AVOID: Ambiguous nullable booleans
+$schema->boolean('is_verified')->nullable(true); // NULL vs false?
+```
+
+### 4. Use Foreign Keys for Data Integrity
+
+```php
+// ✅ GOOD: Enforce referential integrity
+$schema->foreign('user_id')
+    ->references('users', 'id')
+    ->onDelete(ForeignKeyInterface::CASCADE);
+
+// ❌ AVOID: Orphaned records
+// Without FK, you may have posts pointing to non-existent users
+```
+
+### 5. Plan Composite Indexes Carefully
+
+```php
+// ✅ GOOD: Most selective column first
+$schema->index(['status', 'created_at', 'user_id']);
+// Useful for: WHERE status = ? ORDER BY created_at
+
+// ❌ AVOID: Poor ordering
+$schema->index(['created_at', 'status']);
+// Can't efficiently filter by status alone
+```
+
+### 6. Use Transactions for Related Changes
+
+```php
+// ✅ GOOD: Multiple related schemas
+$reflector = new Reflector();
+$reflector->addTable($users);
+$reflector->addTable($posts);
+$reflector->run(); // All or nothing
+
+// ❌ AVOID: Individual saves
+$users->save();
+$posts->save(); // May fail if users didn't save
+```
+
+### 7. Review Changes Before Production
+
+```php
+// ✅ GOOD: Check before saving
+$comparator = $schema->getComparator();
+if ($comparator->droppedColumns()) {
+    // Confirm you want to drop these columns
+    foreach ($comparator->droppedColumns() as $col) {
+        echo "WARNING: Will drop " . $col->getName() . "\n";
+    }
+}
+$schema->save();
+```
+
+### 8. Consider Migration Systems
+
+For production applications, use migrations instead of direct schema saves:
+
+```php
+// ✅ GOOD: Generate migrations for review
+// See the Migrations documentation for details
+
+// ❌ AVOID: Direct schema saves in production
+// $schema->save(); // Skip in production, use migrations
+```
+
+### 9. Document Complex Schemas
+
+```php
+// ✅ GOOD: Add comments for clarity
+$schema->string('status', 20)
+    ->enum(['draft', 'review', 'published', 'archived'])
+    ->defaultValue('draft');
+// Status workflow: draft -> review -> published -> archived
+
+$schema->decimal('tax_rate', 5, 4);
+// Example: 0.0825 for 8.25% tax rate
+```
+
+### 10. Test Schema Changes
+
+```php
+// ✅ GOOD: Test on development/staging first
+// 1. Test schema changes locally
+// 2. Verify in staging environment
+// 3. Back up production before applying
+// 4. Have rollback plan ready
+
+// ❌ AVOID: Untested production changes
+```
+
+## Type Compatibility Notes
+
+When altering column types, be aware of database-specific conversion limitations:
+
+**Safe Conversions:**
+
+- `integer` → `bigInteger`
+- `string(64)` → `string(128)` (increasing length)
+- `nullable(true)` → `nullable(false)` (with default or data cleanup)
+
+**Potentially Unsafe:**
+
+- `string` → `integer` (data loss if non-numeric values exist)
+- `bigInteger` → `integer` (data loss if values exceed range)
+- `string(128)` → `string(64)` (data truncation)
+
+**Database-Specific:**
+
+- MySQL: More flexible type conversions
+- PostgreSQL: Stricter type checking
+- SQLite: Very flexible (dynamic typing)
+- SQL Server: Moderate strictness
+
+Always test schema changes in a non-production environment first.
