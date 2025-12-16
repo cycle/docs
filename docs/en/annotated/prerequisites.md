@@ -63,41 +63,41 @@ Once configured, you can use these attributes to define your entities:
 
 ### Entity Definitions
 
-- `#[Cycle\Annotated\Annotation\Entity]` - Defines an entity class
-- `#[Cycle\Annotated\Annotation\Embeddable]` - Defines an embeddable entity
+- `#[\Cycle\Annotated\Annotation\Entity]` - Defines an entity class
+- `#[\Cycle\Annotated\Annotation\Embeddable]` - Defines an embeddable entity
 
 ### Column Definitions
 
-- `#[Cycle\Annotated\Annotation\Column]` - Defines a column mapping
-- `#[Cycle\Annotated\Annotation\GeneratedValue]` - Marks auto-generated fields (timestamps, UUIDs, auto-increment)
+- `#[\Cycle\Annotated\Annotation\Column]` - Defines a column mapping
+- `#[\Cycle\Annotated\Annotation\GeneratedValue]` - Marks auto-generated fields (timestamps, UUIDs, auto-increment)
 
 ### Table Schema
 
-- `#[Cycle\Annotated\Annotation\Table\Index]` - Defines table indexes
-- `#[Cycle\Annotated\Annotation\Table\PrimaryKey]` - Defines composite primary keys
-- `#[Cycle\Annotated\Annotation\ForeignKey]` - Defines foreign key constraints without relations
+- `#[\Cycle\Annotated\Annotation\Table\Index]` - Defines table indexes
+- `#[\Cycle\Annotated\Annotation\Table\PrimaryKey]` - Defines composite primary keys
+- `#[\Cycle\Annotated\Annotation\ForeignKey]` - Defines foreign key constraints without relations
 
 ### Relations
 
-- `#[Cycle\Annotated\Annotation\Relation\Embedded]` - Embeds an entity
-- `#[Cycle\Annotated\Annotation\Relation\BelongsTo]` - Defines belongs-to relationship
-- `#[Cycle\Annotated\Annotation\Relation\HasOne]` - Defines has-one relationship
-- `#[Cycle\Annotated\Annotation\Relation\HasMany]` - Defines has-many relationship
-- `#[Cycle\Annotated\Annotation\Relation\ManyToMany]` - Defines many-to-many relationship
-- `#[Cycle\Annotated\Annotation\Relation\RefersTo]` - Defines self-referencing or multiple relationships
-- `#[Cycle\Annotated\Annotation\Relation\Inverse]` - Defines inverse side of a relation
+- `#[\Cycle\Annotated\Annotation\Relation\Embedded]` - Embeds an entity
+- `#[\Cycle\Annotated\Annotation\Relation\BelongsTo]` - Defines belongs-to relationship
+- `#[\Cycle\Annotated\Annotation\Relation\HasOne]` - Defines has-one relationship
+- `#[\Cycle\Annotated\Annotation\Relation\HasMany]` - Defines has-many relationship
+- `#[\Cycle\Annotated\Annotation\Relation\ManyToMany]` - Defines many-to-many relationship
+- `#[\Cycle\Annotated\Annotation\Relation\RefersTo]` - Defines self-referencing or multiple relationships
+- `#[\Cycle\Annotated\Annotation\Relation\Inverse]` - Defines inverse side of a relation
 
 ### Morphed (Polymorphic) Relations
 
-- `#[Cycle\Annotated\Annotation\Relation\Morphed\BelongsToMorphed]` - Child belongs to multiple parent types
-- `#[Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasOne]` - Parent has one polymorphic child
-- `#[Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasMany]` - Parent has many polymorphic children
+- `#[\Cycle\Annotated\Annotation\Relation\Morphed\BelongsToMorphed]` - Child belongs to multiple parent types
+- `#[\Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasOne]` - Parent has one polymorphic child
+- `#[\Cycle\Annotated\Annotation\Relation\Morphed\MorphedHasMany]` - Parent has many polymorphic children
 
 ### Table Inheritance
 
-- `#[Cycle\Annotated\Annotation\Inheritance\SingleTable]` - Single table inheritance strategy
-- `#[Cycle\Annotated\Annotation\Inheritance\JoinedTable]` - Joined table inheritance strategy
-- `#[Cycle\Annotated\Annotation\Inheritance\DiscriminatorColumn]` - Discriminator column for STI
+- `#[\Cycle\Annotated\Annotation\Inheritance\SingleTable]` - Single table inheritance strategy
+- `#[\Cycle\Annotated\Annotation\Inheritance\JoinedTable]` - Joined table inheritance strategy
+- `#[\Cycle\Annotated\Annotation\Inheritance\DiscriminatorColumn]` - Discriminator column for STI
 
 > Read more about each attribute in the [Annotated Entities](/docs/en/annotated/entity.md)
 > and [Relations](/docs/en/annotated/relations.md) documentation.
