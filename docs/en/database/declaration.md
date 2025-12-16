@@ -4,27 +4,6 @@ Cycle/Database provides a powerful declarative approach to define and manage dat
 and indexes. The schema declaration system compares your desired schema with the current database state and
 automatically generates the necessary SQL operations.
 
-## Table of Contents
-
-- [Principle of Work](#principle-of-work)
-- [Getting Started](#getting-started)
-- [Column Declaration](#column-declaration)
-    - [Abstract Types](#abstract-types)
-    - [Column Type Reference](#column-type-reference)
-    - [Enum Types](#enum-types)
-    - [Column Attributes](#column-attributes)
-- [Primary Keys](#primary-keys)
-- [Indexes](#indexes)
-- [Foreign Keys](#foreign-keys)
-- [Schema Modification](#schema-modification)
-    - [Renaming Elements](#renaming-elements)
-    - [Dropping Elements](#dropping-elements)
-- [Advanced Operations](#advanced-operations)
-    - [Clean Table Schema](#clean-table-schema)
-    - [Working with Comparator](#working-with-comparator)
-    - [Syncing Multiple Tables](#syncing-multiple-tables)
-- [Best Practices](#best-practices)
-
 ## Principle of Work
 
 The schema declaration system operates through a comparison-based approach:

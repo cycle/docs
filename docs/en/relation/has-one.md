@@ -5,20 +5,6 @@ relation is useful for decomposing entities by storing related data in a separat
 
 > The parent entity is persisted first, then the child entity with a reference to the parent.
 
-## Table of Contents
-
-- [Definition](#definition)
-    - [Attribute Specification](#attribute-specification)
-    - [Key Behavior](#key-behavior)
-- [Usage Examples](#usage-examples)
-    - [Creating Relations](#creating-relations)
-    - [Removing Children](#removing-children)
-    - [Transferring Children](#transferring-children)
-- [Loading](#loading)
-- [Filtering](#filtering)
-- [Inverse Relations](#inverse-relations)
-- [Foreign Key Options](#foreign-key-options)
-
 ## Definition
 
 To define a HasOne relation using the annotated entities extension:

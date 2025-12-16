@@ -3,27 +3,6 @@
 Migrations provide a structured and organized way to alter your database schema over time. This package adds versioning
 capabilities for your database schema and simplifies deployment of schema changes across different environments.
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Configuration](#configuration)
-    - [Migration Config](#migration-config)
-    - [Initializing Migrator](#initializing-migrator)
-- [Creating Migrations](#creating-migrations)
-    - [Manual Migration Creation](#manual-migration-creation)
-    - [Automatic Migration Generation](#automatic-migration-generation)
-    - [Migration Strategies](#migration-strategies)
-- [Migration Operations](#migration-operations)
-    - [Table Operations](#table-operations)
-    - [Column Operations](#column-operations)
-    - [Index Operations](#index-operations)
-    - [Foreign Key Operations](#foreign-key-operations)
-- [Running Migrations](#running-migrations)
-    - [Executing Migrations](#executing-migrations)
-    - [Rolling Back Migrations](#rolling-back-migrations)
-- [Migration Blueprint API Reference](#migration-blueprint-api-reference)
-- [Best Practices](#best-practices)
-
 ## Installation
 
 Install the migrations package via Composer:

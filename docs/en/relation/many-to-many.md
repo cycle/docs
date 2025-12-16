@@ -7,27 +7,6 @@ way to model many-to-many relationships in relational databases.
 
 > Many To Many is actually two HasMany relations combined: source → pivot and pivot → target.
 
-## Table of Contents
-
-- [Definition](#definition)
-    - [Attribute Specification](#attribute-specification)
-    - [Key Behavior](#key-behavior)
-    - [Pivot Entity](#pivot-entity)
-- [Usage Examples](#usage-examples)
-    - [Creating Relations](#creating-relations)
-    - [Managing Collections](#managing-collections)
-    - [Removing Relations](#removing-relations)
-- [Loading](#loading)
-- [Filtering](#filtering)
-    - [Pivot Filtering](#pivot-filtering)
-- [Pivot Entity Access](#pivot-entity-access)
-    - [Pivot Data](#pivot-data)
-    - [Pivot Relations](#pivot-relations)
-- [Complex Loading](#complex-loading)
-- [Collections](#collections)
-- [Inverse Relations](#inverse-relations)
-- [Foreign Key Options](#foreign-key-options)
-
 ## Definition
 
 To define a ManyToMany relation, you need three entities: source, target, and pivot.

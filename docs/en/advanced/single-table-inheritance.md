@@ -54,21 +54,6 @@ Use Single Table Inheritance when your entities are **more similar than differen
 - Child types have completely different data structures
 - You need strict NOT NULL constraints on child-specific fields
 
-## Table of Contents
-
-- [Understanding Single Table Inheritance](#understanding-single-table-inheritance)
-    - [What is a Discriminator?](#what-is-a-discriminator)
-    - [How STI Works](#how-sti-works)
-    - [When to Use STI](#when-to-use-sti)
-- [Definition via Attributes](#definition-via-attributes)
-    - [Attribute Specification](#attribute-specification)
-    - [Basic Example](#basic-example)
-    - [Custom Discriminator Values](#custom-discriminator-values)
-    - [Multi-Level Inheritance](#multi-level-inheritance)
-- [Schema Definition](#schema-definition)
-- [Querying Entities](#querying-entities)
-- [Important Considerations](#important-considerations)
-
 ## Definition via Attributes
 
 ### Attribute Specification

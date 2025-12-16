@@ -6,20 +6,6 @@ a declared `hasOne` or `hasMany` relation.
 
 > The child entity will always be persisted **after** its parent entity to ensure referential integrity.
 
-## Table of Contents
-
-- [Definition](#definition)
-  - [Attribute Specification](#attribute-specification)
-  - [Key Behavior](#key-behavior)
-- [Usage Examples](#usage-examples)
-  - [Creating Relations](#creating-relations)
-  - [Nullable Relations](#nullable-relations)
-  - [Composite Keys](#composite-keys)
-- [Loading](#loading)
-- [Filtering](#filtering)
-- [Inverse Relations](#inverse-relations)
-- [Foreign Key Options](#foreign-key-options)
-
 ## Definition
 
 To define a BelongsTo relation using the annotated entities extension:
