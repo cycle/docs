@@ -1,63 +1,74 @@
 # Many To Many
 
-A relation of type 'Many To Many' provides a more complex connection with the ability to use an intermediate entity for the
-connection. The relation requires the `through` option with similar rules as `target`.
+The **Many To Many** relation connects two entities through an intermediate pivot (junction) table. This is the standard
+way to model many-to-many relationships in relational databases.
 
-'Many To Many' relations are, in fact, two relations combined together. This relation requires an intermediate (pivot)
-entity to connect the source and target entities. **Example:** many users have many tags, many posts have many favorites.
+**Examples:** Users have many tags, posts have many categories, students enroll in many courses.
 
-The relation provides access to an intermediate object on all the steps, including creation, update and query building.
+> Many To Many is actually two HasMany relations combined: source → pivot and pivot → target.
+
+## Table of Contents
+
+- [Definition](#definition)
+    - [Attribute Specification](#attribute-specification)
+    - [Key Behavior](#key-behavior)
+    - [Pivot Entity](#pivot-entity)
+- [Usage Examples](#usage-examples)
+    - [Creating Relations](#creating-relations)
+    - [Managing Collections](#managing-collections)
+    - [Removing Relations](#removing-relations)
+- [Loading](#loading)
+- [Filtering](#filtering)
+    - [Pivot Filtering](#pivot-filtering)
+- [Pivot Entity Access](#pivot-entity-access)
+    - [Pivot Data](#pivot-data)
+    - [Pivot Relations](#pivot-relations)
+- [Complex Loading](#complex-loading)
+- [Collections](#collections)
+- [Inverse Relations](#inverse-relations)
+- [Foreign Key Options](#foreign-key-options)
 
 ## Definition
 
-To define a 'Many To Many' relation using the annotated entities' extension, use (attention, make sure to create pivot
-entity):
+To define a ManyToMany relation, you need three entities: source, target, and pivot.
+
+### Complete Example
 
 ```php
-use Cycle\Annotated\Annotation\Relation\ManyToMany;
 use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
 
 #[Entity]
 class User
 {
-    // ...
+    #[Column(type: 'primary')]
+    private int $id;
+
+    #[Column(type: 'string')]
+    private string $username;
 
     #[ManyToMany(target: Tag::class, through: UserTag::class)]
-    protected array $tags;
-    
+    private array $tags = [];
+
     public function getTags(): array
     {
         return $this->tags;
     }
-    
+
     public function addTag(Tag $tag): void
     {
         $this->tags[] = $tag;
     }
-    
+
     public function removeTag(Tag $tag): void
     {
-        $this->tags = array_filter($this->tags, static fn(Tag $t) => $t !== $tag);
+        $this->tags = array_filter(
+            $this->tags,
+            static fn(Tag $t) => $t !== $tag
+        );
     }
 }
-```
-
-```php
-use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Entity;
-
-#[Entity]
-class UserTag
-{
-    #[Column(type: 'primary')]
-    private int $id;
-}
-```
-
-```php
-use Cycle\Annotated\Annotation\Relation\ManyToMany;
-use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Entity;
 
 #[Entity]
 class Tag
@@ -78,295 +89,806 @@ class Tag
         return $this->name;
     }
 }
-```
-
-By default, ORM will generate FK and indexes in `through` entity using the role and primary keys of the linked objects.
-Following values are available for the configuration:
-
-| Option         | Value                        | Comment                                                                                                           |
-|----------------|------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| load           | lazy/eager                   | Relation load approach. Defaults to `lazy`                                                                        |
-| cascade        | bool                         | Automatically save related data with parent entity. Defaults to `false`                                           |
-| innerKey       | string                       | Inner key name in source entity. Defaults to a primary key                                                        |
-| outerKey       | string                       | Outer key name in target entity. Defaults to a primary key                                                        |
-| throughInnerKey | string                       | Key name connected to the innerKey of source entity. Defaults to `{sourceRole}_{innerKey}`                        |
-| throughOuterKey | string                       | Key name connected to the outerKey of a related entity. Defaults to `{targetRole}_{outerKey}`                     |
-| throughWhere    | array                        | Where conditions applied to `through` entity                                                                       |
-| where          | array                        | Where conditions applied to a related entity                                                                      |
-| orderBy        | array                        | Additional sorting rules                                                                                          |
-| fkCreate       | bool                         | Set to true to automatically create FK on throughInnerKey and throughOuterKey. Defaults to `true`                   |
-| fkAction       | CASCADE, NO ACTION, SET NULL | FK onDelete and onUpdate action. Defaults to `SET NULL`                                                           |
-| fkOnDelete     | CASCADE, NO ACTION, SET NULL | FK onDelete action. It has higher priority than {$fkAction}. Defaults to @see {$fkAction}                         |
-| indexCreate    | bool                         | Create index on [throughInnerKey, throughOuterKey]. Defaults to `true`                                              |
-| collection     | string                       | Collection type that will contain loaded entities. By defaults uses `Cycle\ORM\Collection\ArrayCollectionFactory`. Read more about [relation collections](collections.md). |
-
-You can keep your pivot entity empty, the only requirement is to have defined a primary key.
-
-
-## Usage
-
-To associate two entities using Many To Many relation, use proper way depended on collection type you use. In our 
-example we use default collection factory `Cycle\ORM\Collection\ArrayCollectionFactory`:
-
-> Read more about relation collections [here](/docs/en/relation/collections.md).
-
-```php
-$user = new User();
-$user->setName("Antony");
-$user->addTag(new Tag("tag a"));
-
-$manager = new \Cycle\ORM\EntityManager($orm);
-$manager->persist($user);
-$manager->run();
-```
-
-Disassociation will remove the `UserTag` entity, and not the `Tag` entity.
-
-```php
-$user->removeTag($tag);
-```
-
-### Loading
-
-Use the method `load` of your `Select` object to preload data of related and pivot entities:
-
-```php
-$users = $orm->getRepository(User::class)
-    ->select()
-    ->load('tags')
-    ->fetchAll();
-```
-
-Once loaded, you can access the related entity data using the collection:
-
-```php
-$users = $orm->getRepository(User::class)
-    ->select()
-    ->load('tags')
-    ->fetchAll();
-
-foreach ($users as $u) {
-    print_r($u->getTags()->toArray());
-}
-```
-
-### Accessing Pivot Entity
-
-If you use `Cycle\ORM\Collection\DoctrineCollectionFactory` for 'Many To Many' relation, you have the ability to
-access the pivot entity's data using the `Cycle\ORM\Collection\Pivoted\PivotedCollectionInterface` object. You can do 
-that using the `getPivot` method:
-
-```php
-use Cycle\Annotated\Annotation\Relation\ManyToMany;
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\ORM\Collection\Pivoted\PivotedCollection;
-
-#[Entity]
-class User
-{
-    // ...
-    
-    #[ManyToMany(target: Tag::class, through: UserTag::class, collection: 'doctrine')]
-    public PivotedCollection $tags;
-    
-    public function __construct() 
-    {
-        $this->tags = new PivotedCollection();
-    }
-}
-```
-
-```php
-$users = $orm->getRepository(User::class)
-    ->select()
-    ->load('tags')
-    ->fetchAll();
-
-foreach ($users as $user) {
-    foreach ($user->tags as $tag) {
-         print_r($tag);
-         print_r($user->tags->getPivot($tag));
-    }
-}
-```
-
-You can change the values of this entity as they will be persisted with the parent entity. This approach allows you to
-easier control the association between parent and related entities.
-
-For example, we can add a new property to our `UserTag`:
-
-```php
-use Cycle\Annotated\Annotation\Relation\ManyToMany;
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Column;
 
 #[Entity]
 class UserTag
 {
     #[Column(type: 'primary')]
     private int $id;
+}
+```
 
-    #[Column(type: 'datetime', default: null)]
-    private \DateTimeInterface $created_at;
+### Attribute Specification
 
-    public function __construct(\DateTimeInterface $d)
+| Parameter       | Type          | Default   | Description                                                                                 |
+|-----------------|---------------|-----------|---------------------------------------------------------------------------------------------|
+| target          | string        | -         | **Required**. Target entity role or class name                                              |
+| through         | string        | -         | **Required**. Pivot entity role or class name                                               |
+| load            | string        | 'lazy'    | Loading strategy: 'lazy' or 'eager'                                                         |
+| cascade         | bool          | true      | Automatically save related entities with source entity                                      |
+| nullable        | bool          | false     | Whether relations can be null (affects FK constraints in pivot)                             |
+| innerKey        | string\|array | null      | Key column(s) in source entity. Defaults to source's primary key                            |
+| outerKey        | string\|array | null      | Key column(s) in target entity. Defaults to target's primary key                            |
+| throughInnerKey | string\|array | null      | Foreign key column(s) in pivot referencing source. Defaults to `{sourceRole}_{innerKey}`    |
+| throughOuterKey | string\|array | null      | Foreign key column(s) in pivot referencing target. Defaults to `{targetRole}_{outerKey}`    |
+| where           | array         | []        | WHERE conditions applied to target entity when loading                                      |
+| throughWhere    | array         | []        | WHERE conditions applied to pivot entity when loading                                       |
+| orderBy         | array         | []        | Default sorting for loaded collection                                                       |
+| fkCreate        | bool          | true      | Automatically create foreign key constraints in pivot table                                 |
+| fkAction        | string        | 'CASCADE' | Foreign key action for both DELETE and UPDATE: 'CASCADE', 'NO ACTION', 'SET NULL'           |
+| fkOnDelete      | string        | null      | Foreign key DELETE action (overrides `fkAction` if set): 'CASCADE', 'NO ACTION', 'SET NULL' |
+| indexCreate     | bool          | true      | Automatically create index on [throughInnerKey, throughOuterKey]                            |
+| collection      | string        | null      | Collection class for loaded entities. See [Collections](#collections)                       |
+| inverse         | Inverse       | null      | Configure inverse relation on target entity. See [Inverse Relations](#inverse-relations)    |
+
+> Since Cycle ORM v2.x, all key parameters can be arrays for [composite keys](/docs/en/advanced/composite-pk.md).
+
+### Key Behavior
+
+By default, the ORM generates foreign key columns in the pivot table:
+
+```php
+#[Entity]
+class User
+{
+    #[ManyToMany(target: Tag::class, through: UserTag::class)]
+    private array $tags = [];
+}
+```
+
+This creates in the `UserTag` pivot table:
+
+- `user_id` → references `user.id`
+- `tag_id` → references `tag.id`
+
+Customize column names:
+
+```php
+#[ManyToMany(
+    target: Tag::class,
+    through: UserTag::class,
+    throughInnerKey: 'person_id',
+    throughOuterKey: 'label_id'
+)]
+private array $tags = [];
+```
+
+### Pivot Entity
+
+The pivot entity can be minimal (just a primary key) or contain additional data:
+
+#### Minimal Pivot
+
+```php
+#[Entity]
+class UserTag
+{
+    #[Column(type: 'primary')]
+    private int $id;
+}
+```
+
+#### Pivot with Additional Data
+
+```php
+#[Entity]
+class UserTag
+{
+    #[Column(type: 'primary')]
+    private int $id;
+
+    #[Column(type: 'datetime')]
+    private \DateTimeInterface $assignedAt;
+
+    #[Column(type: 'integer')]
+    private int $priority = 0;
+
+    public function __construct()
     {
-        $this->created_at = $d;
+        $this->assignedAt = new \DateTimeImmutable();
+    }
+
+    public function getAssignedAt(): \DateTimeInterface
+    {
+        return $this->assignedAt;
+    }
+
+    public function setPriority(int $priority): void
+    {
+        $this->priority = $priority;
     }
 }
 ```
 
-Now we can assign this entity to the newly created connection:
+## Usage Examples
+
+### Creating Relations
+
+Related entities are automatically saved with the source (unless `cascade: false`):
 
 ```php
-$u = new User();
-$u->setName("Antony");
+$user = new User();
+$user->setUsername("johndoe");
 
-$tag = new Tag("tag a");
+$tag1 = new Tag("php");
+$tag2 = new Tag("database");
+$tag3 = new Tag("orm");
 
-$u->tags->add($tag);
-$u->tags->setPivot($tag, new UserTag(new \DateTimeImmutable()));
+$user->addTag($tag1);
+$user->addTag($tag2);
+$user->addTag($tag3);
 
-$t->persist($u);
-$t->run();
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($user);
+$manager->run();
 ```
 
-### Filtering
+The save order:
 
-Similar to Has Many the entity query can be filtered using the `with` method:
+1. Source entity (`User`) is saved
+2. Target entities (`Tag`) are saved
+3. Pivot records (`UserTag`) are created linking source and targets
+
+### Managing Collections
+
+#### Adding to Existing Collection
+
+```php
+$user = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->wherePK(1)
+    ->fetchOne();
+
+$newTag = new Tag("security");
+$user->addTag($newTag);
+
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($user);
+$manager->run();
+```
+
+#### Checking Existence
+
+```php
+$user = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->wherePK(1)
+    ->fetchOne();
+
+$tag = $orm->getRepository(Tag::class)->findOne(['name' => 'php']);
+
+if (!in_array($tag, $user->getTags(), true)) {
+    $user->addTag($tag);
+}
+```
+
+### Removing Relations
+
+Removing from the collection deletes the pivot record, **not the target entity**:
+
+```php
+$user = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->wherePK(1)
+    ->fetchOne();
+
+$tagToRemove = $user->getTags()[0];
+$user->removeTag($tagToRemove);
+
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($user);
+$manager->run();
+// UserTag pivot record deleted, Tag entity remains
+```
+
+#### Clearing All Relations
+
+```php
+$user->setTags([]);
+
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($user);
+$manager->run();
+// All UserTag pivot records deleted
+```
+
+## Loading
+
+### Basic Loading
+
+Load related entities explicitly:
+
+```php
+$user = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->wherePK(1)
+    ->fetchOne();
+
+foreach ($user->getTags() as $tag) {
+    echo $tag->getName() . "\n";
+}
+```
+
+### Eager Loading
+
+Configure automatic loading:
+
+```php
+#[ManyToMany(target: Tag::class, through: UserTag::class, load: 'eager')]
+private array $tags = [];
+```
+
+```php
+$user = $orm->getRepository(User::class)->findByPK(1);
+// Tags are already loaded
+print_r($user->getTags());
+```
+
+### Filtered Loading
+
+Pre-filter target entities when loading:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags', ['where' => ['active' => true]])
+    ->fetchAll();
+```
+
+Set default filters in the relation:
+
+```php
+#[ManyToMany(
+    target: Tag::class,
+    through: UserTag::class,
+    where: ['active' => true, 'verified' => true]
+)]
+private array $tags = [];
+```
+
+### Sorted Loading
+
+Specify sorting when loading:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags', ['orderBy' => ['name' => 'ASC']])
+    ->fetchAll();
+```
+
+Set default sorting in the relation:
+
+```php
+#[ManyToMany(
+    target: Tag::class,
+    through: UserTag::class,
+    orderBy: ['priority' => 'DESC', 'name' => 'ASC']
+)]
+private array $tags = [];
+```
+
+## Filtering
+
+### Using `with()` for Filtering
+
+Filter source entities based on target entity criteria:
 
 ```php
 $users = $orm->getRepository(User::class)
     ->select()
     ->distinct()
-    ->with('tags')
+    ->with('tags')->where('tags.name', 'php')
     ->fetchAll();
 ```
 
-You can filter the entity results using the `where` method on related properties:
+> **Important:** Always use `distinct()` with ManyToMany filtering to avoid duplicate source rows.
+
+### Automatic Joins
+
+```php
+// Automatically joins tags and user_tags tables
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->distinct()
+    ->where('tags.name', 'php')
+    ->where('tags.active', true)
+    ->fetchAll();
+```
+
+### Complex Filtering
+
+Find users with specific tags:
 
 ```php
 $users = $orm->getRepository(User::class)
     ->select()
     ->distinct()
-    ->where('tags.name', 'tag a')
+    ->where('tags.name', 'in', ['php', 'database', 'orm'])
+    ->having('COUNT(DISTINCT tags.id)', '>=', 2)
     ->fetchAll();
 ```
 
-Following SQL will be produced:
+### Pivot Filtering
 
-```sql
-SELECT DISTINCT `user`.`id`   AS `c0`,
-                `user`.`name` AS `c1`
-FROM `users` AS `user`
-         INNER JOIN `user_tags` AS `user_tags_pivot`
-                    ON `user_tags_pivot`.`user_id` = `user`.`id`
-         INNER JOIN `tags` AS `user_tags`
-                    ON `user_tags`.`id` = `user_tags_pivot`.`tag_id`
-WHERE `user_tags`.`name` = 'tag a'
-```
-
-### Chain Filtering
-
-Pivot entity data is available for filtering as well, you must use the keyword `@` to access it.
+Access pivot table data using the `@` syntax:
 
 ```php
-$hour = new \DateInterval("PT40M");
-
-$users = $orm->getRepository(User::class)
+// Find users who were assigned tags in the last hour
+$hour = new \DateInterval("PT1H");
+$recentUsers = $orm->getRepository(User::class)
     ->select()
     ->distinct()
-    ->where('tags.@.created_at', '>', (new \DateTimeImmutable())->sub($hour))
+    ->where('tags.@.assigned_at', '>', (new \DateTimeImmutable())->sub($hour))
     ->fetchAll();
 ```
 
-You can also load/filter the relations assigned to the pivot entity.
+Filter by pivot relations:
 
 ```php
 $users = $orm->getRepository(User::class)
     ->select()
     ->distinct()
-    ->where('tags.@.subRelation.value', $value)
+    ->where('tags.@.assignedBy.role', 'admin')
     ->fetchAll();
 ```
 
-> Cross-database Many To Many relations are not supported yet.
+## Pivot Entity Access
+
+### Pivot Data
+
+To access pivot entity data, use the Doctrine collection with pivoted support:
+
+```php
+use Cycle\ORM\Collection\Pivoted\PivotedCollection;
+
+#[Entity]
+class User
+{
+    #[ManyToMany(
+        target: Tag::class,
+        through: UserTag::class,
+        collection: 'doctrine'
+    )]
+    private PivotedCollection $tags;
+
+    public function __construct()
+    {
+        $this->tags = new PivotedCollection();
+    }
+}
+```
+
+Access pivot data:
+
+```php
+$user = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->wherePK(1)
+    ->fetchOne();
+
+foreach ($user->tags as $tag) {
+    $pivot = $user->tags->getPivot($tag);
+    echo sprintf(
+        "Tag '%s' assigned at %s with priority %d\n",
+        $tag->getName(),
+        $pivot->getAssignedAt()->format('Y-m-d H:i'),
+        $pivot->getPriority()
+    );
+}
+```
+
+### Setting Pivot Data
+
+Create associations with custom pivot data:
+
+```php
+$user = new User();
+$user->setUsername("johndoe");
+
+$tag = new Tag("php");
+
+$pivot = new UserTag();
+$pivot->setPriority(10);
+
+$user->tags->add($tag);
+$user->tags->setPivot($tag, $pivot);
+
+$manager = new \Cycle\ORM\EntityManager($orm);
+$manager->persist($user);
+$manager->run();
+```
+
+### Pivot Relations
+
+Pivot entities can have their own relations:
+
+```php
+#[Entity]
+class UserTag
+{
+    #[Column(type: 'primary')]
+    private int $id;
+
+    #[BelongsTo(target: User::class)]
+    private User $assignedBy;
+
+    public function __construct(User $assignedBy)
+    {
+        $this->assignedBy = $assignedBy;
+        $this->assignedAt = new \DateTimeImmutable();
+    }
+}
+```
+
+Load pivot relations:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags.@.assignedBy') // Load pivot's assignedBy relation
+    ->fetchAll();
+```
 
 ## Complex Loading
 
-You can load related data using conditions and sorts applied to the pivot table using the option `load`.
+### Sorting by Pivot Data
 
-For example, we can have the following entities:
-
-- category (id, title)
-- photo (id, url)
-- photo_to_category (photo_id, category_id, position)
+Load with pivot-based sorting:
 
 ```php
-$categories = $orm->getRepository('category')->select();
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags', [
+        'load' => function (\Cycle\ORM\Select\QueryBuilder $q) {
+            // @ = current relation, @.@ = pivot entity
+            $q->orderBy('@.@.priority', 'DESC');
+        }
+    ])
+    ->fetchAll();
 ```
 
-We can now load categories with photos inside them ordered by `photo_to_category` position using a `WHERE IN` or `JOIN`
-query:
+### Single Query Loading
+
+Force single-query loading for complex scenarios:
 
 ```php
-$result = $categories->load('photos', [
-    'load' => function (\Cycle\ORM\Select\QueryBuilder $q) {
-        $q->orderBy('@.@.position'); // @ current relation (photos), @.@ current relation pivot (photo_to_category)
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags', [
+        'method' => \Cycle\ORM\Select::SINGLE_QUERY,
+        'load' => function (\Cycle\ORM\Select\QueryBuilder $q) {
+            $q->where('@.@.priority', '>', 5)
+              ->orderBy('@.@.priority', 'DESC');
+        }
+    ])
+    ->fetchAll();
+```
+
+### Combined Filtering and Loading
+
+Filter source, then load with pivot conditions:
+
+```php
+$activeUsers = $orm->getRepository(User::class)
+    ->select()
+    ->where('active', true)
+    ->load('tags', [
+        'where' => ['verified' => true],
+        'load' => function (\Cycle\ORM\Select\QueryBuilder $q) {
+            $q->where('@.@.priority', '>=', 5)
+              ->orderBy('@.@.priority', 'DESC')
+              ->orderBy('name', 'ASC');
+        }
+    ])
+    ->fetchAll();
+```
+
+## Collections
+
+ManyToMany supports different collection types:
+
+### Default Array Collection
+
+```php
+#[ManyToMany(target: Tag::class, through: UserTag::class)]
+private array $tags = [];
+```
+
+### Doctrine Collection (with Pivot Access)
+
+```php
+use Doctrine\Common\Collections\Collection;
+use Cycle\ORM\Collection\Pivoted\PivotedCollection;
+
+#[Entity]
+class User
+{
+    #[ManyToMany(
+        target: Tag::class,
+        through: UserTag::class,
+        collection: 'doctrine'
+    )]
+    private PivotedCollection $tags;
+
+    public function __construct()
+    {
+        $this->tags = new PivotedCollection();
     }
-])->fetchAll();
+}
 ```
 
-The produced SQL:
-
-```sql
-SELECT "category"."id"    AS "c0",
-       "category"."title" AS "c1"
-FROM "categories" AS "category"
-```
-
-SQL #2:
-
-```sql
-SELECT "l_category_photos_pivot"."id"          AS "c0",
-       "l_category_photos_pivot"."position"    AS "c1",
-       "l_category_photos_pivot"."photo_id"    AS "c2",
-       "l_category_photos_pivot"."category_id" AS "c3",
-       "category_photos"."id"                  AS "c4",
-       "category_photos"."url"                 AS "c5"
-FROM "photos" AS "category_photos"
-         INNER JOIN "photo_category_positions" AS "l_category_photos_pivot"
-                    ON "l_category_photos_pivot"."photo_id" = "category_photos"."id"
-WHERE "l_category_photos_pivot"."category_id" IN (1, 2, 3, 4)
-ORDER BY "l_category_photos_pivot"."position" ASC
-```
-
-We can force the ORM to use a single query to pull the data (useful for more complex conditions):
+### Custom Collection Factory
 
 ```php
-$result = $categories->load('photos', [
-     'method' => \Cycle\ORM\Select::SINGLE_QUERY,
-     'load'   => function (\Cycle\ORM\Select\QueryBuilder $q) {
-         $q->orderBy('@.@.position');  // @ current relation (photos), @.@ current relation pivot (photo_to_category)
-     }
-])->orderBy('id')->fetchAll();
+#[ManyToMany(
+    target: Tag::class,
+    through: UserTag::class,
+    collection: 'my_custom_factory'
+)]
+private CustomCollection $tags;
 ```
 
-SQL:
+> Read more about [relation collections](/docs/en/relation/collections.md).
 
-```sql
-SELECT "category"."id"                           AS "c0",
-       "category"."title"                        AS "c1",
-       "l_l_category_photos_pivot"."id"          AS "c2",
-       "l_l_category_photos_pivot"."position"    AS "c3",
-       "l_l_category_photos_pivot"."photo_id"    AS "c4",
-       "l_l_category_photos_pivot"."category_id" AS "c5",
-       "l_category_photos"."id"                  AS "c6",
-       "l_category_photos"."url"                 AS "c7"
-FROM "categories" AS "category"
-         LEFT JOIN "photo_category_positions" AS "l_l_category_photos_pivot"
-                   ON "l_l_category_photos_pivot"."category_id" = "category"."id"
-         INNER JOIN "photos" AS "l_category_photos"
-                    ON "l_category_photos"."id" = "l_l_category_photos_pivot"."photo_id"
-ORDER BY "category"."id" ASC, "l_l_category_photos_pivot"."position" ASC
+## Inverse Relations
+
+Define bidirectional relationships:
+
+```php
+use Cycle\Annotated\Annotation\Relation\Inverse;
+
+#[Entity]
+class User
+{
+    #[ManyToMany(
+        target: Tag::class,
+        through: UserTag::class,
+        inverse: new Inverse(as: 'users', type: 'manyToMany')
+    )]
+    private array $tags = [];
+}
 ```
+
+This automatically creates the inverse relation on Tag:
+
+```php
+// Equivalent to defining on Tag:
+#[Entity]
+class Tag
+{
+    #[ManyToMany(target: User::class, through: UserTag::class)]
+    private array $users = [];
+}
+```
+
+## Foreign Key Options
+
+### Default Behavior
+
+By default, ManyToMany creates foreign keys in the pivot table with CASCADE:
+
+```php
+#[ManyToMany(target: Tag::class, through: UserTag::class)]
+private array $tags = [];
+// Creates in UserTag:
+// FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+// FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
+```
+
+When either User or Tag is deleted, pivot records are automatically removed.
+
+### Custom Foreign Key Actions
+
+```php
+#[ManyToMany(
+    target: Tag::class,
+    through: UserTag::class,
+    fkAction: 'CASCADE',        // Both DELETE and UPDATE
+)]
+private array $tags = [];
+```
+
+### Separate DELETE Action
+
+```php
+#[ManyToMany(
+    target: Tag::class,
+    through: UserTag::class,
+    fkAction: 'CASCADE',
+    fkOnDelete: 'SET NULL',
+    nullable: true
+)]
+private array $tags = [];
+```
+
+**Available Actions:**
+
+| Action    | Description                                                 |
+|-----------|-------------------------------------------------------------|
+| CASCADE   | Delete pivot records when source or target is deleted       |
+| SET NULL  | Set FK to NULL (requires `nullable: true`)                  |
+| NO ACTION | Prevent deletion if pivot records exist (database enforced) |
+
+### Disable Foreign Key Creation
+
+```php
+#[ManyToMany(
+    target: Tag::class,
+    through: UserTag::class,
+    fkCreate: false,
+    indexCreate: false
+)]
+private array $tags = [];
+```
+
+## Best Practices
+
+1. **Always initialize collections** to empty arrays in property declarations
+2. **Use distinct()** when filtering by target properties
+3. **Keep pivot entities simple** unless you need additional data
+4. **Use Doctrine collections** when you need pivot access
+5. **Index pivot foreign keys** for query performance (enabled by default)
+6. **Consider cascade behavior** - pivot records should usually cascade delete
+7. **Avoid cross-database** ManyToMany relations (not supported)
+
+## Common Patterns
+
+### Tags/Categories System
+
+```php
+#[Entity]
+class Post
+{
+    #[ManyToMany(
+        target: Tag::class,
+        through: PostTag::class,
+        orderBy: ['name' => 'ASC']
+    )]
+    private array $tags = [];
+
+    public function hasTag(string $name): bool
+    {
+        foreach ($this->tags as $tag) {
+            if ($tag->getName() === $name) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
+
+### Timestamped Relations
+
+```php
+#[Entity]
+class UserTag
+{
+    #[Column(type: 'primary')]
+    private int $id;
+
+    #[Column(type: 'datetime')]
+    private \DateTimeInterface $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+}
+```
+
+```php
+// Find recent associations
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->distinct()
+    ->where('tags.@.created_at', '>', new DateTime('-7 days'))
+    ->fetchAll();
+```
+
+### Weighted Relations
+
+```php
+#[Entity]
+class UserSkill
+{
+    #[Column(type: 'primary')]
+    private int $id;
+
+    #[Column(type: 'integer')]
+    private int $level; // 1-10
+
+    public function setLevel(int $level): void
+    {
+        if ($level < 1 || $level > 10) {
+            throw new \InvalidArgumentException('Level must be 1-10');
+        }
+        $this->level = $level;
+    }
+}
+```
+
+### Preventing Duplicates
+
+```php
+public function addTag(Tag $tag): void
+{
+    foreach ($this->tags as $existingTag) {
+        if ($existingTag->getId() === $tag->getId()) {
+            return; // Already exists
+        }
+    }
+    $this->tags[] = $tag;
+}
+```
+
+## Performance Considerations
+
+### Loading Strategy
+
+```php
+// Separate queries (default) - better for many relations
+$user = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->wherePK(1)
+    ->fetchOne();
+
+// Single query with JOINs - better for filtering
+$user = $orm->getRepository(User::class)
+    ->select()
+    ->with('tags')
+    ->load('tags', ['using' => 'tags'])
+    ->wherePK(1)
+    ->fetchOne();
+```
+
+### Pagination
+
+For large many-to-many collections, paginate on the target side:
+
+```php
+$user = $orm->getRepository(User::class)->findByPK(1);
+
+$tags = $orm->getRepository(Tag::class)
+    ->select()
+    ->with('users')
+    ->where('users.id', $user->getId())
+    ->orderBy('name')
+    ->limit(20)
+    ->offset(0)
+    ->fetchAll();
+```
+
+### Batch Loading
+
+Load multiple entities with their relations efficiently:
+
+```php
+$users = $orm->getRepository(User::class)
+    ->select()
+    ->load('tags')
+    ->where('active', true)
+    ->fetchAll();
+// Single query for users, single query for all tags
+```
+
+## Limitations
+
+- **Cross-database relations** are not currently supported
+- **Pivot entity** must have a primary key
+- **Composite keys** in pivot table require careful configuration
+
+## See Also
+
+- [HasMany Relations](/docs/en/relation/has-many.md) - One-to-many relationships
+- [BelongsTo Relations](/docs/en/relation/belongs-to.md) - Many-to-one relationships
+- [Relation Collections](/docs/en/relation/collections.md) - Collection management
+- [Composite Keys](/docs/en/advanced/composite-pk.md) - Using composite keys
+- [Query Builder](/docs/en/query-builder/relations.md) - Advanced querying

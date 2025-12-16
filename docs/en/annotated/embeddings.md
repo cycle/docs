@@ -6,10 +6,20 @@ selection is possible as well.
 
 > Embedded entities do not support relations at the moment.
 
+## Table of Contents
+
+- [Definition](#definition)
+    - [Embeddable Attribute](#embeddable-attribute)
+    - [Embedded Relation](#embedded-relation)
+- [Column Mapping](#column-mapping)
+- [Querying](#querying)
+- [Loading Strategies](#eager-and-lazy-loading)
+- [Advanced Usage](#query-embedded-entity-separately)
+
 ## Definition
 
 To define an embeddable entity use the `#[Embeddable]` attribute. As with `#[Entity]`, you are able to define a custom
-mapper or associate additional columns/indexes using the `#[Table]` attribute.
+mapper or associate additional columns/indexes using class-level `#[Column]` and `#[Index]` attributes.
 
 ```php
 use Cycle\Annotated\Annotation\Embeddable;
@@ -29,11 +39,23 @@ class Address
 }
 ```
 
-> You do not need to define the `primary` column, this column will be inherited from the parent entity. Mapper 
+> You do not need to define the `primary` column, this column will be inherited from the parent entity. Mapper
 > methods `queueDelete`, `queueCreate` and `queueUpdate` would never be invoked due to the delegation to the parent
 > mapper.
 
-To embed an entity to another object use the `#[Embedded]` attribute:
+### Embeddable Attribute
+
+| Parameter    | Type                   | Default | Description                                                                                        |
+|--------------|------------------------|---------|----------------------------------------------------------------------------------------------------|
+| role         | ?string                | null    | Entity role. Defaults to the lowercase class name without a namespace                              |
+| mapper       | ?class-string          | null    | Mapper class name. Defaults to `Cycle\ORM\Mapper\Mapper`                                           |
+| columnPrefix | string                 | ''      | Prefix for all embedded entity columns in parent table                                             |
+| columns      | Column[]               | []      | Additional unmapped columns (class-level definitions)                                              |
+| typecast     | string\|string[]\|null | null    | Typecast handler(s) for entity columns. Read about [typecasting](/docs/en/advanced/typecasting.md) |
+
+### Embedded Relation
+
+To embed an entity into another object use the `#[Embedded]` attribute:
 
 ```php
 use Cycle\Annotated\Annotation\Entity;
@@ -59,6 +81,14 @@ public function __construct()
     $this->address = new Address();
 }
 ```
+
+**Embedded Relation Parameters:**
+
+| Parameter | Type   | Default | Description                                             |
+|-----------|--------|---------|---------------------------------------------------------|
+| target    | string | -       | **Required**. Embeddable entity class                   |
+| load      | string | 'eager' | Loading strategy: 'eager' or 'lazy'                     |
+| prefix    | string | null    | Column prefix override (overrides embeddable's default) |
 
 You can use embedding after the schema update:
 
