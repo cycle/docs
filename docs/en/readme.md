@@ -39,6 +39,7 @@ Table of Contents
   * [Security](/docs/en/query-builder/security.md)
 * Entity behaviors
   * [Install](/docs/en/entity-behaviors/install.md)
+  * [Identifiers](/docs/en/entity-behaviors/identifiers.md)
   * [UUID](/docs/en/entity-behaviors/uuid.md)
   * [Auto Timestamps](/docs/en/entity-behaviors/timestamps.md)
   * [Soft delete](/docs/en/entity-behaviors/soft-delete.md)

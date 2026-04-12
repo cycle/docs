@@ -116,8 +116,7 @@ class Pivot
 ```
 
 > Read how to use non-incremental primary keys in the Advanced section:
-> - [UUID](/docs/en/entity-behaviors/uuid.md)
-> - [Snowflake IDs](/docs/en/entity-behaviors/uuid.md#snowflake-ids)
+> - [Identifiers](/docs/en/entity-behaviors/identifiers.md)
 
 You can use multiple attributes at the same time with shorter syntax:
 
@@ -296,7 +295,7 @@ class User
 
     #[Column(type: 'enum', values: UserStatus::class, default: 'active')]
     private string $status;
-    
+
     // Or pass a specific enum instance
     #[Column(type: 'enum', values: UserStatus::Active)]
     private string $defaultActive;
@@ -311,7 +310,7 @@ class User
 {
     #[Column(type: 'enum', values: ['active', 'disabled', 'banned'])]
     private string $status;
-    
+
     // Mix of strings and enum values
     #[Column(type: 'enum', values: [UserStatus::Active, 'custom'])]
     private string $mixedStatus;
@@ -337,15 +336,15 @@ class PostgresEntity
     // PostgreSQL JSONB with indexing support
     #[Column(type: 'jsonb')]
     private array $metadata;
-    
+
     // PostgreSQL timestamp with timezone
     #[Column(type: 'timestamptz')]
     private \DateTimeInterface $scheduledAt;
-    
+
     // PostgreSQL geometric types
     #[Column(type: 'point')]
     private string $location;
-    
+
     // PostgreSQL network address types
     #[Column(type: 'inet')]
     private string $ipAddress;
@@ -421,7 +420,7 @@ class User
     #[Column(type: 'primary')]
     #[GeneratedValue(onInsert: true)]
     private int $id;
-    
+
     // Database default timestamp (PostgreSQL: DEFAULT NOW())
     #[Column(type: 'datetime', default: 'CURRENT_TIMESTAMP')]
     #[GeneratedValue(onInsert: true)]
@@ -446,7 +445,7 @@ class Document
     #[Column(type: 'uuid', primary: true)]
     #[GeneratedValue(beforeInsert: true)]
     private string $id;
-    
+
     #[Column(type: 'datetime')]
     #[GeneratedValue(beforeInsert: true)]
     private \DateTimeInterface $createdAt;
@@ -460,7 +459,7 @@ class Document
 - Creation timestamps set by ORM
 - Custom business logic for initial values
 
-> Read more about UUID generation in [Entity Behaviors: UUID](/docs/en/entity-behaviors/uuid.md).
+> Read more about identifier generation in [Entity Behaviors: Identifiers](/docs/en/entity-behaviors/identifiers.md).
 
 #### 3. PHP-Generated Before Update (`beforeUpdate: true`)
 
@@ -473,11 +472,11 @@ class Article
     #[Column(type: 'primary')]
     #[GeneratedValue(onInsert: true)]
     private int $id;
-    
+
     #[Column(type: 'datetime')]
     #[GeneratedValue(beforeInsert: true)]
     private \DateTimeInterface $createdAt;
-    
+
     // Automatically updated on every save
     #[Column(type: 'datetime')]
     #[GeneratedValue(beforeInsert: true, beforeUpdate: true)]
@@ -502,7 +501,7 @@ class Post
     #[Column(type: 'datetime')]
     #[GeneratedValue(beforeInsert: true, beforeUpdate: true)]
     private \DateTimeInterface $lastModified; // Set on create AND update
-    
+
     #[Column(type: 'datetime')]
     #[GeneratedValue(beforeInsert: true)]
     private \DateTimeInterface $createdAt; // Set only on create
@@ -603,7 +602,7 @@ class UserPost
 {
     #[Column(type: 'integer')]
     private int $user_id;
-    
+
     #[Column(type: 'integer')]
     private int $post_id;
 }
@@ -676,7 +675,7 @@ class Post
 {
     #[Column(type: 'primary')]
     public int $id;
-    
+
     #[Column(type: 'integer')]
     #[ForeignKey(target: User::class, action: 'CASCADE')]
     private int $userId;
@@ -699,7 +698,7 @@ class Post
 {
     #[Column(type: 'primary')]
     public int $id;
-    
+
     #[Column(type: 'integer')]
     private int $user_id;
 }
