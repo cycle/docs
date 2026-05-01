@@ -116,6 +116,7 @@ class Pivot
 ```
 
 > Read how to use non-incremental primary keys in the Advanced section:
+> - [UUID](/docs/en/entity-behaviors/uuid.md)
 > - [Identifiers](/docs/en/entity-behaviors/identifiers.md)
 
 You can use multiple attributes at the same time with shorter syntax:
