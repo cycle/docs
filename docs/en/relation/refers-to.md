@@ -595,5 +595,6 @@ $category = $orm->getRepository(Category::class)
 - [BelongsTo Relations](/docs/en/relation/belongs-to.md) - Similar relation with different FK placement
 - [HasOne Relations](/docs/en/relation/has-one.md) - One-to-one relationships
 - [HasMany Relations](/docs/en/relation/has-many.md) - One-to-many relationships
+- [Morphed Relations](/docs/en/relation/morphed.md) - RefersToMorphed for polymorphic self/cyclic references
 - [Composite Keys](/docs/en/advanced/composite-pk.md) - Using composite keys
 - [Query Builder](/docs/en/query-builder/relations.md) - Advanced querying

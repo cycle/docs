@@ -185,6 +185,69 @@ $manager->persist($comment);
 $manager->run();
 ```
 
+## RefersToMorphed
+
+**RefersToMorphed** is the morphed counterpart of the [RefersTo](refers-to.md) relation. Like BelongsToMorphed, it
+stores the morph key and foreign key on the source entity, but the foreign key is resolved in a **deferred** way instead
+of as a hard "parent before child" dependency.
+
+This makes RefersToMorphed the relation to use for **self-referencing and cyclic morphed references** (e.g. `A → A` or
+`A → B → A`). Unlike BelongsToMorphed, which can deadlock the transaction pool when a closed cycle is persisted in a
+single transaction, RefersToMorphed persists the row first and fills in the foreign key with a follow-up update.
+
+### RefersToMorphed Attribute Specification
+
+| Parameter      | Type          | Default | Description                                                                                |
+|----------------|---------------|---------|--------------------------------------------------------------------------------------------|
+| target         | string        | -       | **Required**. Target interface name                                                        |
+| load           | string        | 'lazy'  | Loading strategy: 'lazy' or 'eager'                                                        |
+| cascade        | bool          | true    | Automatically save related entity with source entity                                       |
+| nullable       | bool          | true    | Whether relation can be null                                                               |
+| innerKey       | string\|array | null    | Foreign key column(s) in source entity. Defaults to `{relationName}_{outerKey}`            |
+| outerKey       | string\|array | null    | Key column(s) in target entity. Defaults to target's primary key                           |
+| morphKey       | string        | null    | Column storing target entity type (role). Defaults to `{relationName}_role`                |
+| morphKeyLength | int           | 32      | Length of morph key column                                                                 |
+| indexCreate    | bool          | true    | Create index on [morphKey, innerKey] for query performance                                 |
+| inverse        | Inverse       | null    | Configure inverse relation on target entities. See [Inverse Relations](#inverse-relations) |
+
+> **Note:** As with BelongsToMorphed, foreign key constraints are not supported since the target can be multiple entity
+> types.
+
+### RefersToMorphed Usage Examples
+
+```php
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\Morphed\RefersToMorphed;
+
+#[Entity]
+class Comment implements CommentableInterface
+{
+    #[Column(type: 'primary')]
+    private int $id;
+
+    #[Column(type: 'text')]
+    private string $content;
+
+    // A comment can reply to a Post, a Video, or another Comment
+    #[RefersToMorphed(target: CommentableInterface::class, nullable: true)]
+    private ?CommentableInterface $parent = null;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setParent(?CommentableInterface $parent): void
+    {
+        $this->parent = $parent;
+    }
+}
+```
+
+The morph key is kept in sync with the related entity role and is cleared together with the foreign key when the
+relation is set to `null`.
+
 ## MorphedHasOne
 
 **MorphedHasOne** is the inverse of BelongsToMorphed for one-to-one relationships. The parent entity owns one child
