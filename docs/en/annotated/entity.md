@@ -117,7 +117,7 @@ class Pivot
 
 > Read how to use non-incremental primary keys in the Advanced section:
 > - [UUID](/docs/en/entity-behaviors/uuid.md)
-> - [Snowflake IDs](/docs/en/entity-behaviors/uuid.md#snowflake-ids)
+> - [Identifiers](/docs/en/entity-behaviors/identifiers.md)
 
 You can use multiple attributes at the same time with shorter syntax:
 
@@ -463,7 +463,7 @@ class Document
 - Creation timestamps set by ORM
 - Custom business logic for initial values
 
-> Read more about UUID generation in [Entity Behaviors: UUID](/docs/en/entity-behaviors/uuid.md).
+> Read more about identifier generation in [Entity Behaviors: Identifiers](/docs/en/entity-behaviors/identifiers.md).
 
 #### 3. PHP-Generated Before Update (`beforeUpdate: true`)
 
