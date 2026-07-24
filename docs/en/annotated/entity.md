@@ -360,6 +360,8 @@ class SQLServerEntity
 }
 ```
 
+> **Warning:** Custom database-specific types will likely require special typecasts. Don't forget to specify them using the `typecast` parameter. Read more about [typecasting](/docs/en/advanced/typecasting.md).
+
 #### Database-Specific Attributes
 
 Use named parameters to pass vendor-specific column attributes:
