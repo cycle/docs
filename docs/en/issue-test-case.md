@@ -1,34 +1,39 @@
-# Issue with test case
+# Issue Reproduction through Test Cases
 
-Sometime we can't reproduce an customer's problem based only on the Issue description.
-In this case the preffered way is to make a PR with a reproducible Test Case.
+Ever run into a tricky issue that words just can't seem to describe? Or found yourself stuck with a problem that’s hard
+for others to reproduce? That’s where a reproducible test case comes into play. By creating and submitting a test case,
+you provide the community with a notable representation of the problem, making it easier for everyone to understand and
+solve.
+
+This guide will walk you through the process of creating and submitting a test case to the Cycle ORM repository,
+ensuring your issue gets the attention and resolution it deserves. **Dive in and let’s get started!**
 
 ## Cycle ORM
 
-Examples of other test cases you can find in the
-[Cycle reository](https://github.com/cycle/orm/tree/2.x/tests/ORM/Functional/Driver/Common/Integration).
+To get a sense of how test cases should look, check out the examples in
+the [Cycle reository](https://github.com/cycle/orm/tree/2.x/tests/ORM/Functional/Driver/Common/Integration).
 
-To implement custom test case you need to do few actions.
+### Setting Up Your Test Case Template
 
-### Prepare a case template
+Here's a step-by-step guide to crafting your test case:
 
-0. Fork and clone `cycle/orm` repository. Install `composer` dependencies.
-1. Run `php tests/generate-case.php`. \
-   You will have the new test case in the `tests/ORM/Functional/Driver/Common/Integration` directory.
+1. Begin by forking and cloning the `cycle/orm` repository. Make sure to install the necessary composer dependencies.
+2. Run `php tests/generate-case.php`.
+   This will create a new test case under the `tests/ORM/Functional/Driver/Common/Integration` directory.
 
-### Implement your case
+### Implement your test case
 
-In the generated Case directory you'll find:
+Within the directory of your generated test case, you'll discover:
 
-- Prepared entities in the `Entity` dir.
-- Related ORM Schema preset in the `schema.php` file.
-- Test class `CaseTest.php` with one example test method.
+- Set-up entities inside the `Entity` folder.
+- The corresponding ORM Schema configuration in the `schema.php` file.
+- A `CaseTest.php` test class, complete with a sample test method.
 
-Feel free to change all of them to reproduce your case.
+Modify these files as needed to mirror the issue you're experiencing.
 
 > **Note**
-> If the issue doesn't depend on any database driver you can use only SQLite driver to test it
-> locally with better performance (the `pdo_sqlite` extention required).
+> If the problem isn't tied to a specific database driver, you can stick with the SQLite driver for local testing. This
+> provides faster results (though you'll need the `pdo_sqlite` extension).
 
 To run test case `Case42` with the SQLite driver just execute:
 
@@ -36,8 +41,8 @@ To run test case `Case42` with the SQLite driver just execute:
 vendor/bin/phpunit --group driver-sqlite --filter Case42
 ```
 
-### Make a PR
+### Submitting Your PR
 
-Push your changes in a new branch and go to [Cycle ORM repository](https://github.com/cycle/orm/pulls).\
-You will see the suggestion with button `Compare & pull request`. \
-Press it and fill the form.
+After making your changes, push them to a fresh branch. Then, head over to
+the [Cycle ORM repository](https://github.com/cycle/orm/pulls). There, you'll see a prompt with the option **Compare &
+pull request**. Click on it and complete the form.
