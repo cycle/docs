@@ -335,7 +335,7 @@ use Cycle\Annotated\Annotation\Column;
 class PostgresEntity
 {
     // PostgreSQL JSONB with indexing support
-    #[Column(type: 'jsonb')]
+    #[Column(type: 'jsonb', typecast: 'json')]
     private array $metadata;
     
     // PostgreSQL timestamp with timezone
