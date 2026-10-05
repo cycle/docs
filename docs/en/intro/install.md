@@ -203,7 +203,7 @@ entities:
 ```php index.php
 //...
 
-$finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__]); // __DIR__ here is folder with entities
+$finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__ . '/src']); // the folder with your entities
 $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 ```
 
