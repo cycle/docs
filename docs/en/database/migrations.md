@@ -45,10 +45,50 @@ $config = new MigrationConfig([
 | Option              | Type     | Default        | Description                                       |
 |---------------------|----------|----------------|---------------------------------------------------|
 | `directory`         | `string` | `''`           | Primary directory for migration files             |
-| `vendorDirectories` | `array`  | `[]`           | Additional directories for vendor migrations      |
+| `vendorDirectories` | `array`  | `[]`           | Additional directories for vendor migrations, see [Vendor Migrations](#vendor-migrations) |
 | `table`             | `string` | `'migrations'` | Table name for migration tracking                 |
 | `namespace`         | `string` | `'Migration'`  | Namespace for generated migration classes         |
 | `safe`              | `bool`   | `false`        | Skip confirmation prompts when running migrations |
+
+### Vendor Migrations
+
+Packages can ship their own migrations, for example a package that needs a `users` or `audit_log` table. Instead of
+copying those files into your application, list the package directories in `vendorDirectories`:
+
+```php
+use Cycle\Migrations\Config\MigrationConfig;
+
+$config = new MigrationConfig([
+    'directory' => __DIR__ . '/../migrations/',
+    'vendorDirectories' => [
+        __DIR__ . '/../vendor/acme/users/migrations/',
+        __DIR__ . '/../vendor/acme/audit/migrations/',
+    ],
+]);
+```
+
+A single directory can also be passed as a string: `'vendorDirectories' => __DIR__ . '/../vendor/acme/users/migrations/'`.
+
+The repository reads migrations from `directory` and from every vendor directory and treats them as one list:
+
+- Migrations are ordered by the timestamp in the file name, regardless of the directory they come from. A package
+  migration dated `20240101.090000` runs before an application migration dated `20240102.120000`.
+- All migrations share one tracking table (`table`), so `run()`, `rollback()` and status checks work the same way for
+  vendor migrations.
+- New migrations, created manually through the repository or by the generator, are always written to `directory`.
+  Vendor directories are read-only.
+- Only `*.php` files directly inside each directory are loaded; subdirectories are not scanned. A directory that
+  does not exist is skipped without an error.
+
+Vendor migrations follow the same rules as your own:
+
+- Every `*.php` file in a vendor directory must be a migration named `{timestamp}_{chunk}_{name}.php`
+  (e.g. `20240101.090000_0_create_users.php`). Any other PHP file in that directory makes loading fail with
+  `RepositoryException: Invalid migration filename`.
+- Migration class names must be unique across all directories. Packages should use their own namespace for migration
+  classes.
+- A migration is recorded by its name and creation time, so two migrations with the same name and the same timestamp
+  are treated as one.
 
 ### Initializing Migrator
 
