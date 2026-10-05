@@ -221,7 +221,7 @@ class User
 | castDefault    | bool                   | false   | Apply typecast to default value                                                                                                                                   |
 | typecast       | callable\|string\|null | null    | Typecast rule. Can be callable or string for default handler: "int", "float", "bool", "datetime". Read more about [typecasting](/docs/en/advanced/typecasting.md) |
 | readonlySchema | bool                   | false   | Set to `true` to disable schema synchronization for this column                                                                                                   |
-| ...$attributes | mixed                  | -       | Database-specific attributes using named parameters. Example: `#[Column('smallInt', unsigned: true, zerofill: true)]`                                             |
+| ...$attributes | mixed                  | -       | Database-specific attributes using named parameters. Example: `#[Column('smallInteger', unsigned: true, zerofill: true)]`                                         |
 
 ### Column Types Reference
 
