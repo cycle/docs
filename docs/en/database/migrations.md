@@ -211,12 +211,13 @@ Generates one migration file per database, grouping all changes together.
 
 ```php
 use Cycle\Schema\Generator\Migrations\GenerateMigrations;
+use Cycle\Schema\Generator\Migrations\NameBasedOnChangesGenerator;
 use Cycle\Schema\Generator\Migrations\Strategy\SingleFileStrategy;
 
 $generator = new GenerateMigrations(
     $migrator->getRepository(),
     $migrator->getConfig(),
-    new SingleFileStrategy($migrator->getConfig())
+    new SingleFileStrategy($migrator->getConfig(), new NameBasedOnChangesGenerator())
 );
 ```
 
@@ -252,23 +253,73 @@ $generator = new GenerateMigrations(
 - More granular version control
 - Parallel development friendly
 
-**Custom Name Generator:**
+### Migration Names
 
-The `NameBasedOnChangesGenerator` creates descriptive migration names based on the operations performed. You can
-implement `NameGeneratorInterface` for custom naming logic:
+Both strategies take a name generator: it builds the name part of the migration file from the changes going into the
+migration, as in `20240101.120000_0_0_default_create_users_create_posts.php`. The package ships two generators; the
+examples are for a migration creating `users` and `posts`, and for one adding a `name` column to `users`.
+
+| Generator                     | Name it produces                                  | Examples                                             |
+|-------------------------------|---------------------------------------------------|------------------------------------------------------|
+| `NameBasedOnChangesGenerator` | every change with its table, column or index name | `create_users_create_posts`, `change_users_add_name` |
+| `ChangesCountNameGenerator`   | the number of changes of each kind                | `ct2`, `t1_c1`                                       |
+
+`NameBasedOnChangesGenerator` is the default. Its names describe the migration but grow with every change: a migration
+touching many tables, columns or indexes gets a long, hard to read file name. For short names pass
+`ChangesCountNameGenerator` to the strategy:
 
 ```php
+use Cycle\Schema\Generator\Migrations\ChangesCountNameGenerator;
+use Cycle\Schema\Generator\Migrations\GenerateMigrations;
+use Cycle\Schema\Generator\Migrations\Strategy\SingleFileStrategy;
+
+$generator = new GenerateMigrations(
+    $migrator->getRepository(),
+    $migrator->getConfig(),
+    new SingleFileStrategy($migrator->getConfig(), new ChangesCountNameGenerator())
+);
+```
+
+`ChangesCountNameGenerator` uses these prefixes: `ct` – created tables, `dt` – dropped tables, `t` – changed or renamed
+tables, `c` – added, dropped or altered columns, `i` – indexes, `fk` – foreign keys. Both generators list a created,
+dropped or renamed table without its columns, indexes and foreign keys.
+
+> **Note**
+> Name generators and `MultipleFilesStrategy` are available since `cycle/schema-migrations-generator` v2.2.0,
+> `ChangesCountNameGenerator` since v2.3.0.
+
+**Custom Name Generator:**
+
+Implement `NameGeneratorInterface` for your own naming logic. The generator receives the
+`Cycle\Migrations\Atomizer\Atomizer` holding the tables of the migration; each table's status and comparator tell what
+changes:
+
+```php
+use Cycle\Database\Schema\AbstractTable;
+use Cycle\Migrations\Atomizer\Atomizer;
 use Cycle\Schema\Generator\Migrations\NameGeneratorInterface;
 
-class CustomNameGenerator implements NameGeneratorInterface
+final class TableNamesGenerator implements NameGeneratorInterface
 {
-    public function generate(array $changes): string
+    public function generate(Atomizer $atomizer): string
     {
-        // Your custom naming logic
-        return 'custom_migration_name';
+        $names = [];
+        foreach ($atomizer->getTables() as $table) {
+            $action = match ($table->getStatus()) {
+                AbstractTable::STATUS_NEW => 'create',
+                AbstractTable::STATUS_DECLARED_DROPPED => 'drop',
+                default => 'change',
+            };
+            $names[] = $action . '_' . $table->getName();
+        }
+
+        return \implode('_', $names);
     }
 }
 ```
+
+Pass it to a strategy the same way: `new SingleFileStrategy($migrator->getConfig(), new TableNamesGenerator())`. With it
+the two migrations above are named `create_users_create_posts` and `change_users`.
 
 ## Migration Operations
 
