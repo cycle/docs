@@ -106,6 +106,8 @@ $schema->string('username', 64);
 - Only one auto-increment column per table
 - Automatically added to table's primary key index
 - Use `bigPrimary` for tables expecting billions of records
+- For an auto-incremented column that is not the primary key, see
+  [Auto-increment Columns Outside the Primary Key](#auto-increment-columns-outside-the-primary-key)
 
 #### Integer Types
 
@@ -494,6 +496,71 @@ $schema->save();
 
 > **Important**  
 > Primary keys can only be set during table creation. You cannot change them after the table exists.
+
+### Auto-increment Columns Outside the Primary Key
+
+Sometimes a counter column is needed next to the primary key, such as a human-readable order number in a table keyed
+by UUID. Support depends on the driver:
+
+| Driver     | Declaration                                             | Result                                                                  |
+|------------|---------------------------------------------------------|-------------------------------------------------------------------------|
+| PostgreSQL | `serial()`, `bigSerial()`, `smallSerial()`              | A column with its own sequence, `NOT NULL`, not part of the primary key |
+| MySQL      | `integer()` / `bigInteger()` with `autoIncrement: true` | Not supported: the column is always **added to the primary key**        |
+| SQLite     | not supported                                           | `serial()` throws `SchemaException`, `autoIncrement: true` is ignored   |
+| SQL Server | not supported                                           | `serial()` throws `SchemaException`, `autoIncrement: true` is ignored   |
+
+#### PostgreSQL: serial columns
+
+`serial()`, `bigSerial()` and `smallSerial()` (available since cycle/database 2.5.0) create `serial`, `bigserial` and
+`smallserial` columns. Unlike `primary()`, `bigPrimary()` and `smallPrimary()`, they are not added to the primary key,
+so a table can have several of them, or no primary key at all:
+
+```php
+$schema = $database->table('orders')->getSchema();
+
+$schema->uuid('id')->nullable(false);
+$schema->serial('number');     // "number" serial NOT NULL
+$schema->string('title');
+
+$schema->setPrimaryKeys(['id']);
+$schema->save();
+```
+
+PostgreSQL fills `number` from the column's sequence when an `INSERT` does not set it.
+
+#### MySQL: not outside the primary key
+
+On MySQL an integer column takes the `autoIncrement` attribute, but such a column cannot stay outside the primary key.
+Cycle treats it as the `primary` abstract type (`bigPrimary` for `bigInteger()`) and always adds it to the table's
+primary key: `setPrimaryKeys(['id'])` turns into `PRIMARY KEY (id, number)`. MySQL rejects that table with error 1075,
+because an `AUTO_INCREMENT` column must be the first column of an index, and Cycle creates the other indexes only after
+the table itself. The table is created only when the counter comes first in the key:
+
+```php
+$schema = $database->table('orders')->getSchema();
+
+$schema->string('id', 36)->nullable(false);
+$schema->integer('number', autoIncrement: true)->nullable(false);   // `number` int(11) NOT NULL AUTO_INCREMENT
+$schema->string('title');
+
+$schema->setPrimaryKeys(['number', 'id']);       // PRIMARY KEY (number, id)
+
+$schema->save();
+```
+
+The column must not be nullable: every part of a MySQL primary key is `NOT NULL` (error 1171 otherwise). A table has
+only one `AUTO_INCREMENT` column, so it cannot be combined with `primary()`.
+
+#### SQLite and SQL Server
+
+Neither driver has a schema option for an auto-incremented column outside the primary key: `serial()`, `bigSerial()`
+and `smallSerial()` throw `SchemaException: Undefined abstract/virtual type`, while `autoIncrement` and `identity`
+arguments are silently ignored and produce a plain integer column. Fill the value in the application, or keep such
+code to PostgreSQL.
+
+> **Note**  
+> To read the generated value back into an entity, mark the field with `#[GeneratedValue(onInsert: true)]`. See
+> [Generated Values](/docs/en/annotated/entity.md#generated-values).
 
 ## Indexes
 
