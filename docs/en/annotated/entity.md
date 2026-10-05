@@ -467,10 +467,24 @@ field back with `INSERT ... RETURNING`. Fields of the `serial`, `bigserial` and 
 
 Other drivers:
 
-- **MySQL**: not supported. `#[Column(type: 'integer', autoIncrement: true)]` is added to the table's primary key,
-  and creating the table fails (see the schema notes linked below). With a table made outside Cycle, MySQL has no
-  `RETURNING` either: the ORM reads the last insert ID only into a single primary key that was not set, so the field
-  stays empty after `persist()` until the entity is loaded again.
+- **MySQL** (since cycle/database 2.23.4): use an integer column with `autoIncrement: true` and an index on it:
+
+  ```php
+  #[Entity]
+  #[Index(columns: ['number'], unique: true)]
+  class Order
+  {
+      #[Column(type: 'string(36)', primary: true)]
+      private string $id;
+
+      #[Column(type: 'integer', autoIncrement: true)]
+      #[GeneratedValue(onInsert: true)]
+      private ?int $number = null;
+  }
+  ```
+
+  MySQL has no `RETURNING`: the ORM reads the last insert ID only into a single primary key that was not set, so
+  `$number` stays `null` after `persist()` until the entity is loaded again.
 - **SQLite, SQL Server**: not supported. There `serial` is passed to the database as a native type name. On SQLite this
   makes a plain `NOT NULL` column, and the `INSERT` fails.
 
