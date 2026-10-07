@@ -2,6 +2,9 @@
 
 The `cycle/entity-behavior-uuid` package provides the ability to use `ramsey/uuid` as a Cycle ORM property type.
 
+> **Note** This package has been superseded by `cycle/entity-behavior-identifier`.
+> Read more about identifier generation in [Entity Behaviors: Identifiers](/docs/en/entity-behaviors/identifiers.md).
+
 ## Installation
 
 Install this package as a dependency using Composer.

@@ -35,8 +35,8 @@ $container = new Container();
 $commandGenerator = new EventDrivenCommandGenerator($schema, $container);
 
 $orm = new ORM(
-  factory: $factory, 
-  schema: $schema, 
+  factory: $factory,
+  schema: $schema,
   commandGenerator: $commandGenerator
 );
 ```
@@ -45,6 +45,7 @@ That's it. Now you can use all benefits of this package.
 
 ### Available behaviors
 
+- [Identifiers](/docs/en/entity-behaviors/identifiers.md)
 - [UUID](/docs/en/entity-behaviors/uuid.md)
 - [CreatedAt and UpdatedAt](/docs/en/entity-behaviors/timestamps.md)
 - [SoftDelete](/docs/en/entity-behaviors/soft-delete.md)

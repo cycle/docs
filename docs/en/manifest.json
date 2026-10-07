@@ -61,6 +61,7 @@
     "title": "Entity behaviors",
     "links": {
       "entity-behaviors/install": "Install",
+      "entity-behaviors/identifiers": "Identifiers",
       "entity-behaviors/uuid": "UUID",
       "entity-behaviors/timestamps": "Auto Timestamps",
       "entity-behaviors/soft-delete": "Soft delete",
