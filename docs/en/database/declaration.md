@@ -106,6 +106,8 @@ $schema->string('username', 64);
 - Only one auto-increment column per table
 - Automatically added to table's primary key index
 - Use `bigPrimary` for tables expecting billions of records
+- For an auto-incremented column that is not the primary key, see
+  [Auto-increment Columns Outside the Primary Key](#auto-increment-columns-outside-the-primary-key)
 
 #### Integer Types
 
@@ -494,6 +496,78 @@ $schema->save();
 
 > **Important**  
 > Primary keys can only be set during table creation. You cannot change them after the table exists.
+
+### Auto-increment Columns Outside the Primary Key
+
+Sometimes a counter column is needed next to the primary key, such as a human-readable order number in a table keyed
+by UUID. Support depends on the driver:
+
+| Driver     | Declaration                                             | Result                                                                  |
+|------------|---------------------------------------------------------|-------------------------------------------------------------------------|
+| PostgreSQL | `serial()`, `bigSerial()`, `smallSerial()`              | A column with its own sequence, `NOT NULL`, not part of the primary key |
+| MySQL      | `integer()` / `bigInteger()` with `autoIncrement: true` | `AUTO_INCREMENT` column with its own index, since cycle/database 2.23.4 |
+| SQLite     | not supported                                           | `serial()` throws `SchemaException`, `autoIncrement: true` is ignored   |
+| SQL Server | not supported                                           | `serial()` throws `SchemaException`, `autoIncrement: true` is ignored   |
+
+#### PostgreSQL: serial columns
+
+`serial()`, `bigSerial()` and `smallSerial()` (available since cycle/database 2.5.0) create `serial`, `bigserial` and
+`smallserial` columns. Unlike `primary()`, `bigPrimary()` and `smallPrimary()`, they are not added to the primary key,
+so a table can have several of them, or no primary key at all:
+
+```php
+$schema = $database->table('orders')->getSchema();
+
+$schema->uuid('id')->nullable(false);
+$schema->serial('number');     // "number" serial NOT NULL
+$schema->string('title');
+
+$schema->setPrimaryKeys(['id']);
+$schema->save();
+```
+
+PostgreSQL fills `number` from the column's sequence when an `INSERT` does not set it.
+
+#### MySQL: autoIncrement attribute
+
+Since cycle/database 2.23.4 an integer column with the `autoIncrement` attribute can stay outside the primary key.
+MySQL requires an `AUTO_INCREMENT` column to be indexed, so give it a unique or a plain index: Cycle writes that index
+into the `CREATE TABLE` statement.
+
+```php
+$schema = $database->table('orders')->getSchema();
+
+$schema->string('id', 36)->nullable(false);
+$schema->integer('number', autoIncrement: true)->nullable(false);   // `number` int(11) NOT NULL AUTO_INCREMENT
+$schema->string('title');
+
+$schema->setPrimaryKeys(['id']);                 // PRIMARY KEY (id)
+$schema->index(['number'])->unique();
+
+$schema->save();
+```
+
+`bigInteger()` works the same way. Without an index on the column, `save()` throws `SchemaException`:
+``AUTO_INCREMENT column `number` of table `orders` must be in the primary key or in an index``.
+
+Limitations:
+
+- A table has only one `AUTO_INCREMENT` column, so such a counter cannot be combined with `primary()`.
+- An existing table cannot get the counter yet: adding an `AUTO_INCREMENT` column to it fails with MySQL error 1075,
+  because the column and its index are added by separate statements. Only a new table can have it.
+- Before cycle/database 2.23.4 the column was always added to the primary key, and the table could be created only with
+  the counter first in it: `setPrimaryKeys(['number', 'id'])`.
+
+#### SQLite and SQL Server
+
+Neither driver has a schema option for an auto-incremented column outside the primary key: `serial()`, `bigSerial()`
+and `smallSerial()` throw `SchemaException: Undefined abstract/virtual type`, while `autoIncrement` and `identity`
+arguments are silently ignored and produce a plain integer column. Fill the value in the application, or keep such
+code to PostgreSQL and MySQL.
+
+> **Note**  
+> To read the generated value back into an entity, mark the field with `#[GeneratedValue(onInsert: true)]`. See
+> [Generated Values](/docs/en/annotated/entity.md#generated-values).
 
 ## Indexes
 

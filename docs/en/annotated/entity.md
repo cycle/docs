@@ -435,8 +435,61 @@ class User
 **Use cases:**
 
 - Auto-increment primary keys (`primary`, `bigPrimary`)
+- Auto-increment columns outside the primary key (see below)
 - Database-side DEFAULT expressions
 - Database triggers that populate columns
+
+**Auto-increment columns outside the primary key**
+
+On PostgreSQL a `serial`, `bigserial` or `smallserial` column gets its value from a sequence and is not part of the
+primary key:
+
+```php
+#[Entity]
+class Order
+{
+    #[Column(type: 'primary')]
+    private ?int $id = null;
+
+    // PostgreSQL only: "number" serial NOT NULL
+    #[Column(type: 'serial')]
+    #[GeneratedValue(onInsert: true)]
+    private ?int $number = null;
+
+    #[Column(type: 'string')]
+    private string $title;
+}
+```
+
+After `persist()` both `$id` and `$number` hold the values PostgreSQL generated: the ORM reads every `onInsert`
+field back with `INSERT ... RETURNING`. Fields of the `serial`, `bigserial` and `smallserial` types are treated as
+`onInsert` even without the attribute.
+
+Other drivers:
+
+- **MySQL** (since cycle/database 2.23.4): use an integer column with `autoIncrement: true` and an index on it:
+
+  ```php
+  #[Entity]
+  #[Index(columns: ['number'], unique: true)]
+  class Order
+  {
+      #[Column(type: 'string(36)', primary: true)]
+      private string $id;
+
+      #[Column(type: 'integer', autoIncrement: true)]
+      #[GeneratedValue(onInsert: true)]
+      private ?int $number = null;
+  }
+  ```
+
+  MySQL has no `RETURNING`: the ORM reads the last insert ID only into a single primary key that was not set, so
+  `$number` stays `null` after `persist()` until the entity is loaded again.
+- **SQLite, SQL Server**: not supported. There `serial` is passed to the database as a native type name. On SQLite this
+  makes a plain `NOT NULL` column, and the `INSERT` fails.
+
+See [Auto-increment Columns Outside the Primary Key](/docs/en/database/declaration.md#auto-increment-columns-outside-the-primary-key)
+for the schema side.
 
 #### 2. PHP-Generated Before Insert (`beforeInsert: true`)
 
